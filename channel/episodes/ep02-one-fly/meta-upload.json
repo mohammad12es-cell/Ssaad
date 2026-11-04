@@ -15,5 +15,31 @@
   ],
   "categoryId": "1",
   "privacyStatus": "public",
-  "madeForKids": false
+  "madeForKids": false,
+  "localizations": {
+    "fa": {
+      "title": "پیپ در برابر یک مگس 🪰😂 #انیمیشن #shorts",
+      "description": "پیپ هر کاری می‌کنه تا یه مگس کوچولو رو بگیره. پبل فقط… صبر می‌کنه 😌\nتیم پیپ 🐸 یا تیم پبل 🐌؟"
+    },
+    "es": {
+      "title": "Pip vs. UNA mosca 🪰😂 #animacion #shorts",
+      "description": "Pip lo intenta TODO para atrapar una mosquita. Pebble solo… espera 😌 ¿Equipo Pip o Equipo Pebble?"
+    },
+    "pt": {
+      "title": "Pip vs. UMA mosca 🪰😂 #animacao #shorts",
+      "description": "Pip tenta de TUDO para pegar uma mosquinha. Pebble só… espera 😌 Time Pip ou Time Pebble?"
+    },
+    "hi": {
+      "title": "पिप vs. एक मक्खी 🪰😂 #animation #shorts",
+      "description": "पिप एक छोटी मक्खी पकड़ने के लिए सब कुछ करता है। पेबल बस… इंतज़ार करता है 😌"
+    },
+    "ar": {
+      "title": "بيب ضد ذبابة واحدة 🪰😂 #انيميشن #shorts",
+      "description": "بيب يحاول كل شيء ليمسك ذبابة صغيرة. بيبل فقط… ينتظر 😌 فريق بيب أم فريق بيبل؟"
+    },
+    "id": {
+      "title": "Pip vs. SATU lalat 🪰😂 #animasi #shorts",
+      "description": "Pip mencoba SEGALANYA untuk menangkap seekor lalat. Pebble cuma… menunggu 😌"
+    }
+  }
 }

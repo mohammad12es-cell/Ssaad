@@ -14,5 +14,31 @@
   ],
   "categoryId": "1",
   "privacyStatus": "public",
-  "madeForKids": false
+  "madeForKids": false,
+  "localizations": {
+    "fa": {
+      "title": "پیپ و سرسره‌ی برگ 🐸🐌 کی می‌بره؟ #انیمیشن #shorts",
+      "description": "پیپ قورباغه با عجله از سرسره پایین می‌ره… ولی پبل حلزون یه حرکت مخفی داره 🌀\nبه نظرت دفعه‌ی بعد کی می‌بره؟"
+    },
+    "es": {
+      "title": "Pip vs. el tobogán de hoja 🐸🐌 ¿Quién gana? #animacion #shorts",
+      "description": "Pip baja corriendo por el tobogán… ¡pero Pebble tiene un movimiento secreto! 🌀 ¿Quién gana la próxima vez?"
+    },
+    "pt": {
+      "title": "Pip vs. o escorregador de folha 🐸🐌 Quem vence? #animacao #shorts",
+      "description": "Pip desce correndo… mas Pebble tem um movimento secreto 🌀 Quem vence na próxima?"
+    },
+    "hi": {
+      "title": "पिप vs. पत्ते की स्लाइड 🐸🐌 कौन जीतेगा? #animation #shorts",
+      "description": "पिप जल्दी में नीचे फिसलता है… लेकिन पेबल के पास एक सीक्रेट मूव है 🌀"
+    },
+    "ar": {
+      "title": "بيب ضد زحليقة الورقة 🐸🐌 من سيفوز؟ #انيميشن #shorts",
+      "description": "بيب يتزحلق بسرعة… لكن بيبل لديه حركة سرية 🌀 من سيفوز في المرة القادمة؟"
+    },
+    "id": {
+      "title": "Pip vs. Perosotan Daun 🐸🐌 Siapa menang? #animasi #shorts",
+      "description": "Pip meluncur terburu-buru… tapi Pebble punya jurus rahasia 🌀"
+    }
+  }
 }

@@ -7,7 +7,8 @@ Needs env vars YT_CLIENT_ID, YT_CLIENT_SECRET, YT_REFRESH_TOKEN
 usage: yt_upload.py VIDEO.mp4 META.json
 META.json: {"title":..., "description":..., "tags":[...], "categoryId":"1",
             "privacyStatus":"private|unlisted|public", "publishAt":"2026-11-06T17:00:00Z" (optional),
-            "madeForKids": false}
+            "madeForKids": false,
+            "localizations": {"fa": {"title":..., "description":...}, "es": {...}} (optional)}
 """
 import json, os, sys, urllib.parse, urllib.request
 
@@ -27,9 +28,12 @@ def main(video, meta_path):
     body = {"snippet": {"title": meta["title"], "description": meta["description"], "tags": meta.get("tags", []),
                         "categoryId": meta.get("categoryId", "1"), "defaultLanguage": "en", "defaultAudioLanguage": "en"},
             "status": status}
+    parts = "snippet,status"
+    if meta.get("localizations"):
+        body["localizations"] = meta["localizations"]; parts += ",localizations"
     size = os.path.getsize(video); tok = token()
     req = urllib.request.Request(
-        "https://www.googleapis.com/upload/youtube/v3/videos?uploadType=resumable&part=snippet,status",
+        "https://www.googleapis.com/upload/youtube/v3/videos?uploadType=resumable&part=" + parts,
         data=json.dumps(body).encode(), method="POST",
         headers={"Authorization": f"Bearer {tok}", "Content-Type": "application/json; charset=UTF-8",
                  "X-Upload-Content-Type": "video/mp4", "X-Upload-Content-Length": str(size)})

@@ -1,0 +1,234 @@
+<!doctype html>
+<html lang="en" data-resolution="portrait">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <script src="assets/gsap.min.js"></script>
+    <script src="assets/characters.js"></script>
+    <style>
+      @font-face { font-family: "Fredoka"; font-weight: 700; src: url("assets/fredoka-latin-700-normal.woff2") format("woff2"); }
+      @font-face { font-family: "Fredoka"; font-weight: 500; src: url("assets/fredoka-latin-500-normal.woff2") format("woff2"); }
+      :root { --ground: #7be0ff; --ink: #ffffff; --stroke: #2b2a6e; --font-display: "Fredoka", sans-serif; }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { margin: 0; width: 1080px; height: 1920px; overflow: hidden; background: var(--ground); }
+      #root { position: relative; width: 100%; height: 100%; overflow: hidden; font-family: var(--font-display); }
+      .clip { position: absolute; inset: 0; }
+      svg.stage { width: 1080px; height: 1920px; }
+      .cap {
+        position: absolute; left: 60px; right: 60px; top: 230px; text-align: center;
+        color: var(--ink); font-weight: 700; font-size: 96px; line-height: 1.05;
+        -webkit-text-stroke: 16px var(--stroke); paint-order: stroke fill;
+      }
+      .cap.small { font-size: 76px; }
+      .count { top: 560px; font-size: 260px; }
+      #end { background: rgba(43, 42, 110, 0.82); display: flex; flex-direction: column; align-items: center; justify-content: center; }
+      #end img { width: 420px; height: 420px; border-radius: 50%; border: 12px solid #fff; }
+      #end .t1 { margin-top: 60px; color: #fff; font-weight: 700; font-size: 100px; text-align: center; line-height: 1.05; }
+      #end .t2 { margin-top: 30px; color: #ffd166; font-weight: 500; font-size: 56px; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="20" data-width="1080" data-height="1920">
+      <svg id="world" class="clip stage" data-start="0" data-duration="20" data-track-index="0" viewBox="0 0 1080 1920">
+        <defs>
+          <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#6fd3ff" /><stop offset="0.6" stop-color="#b8ecff" /><stop offset="1" stop-color="#e8fbff" />
+          </linearGradient>
+          <linearGradient id="water" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#4fc3f7" /><stop offset="1" stop-color="#1e88e5" />
+          </linearGradient>
+        </defs>
+        <rect width="1080" height="1920" fill="url(#sky)" />
+        <circle cx="880" cy="200" r="90" fill="#ffe27a" />
+        <g id="clouds" fill="#fff" opacity="0.9">
+          <g id="cloud1"><ellipse cx="200" cy="430" rx="110" ry="45" /><ellipse cx="260" cy="400" rx="70" ry="50" /></g>
+          <g id="cloud2"><ellipse cx="760" cy="520" rx="90" ry="36" /><ellipse cx="810" cy="495" rx="60" ry="42" /></g>
+        </g>
+        <!-- hills -->
+        <path d="M0,1180 C260,1080 520,1300 1080,1150 L1080,1920 L0,1920 Z" fill="#8be08f" />
+        <path d="M0,1450 C300,1380 700,1520 1080,1420 L1080,1920 L0,1920 Z" fill="#5fcf6a" />
+        <!-- tree tower holding the slide top -->
+        <rect x="90" y="770" width="40" height="560" rx="14" fill="#a0673e" />
+        <!-- leaf slide -->
+        <path d="M110,760 L880,1290 C910,1310 950,1290 975,1235" fill="none" stroke="#3fa34d" stroke-width="64" stroke-linecap="round" stroke-linejoin="round" />
+        <path d="M110,760 L880,1290 C910,1310 950,1290 975,1235" fill="none" stroke="#7ed957" stroke-width="40" stroke-linecap="round" />
+        <path d="M130,770 L870,1280" fill="none" stroke="#c9f2a8" stroke-width="5" stroke-dasharray="30 20" />
+        <!-- finish flag -->
+        <g id="flag">
+          <rect x="1010" y="1080" width="10" height="180" fill="#5a4636" />
+          <g id="flagCloth">
+            <rect x="1020" y="1082" width="40" height="30" fill="#fff" /><rect x="1060" y="1082" width="20" height="30" fill="#222" />
+            <rect x="1020" y="1112" width="40" height="30" fill="#222" /><rect x="1060" y="1112" width="20" height="30" fill="#fff" />
+          </g>
+        </g>
+        <!-- pond back -->
+        <ellipse cx="800" cy="1700" rx="240" ry="80" fill="url(#water)" />
+        <ellipse id="ripple" cx="800" cy="1700" rx="120" ry="36" fill="none" stroke="#fff" stroke-width="8" opacity="0" />
+        <ellipse cx="650" cy="1690" rx="46" ry="16" fill="#3fa34d" />
+
+        <g id="pip"></g>
+        <g id="lily" opacity="0"><ellipse cx="0" cy="0" rx="70" ry="22" fill="#3fa34d" /><path d="M0,0 L60,-14 L60,14 Z" fill="#8be0ff" /></g>
+        <g id="pebble"></g>
+        <g id="shellBall" opacity="0">
+          <circle cx="0" cy="0" r="38" fill="#ff7b6b" />
+          <path d="M0,-28 a28,28 0 1,1 -1,0 M0,-18 a18,18 0 1,0 1,0 M0,-9 a9,9 0 1,1 -1,0" fill="none" stroke="#c94f63" stroke-width="5" />
+        </g>
+        <!-- pond front lip (hides Pip's body) -->
+        <path d="M560,1700 A240,80 0 0,0 1040,1700 L1040,1800 L560,1800 Z" fill="#5fcf6a" />
+        <path d="M560,1700 A240,80 0 0,0 1040,1700" fill="none" stroke="#1e88e5" stroke-width="10" />
+
+        <g id="drops" fill="#4fc3f7"></g>
+        <g id="dizzy" opacity="0" fill="#ffd166"></g>
+        <g id="trophy" opacity="0">
+          <path d="M-40,-90 L40,-90 L32,-40 C28,-20 -28,-20 -32,-40 Z" fill="#ffc83d" stroke="#c98a1b" stroke-width="5" />
+          <rect x="-8" y="-28" width="16" height="24" fill="#ffc83d" /><rect x="-30" y="-6" width="60" height="14" rx="4" fill="#c98a1b" />
+        </g>
+        <g id="confetti"></g>
+        <text id="bang" x="0" y="0" font-family="Fredoka" font-weight="700" font-size="110" fill="#ff5a5f" stroke="#2b2a6e" stroke-width="10" paint-order="stroke" opacity="0">!!</text>
+      </svg>
+
+      <div id="c1" class="clip cap" data-start="0" data-duration="1.8" data-track-index="1">Who gets down first? 🐸🐌</div>
+      <div id="n3" class="clip cap count" data-start="1.85" data-duration="0.6" data-track-index="1">3</div>
+      <div id="n2" class="clip cap count" data-start="2.45" data-duration="0.6" data-track-index="1">2</div>
+      <div id="n1" class="clip cap count" data-start="3.05" data-duration="0.6" data-track-index="1">1</div>
+      <div id="go" class="clip cap count" data-start="3.65" data-duration="0.7" data-track-index="1">GO!</div>
+      <div id="c2" class="clip cap" data-start="7.8" data-duration="1.7" data-track-index="1">SPLASH 😵</div>
+      <div id="c3" class="clip cap" data-start="9.6" data-duration="1.4" data-track-index="1">Meanwhile… 🐌</div>
+      <div id="c4" class="clip cap" data-start="11" data-duration="2.1" data-track-index="1">SHELL MODE 🌀</div>
+      <div id="c5" class="clip cap" data-start="13.2" data-duration="1.4" data-track-index="1">WINNER 🏆</div>
+      <div id="c6" class="clip cap small" data-start="14.6" data-duration="3" data-track-index="1">Slow and steady?<br />More like SPIN and steady 😂</div>
+
+      <div id="end" class="clip" data-start="17.6" data-duration="2.4" data-track-index="2">
+        <img src="assets/avatar.png" alt="Pip and Pebble" />
+        <div class="t1">Follow for more<br />Pip &amp; Pebble</div>
+        <div class="t2">New episode every week</div>
+      </div>
+
+      <audio id="sound" src="assets/audio.wav" data-start="0" data-duration="20" data-volume="1"></audio>
+    </div>
+
+    <script>
+      const NS = "http://www.w3.org/2000/svg";
+      const $ = (id) => document.getElementById(id);
+      // characters: origin at their feet
+      $("pip").innerHTML = `<g transform="scale(0.32)">${PIP(0, -165, 1)}</g>`;
+      $("pebble").innerHTML = `<g transform="scale(0.34)">${PEBBLE(0, -92, 1)}</g>`;
+      // splash drops
+      for (let i = 0; i < 9; i++) {
+        const c = document.createElementNS(NS, "ellipse");
+        c.setAttribute("class", "drop"); c.setAttribute("cx", 800); c.setAttribute("cy", 1690);
+        c.setAttribute("rx", 14); c.setAttribute("ry", 20); $("drops").appendChild(c);
+      }
+      // dizzy stars
+      for (let i = 0; i < 3; i++) {
+        const p = document.createElementNS(NS, "path");
+        const a = (i * 2 * Math.PI) / 3, x = Math.cos(a) * 60, y = Math.sin(a) * 18;
+        p.setAttribute("d", `M${x},${y - 18} L${x + 5},${y - 5} L${x + 18},${y} L${x + 5},${y + 5} L${x},${y + 18} L${x - 5},${y + 5} L${x - 18},${y} L${x - 5},${y - 5} Z`);
+        $("dizzy").appendChild(p);
+      }
+      // confetti
+      const cols = ["#ff5a5f", "#ffd166", "#6a7bff", "#5fcf6a", "#ff8fb1"];
+      for (let i = 0; i < 18; i++) {
+        const r = document.createElementNS(NS, "rect");
+        r.setAttribute("class", "conf"); r.setAttribute("x", 930); r.setAttribute("y", 1150);
+        r.setAttribute("width", 16); r.setAttribute("height", 10); r.setAttribute("fill", cols[i % 5]);
+        $("confetti").appendChild(r);
+      }
+
+      // slide surface: point at t in [0,1]
+      const S = (t) => ({ x: 110 + 770 * t, y: 760 + 530 * t - 30 });
+      const ANG = 34.5;
+
+      const tl = gsap.timeline({ paused: true });
+      const pop = (id, t) => {
+        tl.fromTo(id, { scale: 0.4, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.25, ease: "back.out(2.5)" }, t);
+      };
+
+      // ambient
+      tl.fromTo("#cloud1", { x: 0 }, { x: 140, duration: 20, ease: "none" }, 0);
+      tl.fromTo("#cloud2", { x: 0 }, { x: -120, duration: 20, ease: "none" }, 0);
+      tl.fromTo("#flagCloth", { skewY: 0 }, { skewY: 8, duration: 0.5, yoyo: true, repeat: 39, ease: "sine.inOut" }, 0);
+
+      // starting positions
+      tl.set("#pip", { x: S(0.2).x, y: S(0.2).y, rotation: 0 }, 0);
+      tl.set("#pebble", { x: S(0.07).x, y: S(0.07).y }, 0);
+      tl.set(".drop", { opacity: 0 }, 0);
+      tl.set(".conf", { opacity: 0 }, 0);
+
+      // HOOK + countdown
+      pop("#c1", 0.05);
+      tl.to("#pip", { y: "-=40", duration: 0.2, yoyo: true, repeat: 3, ease: "power1.out" }, 0.2);
+      ["#n3", "#n2", "#n1", "#go"].forEach((id, i) => pop(id, 1.85 + i * 0.6));
+
+      // Pip slides
+      tl.to("#pip", { y: "-=70", duration: 0.2, ease: "power2.out" }, 3.75);
+      tl.to("#pip", { x: S(0.24).x, y: S(0.24).y, rotation: ANG, duration: 0.2, ease: "power2.in" }, 3.95);
+      tl.to("#pip", { x: S(1).x, y: S(1).y, duration: 2.1, ease: "power2.in" }, 4.15);
+      tl.to("#pip", { x: 955, y: 1235, rotation: -20, duration: 0.12, ease: "none" }, 6.25);
+      // launch + fall
+      tl.to("#pip", { x: 980, y: 900, rotation: 340, duration: 0.65, ease: "power2.out" }, 6.37);
+      tl.to("#pip", { x: 820, y: 1720, rotation: 540, duration: 0.8, ease: "power2.in" }, 7.02);
+      // splash
+      tl.fromTo("#ripple", { opacity: 0.9, scale: 0.3, transformOrigin: "50% 50%" }, { opacity: 0, scale: 1.8, transformOrigin: "50% 50%", duration: 0.9, ease: "power2.out" }, 7.8);
+      tl.set(".drop", { opacity: 1 }, 7.8);
+      tl.fromTo(".drop", { x: 0, y: 0 }, {
+        keyframes: { y: [0, -260, 40] },
+        x: (i) => (i - 4) * 55, duration: 0.9, ease: "power1.in" }, 7.8);
+      tl.to(".drop", { opacity: 0, duration: 0.2 }, 8.55);
+      // dizzy Pip pops up (body hidden by pond lip)
+      tl.set("#pip", { rotation: 0, x: 800, y: 1820, opacity: 0 }, 7.83);
+      tl.to("#pip", { y: 1765, opacity: 1, duration: 0.4, ease: "back.out(2)" }, 8.2);
+      tl.set("#dizzy", { x: 800, y: 1610 }, 8.2);
+      tl.to("#dizzy", { opacity: 1, duration: 0.2 }, 8.3);
+      tl.fromTo("#dizzy", { rotation: 0, transformOrigin: "50% 50%" }, { rotation: 720, transformOrigin: "50% 50%", duration: 1.6, ease: "none" }, 8.3);
+      tl.to("#dizzy", { opacity: 0, duration: 0.2 }, 9.7);
+      tl.to("#pip", { y: 1800, opacity: 0, duration: 0.3, ease: "power2.in" }, 9.6);
+
+      // Pebble: meanwhile
+      pop("#c2", 7.8);
+      pop("#c3", 9.6);
+      tl.to("#pebble", { scaleY: 0.85, transformOrigin: "50% 100%", duration: 0.12, yoyo: true, repeat: 3 }, 9.8);
+      // shell mode
+      tl.set("#shellBall", { x: S(0.07).x, y: S(0.07).y - 30 }, 10.4);
+      tl.to("#pebble", { opacity: 0, scale: 0.6, transformOrigin: "50% 100%", duration: 0.15 }, 10.4);
+      tl.to("#shellBall", { opacity: 1, duration: 0.1 }, 10.45);
+      pop("#c4", 11.0);
+      tl.to("#shellBall", { x: S(1).x, y: S(1).y - 10, rotation: 1440, duration: 2.0, ease: "power2.in" }, 11.0);
+      tl.to("#shellBall", { x: 950, y: 1210, rotation: 1620, duration: 0.25, ease: "power2.out" }, 13.0);
+      // Pebble pops out at the flag
+      tl.set("#pebble", { x: 950, y: 1245, scale: 0.6 }, 13.2);
+      tl.to("#shellBall", { opacity: 0, duration: 0.1 }, 13.2);
+      tl.to("#pebble", { opacity: 1, scale: 1, duration: 0.3, ease: "back.out(3)" }, 13.2);
+      pop("#c5", 13.2);
+      tl.set("#trophy", { x: 960, y: 1150 }, 13.5);
+      tl.fromTo("#trophy", { opacity: 0, scale: 0, transformOrigin: "50% 100%" }, { opacity: 1, scale: 1, transformOrigin: "50% 100%", duration: 0.4, ease: "back.out(3)" }, 13.6);
+      tl.set(".conf", { opacity: 1 }, 13.6);
+      tl.fromTo(".conf", { x: 0, y: 0, rotation: 0 }, {
+        x: (i) => ((i * 37) % 300) - 150 - 60, y: (i) => -150 - ((i * 53) % 200), rotation: (i) => i * 60,
+        duration: 0.6, ease: "power2.out" }, 13.6);
+      tl.to(".conf", { y: "+=420", rotation: "+=180", opacity: 0, duration: 1.4, ease: "power1.in" }, 14.2);
+
+      // Pip emerges with a lily pad hat, shocked
+      tl.set("#pip", { x: 800, y: 1790 }, 14.4);
+      tl.to("#pip", { y: 1745, opacity: 1, duration: 0.4, ease: "back.out(2)" }, 14.5);
+      tl.set("#lily", { x: 800, y: 1630 }, 14.5);
+      tl.fromTo("#lily", { opacity: 0, y: 1580 }, { opacity: 1, y: 1645, duration: 0.4, ease: "bounce.out" }, 14.6);
+      tl.to("#pip", { x: "+=10", duration: 0.05, yoyo: true, repeat: 9 }, 15.0);
+      tl.to("#lily", { x: "+=10", duration: 0.05, yoyo: true, repeat: 9 }, 15.0);
+      tl.set("#bang", { x: 870, y: 1560 }, 14.9);
+      tl.fromTo("#bang", { opacity: 0, scale: 0.3, transformOrigin: "50% 50%" }, { opacity: 1, scale: 1, transformOrigin: "50% 50%", duration: 0.25, ease: "back.out(3)" }, 14.95);
+      pop("#c6", 14.6);
+      tl.to("#pebble", { rotation: -8, transformOrigin: "50% 100%", duration: 0.3, yoyo: true, repeat: 5, ease: "sine.inOut" }, 15.2);
+
+      // end card
+      tl.fromTo("#end", { opacity: 0 }, { opacity: 1, duration: 0.35 }, 17.6);
+      tl.fromTo("#end img", { scale: 0.5 }, { scale: 1, duration: 0.5, ease: "back.out(2)" }, 17.65);
+      tl.fromTo("#end .t1", { y: 60, opacity: 0 }, { y: 0, opacity: 1, duration: 0.4, ease: "power3.out" }, 17.85);
+      tl.fromTo("#end .t2", { y: 40, opacity: 0 }, { y: 0, opacity: 1, duration: 0.4, ease: "power3.out" }, 18.05);
+
+      window.__timelines = window.__timelines || {};
+      window.__timelines["main"] = tl;
+      tl.seek(0);
+    </script>
+  </body>
+</html>

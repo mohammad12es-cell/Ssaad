@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en" data-resolution="portrait">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <script src="assets/gsap.min.js"></script>
+    <style>
+      @font-face { font-family: "Fredoka"; font-weight: 700; src: url("assets/fredoka-latin-700-normal.woff2") format("woff2"); }
+      :root { --paper: #fbf8f1; --ink: #111111; --navy: #1b2a4a; --gold: #ffd400; }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { margin: 0; width: 1080px; height: 1920px; overflow: hidden; background: var(--paper); }
+      #root { position: relative; width: 100%; height: 100%; overflow: hidden; font-family: "Fredoka", sans-serif;
+        background: radial-gradient(circle at 30% 20%, #ffffff 0%, var(--paper) 60%, #f3eee2 100%); }
+      .clip { position: absolute; inset: 0; }
+      svg.stage { width: 1080px; height: 1920px; }
+      .photo { overflow: hidden; background: #fff; }
+      .cam { position: absolute; left: 0; top: 0; width: 1080px; height: 1919px; transform-origin: 0 0; }
+      .cam img, .cam svg { position: absolute; left: 0; top: 0; width: 1080px; height: 1919px; }
+      .cap { inset: auto 0 auto 0; top: 120px; height: 300px; display: flex; justify-content: center; align-items: flex-start; pointer-events: none; }
+      .card { max-width: 1010px; text-align: center; background: var(--navy); color: #fff; font-weight: 700;
+        font-size: 66px; line-height: 1.18; padding: 22px 40px 26px; border-radius: 34px; border: 7px solid var(--ink);
+        box-shadow: 0 10px 0 rgba(0,0,0,0.25); }
+      .hl { color: var(--gold); }
+      .hl2 { color: #cfd8e3; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="60.02" data-width="1080" data-height="1920">
+      <svg id="v1" class="clip stage" data-start="0" data-duration="4.82" data-track-index="2" viewBox="0 0 1080 1920"><g id="g1"></g></svg>
+      <div id="c1" class="clip cap" data-start="0" data-duration="4.82" data-track-index="3"><div class="card">A street named after a <span class="hl">light bulb?</span></div></div>
+      <svg id="v2" class="clip stage" data-start="4.82" data-duration="5.076" data-track-index="2" viewBox="0 0 1080 1920"><g id="g2"></g></svg>
+      <div id="c2" class="clip cap" data-start="4.82" data-duration="5.076" data-track-index="3"><div class="card">Old Tehran: <span class="hl">lanterns & darkness</span></div></div>
+      <svg id="v3" class="clip stage" data-start="9.896" data-duration="5.48" data-track-index="2" viewBox="0 0 1080 1920"><g id="g3"></g></svg>
+      <div id="c3" class="clip cap" data-start="9.896" data-duration="5.48" data-track-index="3"><div class="card">Meet <span class="hl">Amin al-Zarb</span></div></div>
+      <svg id="v4" class="clip stage" data-start="15.376" data-duration="4.272" data-track-index="2" viewBox="0 0 1080 1920"><g id="g4"></g></svg>
+      <div id="c4" class="clip cap" data-start="15.376" data-duration="4.272" data-track-index="3"><div class="card">Gardens? No. <span class="hl">A generator!</span></div></div>
+      <svg id="v5" class="clip stage" data-start="19.648" data-duration="3.913" data-track-index="2" viewBox="0 0 1080 1920"><g id="g5"></g></svg>
+      <div id="c5" class="clip cap" data-start="19.648" data-duration="3.913" data-track-index="3"><div class="card">Shipped in <span class="hl">from abroad</span></div></div>
+      <svg id="v6" class="clip stage" data-start="23.561" data-duration="2.729" data-track-index="2" viewBox="0 0 1080 1920"><g id="g6"></g></svg>
+      <div id="c6" class="clip cap" data-start="23.561" data-duration="2.729" data-track-index="3"><div class="card"><span class="hl">~1904</span>: lights on!</div></div>
+      <svg id="v7" class="clip stage" data-start="26.29" data-duration="3.918" data-track-index="2" viewBox="0 0 1080 1920"><g id="g7"></g></svg>
+      <div id="c7" class="clip cap" data-start="26.29" data-duration="3.918" data-track-index="3"><div class="card">No oil. <span class="hl">No wick!</span></div></div>
+      <svg id="v8" class="clip stage" data-start="30.208" data-duration="3.774" data-track-index="2" viewBox="0 0 1080 1920"><g id="g8"></g></svg>
+      <div id="c8" class="clip cap" data-start="30.208" data-duration="3.774" data-track-index="3"><div class="card">Shops and houses <span class="hl">glow</span></div></div>
+      <svg id="v9" class="clip stage" data-start="33.982" data-duration="5.152" data-track-index="2" viewBox="0 0 1080 1920"><g id="g9"></g></svg>
+      <div id="c9" class="clip cap" data-start="33.982" data-duration="5.152" data-track-index="3"><div class="card"><span class="hl">Cheragh Bargh</span> = Electric Light St.</div></div>
+      <svg id="v10" class="clip stage" data-start="39.134" data-duration="2.326" data-track-index="2" viewBox="0 0 1080 1920"><g id="g10"></g></svg>
+      <div id="c10" class="clip cap" data-start="39.134" data-duration="2.326" data-track-index="3"><div class="card">Very poetic. <span class="hl">Very literal.</span></div></div>
+      <svg id="v11" class="clip stage" data-start="41.46" data-duration="3.617" data-track-index="2" viewBox="0 0 1080 1920"><g id="g11"></g></svg>
+      <div id="c11" class="clip cap" data-start="41.46" data-duration="3.617" data-track-index="3"><div class="card">Officially: <span class="hl">Amir Kabir St.</span></div></div>
+      <svg id="v12" class="clip stage" data-start="45.077" data-duration="3.761" data-track-index="2" viewBox="0 0 1080 1920"><g id="g12"></g></svg>
+      <div id="c12" class="clip cap" data-start="45.077" data-duration="3.761" data-track-index="3"><div class="card">Old Tehranis still say <span class="hl">Cheragh Bargh</span></div></div>
+      <svg id="v13" class="clip stage" data-start="48.838" data-duration="3.23" data-track-index="2" viewBox="0 0 1080 1920"><g id="g13"></g></svg>
+      <div id="c13" class="clip cap" data-start="48.838" data-duration="3.23" data-track-index="3"><div class="card">One merchant <span class="hl">lit a city</span></div></div>
+      <svg id="v14" class="clip stage" data-start="52.068" data-duration="3.577" data-track-index="2" viewBox="0 0 1080 1920"><g id="g14"></g></svg>
+      <div id="c14" class="clip cap" data-start="52.068" data-duration="3.577" data-track-index="3"><div class="card">Flip a switch? <span class="hl">Thank him.</span></div></div>
+      <svg id="v15" class="clip stage" data-start="55.645" data-duration="4.375" data-track-index="2" viewBox="0 0 1080 1920"><g id="g15"></g></svg>
+      <div id="c15" class="clip cap" data-start="55.645" data-duration="4.375" data-track-index="3"><div class="card">Does your street <span class="hl">have a story?</span></div></div>
+      <audio id="sound" src="assets/audio.wav" data-start="0" data-duration="60.02" data-volume="1"></audio>
+    </div>
+    <script>
+      const S = [0.15, 4.82, 9.896, 15.376, 19.648, 23.561, 26.29, 30.208, 33.982, 39.134, 41.46, 45.077, 48.838, 52.068, 55.645];
+      const TOTAL = 60.02;
+      const tl = gsap.timeline({ paused: true });
+    </script>
+    <script src="assets/lib.js"></script>
+    <script src="scenes.js"></script>
+    <script>
+      for (let i = 1; i <= S.length; i++)
+        tl.fromTo(`#c${i} .card`, { y: -40, opacity: 0, scale: 0.9 }, { y: 0, opacity: 1, scale: 1, duration: 0.3, ease: "back.out(2)" }, i === 1 ? 0.05 : S[i - 1] + 0.05);
+      window.__timelines = window.__timelines || {};
+      window.__timelines["main"] = tl;
+      tl.seek(0);
+    </script>
+  </body>
+</html>

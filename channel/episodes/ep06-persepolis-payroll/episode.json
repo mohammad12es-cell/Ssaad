@@ -1,0 +1,22 @@
+{
+  "title": "The Oldest Payslip in Iran",
+  "voice": 9, "speed": 1.1, "seed": 6, "root": 146.83, "bpm": 112,
+  "kinds": ["photo", "vec", "photo", "photo", "vec", "photo", "photo", "vec", "vec", "vec", "vec", "vec", "photo", "vec", "vec"],
+  "captions": [
+    "The oldest <span class=\"hl\">payslip</span> in Iran?",
+    "<span class=\"hl\">2,500 years ago</span>: Darius starts building",
+    "<span class=\"hl\">1933</span>: stone boxes under the Apadana",
+    "A <span class=\"hl\">gold</span> tablet... and a <span class=\"hl2\">silver</span> one!",
+    "An imperial <span class=\"hl\">résumé</span>",
+    "Luxury flooring: <span class=\"hl\">coins!</span>",
+    "The real treasure: <span class=\"hl\">clay tablets</span>",
+    "<span class=\"hl\">Thousands</span> of account tablets",
+    "Barley, wine, sheep... in <span class=\"hl\">cuneiform!</span>",
+    "<span class=\"hl\">Rations and wages</span> for workers",
+    "<span class=\"hl\">Women</span> worked and got rations too",
+    "Extra rations for <span class=\"hl\">new mothers</span>",
+    "A <span class=\"hl\">payroll</span>, 2,500 years ago!",
+    "Our payslips vanish... <span class=\"hl\">their clay stayed!</span>",
+    "What will survive from <span class=\"hl\">our time?</span>"
+  ]
+}

@@ -4,6 +4,6 @@
   "type": "module",
   "scripts": {
     "check": "npx --yes hyperframes@0.9.13 check",
-    "render": "npx --yes hyperframes@0.9.13 render -o ../../../output/ep06-persepolis-payroll-fa.mp4"
+    "render": "npx --yes hyperframes@0.9.13 render -o ../../../output/explorer-part1-persepolis-payroll.mp4"
   }
 }

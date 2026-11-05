@@ -1,0 +1,9 @@
+{
+  "name": "ep10-electric-street",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "check": "npx --yes hyperframes@0.9.13 check",
+    "render": "npx --yes hyperframes@0.9.13 render -o ../../../output/explorer-part5-electric-street.mp4"
+  }
+}

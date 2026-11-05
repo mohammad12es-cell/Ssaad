@@ -1,13 +1,13 @@
-# ep06: قدیمی‌ترین فیش حقوقی ایران (تخت جمشید)
+# Explorer's Ledger, part 1: The Oldest Payslip in Iran
 
-- قالب: عمودی ۹:۱۶، ۶۲ ثانیه، ۱۵ صحنه
-- خروجی: `output/ep06-persepolis-payroll-fa.mp4`
-- ابزارهای رایگان: HyperFrames (انیمیشن HTML/SVG)، صدای Piper فارسی (`fa_IR-amir-medium`) از طریق sherpa-onnx، فونت وزیرمتن، موسیقی ساخته‌شده با کد
-- متن گویندگی: `vo/lines.txt` · زمان‌بندی: `vo/timing.json`
-- ساخت دوباره: `python3 build.py && npm run render`
+- Format: vertical 9:16, about 60 s, 15 scenes
+- Video: `output/explorer-part1-persepolis-payroll.mp4`
+- Free tools: HyperFrames (vector animation), Kokoro English voice (offline, via sherpa-onnx), Fredoka captions, code-generated music
+- Script: `vo/lines.txt` · scenes: `scenes.js` · upload metadata: `meta-upload.json`
+- Rebuild: `KOKORO_DIR=... python3 ../../explorer-kit/build.py .` then `npx hyperframes@0.9.13 render`
 
-## نکات نیازمند بررسی
-1. لوح‌های طلا و نقره‌ی داریوش در سال ۱۹۳۳ در پی‌بنای کاخ آپادانا پیدا شدند. جزئیات کاوش و تعداد سکه‌های زیر صندوق‌ها را با منبع معتبر بررسی کنید.
-2. «قدیمی‌ترین فیش حقوقی ایران» یک تعبیر طنز است، نه ادعای علمی.
-3. لوح‌های باروی تخت جمشید جیره‌ی کارگران (جو، شراب، گوسفند و...) را ثبت کرده‌اند. وضعیت حقوقی همه‌ی کارگران محل بحث پژوهشگران است.
-4. جیره‌ی زنان کارگر و سهمیه‌ی اضافه‌ی مادران تازه‌زا در پژوهش‌های مربوط به این لوح‌ها گزارش شده است.
+## Facts to double-check
+1. Persepolis foundation deposits (gold and silver tablets of Darius I) were found in the Apadana in 1933; check excavation details and the coins found beneath the boxes.
+2. 'Oldest payslip' is a joke, not a scholarly claim.
+3. The Persepolis Fortification and Treasury tablets record rations and payments; the legal status of all workers is debated by scholars.
+4. Rations for women workers and extra rations for new mothers are reported in studies of these tablets.

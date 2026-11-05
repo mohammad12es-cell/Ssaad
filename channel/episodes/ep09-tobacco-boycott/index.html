@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en" data-resolution="portrait">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <script src="assets/gsap.min.js"></script>
+    <style>
+      @font-face { font-family: "Fredoka"; font-weight: 700; src: url("assets/fredoka-latin-700-normal.woff2") format("woff2"); }
+      :root { --paper: #fbf8f1; --ink: #111111; --navy: #1b2a4a; --gold: #ffd400; }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { margin: 0; width: 1080px; height: 1920px; overflow: hidden; background: var(--paper); }
+      #root { position: relative; width: 100%; height: 100%; overflow: hidden; font-family: "Fredoka", sans-serif;
+        background: radial-gradient(circle at 30% 20%, #ffffff 0%, var(--paper) 60%, #f3eee2 100%); }
+      .clip { position: absolute; inset: 0; }
+      svg.stage { width: 1080px; height: 1920px; }
+      .photo { overflow: hidden; background: #fff; }
+      .cam { position: absolute; left: 0; top: 0; width: 1080px; height: 1919px; transform-origin: 0 0; }
+      .cam img, .cam svg { position: absolute; left: 0; top: 0; width: 1080px; height: 1919px; }
+      .cap { inset: auto 0 auto 0; top: 120px; height: 300px; display: flex; justify-content: center; align-items: flex-start; pointer-events: none; }
+      .card { max-width: 1010px; text-align: center; background: var(--navy); color: #fff; font-weight: 700;
+        font-size: 66px; line-height: 1.18; padding: 22px 40px 26px; border-radius: 34px; border: 7px solid var(--ink);
+        box-shadow: 0 10px 0 rgba(0,0,0,0.25); }
+      .hl { color: var(--gold); }
+      .hl2 { color: #cfd8e3; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="58.12" data-width="1080" data-height="1920">
+      <svg id="v1" class="clip stage" data-start="0" data-duration="4.435" data-track-index="2" viewBox="0 0 1080 1920"><g id="g1"></g></svg>
+      <div id="c1" class="clip cap" data-start="0" data-duration="4.435" data-track-index="3"><div class="card"><span class="hl">1891</span>: a nation quits the hookah</div></div>
+      <svg id="v2" class="clip stage" data-start="4.435" data-duration="3.167" data-track-index="2" viewBox="0 0 1080 1920"><g id="g2"></g></svg>
+      <div id="c2" class="clip cap" data-start="4.435" data-duration="3.167" data-track-index="3"><div class="card">The Shah <span class="hl">needs money</span></div></div>
+      <svg id="v3" class="clip stage" data-start="7.602" data-duration="5.462" data-track-index="2" viewBox="0 0 1080 1920"><g id="g3"></g></svg>
+      <div id="c3" class="clip cap" data-start="7.602" data-duration="5.462" data-track-index="3"><div class="card">Tobacco monopoly: <span class="hl">50 years</span></div></div>
+      <svg id="v4" class="clip stage" data-start="13.064" data-duration="4.483" data-track-index="2" viewBox="0 0 1080 1920"><g id="g4"></g></svg>
+      <div id="c4" class="clip cap" data-start="13.064" data-duration="4.483" data-track-index="3"><div class="card">Everything... <span class="hl">one company</span></div></div>
+      <svg id="v5" class="clip stage" data-start="17.547" data-duration="3.818" data-track-index="2" viewBox="0 0 1080 1920"><g id="g5"></g></svg>
+      <div id="c5" class="clip cap" data-start="17.547" data-duration="3.818" data-track-index="3"><div class="card">Merchants and farmers: <span class="hl">furious</span></div></div>
+      <svg id="v6" class="clip stage" data-start="21.365" data-duration="2.606" data-track-index="2" viewBox="0 0 1080 1920"><g id="g6"></g></svg>
+      <div id="c6" class="clip cap" data-start="21.365" data-duration="2.606" data-track-index="3"><div class="card">Protests <span class="hl">spread</span></div></div>
+      <svg id="v7" class="clip stage" data-start="23.971" data-duration="4.622" data-track-index="2" viewBox="0 0 1080 1920"><g id="g7"></g></svg>
+      <div id="c7" class="clip cap" data-start="23.971" data-duration="4.622" data-track-index="3"><div class="card">Tobacco declared <span class="hl">forbidden</span></div></div>
+      <svg id="v8" class="clip stage" data-start="28.593" data-duration="2.793" data-track-index="2" viewBox="0 0 1080 1920"><g id="g8"></g></svg>
+      <div id="c8" class="clip cap" data-start="28.593" data-duration="2.793" data-track-index="3"><div class="card">The country <span class="hl">stopped smoking!</span></div></div>
+      <svg id="v9" class="clip stage" data-start="31.386" data-duration="5.531" data-track-index="2" viewBox="0 0 1080 1920"><g id="g9"></g></svg>
+      <div id="c9" class="clip cap" data-start="31.386" data-duration="5.531" data-track-index="3"><div class="card">Shops closed. <span class="hl">Hookahs away.</span></div></div>
+      <svg id="v10" class="clip stage" data-start="36.917" data-duration="2.636" data-track-index="2" viewBox="0 0 1080 1920"><g id="g10"></g></svg>
+      <div id="c10" class="clip cap" data-start="36.917" data-duration="2.636" data-track-index="3"><div class="card">A nationwide <span class="hl">hookah strike</span></div></div>
+      <svg id="v11" class="clip stage" data-start="39.553" data-duration="3.389" data-track-index="2" viewBox="0 0 1080 1920"><g id="g11"></g></svg>
+      <div id="c11" class="clip cap" data-start="39.553" data-duration="3.389" data-track-index="3"><div class="card"><span class="hl">1892</span>: deal cancelled</div></div>
+      <svg id="v12" class="clip stage" data-start="42.942" data-duration="4.742" data-track-index="2" viewBox="0 0 1080 1920"><g id="g12"></g></svg>
+      <div id="c12" class="clip cap" data-start="42.942" data-duration="4.742" data-track-index="3"><div class="card">The catch: <span class="hl">compensation</span></div></div>
+      <svg id="v13" class="clip stage" data-start="47.684" data-duration="2.878" data-track-index="2" viewBox="0 0 1080 1920"><g id="g13"></g></svg>
+      <div id="c13" class="clip cap" data-start="47.684" data-duration="2.878" data-track-index="3"><div class="card">The boycott won... <span class="hl">the bill came</span></div></div>
+      <svg id="v14" class="clip stage" data-start="50.562" data-duration="3.461" data-track-index="2" viewBox="0 0 1080 1920"><g id="g14"></g></svg>
+      <div id="c14" class="clip cap" data-start="50.562" data-duration="3.461" data-track-index="3"><div class="card">Never underestimate <span class="hl">walking away</span></div></div>
+      <svg id="v15" class="clip stage" data-start="54.023" data-duration="4.097" data-track-index="2" viewBox="0 0 1080 1920"><g id="g15"></g></svg>
+      <div id="c15" class="clip cap" data-start="54.023" data-duration="4.097" data-track-index="3"><div class="card">Would you <span class="hl">join a boycott?</span></div></div>
+      <audio id="sound" src="assets/audio.wav" data-start="0" data-duration="58.12" data-volume="1"></audio>
+    </div>
+    <script>
+      const S = [0.15, 4.435, 7.602, 13.064, 17.547, 21.365, 23.971, 28.593, 31.386, 36.917, 39.553, 42.942, 47.684, 50.562, 54.023];
+      const TOTAL = 58.12;
+      const tl = gsap.timeline({ paused: true });
+    </script>
+    <script src="assets/lib.js"></script>
+    <script src="scenes.js"></script>
+    <script>
+      for (let i = 1; i <= S.length; i++)
+        tl.fromTo(`#c${i} .card`, { y: -40, opacity: 0, scale: 0.9 }, { y: 0, opacity: 1, scale: 1, duration: 0.3, ease: "back.out(2)" }, i === 1 ? 0.05 : S[i - 1] + 0.05);
+      window.__timelines = window.__timelines || {};
+      window.__timelines["main"] = tl;
+      tl.seek(0);
+    </script>
+  </body>
+</html>

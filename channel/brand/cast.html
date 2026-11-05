@@ -1,0 +1,32 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:F;font-weight:700;src:url(fredoka-latin-700-normal.woff2)}
+@font-face{font-family:F;font-weight:500;src:url(fredoka-latin-500-normal.woff2)}
+html,body{margin:0;width:1080px;height:1350px;overflow:hidden;background:#fff7ea}
+</style><script src="characters.js"></script></head><body>
+<svg id="s" width="1080" height="1350" viewBox="0 0 1080 1350" font-family="F">
+<text x="540" y="90" text-anchor="middle" font-weight="700" font-size="64" fill="#2b2a6e">Pip &amp; Pebble — Cast</text>
+<rect x="40" y="130" width="490" height="560" rx="40" fill="#dff7e2"/><rect x="550" y="130" width="490" height="560" rx="40" fill="#ffe9dc"/>
+<rect x="40" y="710" width="490" height="600" rx="40" fill="#e6e9ff"/><rect x="550" y="710" width="490" height="600" rx="40" fill="#ffe4e4"/>
+<g font-weight="700" font-size="52" fill="#2b2a6e" text-anchor="middle">
+<text x="285" y="600">Pip 🐸</text><text x="795" y="600">Pebble 🐌</text><text x="285" y="1210">Officer Beetle 🪲</text><text x="795" y="1210">Ladybug 🐞</text></g>
+<g font-weight="500" font-size="30" fill="#555" text-anchor="middle">
+<text x="285" y="650">Fast, excited, always loses</text><text x="795" y="650">Slow, cool, always wins 😎</text>
+<text x="285" y="1260">Grumpy traffic cop</text><text x="795" y="1260">Crosses the road… slowly</text></g>
+<g id="cop" transform="translate(285,990) scale(0.48)">
+ <ellipse cx="0" cy="40" rx="230" ry="260" fill="#5a3d2b"/><line x1="0" y1="-200" x2="0" y2="290" stroke="#3a2618" stroke-width="10"/>
+ <circle cx="0" cy="-260" r="140" fill="#6b4a33"/>
+ <path d="M-150,-330 L150,-330 L120,-420 L-120,-420 Z" fill="#2f4aa0"/><rect x="-170" y="-345" width="340" height="40" rx="18" fill="#22357a"/><circle cx="0" cy="-385" r="22" fill="#ffd166"/>
+ <rect x="-110" y="-300" width="90" height="50" rx="16" fill="#111"/><rect x="20" y="-300" width="90" height="50" rx="16" fill="#111"/><rect x="-20" y="-285" width="40" height="10" fill="#111"/>
+ <path d="M0,-210 C-40,-240 -140,-230 -170,-180 C-120,-200 -60,-190 0,-180 C60,-190 120,-200 170,-180 C140,-230 40,-240 0,-210 Z" fill="#2a1a10"/>
+ <rect x="-260" y="-40" width="520" height="70" rx="35" fill="#5a3d2b"/>
+ <g transform="translate(300,-180)"><rect x="-10" y="0" width="20" height="260" fill="#999"/><polygon points="-90,-37 -37,-90 37,-90 90,-37 90,37 37,90 -37,90 -90,37" fill="#e63946" stroke="#fff" stroke-width="8"/><text x="0" y="18" text-anchor="middle" font-weight="700" font-size="54" fill="#fff">STOP</text></g>
+</g>
+<g transform="translate(820,1000) scale(2.2)">
+ <ellipse cx="0" cy="0" rx="70" ry="50" fill="#ff3b3b"/><circle cx="-62" cy="-5" r="30" fill="#1b1a2e"/><line x1="0" y1="-50" x2="0" y2="50" stroke="#1b1a2e" stroke-width="6"/>
+ <circle cx="-25" cy="-20" r="12" fill="#1b1a2e"/><circle cx="25" cy="-22" r="12" fill="#1b1a2e"/><circle cx="28" cy="18" r="10" fill="#1b1a2e"/><circle cx="-22" cy="20" r="10" fill="#1b1a2e"/>
+ <circle cx="-70" cy="-12" r="8" fill="#fff"/><circle cx="-68" cy="-12" r="4" fill="#1b1a2e"/></g>
+</svg>
+<script>
+const SH=`<rect x="105" y="-245" width="62" height="44" rx="14" fill="#111"/><rect x="167" y="-240" width="62" height="44" rx="14" fill="#111"/><rect x="150" y="-232" width="30" height="8" fill="#111"/>`;
+document.getElementById('s').insertAdjacentHTML('beforeend', PIP(285,400,0.85)+`<g transform="translate(760,470) scale(1.05)">${PEBBLE(0,-92,1)}${SH}</g>`);
+</script></body></html>

@@ -2,3 +2,8 @@ node_modules/
 .hyperframes/
 output/work-*/
 output/.*hf-transaction*/
+geo-shorts/cache/
+geo-shorts/out/work_*/
+geo-shorts/out/*_preview.jpg
+geo-shorts/out/log_*.txt
+geo-shorts/out/*.tmp.mp4

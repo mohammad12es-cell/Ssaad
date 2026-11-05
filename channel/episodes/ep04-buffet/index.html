@@ -1,0 +1,301 @@
+<!doctype html>
+<html lang="en" data-resolution="portrait">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <script src="assets/gsap.min.js"></script>
+    <script src="assets/characters.js"></script>
+    <style>
+      @font-face { font-family: "Fredoka"; font-weight: 700; src: url("assets/fredoka-latin-700-normal.woff2") format("woff2"); }
+      @font-face { font-family: "Fredoka"; font-weight: 500; src: url("assets/fredoka-latin-500-normal.woff2") format("woff2"); }
+      :root { --ground: #000000; --ink: #ffffff; --font-display: "Fredoka", sans-serif; }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { margin: 0; width: 1080px; height: 1920px; overflow: hidden; background: var(--ground); }
+      #root { position: relative; width: 100%; height: 100%; overflow: hidden; font-family: var(--font-display); background: #000; }
+      .clip { position: absolute; inset: 0; }
+      #topcap { position: absolute; left: 70px; right: 70px; top: 360px; text-align: center; color: var(--ink); font-weight: 700; font-size: 66px; line-height: 1.15; }
+      #brand { position: absolute; left: 0; right: 0; top: 1340px; text-align: center; color: #9a9ab5; font-weight: 500; font-size: 42px; }
+      #film { position: absolute; left: 0; top: 656px; width: 1080px; height: 607.5px; overflow: hidden; }
+      #film svg { width: 1080px; height: 607.5px; display: block; }
+      .fx { font-family: "Fredoka"; font-weight: 700; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="19.5" data-width="1080" data-height="1920">
+      <div id="caps" class="clip" data-start="0" data-duration="19.5" data-track-index="1">
+        <div id="topcap">When the buffet says<br />“first come, first served” 🥬</div>
+        <div id="brand">Pip &amp; Pebble 🐸🐌</div>
+      </div>
+
+      <div id="filmClip" class="clip" data-start="0" data-duration="19.5" data-track-index="0">
+        <div id="film">
+          <svg viewBox="0 0 1920 1080">
+            <defs>
+              <linearGradient id="sunset" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0" stop-color="#3a2f7a" /><stop offset="0.45" stop-color="#ff7b54" /><stop offset="0.7" stop-color="#ffcf7a" />
+              </linearGradient>
+              <radialGradient id="sunGlow" cx="0.5" cy="0.5" r="0.5">
+                <stop offset="0" stop-color="#fff3c4" stop-opacity="1" /><stop offset="0.3" stop-color="#ffd27a" stop-opacity="0.8" /><stop offset="1" stop-color="#ff9b54" stop-opacity="0" />
+              </radialGradient>
+              <radialGradient id="bokeh" cx="0.5" cy="0.5" r="0.7">
+                <stop offset="0" stop-color="#7ed957" /><stop offset="1" stop-color="#2f7d3a" />
+              </radialGradient>
+              <radialGradient id="holy" cx="0.5" cy="0.5" r="0.5">
+                <stop offset="0" stop-color="#fffbe0" /><stop offset="0.6" stop-color="#ffe27a" stop-opacity="0.8" /><stop offset="1" stop-color="#ffb347" stop-opacity="0" />
+              </radialGradient>
+              <linearGradient id="wall" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffb38a" /><stop offset="1" stop-color="#e8836a" /></linearGradient>
+            </defs>
+
+            <!-- S1: phone notification -->
+            <g id="s1" class="scene">
+              <g id="s1cam">
+                <rect width="1920" height="1080" fill="url(#bokeh)" />
+                <g fill="#c9f2a8" opacity="0.35"><circle cx="200" cy="200" r="90" /><circle cx="1700" cy="260" r="120" /><circle cx="400" cy="900" r="140" /><circle cx="1550" cy="880" r="70" /></g>
+                <rect x="660" y="120" width="600" height="960" rx="70" fill="#22213a" />
+                <rect x="690" y="150" width="540" height="930" rx="50" fill="#0f0f1c" />
+                <g id="notif1">
+                  <rect x="710" y="250" width="500" height="190" rx="34" fill="#ffffff" />
+                  <text x="740" y="320" class="fx" font-size="42" fill="#2b2a6e">🥬 LETTUCE BUFFET</text>
+                  <text x="740" y="380" font-family="Fredoka" font-weight="500" font-size="30" fill="#555">FREE · first come, first served!</text>
+                </g>
+                <g id="s1peb"></g>
+                <text id="bang1" x="1540" y="380" class="fx" font-size="150" fill="#ff5a5f" stroke="#2b2a6e" stroke-width="12" paint-order="stroke">!!</text>
+              </g>
+            </g>
+
+            <!-- S2: Pip extreme close-up -->
+            <g id="s2" class="scene">
+              <g id="s2cam">
+                <rect width="1920" height="1080" fill="#5fcf6a" />
+                <circle cx="620" cy="560" r="300" fill="#4fb85a" /><circle cx="1300" cy="560" r="300" fill="#4fb85a" />
+                <circle cx="620" cy="560" r="250" fill="#ffffff" /><circle cx="1300" cy="560" r="250" fill="#ffffff" />
+                <g id="pupils"><circle cx="620" cy="580" r="115" fill="#1b1a2e" /><circle cx="1300" cy="580" r="115" fill="#1b1a2e" />
+                  <circle cx="660" cy="530" r="34" fill="#fff" /><circle cx="1340" cy="530" r="34" fill="#fff" /></g>
+                <g id="brows" fill="#2f7d3a">
+                  <rect x="380" y="200" width="480" height="70" rx="35" transform="rotate(12 620 235)" />
+                  <rect x="1060" y="200" width="480" height="70" rx="35" transform="rotate(-12 1300 235)" />
+                </g>
+              </g>
+            </g>
+
+            <!-- shared outdoor backdrop builder targets -->
+            <g id="s3" class="scene"><g id="s3cam"></g></g>
+            <g id="s4" class="scene"><g id="s4cam"></g></g>
+            <g id="s5" class="scene"><g id="s5cam"></g></g>
+            <g id="s6" class="scene"><g id="s6cam"></g></g>
+            <g id="s7" class="scene"><g id="s7cam"></g></g>
+
+            <!-- S8: inside, empty plate -->
+            <g id="s8" class="scene">
+              <g id="s8cam">
+                <rect width="1920" height="1080" fill="url(#wall)" />
+                <rect y="900" width="1920" height="180" fill="#a0673e" />
+                <rect x="120" y="380" width="260" height="520" rx="20" fill="#2d6f73" id="s8doorFrame" />
+                <rect id="s8door" x="130" y="390" width="240" height="510" rx="16" fill="#3fa3a8" />
+                <rect x="760" y="720" width="520" height="30" rx="10" fill="#7a4a2a" /><rect x="800" y="750" width="30" height="150" fill="#7a4a2a" /><rect x="1210" y="750" width="30" height="150" fill="#7a4a2a" />
+                <ellipse cx="1020" cy="712" rx="150" ry="26" fill="#ffffff" stroke="#ddd" stroke-width="5" />
+                <g fill="#7ed957"><circle cx="980" cy="706" r="6" /><circle cx="1050" cy="710" r="5" /><circle cx="1010" cy="702" r="4" /></g>
+                <g id="s8phone"><rect x="1150" y="690" width="70" height="26" rx="8" fill="#22213a" /></g>
+                <g id="notif2" opacity="0">
+                  <rect x="820" y="430" width="560" height="150" rx="30" fill="#ffffff" />
+                  <text x="850" y="500" class="fx" font-size="40" fill="#2b2a6e">🥬 Buffet REFILLED!</text>
+                  <text x="850" y="550" font-family="Fredoka" font-weight="500" font-size="28" fill="#555">first come, first served…</text>
+                </g>
+                <g id="s8peb"></g>
+                <g id="s8pip"></g>
+                <text id="burp" x="1440" y="580" class="fx" font-size="120" fill="#ffd166" stroke="#2b2a6e" stroke-width="12" paint-order="stroke" opacity="0">BURP!</text>
+                <text id="bang8" x="470" y="560" class="fx" font-size="130" fill="#ff5a5f" stroke="#2b2a6e" stroke-width="12" paint-order="stroke" opacity="0">!!</text>
+              </g>
+            </g>
+
+            <text id="shellTxt" x="960" y="300" text-anchor="middle" class="fx" font-size="170" fill="#ffd166" stroke="#2b2a6e" stroke-width="16" paint-order="stroke" opacity="0">SHELL MODE 🌀</text>
+            <rect id="flash" width="1920" height="1080" fill="#fff" opacity="0" />
+          </svg>
+        </div>
+      </div>
+
+      <audio id="sound" src="assets/audio.wav" data-start="0" data-duration="19.5" data-volume="1"></audio>
+    </div>
+
+    <script>
+      const $ = (id) => document.getElementById(id);
+      const SH = `<g class="shades"><rect x="105" y="-245" width="62" height="44" rx="14" fill="#111" /><rect x="167" y="-240" width="62" height="44" rx="14" fill="#111" /><rect x="150" y="-232" width="30" height="8" fill="#111" /><rect x="115" y="-238" width="18" height="8" rx="4" fill="#fff" opacity=".6" /></g>`;
+      const peb = (s, shades) => `<g transform="scale(${s})">${PEBBLE(0, -92, 1)}${shades ? SH : ""}</g>`;
+      const pip = (s) => `<g transform="scale(${s})">${PIP(0, -165, 1)}</g>`;
+      const SHELL = (glasses) => `<circle cx="0" cy="0" r="60" fill="#ff7b6b" /><path d="M0,-46 a46,46 0 1,1 -1,0 M0,-30 a30,30 0 1,0 1,0 M0,-15 a15,15 0 1,1 -1,0" fill="none" stroke="#c94f63" stroke-width="8" />`;
+      const outdoor = (extra = "") => `
+        <rect width="1920" height="1080" fill="url(#sunset)" />
+        <circle cx="960" cy="640" r="420" fill="url(#sunGlow)" /><circle cx="960" cy="650" r="110" fill="#fff3c4" />
+        <g class="trees" fill="#2f5d3a"><g class="treeRow">${[0, 1, 2, 3, 4, 5, 6, 7].map((i) => `<ellipse cx="${i * 300 + 80}" cy="640" rx="110" ry="150" /><rect x="${i * 300 + 70}" y="640" width="22" height="130" />`).join("")}
+          ${[0, 1, 2, 3, 4, 5, 6, 7].map((i) => `<ellipse cx="${i * 300 + 80 + 2400}" cy="640" rx="110" ry="150" /><rect x="${i * 300 + 70 + 2400}" y="640" width="22" height="130" />`).join("")}</g></g>
+        <rect y="760" width="1920" height="320" fill="#6b8f3a" />
+        <path d="M0,830 L1920,830 L1920,1000 L0,1000 Z" fill="#c9a26b" />
+        <g class="dash" stroke="#f3e2b8" stroke-width="10" stroke-dasharray="70 60"><line x1="-200" y1="915" x2="4000" y2="915" /></g>
+        ${extra}`;
+
+      // S1 Pebble peeking
+      $("s1peb").innerHTML = `<g transform="translate(1300,1080)">${peb(2.4, false)}</g>`;
+      // S3 start line
+      $("s3cam").innerHTML = outdoor(`<rect x="560" y="830" width="20" height="170" fill="#fff" /><g id="s3pip" transform="translate(0,0)"></g><g id="s3peb"></g><g id="s3shades"></g><g id="s3dust" fill="#e8d6b0"></g><g id="s3lines" stroke="#fff" stroke-width="10" stroke-linecap="round" opacity="0"></g><path id="glint" d="M0,-40 L8,-8 L40,0 L8,8 L0,40 L-8,8 L-40,0 L-8,-8 Z" fill="#fff" opacity="0" />`);
+      $("s3pip").innerHTML = `<g id="s3pipIn">${pip(0.62)}</g>`;
+      $("s3peb").innerHTML = peb(0.62, false);
+      $("s3shades").innerHTML = `<g transform="scale(0.62)">${SH}</g>`;
+      for (let i = 0; i < 5; i++) $("s3dust").innerHTML += `<circle class="d3" cx="${620 - i * 30}" cy="${960 - (i % 2) * 30}" r="${40 + i * 8}" opacity="0" />`;
+      for (let i = 0; i < 6; i++) $("s3lines").innerHTML += `<line x1="0" y1="${700 + i * 50}" x2="300" y2="${700 + i * 50}" />`;
+      // S4 run + ladybug
+      $("s4cam").innerHTML = outdoor(`<g id="s4pip"></g><g id="s4lady">
+          <ellipse cx="0" cy="0" rx="70" ry="50" fill="#ff3b3b" /><circle cx="-62" cy="-5" r="30" fill="#1b1a2e" /><line x1="0" y1="-50" x2="0" y2="50" stroke="#1b1a2e" stroke-width="6" />
+          <circle cx="-25" cy="-20" r="12" fill="#1b1a2e" /><circle cx="25" cy="-22" r="12" fill="#1b1a2e" /><circle cx="28" cy="18" r="10" fill="#1b1a2e" /><circle cx="-22" cy="20" r="10" fill="#1b1a2e" />
+          <circle cx="-70" cy="-12" r="8" fill="#fff" /><circle cx="-68" cy="-12" r="4" fill="#1b1a2e" /></g>
+          <g id="s4dust" fill="#e8d6b0"></g>
+          <text id="screech" x="560" y="560" class="fx" font-size="120" fill="#fff" stroke="#2b2a6e" stroke-width="12" paint-order="stroke" opacity="0">SCREECH!</text>
+          <text id="slowmo" x="1880" y="120" text-anchor="end" class="fx" font-size="56" fill="#fff" opacity="0">0.25x ⏸</text>`);
+      $("s4pip").innerHTML = `<g id="s4pipIn">${pip(0.62)}</g>`;
+      for (let i = 0; i < 6; i++) $("s4dust").innerHTML += `<circle class="d4" cx="${560 - i * 40}" cy="${950 - (i % 2) * 25}" r="${36 + i * 7}" opacity="0" />`;
+      // S5 beetle cop
+      $("s5cam").innerHTML = outdoor(`<g id="s5pip"></g><g id="cop">
+          <ellipse cx="0" cy="40" rx="230" ry="260" fill="#5a3d2b" /><line x1="0" y1="-200" x2="0" y2="290" stroke="#3a2618" stroke-width="10" />
+          <circle cx="0" cy="-260" r="140" fill="#6b4a33" />
+          <path d="M-150,-330 L150,-330 L120,-420 L-120,-420 Z" fill="#2f4aa0" /><rect x="-170" y="-345" width="340" height="40" rx="18" fill="#22357a" /><circle cx="0" cy="-385" r="22" fill="#ffd166" />
+          <rect x="-110" y="-300" width="90" height="50" rx="16" fill="#111" /><rect x="20" y="-300" width="90" height="50" rx="16" fill="#111" /><rect x="-20" y="-285" width="40" height="10" fill="#111" />
+          <path id="stache" d="M0,-210 C-40,-240 -140,-230 -170,-180 C-120,-200 -60,-190 0,-180 C60,-190 120,-200 170,-180 C140,-230 40,-240 0,-210 Z" fill="#2a1a10" />
+          <rect x="-260" y="-40" width="520" height="70" rx="35" fill="#5a3d2b" />
+          <g transform="translate(300,-180)"><rect x="-10" y="0" width="20" height="260" fill="#999" /><polygon points="-90,-37 -37,-90 37,-90 90,-37 90,37 37,90 -37,90 -90,37" fill="#e63946" stroke="#fff" stroke-width="8" /><text x="0" y="18" text-anchor="middle" class="fx" font-size="54" fill="#fff">STOP</text></g>
+        </g><path id="sweat" d="M0,0 C-14,22 -14,40 0,40 C14,40 14,22 0,0 Z" fill="#7fd6ff" opacity="0" />`);
+      $("s5pip").innerHTML = `<g id="s5pipIn">${pip(0.62)}</g>`;
+      // S6 shell mode
+      $("s6cam").innerHTML = outdoor(`<g id="s6pip"></g><g id="s6cop">
+          <ellipse cx="0" cy="-110" rx="80" ry="95" fill="#5a3d2b" /><circle cx="0" cy="-215" r="55" fill="#6b4a33" />
+          <path d="M-60,-245 L60,-245 L48,-285 L-48,-285 Z" fill="#2f4aa0" /><rect x="-45" y="-235" width="34" height="20" rx="8" fill="#111" /><rect x="11" y="-235" width="34" height="20" rx="8" fill="#111" />
+          <path id="stache6" d="M0,-190 C-20,-202 -55,-198 -68,-178 C-48,-186 -24,-182 0,-178 C24,-182 48,-186 68,-178 C55,-198 20,-202 0,-190 Z" fill="#2a1a10" /></g>
+          <g id="trail"></g><g id="ball"><g id="ballSpin">${SHELL()}</g><g transform="translate(-36,-60) scale(0.55)"><g transform="translate(-130,190)">${SH}</g></g></g>`);
+      $("s6pip").innerHTML = pip(0.5);
+      for (let i = 0; i < 6; i++) $("trail").innerHTML += `<ellipse class="fire" cx="${-90 - i * 45}" cy="${-10 + (i % 2) * 14}" rx="${50 - i * 6}" ry="${30 - i * 3}" fill="${i % 2 ? "#ffb347" : "#ff5a1f"}" opacity="0" />`;
+      // S7 mushroom house
+      $("s7cam").innerHTML = outdoor(`<g id="house">
+          <rect x="1260" y="520" width="380" height="330" rx="30" fill="#f3e2c8" />
+          <path d="M1150,560 C1150,300 1750,300 1750,560 Z" fill="#e63946" />
+          <g fill="#fff"><circle cx="1300" cy="450" r="34" /><circle cx="1450" cy="390" r="40" /><circle cx="1600" cy="460" r="30" /></g>
+          <circle cx="1450" cy="690" r="120" fill="url(#holy)" id="holyGlow" opacity="0" />
+          <g id="lettuce" opacity="0"><circle cx="1410" cy="760" r="50" fill="#7ed957" /><circle cx="1480" cy="760" r="50" fill="#5fcf6a" /><circle cx="1445" cy="715" r="50" fill="#9be36f" /></g>
+          <rect id="door7" x="1380" y="620" width="140" height="230" rx="60" fill="#3fa3a8" /><circle cx="1500" cy="740" r="9" fill="#ffd166" />
+        </g><g id="s7dust" fill="#e8d6b0"></g><g id="ball7"><g id="ball7Spin">${SHELL()}</g></g><g id="s7peb"></g>
+        <g id="spark7" fill="#fff6c4" opacity="0">${[[1300, 600], [1600, 620], [1450, 560], [1350, 820], [1560, 820]].map(([x, y]) => `<path d="M${x},${y - 26} L${x + 6},${y - 6} L${x + 26},${y} L${x + 6},${y + 6} L${x},${y + 26} L${x - 6},${y + 6} L${x - 26},${y} L${x - 6},${y - 6} Z" />`).join("")}</g>`);
+      $("s7peb").innerHTML = peb(0.62, true);
+      for (let i = 0; i < 5; i++) $("s7dust").innerHTML += `<circle class="d7" cx="${820 - i * 40}" cy="${950 - (i % 2) * 25}" r="${40 + i * 7}" opacity="0" />`;
+      // S8 characters
+      $("s8peb").innerHTML = `<g id="s8pebIn">${peb(0.62, true)}</g>`;
+      $("s8pip").innerHTML = `<g id="s8pipIn">${pip(0.62)}</g>`;
+
+      // ===================== TIMELINE =====================
+      const tl = gsap.timeline({ paused: true });
+      const scenes = [["#s1", 0, 2.2], ["#s2", 2.2, 3.4], ["#s3", 3.4, 5.6], ["#s4", 5.6, 7.4], ["#s5", 7.4, 9.2], ["#s6", 9.2, 12.2], ["#s7", 12.2, 15.2], ["#s8", 15.2, 19.5]];
+      tl.set(".scene", { autoAlpha: 0 }, 0);
+      scenes.forEach(([id, a, b]) => {
+        tl.set(id, { autoAlpha: 1 }, a);
+        if (b < 19.5) tl.set(id, { autoAlpha: 0 }, b);
+        // cinematic slow push-in
+        tl.fromTo(id + "cam", { scale: 1, svgOrigin: "960 540" }, { scale: 1.07, svgOrigin: "960 540", duration: b - a, ease: "none" }, a);
+      });
+      const flash = (t) => tl.fromTo("#flash", { opacity: 0.8 }, { opacity: 0, duration: 0.25, immediateRender: false }, t);
+
+      // S1
+      tl.fromTo("#notif1", { y: -260, opacity: 0 }, { y: 0, opacity: 1, duration: 0.35, ease: "back.out(1.8)" }, 0.35);
+      tl.fromTo("#s1peb", { y: 500 }, { y: 0, duration: 0.3, ease: "back.out(2)" }, 1.25);
+      tl.fromTo("#bang1", { opacity: 0, scale: 0.3, svgOrigin: "1600 340" }, { opacity: 1, scale: 1, svgOrigin: "1600 340", duration: 0.2, ease: "back.out(3)" }, 1.4);
+      // S2
+      flash(2.2);
+      tl.fromTo("#pupils", { x: 0 }, { x: 110, duration: 0.25, ease: "power3.out" }, 2.5);
+      tl.fromTo("#brows", { y: -60 }, { y: 30, duration: 0.25, ease: "power3.out" }, 2.6);
+      // S3
+      tl.set("#s3pip", { x: 680, y: 990 }, 3.4);
+      tl.set("#s3peb", { x: 1180, y: 1000 }, 3.4);
+      tl.set("#s3shades", { x: 1180, y: -200 }, 3.4);
+      tl.set(".d3", { opacity: 0 }, 3.4);
+      tl.to("#s3pipIn", { scaleY: 0.8, transformOrigin: "50% 100%", duration: 0.15, yoyo: true, repeat: 1 }, 3.45);
+      tl.to("#s3pip", { x: 2300, duration: 0.35, ease: "power3.in" }, 3.75);
+      tl.set("#s3lines", { opacity: 1, x: 300 }, 3.85);
+      tl.to("#s3lines", { x: 1900, duration: 0.3, ease: "none" }, 3.85);
+      tl.set("#s3lines", { opacity: 0 }, 4.15);
+      tl.to(".d3", { keyframes: [{ opacity: 0.9, scale: 1, duration: 0.05 }, { opacity: 0, scale: 1.8, duration: 0.6 }], transformOrigin: "50% 50%", stagger: 0.04 }, 3.8);
+      tl.to("#s3shades", { y: 1000, duration: 0.35, ease: "bounce.out" }, 4.35);
+      tl.set("#glint", { x: 1260, y: 845 }, 4.65);
+      tl.fromTo("#glint", { opacity: 0, scale: 0.2, rotation: 0, transformOrigin: "50% 50%" }, { opacity: 1, scale: 1, rotation: 90, transformOrigin: "50% 50%", duration: 0.25, yoyo: true, repeat: 1 }, 4.65);
+      tl.to("#s3peb", { rotation: -5, transformOrigin: "50% 100%", duration: 0.3, yoyo: true, repeat: 1 }, 5.0);
+      // S4
+      tl.set("#s4pip", { x: 760, y: 990 }, 5.6);
+      tl.set("#s4lady", { x: 1250, y: 1150 }, 5.6);
+      tl.set(".d4", { opacity: 0 }, 5.6);
+      tl.fromTo("#s4 .treeRow", { x: 0 }, { x: -2400, duration: 0.8, ease: "none", repeat: 0 }, 5.6);
+      tl.fromTo("#s4 .dash", { x: 0 }, { x: -1300, duration: 0.8, ease: "none" }, 5.6);
+      tl.to("#s4pipIn", { y: -70, duration: 0.12, yoyo: true, repeat: 5, ease: "power1.out" }, 5.6);
+      tl.to("#s4lady", { y: 930, duration: 0.5, ease: "power2.out" }, 6.0);
+      tl.to("#s4pipIn", { rotation: -25, transformOrigin: "50% 100%", duration: 0.12 }, 6.4);
+      tl.to("#s4pip", { x: 940, duration: 0.25, ease: "power3.out" }, 6.4);
+      tl.to(".d4", { keyframes: [{ opacity: 0.9, scale: 1, duration: 0.05 }, { opacity: 0, scale: 1.7, duration: 0.7 }], transformOrigin: "50% 50%", stagger: 0.04 }, 6.4);
+      tl.fromTo("#screech", { opacity: 0, scale: 0.4, svgOrigin: "800 520" }, { opacity: 1, scale: 1, svgOrigin: "800 520", duration: 0.2, ease: "back.out(3)" }, 6.45);
+      tl.to("#slowmo", { opacity: 1, duration: 0.1 }, 6.7);
+      tl.to("#s4lady", { x: 1180, duration: 0.7, ease: "none" }, 6.7);
+      // S5
+      tl.set("#s5pip", { x: 420, y: 1000 }, 7.4);
+      tl.set("#cop", { x: 1220, y: 820 }, 7.4);
+      tl.set("#sweat", { x: 520, y: 780 }, 7.4);
+      tl.fromTo("#cop", { scale: 0.85, svgOrigin: "1220 1080" }, { scale: 1, svgOrigin: "1220 1080", duration: 0.25, ease: "back.out(2)" }, 7.4);
+      tl.fromTo("#stache", { scaleY: 1, svgOrigin: "0 -200" }, { scaleY: 1.25, svgOrigin: "0 -200", duration: 0.07, yoyo: true, repeat: 5 }, 7.45);
+      tl.fromTo("#sweat", { opacity: 0, y: 780 }, { opacity: 1, y: 860, duration: 0.6, ease: "power1.in" }, 7.9);
+      tl.to("#s5pipIn", { scaleY: 0.8, transformOrigin: "50% 100%", duration: 0.5, ease: "power2.out" }, 8.3);
+      // S6
+      flash(9.2);
+      tl.fromTo("#shellTxt", { opacity: 0, scale: 2, svgOrigin: "960 250" }, { opacity: 1, scale: 1, svgOrigin: "960 250", duration: 0.3, ease: "power4.out" }, 9.25);
+      tl.to("#shellTxt", { opacity: 0, duration: 0.25 }, 10.4);
+      tl.set("#s6pip", { x: 1000, y: 1000 }, 9.2);
+      tl.set("#s6cop", { x: 1200, y: 1000 }, 9.2);
+      tl.set(".fire", { opacity: 0.9 }, 9.2);
+      tl.fromTo(".fire", { scaleX: 1 }, { scaleX: 1.4, transformOrigin: "100% 50%", duration: 0.08, yoyo: true, repeat: 30 }, 9.2);
+      tl.fromTo("#ball", { x: -200, y: 900 }, { x: 760, y: 900, duration: 1.4, ease: "power1.in" }, 9.4);
+      tl.fromTo("#ballSpin", { rotation: 0, svgOrigin: "0 0" }, { rotation: 2160, svgOrigin: "0 0", duration: 2.6, ease: "none" }, 9.4);
+      tl.to("#ball", { keyframes: [{ x: 1100, y: 520, duration: 0.4, ease: "power2.out" }, { x: 1500, y: 900, duration: 0.4, ease: "power2.in" }, { x: 2200, y: 900, duration: 0.4, ease: "none" }] }, 10.8);
+      tl.to("#stache6", { rotation: 25, svgOrigin: "0 -185", duration: 0.15 }, 11.0);
+      tl.to("#s6cop", { y: 950, duration: 0.12, yoyo: true, repeat: 1 }, 11.0);
+      tl.to("#s6pip", { rotation: -15, transformOrigin: "50% 100%", duration: 0.2, yoyo: true, repeat: 1 }, 11.0);
+      // S7
+      tl.set("#s7peb", { x: 900, y: 1000, opacity: 0 }, 12.2);
+      tl.set(".d7", { opacity: 0 }, 12.2);
+      tl.fromTo("#ball7", { x: -100, y: 940, opacity: 1 }, { x: 900, y: 940, duration: 0.4, ease: "power3.out" }, 12.2);
+      tl.fromTo("#ball7Spin", { rotation: 0, svgOrigin: "0 0" }, { rotation: 720, svgOrigin: "0 0", duration: 0.4, ease: "power3.out" }, 12.2);
+      tl.to(".d7", { keyframes: [{ opacity: 0.9, scale: 1, duration: 0.05 }, { opacity: 0, scale: 1.8, duration: 0.6 }], transformOrigin: "50% 50%", stagger: 0.04 }, 12.4);
+      tl.to("#ball7", { opacity: 0, duration: 0.05 }, 12.6);
+      tl.to("#s7peb", { opacity: 1, duration: 0.05 }, 12.6);
+      tl.fromTo("#s7peb", { scale: 0.5, svgOrigin: "900 1000" }, { scale: 1, svgOrigin: "900 1000", duration: 0.3, ease: "back.out(3)" }, 12.6);
+      tl.to("#door7", { scaleX: 0, svgOrigin: "1380 735", duration: 0.5, ease: "power2.inOut" }, 13.0);
+      tl.to("#holyGlow", { opacity: 1, scale: 2.2, svgOrigin: "1450 690", duration: 0.6 }, 13.1);
+      tl.to("#lettuce", { opacity: 1, duration: 0.3 }, 13.2);
+      tl.to("#spark7", { opacity: 1, duration: 0.2 }, 13.3);
+      tl.fromTo("#spark7", { scale: 0.6, svgOrigin: "1450 690" }, { scale: 1.1, svgOrigin: "1450 690", duration: 0.5, yoyo: true, repeat: 2 }, 13.3);
+      tl.to("#s7peb", { x: 1380, duration: 0.8, ease: "power1.inOut" }, 14.2);
+      tl.to("#s7peb", { opacity: 0, duration: 0.2 }, 14.9);
+      // S8
+      tl.set("#s8peb", { x: 1480, y: 900 }, 15.2);
+      tl.set("#s8pebIn", { scaleX: 1.12, transformOrigin: "50% 100%" }, 15.2);
+      tl.set("#s8pip", { x: 250, y: 900, opacity: 0 }, 15.2);
+      tl.to("#s8door", { scaleX: 0.1, svgOrigin: "130 645", duration: 0.12 }, 15.5);
+      tl.to("#s8pip", { opacity: 1, duration: 0.05 }, 15.5);
+      tl.to("#s8pip", { x: 560, duration: 0.35, ease: "power2.out" }, 15.5);
+      tl.to("#s8pipIn", { scaleY: 0.9, transformOrigin: "50% 100%", duration: 0.12, yoyo: true, repeat: 5 }, 15.8);
+      tl.fromTo("#bang8", { opacity: 0, scale: 0.3, svgOrigin: "520 520" }, { opacity: 1, scale: 1, svgOrigin: "520 520", duration: 0.2, ease: "back.out(3)" }, 16.1);
+      tl.to("#bang8", { opacity: 0, duration: 0.2 }, 16.6);
+      tl.fromTo("#burp", { opacity: 0, scale: 0.3, svgOrigin: "1600 540" }, { opacity: 1, scale: 1, svgOrigin: "1600 540", duration: 0.25, ease: "back.out(3)" }, 16.6);
+      tl.to("#s8pebIn", { scaleY: 1.12, transformOrigin: "50% 100%", duration: 0.15, yoyo: true, repeat: 1 }, 16.6);
+      tl.to("#burp", { opacity: 0, duration: 0.3 }, 17.4);
+      tl.to("#s8pipIn", { scaleY: 0.8, scaleX: 1.08, transformOrigin: "50% 100%", duration: 0.8, ease: "power2.out" }, 17.3);
+      // phone buzz again -> loops to S1
+      tl.to("#s8phone", { x: 6, duration: 0.04, yoyo: true, repeat: 9 }, 18.85);
+      tl.fromTo("#notif2", { opacity: 0, y: -60 }, { opacity: 1, y: 0, duration: 0.3, ease: "back.out(2)" }, 18.9);
+      tl.to("#s8pipIn", { scaleY: 1, scaleX: 1, duration: 0.2, ease: "back.out(3)" }, 19.0);
+
+      window.__timelines = window.__timelines || {};
+      window.__timelines["main"] = tl;
+      tl.seek(0);
+    </script>
+  </body>
+</html>

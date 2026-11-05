@@ -1,6 +1,6 @@
 # Explorer kit
 
-Shared pipeline for the "Explorer's Ledger" English Shorts (episodes ep06 to ep10).
+Shared pipeline for the "Explorer's Ledger" English Shorts (episodes ep06 to ep15).
 
 - `lib.js`: the explorer character (`HERO`), supporting cast (`PERSON`), props and GSAP timeline helpers
 - `template.html.tpl`: the HyperFrames page; each episode adds its own `scenes.js`

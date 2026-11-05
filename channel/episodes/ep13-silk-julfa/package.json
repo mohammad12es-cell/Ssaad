@@ -1,0 +1,9 @@
+{
+  "name": "ep13-silk-julfa",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "check": "npx --yes hyperframes@0.9.13 check",
+    "render": "npx --yes hyperframes@0.9.13 render -o ../../../output/explorer-part8-silk-julfa.mp4"
+  }
+}

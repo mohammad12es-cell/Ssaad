@@ -82,12 +82,13 @@ const PERSON = (id, x, y, s, o = {}) => {
     crown: `<path d="M-100,-840 L-110,-990 L-55,-935 L0,-1010 L55,-935 L110,-990 L100,-840 Q0,-820 -100,-840 Z" fill="#f7c21b" stroke="${K}" stroke-width="9" stroke-linejoin="round"/>`,
     scarf: `<path d="M-128,-760 Q-120,-890 0,-892 Q120,-890 128,-760 Q60,-830 0,-835 Q-60,-830 -128,-760 Z" fill="${o.scarf || "#a23b3b"}" stroke="${K}" stroke-width="8" stroke-linejoin="round"/>`,
   };
+  const mask = o.mask ? `<path d="M-118,-700 Q0,-660 118,-700 L105,-640 Q0,-600 -105,-640 Z" fill="${o.mask}" stroke="${K}" stroke-width="7" stroke-linejoin="round"/>` : "";
   const beard = o.beard ? `<path d="M-80,-660 Q-70,-560 0,-555 Q70,-560 80,-660 Q40,-625 0,-630 Q-40,-625 -80,-660 Z" fill="${o.beard}" stroke="${K}" stroke-width="7" stroke-linejoin="round"/>` : "";
   return `<g transform="translate(${x},${y}) scale(${s})"><g id="${id}"><g class="rig">
     <ellipse cx="0" cy="6" rx="150" ry="24" fill="rgba(0,0,0,0.12)"/>
     ${legs}${stickArm("L")}${bodies[robe]}${stickArm("R")}
     <line x1="0" y1="-575" x2="0" y2="-612" stroke="${K}" stroke-width="14"/>
-    <g class="head">${back}<circle cx="0" cy="-735" r="125" fill="#fff" stroke="${K}" stroke-width="10"/>${FACE()}${beard}${hats[hat]}</g>
+    <g class="head">${back}<circle cx="0" cy="-735" r="125" fill="#fff" stroke="${K}" stroke-width="10"/>${FACE()}${beard}${mask}${hats[hat]}</g>
   </g></g></g>`;
 };
 
@@ -174,7 +175,7 @@ const PLUS = (x, y, cls = "plus") => `<g transform="translate(${x},${y})"><path 
 const NOSIGN = (x, y, s = 1, cls = "nosign") => g(x, y, s, cls, `<circle r="120" fill="none" stroke="#d1343e" stroke-width="26"/><line x1="-85" y1="85" x2="85" y2="-85" stroke="#d1343e" stroke-width="26"/>`);
 const CROSS = (x, y, s = 1, cls = "cross") => g(x, y, s, cls, `<path d="M-90,-90 L90,90 M90,-90 L-90,90" stroke="#d1343e" stroke-width="30" stroke-linecap="round"/>`);
 const LABEL = (x, y, txt, cls = "label", size = 64, fill = "#fff", bg = "#1b2a4a", w = null) => {
-  const ww = w || Math.max(160, txt.length * size * 0.56 + 60);
+  const ww = w || Math.max(160, txt.length * size * 0.64 + 60);
   return g(x, y, 1, cls, `<rect x="${-ww / 2}" y="${-size * 0.85}" width="${ww}" height="${size * 1.6}" rx="${size * 0.4}" fill="${bg}" stroke="${K}" stroke-width="7"/>
     <text x="0" y="${size * 0.32}" text-anchor="middle" font-family="Fredoka" font-weight="700" font-size="${size}" fill="${fill}">${txt}</text>`);
 };
@@ -264,3 +265,58 @@ const spin = (sel, t, d, turns = 1) => tl.fromTo(sel, { rotation: 0, transformOr
 const slide = (sel, t, fromX, fromY = 0, d = 0.6, ease = "power3.out") => tl.fromTo(sel, { x: fromX, y: fromY, opacity: 0 }, { x: 0, y: 0, opacity: 1, duration: d, ease }, t);
 // standard per-scene setup: entrance (vector scenes), hero bob + default face
 const scene = (i, hero, face = "mS") => { enter(i); if (hero) { bob(hero, i, 8); mouth(hero, face, S[i - 1]); blink(hero, at(i, Math.min(2.2, dur(i) - 0.4))); } };
+
+// ---------- props added for parts 6-10 ----------
+// camel facing right; origin at feet
+const CAMEL = (x, y, s = 1, cls = "camel", load = true) => g(x, y, s, cls, `<g class="legs" stroke="${K}" stroke-width="16" stroke-linecap="round"><line x1="-120" y1="-150" x2="-130" y2="0"/><line x1="-80" y1="-150" x2="-70" y2="0"/><line x1="80" y1="-150" x2="70" y2="0"/><line x1="115" y1="-150" x2="130" y2="0"/></g>
+  <path d="M-170,-170 Q-180,-260 -110,-270 Q-80,-360 -20,-300 Q20,-370 80,-290 Q150,-280 160,-190 Q140,-130 -140,-130 Q-175,-135 -170,-170 Z" fill="#d6a55c" stroke="${K}" stroke-width="9" stroke-linejoin="round"/>
+  <path d="M140,-220 Q200,-260 200,-360 Q205,-410 250,-410 Q290,-405 285,-375 L235,-360 Q235,-260 180,-180 Z" fill="#d6a55c" stroke="${K}" stroke-width="9" stroke-linejoin="round"/><circle cx="255" cy="-392" r="7" fill="${K}"/>
+  ${load ? `<rect x="-120" y="-380" width="110" height="90" rx="10" fill="#b5562e" stroke="${K}" stroke-width="7"/><rect x="10" y="-370" width="100" height="80" rx="10" fill="#2a9d8f" stroke="${K}" stroke-width="7"/>` : ""}
+  <path d="M-170,-170 Q-215,-150 -210,-90" fill="none" stroke="#8a6232" stroke-width="12" stroke-linecap="round"/>`);
+const CARAVANSERAI = (x, y, s = 1, cls = "serai") => g(x, y, s, cls, `<rect x="-360" y="-300" width="720" height="300" fill="#e3c48f" stroke="${K}" stroke-width="9"/>
+  <rect x="-400" y="-340" width="80" height="340" fill="#d8b57a" stroke="${K}" stroke-width="8"/><rect x="320" y="-340" width="80" height="340" fill="#d8b57a" stroke="${K}" stroke-width="8"/>
+  <rect x="-120" y="-400" width="240" height="400" fill="#d8b57a" stroke="${K}" stroke-width="9"/>
+  <path d="M-75,0 L-75,-200 Q0,-300 75,-200 L75,0 Z" fill="#6b5a44" stroke="${K}" stroke-width="8"/>
+  <path class="gate" d="M-75,0 L-75,-200 Q0,-300 75,-200 L75,0 Z" fill="#8a6232" stroke="${K}" stroke-width="8"/>
+  ${[-290, -200, 200, 290].map((cx) => `<path d="M${cx - 30},-120 L${cx - 30},-190 Q${cx},-235 ${cx + 30},-190 L${cx + 30},-120 Z" fill="#6b5a44" stroke="${K}" stroke-width="6"/>`).join("")}
+  <path d="M-130,-400 L-130,-430 L130,-430 L130,-400 Z" fill="#3fa7c9" stroke="${K}" stroke-width="7"/>`);
+const BANKNOTE = (x, y, s = 1, cls = "note", ink = "#2f6b4f", mark = "") => g(x, y, s, cls, `<rect x="-170" y="-90" width="340" height="180" rx="10" fill="#f2ead3" stroke="${K}" stroke-width="8"/>
+  <rect x="-150" y="-70" width="300" height="140" rx="6" fill="none" stroke="${ink}" stroke-width="6"/>
+  ${[0, 1, 2].map((k) => `<line x1="${-110 + k * 30}" y1="-40" x2="${-110 + k * 30}" y2="40" stroke="${ink}" stroke-width="10" stroke-linecap="round"/>`).join("")}
+  <circle cx="60" cy="0" r="42" fill="none" stroke="${ink}" stroke-width="7"/>${mark ? `<text x="60" y="16" text-anchor="middle" font-family="Fredoka" font-weight="700" font-size="44" fill="${ink}">${mark}</text>` : `<rect x="40" y="-20" width="40" height="40" fill="${ink}"/>`}`);
+const SILK = (x, y, s = 1, cls = "silk", col = "#e0407a") => g(x, y, s, cls, `<rect x="-120" y="-60" width="240" height="120" rx="20" fill="${col}" stroke="${K}" stroke-width="8"/>
+  <path d="M-80,-60 Q-70,0 -80,60 M-20,-60 Q-10,0 -20,60 M40,-60 Q50,0 40,60" fill="none" stroke="rgba(255,255,255,0.55)" stroke-width="8"/>
+  <ellipse cx="-120" cy="0" rx="26" ry="60" fill="#c9a24b" stroke="${K}" stroke-width="7"/><ellipse cx="120" cy="0" rx="26" ry="60" fill="#c9a24b" stroke="${K}" stroke-width="7"/>`);
+const DOMEBLD = (x, y, s = 1, cls = "dome", col = "#e3c48f", cross = false) => g(x, y, s, cls, `<rect x="-200" y="-250" width="400" height="250" fill="${col}" stroke="${K}" stroke-width="9"/>
+  <path d="M-150,-250 Q-150,-470 0,-470 Q150,-470 150,-250 Z" fill="${cross ? "#c9a24b" : "#3fa7c9"}" stroke="${K}" stroke-width="9"/>
+  ${cross ? `<path d="M-10,-470 L-10,-560 M-40,-530 L20,-530" stroke="${K}" stroke-width="12" stroke-linecap="round"/>` : `<circle cx="0" cy="-485" r="16" fill="#c9a24b" stroke="${K}" stroke-width="6"/>`}
+  <path d="M-50,0 L-50,-120 Q0,-190 50,-120 L50,0 Z" fill="#6b5a44" stroke="${K}" stroke-width="7"/>`);
+// carpet with simple deer/rider/griffin-like motifs; origin centre
+const CARPET = (x, y, s = 1, cls = "carpet") => g(x, y, s, cls, `<rect x="-260" y="-300" width="520" height="600" rx="10" fill="#a8323a" stroke="${K}" stroke-width="10"/>
+  <rect x="-225" y="-265" width="450" height="530" fill="none" stroke="#f2d27a" stroke-width="14"/>
+  <rect x="-170" y="-210" width="340" height="420" fill="#c94a4a" stroke="#f2d27a" stroke-width="8"/>
+  ${[[-80, -120], [80, -120], [-80, 0], [80, 0], [-80, 120], [80, 120]].map((p, k) => `<g transform="translate(${p[0]},${p[1]})">${k % 2 ? `<path d="M-35,20 L-30,-10 Q-10,-30 20,-15 L35,-35 L30,0 L25,20 M-25,20 L-25,35 M20,20 L20,35" fill="#f2d27a" stroke="#5b1a1f" stroke-width="5" stroke-linejoin="round"/>` : `<rect x="-25" y="-25" width="50" height="50" transform="rotate(45)" fill="#2b6f8a" stroke="#f2d27a" stroke-width="6"/>`}</g>`).join("")}
+  ${Array.from({ length: 13 }, (_, k) => `<line x1="${-240 + k * 40}" y1="300" x2="${-240 + k * 40}" y2="335" stroke="#f2ead3" stroke-width="8"/><line x1="${-240 + k * 40}" y1="-300" x2="${-240 + k * 40}" y2="-335" stroke="#f2ead3" stroke-width="8"/>`).join("")}`);
+const ICE = (x, y, s = 1, cls = "ice") => g(x, y, s, cls, `<path d="M-300,-260 L280,-290 L320,250 L-280,280 Z" fill="rgba(160,215,245,0.55)" stroke="#3f8fd6" stroke-width="10" stroke-linejoin="round"/>
+  <path d="M-230,-200 L-120,-220 M200,180 L260,90 M-200,200 L-150,120" stroke="#fff" stroke-width="12" stroke-linecap="round"/>`);
+const MOUNTAINS = (x, y, s = 1, cls = "mtn") => g(x, y, s, cls, `<path d="M-500,0 L-250,-380 L-120,-200 L80,-460 L500,0 Z" fill="#9aa6b5" stroke="${K}" stroke-width="9" stroke-linejoin="round"/>
+  <path d="M-250,-380 L-200,-300 L-260,-290 L-300,-310 Z M80,-460 L150,-360 L60,-350 L20,-380 Z" fill="#fff" stroke="${K}" stroke-width="6" stroke-linejoin="round"/>`);
+const MOUND = (x, y, s = 1, cls = "mound") => g(x, y, s, cls, `<path d="M-340,0 Q-250,-260 0,-270 Q250,-260 340,0 Z" fill="#8a6232" stroke="${K}" stroke-width="9"/><path d="M-120,-150 Q0,-190 120,-150" fill="none" stroke="#6b4a24" stroke-width="10"/>`);
+const DEER = (x, y, s = 1, cls = "icon") => g(x, y, s, cls, `<g stroke="${K}" stroke-width="10" stroke-linecap="round"><line x1="-50" y1="10" x2="-55" y2="80"/><line x1="40" y1="10" x2="45" y2="80"/></g>
+  <ellipse cx="0" cy="0" rx="80" ry="38" fill="#b5772e" stroke="${K}" stroke-width="7"/><path d="M60,-10 L95,-70 L120,-60 L95,-5 Z" fill="#b5772e" stroke="${K}" stroke-width="7" stroke-linejoin="round"/>
+  <path d="M100,-68 L90,-120 M90,-100 L70,-115 M105,-70 L130,-115 M120,-95 L140,-100" fill="none" stroke="${K}" stroke-width="7" stroke-linecap="round"/>`);
+// chess king piece; origin at base
+const CHESSKING = (x, y, s = 1, cls = "king") => g(x, y, s, cls, `<rect x="-100" y="-40" width="200" height="40" rx="10" fill="#f4f0e6" stroke="${K}" stroke-width="9"/>
+  <path d="M-70,-40 Q-55,-160 -40,-220 L40,-220 Q55,-160 70,-40 Z" fill="#f4f0e6" stroke="${K}" stroke-width="9" stroke-linejoin="round"/>
+  <ellipse cx="0" cy="-230" rx="65" ry="22" fill="#f4f0e6" stroke="${K}" stroke-width="8"/><path d="M-45,-250 Q-50,-320 0,-330 Q50,-320 45,-250 Z" fill="#f4f0e6" stroke="${K}" stroke-width="8"/>
+  <path d="M0,-330 L0,-400 M-30,-370 L30,-370" stroke="${K}" stroke-width="14" stroke-linecap="round"/>`);
+const CHECKER = (x, y, s = 1, cls = "checker", n = 6) => g(x, y, s, cls, `<rect x="${-n * 30}" y="${-n * 30}" width="${n * 60}" height="${n * 60}" fill="#f4f0e6" stroke="${K}" stroke-width="9"/>
+  ${Array.from({ length: n * n }, (_, k) => ((k % n) + Math.floor(k / n)) % 2 ? `<rect x="${-n * 30 + (k % n) * 60}" y="${-n * 30 + Math.floor(k / n) * 60}" width="60" height="60" fill="#2f6b4f"/>` : "").join("")}
+  <rect x="${-n * 30}" y="${-n * 30}" width="${n * 60}" height="${n * 60}" fill="none" stroke="${K}" stroke-width="9"/>`);
+const CHEQUE = (x, y, s = 1, cls = "cheque") => g(x, y, s, cls, `<rect x="-260" y="-110" width="520" height="220" rx="12" fill="#eaf4ea" stroke="${K}" stroke-width="8"/>
+  <line x1="-220" y1="-40" x2="120" y2="-40" stroke="#9ab59a" stroke-width="10" stroke-linecap="round"/><line x1="-220" y1="10" x2="40" y2="10" stroke="#9ab59a" stroke-width="10" stroke-linecap="round"/>
+  <rect x="140" y="-70" width="90" height="50" rx="6" fill="#fff" stroke="#9ab59a" stroke-width="5"/><path d="M60,70 Q100,30 130,70 T210,60" fill="none" stroke="#1b2a4a" stroke-width="7" stroke-linecap="round"/>`);
+const WALLET = (x, y, s = 1, cls = "wallet") => g(x, y, s, cls, `<rect x="-200" y="-140" width="400" height="280" rx="30" fill="#7a4a24" stroke="${K}" stroke-width="10"/>
+  <rect x="-170" y="-170" width="230" height="80" rx="8" fill="#7fbf7f" stroke="${K}" stroke-width="7" transform="rotate(-8)"/>
+  <path d="M60,-50 L200,-50 L200,60 L60,60 Q30,5 60,-50 Z" fill="#5b3216" stroke="${K}" stroke-width="8"/><circle cx="110" cy="5" r="16" fill="#c9a24b" stroke="${K}" stroke-width="5"/>`);
+const BIGTEXT = (x, y, txt, cls = "word", size = 130, fill = "#111") => `<g transform="translate(${x},${y})"><g class="${cls}"><text x="0" y="0" text-anchor="middle" font-family="Fredoka" font-weight="700" font-size="${size}" fill="${fill}" stroke="#fff" stroke-width="10" paint-order="stroke">${txt}</text></g></g>`;

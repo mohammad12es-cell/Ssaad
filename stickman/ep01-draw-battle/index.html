@@ -1,0 +1,310 @@
+<!doctype html>
+<html lang="en" data-resolution="portrait">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <script src="assets/gsap.min.js"></script>
+    <style>
+      @font-face { font-family: "Patrick Hand"; font-weight: 400; src: url("assets/patrick-hand-latin-400-normal.woff2") format("woff2"); }
+      :root { --paper: #fbf7ea; --ink: #1d1d2b; --accent: #e63946; --font-display: "Patrick Hand", sans-serif; }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { margin: 0; width: 1080px; height: 1920px; overflow: hidden; background: var(--paper); }
+      #root { position: relative; width: 100%; height: 100%; overflow: hidden; font-family: var(--font-display); }
+      .clip { position: absolute; inset: 0; }
+      svg.stage { width: 1080px; height: 1920px; }
+      .ink { fill: none; stroke: var(--ink); stroke-width: 9; stroke-linecap: round; stroke-linejoin: round; }
+      .red { fill: none; stroke: var(--accent); stroke-width: 11; stroke-linecap: round; stroke-linejoin: round; }
+      .cap {
+        position: absolute; left: 60px; right: 60px; top: 200px; height: 200px; text-align: center;
+        color: var(--ink); font-size: 112px; line-height: 1.05;
+      }
+      .cap span { display: inline-block; background: #ffe45c; padding: 0 28px 6px; border: 7px solid var(--ink); border-radius: 26px; transform: rotate(-2deg); }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="20" data-width="1080" data-height="1920">
+      <svg id="world" class="clip stage" data-start="0" data-duration="20" data-track-index="0" viewBox="0 0 1080 1920">
+        <defs>
+          <filter id="boil" x="-5%" y="-5%" width="110%" height="110%">
+            <feTurbulence id="turb" type="fractalNoise" baseFrequency="0.018" numOctaves="1" seed="0" />
+            <feDisplacementMap in="SourceGraphic" scale="5" xChannelSelector="R" yChannelSelector="G" />
+          </filter>
+          <!-- eraser wipes over the monster layer (world coords) -->
+          <mask id="mMonster" maskUnits="userSpaceOnUse" x="0" y="0" width="1080" height="1920">
+            <rect width="1080" height="1920" fill="#fff" />
+            <path id="eraseMonster" d="" fill="none" stroke="#000" stroke-width="270" stroke-linecap="round" stroke-linejoin="round" pathLength="1" stroke-dasharray="1 1" stroke-dashoffset="1" />
+          </mask>
+          <!-- eraser pass along the ground (world coords) -->
+          <mask id="mGround" maskUnits="userSpaceOnUse" x="0" y="0" width="1080" height="1920">
+            <rect width="1080" height="1920" fill="#fff" />
+            <path id="eraseGround" d="M960,1185 L90,1185" fill="none" stroke="#000" stroke-width="150" pathLength="1" stroke-dasharray="1 1" stroke-dashoffset="1" />
+          </mask>
+          <!-- same pass, in Inky's local coords (Inky stands at 300,1250) -->
+          <mask id="mLegs" maskUnits="userSpaceOnUse" x="-600" y="-1200" width="1400" height="1400">
+            <rect x="-600" y="-1200" width="1400" height="1400" fill="#fff" />
+            <path id="eraseLegs" d="M660,-65 L-210,-65" fill="none" stroke="#000" stroke-width="150" pathLength="1" stroke-dasharray="1 1" stroke-dashoffset="1" />
+          </mask>
+        </defs>
+
+        <!-- notebook paper -->
+        <rect width="1080" height="1920" fill="#fbf7ea" />
+        <g id="lines" stroke="#a9c8ee" stroke-width="3"></g>
+        <line x1="120" y1="0" x2="120" y2="1920" stroke="#f0a3a8" stroke-width="4" />
+
+        <g id="art" filter="url(#boil)">
+          <path class="ink" d="M40,1252 C260,1244 520,1258 760,1248 S1000,1254 1040,1250" />
+
+          <!-- ===== monster layer (gets erased) ===== -->
+          <g id="monsterLayer" mask="url(#mMonster)">
+            <g id="monster">
+              <circle cx="0" cy="-260" r="185" fill="#2a2a3a" />
+              <path id="scribble" class="ink" d="" stroke-width="7" stroke="#11111a" />
+              <line class="ink" x1="-60" y1="-90" x2="-85" y2="0" /><line class="ink" x1="60" y1="-90" x2="85" y2="0" />
+              <line class="ink" x1="-85" y1="0" x2="-120" y2="0" /><line class="ink" x1="85" y1="0" x2="120" y2="0" />
+              <line class="ink" x1="-170" y1="-230" x2="-230" y2="-180" />
+              <line class="ink" x1="170" y1="-230" x2="235" y2="-300" />
+              <g id="mEyes">
+                <circle cx="-62" cy="-300" r="40" fill="#fff" /><circle cx="62" cy="-300" r="40" fill="#fff" />
+                <circle class="mPupil" cx="-72" cy="-296" r="17" fill="#e63946" /><circle class="mPupil" cx="52" cy="-296" r="17" fill="#e63946" />
+                <path d="M-110,-360 L-25,-335 M110,-360 L25,-335" stroke="#fff" stroke-width="12" stroke-linecap="round" />
+              </g>
+              <path id="mMouth" d="M-85,-205 L-55,-228 L-25,-200 L5,-230 L35,-200 L65,-226 L90,-205" fill="none" stroke="#fff" stroke-width="9" stroke-linejoin="round" stroke-linecap="round" />
+            </g>
+            <path id="mSword" class="red" d="" />
+            <path id="mCannon" class="red" d="" />
+            <path id="mWheel" class="red" d="" />
+          </g>
+
+          <!-- ===== Inky's drawings ===== -->
+          <path id="iSword" class="ink" d="" />
+          <g id="cannonLayer" mask="url(#mGround)">
+            <path id="iCannon" class="ink" d="" />
+            <path id="iWheel" class="ink" d="" />
+            <circle id="ball" cx="0" cy="0" r="11" fill="#1d1d2b" opacity="0" />
+          </g>
+          <g id="bulb" opacity="1">
+            <path id="bulbLine" class="ink" d="" />
+            <circle id="bulbFill" cx="300" cy="740" r="40" fill="#ffe45c" opacity="0" />
+          </g>
+          <path id="eraserLine" class="ink" d="" />
+          <path id="newLegs" class="ink" d="" stroke-width="10" />
+
+          <!-- ===== Inky ===== -->
+          <g id="inky">
+            <g id="legsWrap" mask="url(#mLegs)">
+              <g id="legs"><line class="ink" x1="0" y1="-130" x2="-45" y2="0" /><line class="ink" x1="0" y1="-130" x2="45" y2="0" /></g>
+            </g>
+            <g id="upper">
+              <line class="ink" x1="0" y1="-275" x2="0" y2="-130" />
+              <g id="armL"><line class="ink" x1="0" y1="-240" x2="-70" y2="-170" /></g>
+              <g id="armR"><line class="ink" x1="0" y1="-240" x2="70" y2="-170" /></g>
+              <circle cx="0" cy="-330" r="55" fill="#fbf7ea" stroke="#1d1d2b" stroke-width="9" />
+              <circle cx="-19" cy="-342" r="7" fill="#1d1d2b" /><circle cx="19" cy="-342" r="7" fill="#1d1d2b" />
+              <path id="mSmile" d="M-24,-312 Q0,-288 24,-312" fill="none" stroke="#1d1d2b" stroke-width="7" stroke-linecap="round" />
+              <path id="mWorry" d="M-24,-302 q12,-10 24,0 q12,10 24,0" transform="translate(-12,0)" fill="none" stroke="#1d1d2b" stroke-width="7" stroke-linecap="round" opacity="0" />
+              <circle id="mO" cx="0" cy="-304" r="13" fill="none" stroke="#1d1d2b" stroke-width="7" opacity="0" />
+              <path id="sweat" d="M58,-375 q10,18 0,26 q-10,-8 0,-26 Z" fill="#7cc3ff" stroke="#1d1d2b" stroke-width="4" opacity="0" />
+            </g>
+          </g>
+
+          <!-- eraser object -->
+          <g id="eraser" opacity="0">
+            <rect x="-90" y="-45" width="180" height="90" rx="14" fill="#ff9fb2" stroke="#1d1d2b" stroke-width="8" />
+            <rect x="-90" y="-45" width="80" height="90" rx="10" fill="#5aa9e6" stroke="#1d1d2b" stroke-width="8" />
+          </g>
+          <g id="crumbs" fill="#c98a96"></g>
+          <g id="puff" fill="none" stroke="#1d1d2b" stroke-width="6" opacity="0">
+            <circle cx="0" cy="0" r="18" /><circle cx="22" cy="-14" r="14" /><circle cx="-20" cy="-12" r="12" />
+          </g>
+        </g>
+
+        <!-- pencils sit above the boil so the tips stay crisp -->
+        <g id="penY" opacity="0">
+          <polygon points="0,0 8,-26 24,-19" fill="#1d1d2b" />
+          <polygon points="8,-26 24,-19 66,-112 50,-119" fill="#ffd23f" stroke="#1d1d2b" stroke-width="5" stroke-linejoin="round" />
+          <polygon points="50,-119 66,-112 74,-130 58,-137" fill="#ff9fb2" stroke="#1d1d2b" stroke-width="5" stroke-linejoin="round" />
+        </g>
+        <g id="penR" opacity="0">
+          <polygon points="0,0 8,-26 24,-19" fill="#1d1d2b" />
+          <polygon points="8,-26 24,-19 66,-112 50,-119" fill="#e63946" stroke="#1d1d2b" stroke-width="5" stroke-linejoin="round" />
+          <polygon points="50,-119 66,-112 74,-130 58,-137" fill="#2a2a3a" stroke="#1d1d2b" stroke-width="5" stroke-linejoin="round" />
+        </g>
+      </svg>
+
+      <div id="c1" class="clip cap" data-start="0" data-duration="2.2" data-track-index="1"><span>Drawing battle ✏️</span></div>
+      <div id="c2" class="clip cap" data-start="2.3" data-duration="1.8" data-track-index="1"><span>It drew BIGGER 😳</span></div>
+      <div id="c3" class="clip cap" data-start="5.4" data-duration="1.6" data-track-index="1"><span>Bigger AGAIN 😭</span></div>
+      <div id="c4" class="clip cap" data-start="7.8" data-duration="2.1" data-track-index="1"><span>Plan C 💡</span></div>
+      <div id="c5" class="clip cap" data-start="12.3" data-duration="1.4" data-track-index="1"><span>ERASED 😎</span></div>
+      <div id="c6" class="clip cap" data-start="14.3" data-duration="1.4" data-track-index="1"><span>wait—</span></div>
+      <div id="c7" class="clip cap" data-start="17.5" data-duration="2.5" data-track-index="1"><span>Fixed it 😎</span></div>
+
+      <audio id="sound" src="assets/audio.wav" data-start="0" data-duration="20" data-volume="1"></audio>
+    </div>
+
+    <script>
+      const NS = "http://www.w3.org/2000/svg";
+      const $ = (id) => document.getElementById(id);
+      const mk = (tag, attrs, parent) => { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); parent.appendChild(e); return e; };
+      let s = 7; const rnd = () => ((s = (s * 16807) % 2147483647) / 2147483647);
+
+      for (let y = 160; y < 1920; y += 64) mk("line", { x1: 0, y1: y, x2: 1080, y2: y }, $("lines"));
+
+      // monster scribble texture
+      let d = "";
+      for (let i = 0; i < 44; i++) {
+        const a = i * 2.3, r = 40 + rnd() * 140;
+        d += (i ? " L" : "M") + (Math.cos(a) * r).toFixed(1) + "," + (-260 + Math.sin(a) * r).toFixed(1);
+      }
+      $("scribble").setAttribute("d", d);
+
+      const tl = gsap.timeline({ paused: true });
+      const pop = (id, t) => tl.fromTo(id + " span", { scale: 0.3, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.22, ease: "back.out(2.5)" }, t);
+      const ring = (cx, cy, r, n = 18) => Array.from({ length: n + 1 }, (_, i) => [cx + Math.cos((i / n) * 6.283 - 1.57) * r, cy + Math.sin((i / n) * 6.283 - 1.57) * r]);
+      const len = (p) => p.slice(1).reduce((a, q, i) => a + Math.hypot(q[0] - p[i][0], q[1] - p[i][1]), 0);
+      const pd = (p) => "M" + p.map((q) => q[0].toFixed(1) + "," + q[1].toFixed(1)).join(" L");
+
+      // draw a stroke with a pencil tracing it; keyframe time per segment matches the dash progress
+      function draw(el, pts, t0, dur, pen) {
+        el.setAttribute("d", pd(pts)); el.setAttribute("pathLength", 1);
+        tl.set(el, { opacity: 0, attr: { "stroke-dasharray": "1 1", "stroke-dashoffset": 1 } }, 0);
+        tl.set(el, { opacity: 1 }, t0);
+        tl.to(el, { attr: { "stroke-dashoffset": 0 }, duration: dur, ease: "none" }, t0);
+        const L = len(pts);
+        tl.set(pen, { x: pts[0][0], y: pts[0][1] }, t0);
+        tl.to(pen, { keyframes: pts.slice(1).map((q, i) => ({ x: q[0], y: q[1], duration: (dur * Math.hypot(q[0] - pts[i][0], q[1] - pts[i][1])) / L, ease: "none" })) }, t0);
+      }
+      const penOn = (pen, t) => tl.fromTo(pen, { opacity: 0 }, { opacity: 1, duration: 0.12 }, t);
+      const penOff = (pen, t) => tl.to(pen, { opacity: 0, duration: 0.15 }, t);
+      const face = (which, t) => ["#mSmile", "#mWorry", "#mO"].forEach((m) => tl.to(m, { opacity: m === which ? 1 : 0, duration: 0.06 }, t));
+
+      // line boil: new noise seed ~12 times a second, driven by timeline time
+      tl.fromTo("#turb", { attr: { seed: 0 } }, { attr: { seed: 240 }, duration: 20, ease: "none" }, 0);
+
+      tl.set("#inky", { x: 300, y: 1250 }, 0);
+      tl.set("#upper", { y: 0 }, 0);
+      tl.set("#monster", { x: 760, y: 1250 }, 0);
+
+      // ---- HOOK: monster slams down
+      pop("#c1", 0);
+      tl.fromTo("#monster", { y: 700 }, { y: 1250, duration: 0.32, ease: "power3.in" }, 0);
+      tl.fromTo("#monster", { scaleY: 0.8, scaleX: 1.15, transformOrigin: "50% 100%" }, { scaleY: 1, scaleX: 1, transformOrigin: "50% 100%", duration: 0.35, ease: "back.out(3)" }, 0.32);
+      tl.fromTo("#art", { y: 0 }, { keyframes: { y: [0, 14, -10, 6, 0] }, duration: 0.3 }, 0.32);
+      tl.to("#upper", { keyframes: { y: [0, -40, 0] }, duration: 0.35, ease: "power1.out" }, 0.36);
+      face("#mO", 0.36); face("#mSmile", 0.9);
+
+      // ---- Inky draws a sword
+      penOn("#penY", 0.85);
+      tl.to("#armR", { rotation: -40, transformOrigin: "0% 0%", duration: 0.2 }, 0.85);
+      draw($("iSword"), [[372, 1088], [478, 868], [482, 862], [456, 948], [354, 1030], [424, 1064]], 1.0, 0.75, "#penY");
+      penOff("#penY", 1.8);
+      tl.to("#armR", { rotation: 0, duration: 0.2 }, 1.8);
+      tl.to("#upper", { keyframes: { y: [0, -18, 0] }, duration: 0.3 }, 1.85);
+
+      // ---- monster draws a giant sword and laughs
+      pop("#c2", 2.3);
+      penOn("#penR", 2.3);
+      draw($("mSword"), [[530, 1070], [350, 560], [348, 548], [372, 640], [440, 920], [530, 1070], [474, 964], [390, 1010], [560, 900]], 2.4, 0.85, "#penR");
+      penOff("#penR", 3.3);
+      tl.to("#monster", { keyframes: { scaleY: [1, 0.9, 1.04, 0.92, 1] }, transformOrigin: "50% 100%", duration: 0.6 }, 3.3);
+      tl.to("#mMouth", { keyframes: { scaleY: [1, 1.6, 1, 1.6, 1] }, transformOrigin: "50% 50%", duration: 0.6 }, 3.3);
+      face("#mWorry", 3.3);
+      tl.fromTo("#sweat", { opacity: 0, y: 0 }, { opacity: 1, y: 30, duration: 0.5 }, 3.4);
+      tl.to("#sweat", { opacity: 0, duration: 0.15 }, 3.95);
+
+      // ---- Inky draws a cannon
+      penOn("#penY", 4.1);
+      draw($("iCannon"), [[380, 1172], [470, 1150], [478, 1186], [388, 1206], [380, 1172]], 4.2, 0.5, "#penY");
+      draw($("iWheel"), ring(420, 1216, 30), 4.72, 0.35, "#penY");
+      penOff("#penY", 5.1);
+      face("#mSmile", 5.1);
+
+      // ---- monster draws a bigger cannon
+      pop("#c3", 5.4);
+      penOn("#penR", 5.4);
+      draw($("mCannon"), [[700, 1110], [470, 960], [420, 1050], [660, 1190], [700, 1110]], 5.5, 0.6, "#penR");
+      draw($("mWheel"), ring(640, 1180, 66), 6.12, 0.38, "#penR");
+      penOff("#penR", 6.55);
+      face("#mWorry", 6.5);
+
+      // ---- Inky fires: the ball just plops out
+      tl.to("#iCannon", { keyframes: { x: [0, -10, 0] }, duration: 0.2 }, 6.7);
+      tl.set("#ball", { opacity: 1, attr: { cx: 478, cy: 1165 } }, 6.72);
+      tl.to("#ball", { keyframes: [{ attr: { cx: 505, cy: 1150 }, duration: 0.15, ease: "power1.out" }, { attr: { cx: 528, cy: 1238 }, duration: 0.3, ease: "bounce.out" }] }, 6.72);
+      tl.set("#puff", { x: 485, y: 1160 }, 6.7);
+      tl.fromTo("#puff", { opacity: 1, scale: 0.4 }, { opacity: 0, scale: 1.4, transformOrigin: "50% 50%", duration: 0.4 }, 6.7);
+      tl.to("#monster", { keyframes: { scaleY: [1, 0.9, 1.04, 0.92, 1.03, 1] }, transformOrigin: "50% 100%", duration: 0.7 }, 7.15);
+      tl.to("#mMouth", { keyframes: { scaleY: [1, 1.6, 1, 1.6, 1] }, transformOrigin: "50% 50%", duration: 0.6 }, 7.15);
+
+      // ---- Plan C: light bulb, then an eraser
+      pop("#c4", 7.8);
+      penOn("#penY", 7.8);
+      draw($("bulbLine"), ring(300, 740, 40).concat([[286, 778], [286, 800], [314, 800], [314, 778]]), 7.85, 0.45, "#penY");
+      tl.to("#bulbFill", { opacity: 1, duration: 0.1 }, 8.32);
+      tl.fromTo("#bulb", { scale: 1 }, { keyframes: { scale: [1, 1.25, 1] }, transformOrigin: "50% 50%", duration: 0.3 }, 8.32);
+      face("#mSmile", 8.32);
+      draw($("eraserLine"), [[60, 775], [240, 775], [240, 865], [60, 865], [60, 775], [140, 775], [140, 865]], 8.6, 0.8, "#penY");
+      penOff("#penY", 9.45);
+      tl.to("#bulb", { opacity: 0, duration: 0.2 }, 9.45);
+      tl.set("#eraser", { x: 150, y: 820, rotation: 0 }, 9.4);
+      tl.to("#eraser", { opacity: 1, duration: 0.12 }, 9.45);
+      tl.to("#eraserLine", { opacity: 0, duration: 0.12 }, 9.5);
+      tl.to("#mEyes", { scale: 1.25, transformOrigin: "50% 50%", duration: 0.15, ease: "back.out(3)" }, 9.7);
+      tl.to(".mPupil", { attr: { r: 8 }, duration: 0.15 }, 9.7);
+
+      // ---- eraser wipes the monster away (eraser and mask follow the same zigzag)
+      const zig = [];
+      for (let i = 0; i < 9; i++) zig.push([i % 2 ? 1020 : 330, 380 + i * 112]);
+      $("eraseMonster").setAttribute("d", pd(zig));
+      tl.to("#eraser", { x: zig[0][0], y: zig[0][1], rotation: -15, duration: 0.3, ease: "power2.in" }, 9.7);
+      tl.to("#armL", { rotation: 80, transformOrigin: "100% 0%", duration: 0.2 }, 9.7);
+      tl.to("#armR", { rotation: -80, transformOrigin: "0% 0%", duration: 0.2 }, 9.7);
+      const L = len(zig), T0 = 10.0, D = 2.2;
+      tl.to("#eraseMonster", { attr: { "stroke-dashoffset": 0 }, duration: D, ease: "none" }, T0);
+      tl.to("#eraser", { keyframes: zig.slice(1).map((q, i) => ({ x: q[0], y: q[1], rotation: i % 2 ? -15 : 15, duration: (D * Math.hypot(q[0] - zig[i][0], q[1] - zig[i][1])) / L, ease: "none" })) }, T0);
+      for (let i = 0; i < 14; i++) {
+        const c = mk("ellipse", { cx: 0, cy: 0, rx: 7 + rnd() * 6, ry: 5 + rnd() * 4, opacity: 0 }, $("crumbs"));
+        const t = T0 + 0.1 + (i / 14) * D, p = zig[Math.min(8, Math.floor((i / 14) * 9))];
+        const x = 380 + rnd() * 600;
+        tl.set(c, { opacity: 1, attr: { cx: x, cy: p[1] } }, t);
+        tl.to(c, { attr: { cy: 1246 }, duration: 0.5, ease: "power2.in" }, t);
+        tl.to(c, { opacity: 0, duration: 0.3 }, 13.2);
+      }
+
+      // ---- victory
+      pop("#c5", 12.3);
+      tl.to("#eraser", { x: 960, y: 1185, rotation: 0, duration: 0.25 }, 12.2);
+      tl.to("#iSword", { opacity: 0, duration: 0.2 }, 12.3);
+      tl.to("#inky", { keyframes: [{ y: 1170, duration: 0.18, ease: "power2.out" }, { y: 1250, duration: 0.18, ease: "power2.in" }, { y: 1170, duration: 0.18, ease: "power2.out" }, { y: 1250, duration: 0.18, ease: "power2.in" }] }, 12.35);
+
+      // ---- the eraser comes back and takes his legs (and the cannon)
+      tl.to("#eraser", { scale: 1.5, duration: 0.15 }, 13.4);
+      tl.to("#eraser", { x: 90, duration: 0.6, ease: "none" }, 13.6);
+      tl.to("#eraseGround", { attr: { "stroke-dashoffset": 0 }, duration: 0.6, ease: "none" }, 13.6);
+      tl.to("#eraseLegs", { attr: { "stroke-dashoffset": 0 }, duration: 0.6, ease: "none" }, 13.6);
+      tl.to("#ball", { opacity: 0, duration: 0.05 }, 13.7);
+      tl.to("#eraser", { opacity: 0, duration: 0.2 }, 14.15);
+      tl.to(["#armL", "#armR"], { rotation: 0, duration: 0.15 }, 14.0);
+      face("#mO", 14.05);
+      tl.to("#upper", { y: 130, duration: 0.25, ease: "power2.in" }, 14.15);
+      tl.to("#upper", { keyframes: { scaleY: [1, 0.86, 1] }, transformOrigin: "50% 100%", duration: 0.2 }, 14.4);
+      pop("#c6", 14.3);
+      face("#mWorry", 14.9);
+
+      // ---- he draws himself new (very long) legs and hops on
+      penOn("#penY", 15.7);
+      draw($("newLegs"), [[230, 1250], [300, 750], [370, 1250]], 15.8, 0.95, "#penY");
+      penOff("#penY", 16.8);
+      face("#mSmile", 16.85);
+      tl.to("#upper", { keyframes: [{ y: 160, scaleY: 0.85, duration: 0.12 }, { y: -440, scaleY: 1.12, duration: 0.3, ease: "power2.out" }, { y: -370, scaleY: 1, duration: 0.25, ease: "power2.in" }], transformOrigin: "50% 100%" }, 16.9);
+      tl.to("#upper", { keyframes: { scaleY: [1, 0.9, 1] }, transformOrigin: "50% 100%", duration: 0.25 }, 17.6);
+      pop("#c7", 17.5);
+      tl.to("#armR", { keyframes: { rotation: [0, -110, -90, -110, -90] }, transformOrigin: "0% 0%", duration: 1.6 }, 17.9);
+      tl.to("#upper", { rotation: 4, transformOrigin: "50% 100%", duration: 0.5, yoyo: true, repeat: 2, ease: "sine.inOut" }, 18.3);
+
+      window.__timelines = window.__timelines || {};
+      window.__timelines["main"] = tl;
+      tl.seek(0);
+    </script>
+  </body>
+</html>

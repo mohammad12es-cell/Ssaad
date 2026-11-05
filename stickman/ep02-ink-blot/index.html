@@ -1,0 +1,241 @@
+<!doctype html>
+<html lang="en" data-resolution="portrait">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <script src="assets/gsap.min.js"></script>
+    <script src="assets/inky.js"></script>
+    <style>
+      @font-face { font-family: "Patrick Hand"; font-weight: 400; src: url("assets/patrick-hand-latin-400-normal.woff2") format("woff2"); }
+      :root { --paper: #fbf7ea; --ink: #1d1d2b; --accent: #e63946; --font-display: "Patrick Hand", sans-serif; }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { margin: 0; width: 1080px; height: 1920px; overflow: hidden; background: var(--paper); }
+      #root { position: relative; width: 100%; height: 100%; overflow: hidden; font-family: var(--font-display); }
+      .clip { position: absolute; inset: 0; }
+      svg.stage { width: 1080px; height: 1920px; }
+      .ink { fill: none; stroke: var(--ink); stroke-width: 9; stroke-linecap: round; stroke-linejoin: round; }
+      .cap { position: absolute; left: 60px; right: 60px; top: 200px; height: 200px; text-align: center; color: var(--ink); font-size: 112px; line-height: 1.05; }
+      .cap span { display: inline-block; background: #ffe45c; padding: 0 28px 6px; border: 7px solid var(--ink); border-radius: 26px; transform: rotate(-2deg); }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="20" data-width="1080" data-height="1920">
+      <svg id="world" class="clip stage" data-start="0" data-duration="20" data-track-index="0" viewBox="0 0 1080 1920">
+        <defs>
+          <filter id="boil" x="-5%" y="-5%" width="110%" height="110%">
+            <feTurbulence id="turb" type="fractalNoise" baseFrequency="0.018" numOctaves="1" seed="0" />
+            <feDisplacementMap in="SourceGraphic" scale="5" xChannelSelector="R" yChannelSelector="G" />
+          </filter>
+        </defs>
+        <rect width="1080" height="1920" fill="#fbf7ea" />
+        <g id="lines" stroke="#a9c8ee" stroke-width="3"></g>
+        <line x1="120" y1="0" x2="120" y2="1920" stroke="#f0a3a8" stroke-width="4" />
+
+        <g id="art" filter="url(#boil)">
+          <path class="ink" d="M40,1252 C260,1244 520,1258 760,1248 S1000,1254 1040,1250" />
+
+          <!-- door in the margin -->
+          <rect id="doorway" x="44" y="965" width="146" height="285" fill="#1d1d2b" opacity="0" />
+          <path id="doorLine" class="ink" d="" />
+          <g id="door" opacity="0">
+            <rect x="44" y="965" width="146" height="285" fill="#d9a066" stroke="#1d1d2b" stroke-width="8" />
+            <circle cx="168" cy="1115" r="9" fill="#1d1d2b" />
+          </g>
+
+          <!-- the hole -->
+          <path id="holeLine" class="ink" d="" />
+          <ellipse id="hole" cx="470" cy="1252" rx="95" ry="24" fill="#1d1d2b" opacity="0" />
+
+          <!-- the giant blot rising from the hole -->
+          <g id="giant" transform="translate(470,1258)" opacity="0"><g id="giantS" transform="scale(0.6,0)">
+            <path id="giantBody" fill="#1d1d2b" d="" />
+            <circle cx="-55" cy="-330" r="38" fill="#fff" /><circle cx="55" cy="-330" r="38" fill="#fff" />
+            <circle id="gp1" cx="-65" cy="-325" r="16" fill="#1d1d2b" /><circle id="gp2" cx="45" cy="-325" r="16" fill="#1d1d2b" />
+            <path id="gGrin" d="M-70,-230 Q0,-170 70,-230" fill="none" stroke="#fff" stroke-width="10" stroke-linecap="round" />
+            <rect id="gLids" x="-100" y="-372" width="200" height="0" fill="#1d1d2b" />
+          </g></g>
+
+          <g id="blots"></g>
+          <g id="splash" fill="#1d1d2b"></g>
+          <path id="drop" d="M0,-60 C25,-20 35,0 35,20 A35,35 0 0,1 -35,20 C-35,0 -25,-20 0,-60 Z" fill="#1d1d2b" />
+
+          <path id="eraserLine" class="ink" d="" />
+          <g id="hero"></g>
+          <g id="props"></g>
+        </g>
+        <g id="pens"></g>
+      </svg>
+
+      <div id="c1" class="clip cap" data-start="0" data-duration="1.9" data-track-index="1"><span>Oops… a blot 😒</span></div>
+      <div id="c2" class="clip cap" data-start="3.5" data-duration="1.4" data-track-index="1"><span>It SPLIT 😳</span></div>
+      <div id="c3" class="clip cap" data-start="5.6" data-duration="1.25" data-track-index="1"><span>Again?! 😭</span></div>
+      <div id="c4" class="clip cap" data-start="7.5" data-duration="1.85" data-track-index="1"><span>STOP ERASING 🛑</span></div>
+      <div id="c5" class="clip cap" data-start="9.4" data-duration="1.8" data-track-index="1"><span>Plan B 💡</span></div>
+      <div id="c6" class="clip cap" data-start="12.8" data-duration="1.8" data-track-index="1"><span>Fixed it 😎</span></div>
+      <div id="c7" class="clip cap" data-start="15.3" data-duration="2.0" data-track-index="1"><span>…uh oh</span></div>
+      <div id="c8" class="clip cap" data-start="18.0" data-duration="2.0" data-track-index="1"><span>Nope 🚪</span></div>
+
+      <audio id="sound" src="assets/audio.wav" data-start="0" data-duration="20" data-volume="1"></audio>
+    </div>
+
+    <script>
+      const $ = (id) => document.getElementById(id);
+      const { figure, pencil, eraser, mk, paper, kit } = Inky;
+      paper($("lines"));
+      $("hero").innerHTML = figure("inky");
+      $("props").innerHTML = eraser("eraser");
+      $("pens").innerHTML = pencil("penY", "#ffd23f", "#ff9fb2");
+
+      const tl = gsap.timeline({ paused: true });
+      const K = kit(tl, 11);
+      const { draw, ring, pop, penOn, penOff, face } = K;
+      K.boil(20);
+
+      // wobbly blob outline around (0, -r)
+      const blobPath = (rx, ry, n = 14) => {
+        const pts = [];
+        for (let i = 0; i < n; i++) {
+          const a = (i / n) * 6.2832, k = 0.9 + K.rnd() * 0.2;
+          pts.push([Math.cos(a) * rx * k, -ry + Math.sin(a) * ry * k]);
+        }
+        pts[0][1] = Math.min(pts[0][1], 0);
+        let d = `M${pts[0][0].toFixed(1)},${pts[0][1].toFixed(1)}`;
+        for (let i = 0; i < n; i++) {
+          const p = pts[(i + 1) % n], m = pts[i];
+          d += ` Q${m[0].toFixed(1)},${m[1].toFixed(1)} ${((m[0] + p[0]) / 2).toFixed(1)},${((m[1] + p[1]) / 2).toFixed(1)}`;
+        }
+        return d + " Z";
+      };
+      const blots = [];
+      for (let i = 0; i < 8; i++) {
+        const g = mk("g", { id: "b" + i, opacity: 0 }, $("blots"));
+        mk("path", { d: blobPath(62, 58), fill: "#1d1d2b" }, g);
+        mk("circle", { cx: -20, cy: -72, r: 15, fill: "#fff" }, g); mk("circle", { cx: 20, cy: -72, r: 15, fill: "#fff" }, g);
+        mk("circle", { class: "bp", cx: -24, cy: -70, r: 7, fill: "#1d1d2b" }, g); mk("circle", { class: "bp", cx: 16, cy: -70, r: 7, fill: "#1d1d2b" }, g);
+        blots.push(g);
+      }
+      $("giantBody").setAttribute("d", blobPath(160, 230, 16));
+      for (let i = 0; i < 8; i++) mk("circle", { class: "spl", cx: 0, cy: 0, r: 9 + (i % 3) * 4, opacity: 0 }, $("splash"));
+
+      tl.set("#inky", { x: 230, y: 1250 }, 0);
+            face("inky", "o", 0);
+
+      // ---- HOOK: an ink drop falls and splats
+      pop("#c1", 0);
+      tl.fromTo("#drop", { x: 780, y: 420 }, { y: 1215, duration: 0.38, ease: "power2.in" }, 0);
+      tl.set("#drop", { opacity: 0 }, 0.38);
+      tl.set(".spl", { opacity: 1, x: 780, y: 1230 }, 0.38);
+      tl.to(".spl", { keyframes: { y: [1230, 1100, 1245] }, x: (i) => 780 + (i - 3.5) * 40, duration: 0.45, ease: "power1.in" }, 0.38);
+      tl.to(".spl", { opacity: 0, duration: 0.12 }, 0.85);
+      tl.set("#b0", { opacity: 1, x: 780, y: 1250, scale: 1.25 }, 0.38);
+      tl.fromTo("#b0", { scaleY: 0.4, scaleX: 1.7 }, { scaleY: 1.25, scaleX: 1.25, transformOrigin: "50% 100%", duration: 0.4, ease: "back.out(3)" }, 0.38);
+      tl.fromTo("#art", { y: 0 }, { keyframes: { y: [0, 10, -6, 0] }, duration: 0.25 }, 0.38);
+      face("inky", "sad", 0.9);
+
+      // ---- Inky draws an eraser and rubs the blot
+      penOn("#penY", 1.85);
+      draw("#eraserLine", [[310, 810], [490, 810], [490, 900], [310, 900], [310, 810], [390, 810], [390, 900]], 1.9, 0.6, "#penY");
+      penOff("#penY", 2.5);
+      tl.set("#eraser", { x: 400, y: 855 }, 2.5);
+      tl.to("#eraser", { opacity: 1, duration: 0.1 }, 2.5);
+      tl.to("#eraserLine", { opacity: 0, duration: 0.1 }, 2.55);
+      face("inky", "smile", 2.55);
+      const rubAt = (t, x0, x1, n) => {
+        tl.to("#eraser", { x: x0, y: 1150, rotation: 10, duration: 0.15, ease: "power2.in" }, t - 0.15);
+        tl.to("#eraser", { keyframes: Array.from({ length: n }, (_, i) => ({ x: i % 2 ? x0 : x1, rotation: i % 2 ? 10 : -10, duration: 0.6 / n, ease: "sine.inOut" })) }, t);
+        tl.to("#eraser", { x: 400, y: 855, rotation: 0, duration: 0.2, ease: "power2.out" }, t + 0.62);
+      };
+      // positions of each split stage
+      const stages = [[780], [660, 900], [620, 740, 860, 980], [590, 647, 704, 761, 818, 875, 932, 989]];
+      const scales = [1.25, 0.9, 0.62, 0.42];
+      const split = (k, t) => {
+        stages[k].forEach((x, i) => {
+          const parent = stages[k - 1][i >> 1];
+          tl.set("#b" + i, { opacity: 1, x: parent, y: 1250 }, t);
+          tl.to("#b" + i, { keyframes: [{ x: (parent + x) / 2, y: 1170, scale: scales[k], duration: 0.16, ease: "power2.out" }, { x, y: 1250, duration: 0.18, ease: "power2.in" }] }, t);
+        });
+      };
+      rubAt(2.85, 720, 840, 6);
+      split(1, 3.5);
+      face("inky", "o", 3.55);
+      rubAt(5.0, 640, 920, 6);
+      split(2, 5.6);
+      face("inky", "worry", 5.65);
+      rubAt(6.9, 600, 1000, 6);
+      split(3, 7.5);
+      tl.fromTo("#inky-sweat", { opacity: 0, y: 0 }, { opacity: 1, y: 30, duration: 0.5 }, 7.6);
+      tl.to("#inky-sweat", { opacity: 0, duration: 0.15 }, 8.2);
+
+      // blots creep toward him, eraser drops
+      tl.to(blots, { x: "-=45", duration: 1.1, stagger: 0.04 }, 8.0);
+      tl.to(blots, { keyframes: { y: [1250, 1225, 1250, 1225, 1250] }, duration: 1.1, stagger: 0.04 }, 8.0);
+      tl.to(".bp", { attr: { cx: "-=4" }, duration: 0.2 }, 8.0);
+      tl.to("#eraser", { x: 360, y: 1210, rotation: 80, duration: 0.35, ease: "bounce.out" }, 8.6);
+      tl.to("#eraser", { opacity: 0, duration: 0.2 }, 9.4);
+
+      // ---- Plan B: draw a hole
+      pop("#c5", 9.4);
+      penOn("#penY", 9.45);
+      draw("#holeLine", ring(470, 1252, 95, 24, 22), 9.5, 0.6, "#penY");
+      penOff("#penY", 10.15);
+      tl.to("#hole", { opacity: 1, duration: 0.15 }, 10.1);
+      tl.to("#holeLine", { opacity: 0, duration: 0.15 }, 10.2);
+      face("inky", "smile", 10.2);
+      tl.to("#inky-armR", { rotation: -60, transformOrigin: "0% 0%", duration: 0.2 }, 10.25);
+      tl.to("#inky-armR", { rotation: 0, duration: 0.2 }, 10.7);
+
+      // blots chase him and drop into the hole, nearest first
+      blots.forEach((b, i) => {
+        const t = 10.6 + i * 0.24, x0 = stages[3][i] - 45;
+        tl.to(b, { keyframes: [{ x: (x0 + 470) / 2, y: 1130, duration: 0.18, ease: "power2.out" }, { x: 470, y: 1250, duration: 0.16, ease: "power2.in" }] }, t);
+        tl.to(b, { scaleY: 0.05, scaleX: 0.3, y: 1262, transformOrigin: "50% 100%", duration: 0.12 }, t + 0.34);
+        tl.set(b, { opacity: 0 }, t + 0.46);
+      });
+      tl.to("#hole", { keyframes: { scaleX: [1, 1.1, 1] }, transformOrigin: "50% 50%", duration: 0.24, repeat: 7 }, 10.95);
+
+      // ---- victory
+      pop("#c6", 12.8);
+      K.hop("#inky", 12.85, 70, 2);
+      tl.to("#inky-armL", { rotation: 80, transformOrigin: "100% 0%", duration: 0.2 }, 12.85);
+      tl.to("#inky-armR", { rotation: -80, transformOrigin: "0% 0%", duration: 0.2 }, 12.85);
+      tl.to(["#inky-armL", "#inky-armR"], { rotation: 0, duration: 0.2 }, 14.0);
+
+      // ---- the hole rumbles and a giant blot rises
+      tl.to("#hole", { keyframes: { scaleX: [1, 1.25, 0.9, 1.3, 1] }, transformOrigin: "50% 50%", duration: 0.5 }, 14.7);
+      tl.to("#art", { keyframes: { x: [0, 6, -6, 6, -6, 0] }, duration: 0.5 }, 14.7);
+      face("inky", "o", 14.8);
+      tl.to("#hole", { scaleX: 1.6, transformOrigin: "50% 50%", duration: 0.3 }, 15.2);
+      tl.set("#giant", { opacity: 1 }, 15.2);
+      tl.fromTo("#giantS", { attr: { transform: "scale(0.6,0)" } }, { attr: { transform: "scale(1,1.08)" }, duration: 0.55, ease: "power3.out" }, 15.2);
+      tl.to("#giantS", { attr: { transform: "scale(1,1)" }, duration: 0.25 }, 15.75);
+      pop("#c7", 15.3);
+      tl.to("#inky", { x: 205, duration: 0.3 }, 15.6);
+      tl.to("#inky-upper", { rotation: -8, transformOrigin: "50% 100%", duration: 0.3 }, 15.6);
+      tl.to(["#gp1", "#gp2"], { attr: { cx: "-=12" }, duration: 0.25 }, 16.2);
+      tl.to("#gGrin", { keyframes: { scaleY: [1, 1.5, 1] }, transformOrigin: "50% 50%", duration: 0.5 }, 16.4);
+      face("inky", "worry", 16.3);
+
+      // ---- he draws a door in the margin and leaves
+      penOn("#penY", 17.3);
+      draw("#doorLine", [[44, 1250], [44, 965], [190, 965], [190, 1250]], 17.35, 0.55, "#penY");
+      penOff("#penY", 17.95);
+      tl.to("#door", { opacity: 1, duration: 0.1 }, 17.95);
+      tl.to("#doorLine", { opacity: 0, duration: 0.1 }, 18.0);
+      tl.set("#doorway", { opacity: 1 }, 18.05);
+      tl.to("#door", { scaleX: 0.12, transformOrigin: "0% 50%", duration: 0.2, ease: "power2.out" }, 18.05);
+      pop("#c8", 18.0);
+      tl.to("#inky-upper", { rotation: 0, duration: 0.1 }, 18.2);
+      tl.to("#inky", { x: 117, duration: 0.25, ease: "power2.in" }, 18.25);
+      tl.set("#inky", { opacity: 0 }, 18.5);
+      tl.to("#door", { scaleX: 1, transformOrigin: "0% 50%", duration: 0.15, ease: "power3.in" }, 18.55);
+      tl.set("#doorway", { opacity: 0 }, 18.7);
+      tl.to("#giantS", { keyframes: [{ attr: { transform: "scale(1.08,1)" }, duration: 0.12 }, { attr: { transform: "scale(1,1)" }, duration: 0.13 }] }, 18.7);
+      tl.to("#gLids", { keyframes: { attr: { height: [0, 44, 0] } }, duration: 0.3 }, 19.2);
+      tl.to(["#gp1", "#gp2"], { attr: { cx: "-=10" }, duration: 0.2 }, 19.5);
+
+      window.__timelines = window.__timelines || {};
+      window.__timelines["main"] = tl;
+      tl.seek(0);
+    </script>
+  </body>
+</html>

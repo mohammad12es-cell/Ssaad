@@ -1,0 +1,29 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:PH;src:url(patrick-hand-latin-400-normal.woff2)}
+html,body{margin:0;width:800px;height:800px;background:#fbf7ea;overflow:hidden}
+</style></head><body>
+<svg width="800" height="800" viewBox="0 0 800 800">
+ <rect width="800" height="800" fill="#ffe45c"/>
+ <circle cx="400" cy="400" r="330" fill="#fbf7ea" stroke="#1d1d2b" stroke-width="14"/>
+ <clipPath id="c"><circle cx="400" cy="400" r="323"/></clipPath>
+ <g clip-path="url(#c)">
+  <g stroke="#a9c8ee" stroke-width="5">${''}</g>
+  <line x1="190" y1="0" x2="190" y2="800" stroke="#f0a3a8" stroke-width="6"/>
+ </g>
+ <g fill="none" stroke="#1d1d2b" stroke-width="16" stroke-linecap="round">
+  <circle cx="400" cy="330" r="120" fill="#fbf7ea"/>
+  <line x1="400" y1="450" x2="400" y2="700"/>
+  <line x1="400" y1="510" x2="300" y2="610"/>
+  <line x1="400" y1="510" x2="530" y2="430"/>
+ </g>
+ <circle cx="358" cy="305" r="15" fill="#1d1d2b"/><circle cx="442" cy="305" r="15" fill="#1d1d2b"/>
+ <path d="M345,365 Q400,410 455,365" fill="none" stroke="#1d1d2b" stroke-width="13" stroke-linecap="round"/>
+ <g transform="translate(530,430) rotate(10)">
+  <polygon points="0,0 14,-44 40,-32" fill="#1d1d2b"/>
+  <polygon points="14,-44 40,-32 110,-190 84,-202" fill="#ffd23f" stroke="#1d1d2b" stroke-width="9" stroke-linejoin="round"/>
+  <polygon points="84,-202 110,-190 124,-222 98,-234" fill="#ff9fb2" stroke="#1d1d2b" stroke-width="9" stroke-linejoin="round"/>
+ </g>
+</svg>
+<script>
+const g=document.querySelector('g[stroke="#a9c8ee"]');for(let y=40;y<800;y+=70){const l=document.createElementNS('http://www.w3.org/2000/svg','line');l.setAttribute('x1',0);l.setAttribute('x2',800);l.setAttribute('y1',y);l.setAttribute('y2',y);g.appendChild(l)}
+</script></body></html>

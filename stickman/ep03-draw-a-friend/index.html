@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="en" data-resolution="portrait">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <script src="assets/gsap.min.js"></script>
+    <script src="assets/inky.js"></script>
+    <style>
+      @font-face { font-family: "Patrick Hand"; font-weight: 400; src: url("assets/patrick-hand-latin-400-normal.woff2") format("woff2"); }
+      :root { --paper: #fbf7ea; --ink: #1d1d2b; --accent: #e63946; --font-display: "Patrick Hand", sans-serif; }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { margin: 0; width: 1080px; height: 1920px; overflow: hidden; background: var(--paper); }
+      #root { position: relative; width: 100%; height: 100%; overflow: hidden; font-family: var(--font-display); }
+      .clip { position: absolute; inset: 0; }
+      svg.stage { width: 1080px; height: 1920px; }
+      .ink { fill: none; stroke: var(--ink); stroke-width: 9; stroke-linecap: round; stroke-linejoin: round; }
+      .red { fill: none; stroke: var(--accent); stroke-width: 9; stroke-linecap: round; stroke-linejoin: round; }
+      .cap { position: absolute; left: 60px; right: 60px; top: 200px; height: 260px; text-align: center; color: var(--ink); font-size: 108px; line-height: 1.05; }
+      .cap span { display: inline-block; background: #ffe45c; padding: 0 28px 6px; border: 7px solid var(--ink); border-radius: 26px; transform: rotate(-2deg); }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="20" data-width="1080" data-height="1920">
+      <svg id="world" class="clip stage" data-start="0" data-duration="20" data-track-index="0" viewBox="0 0 1080 1920">
+        <defs>
+          <filter id="boil" x="-5%" y="-5%" width="110%" height="110%">
+            <feTurbulence id="turb" type="fractalNoise" baseFrequency="0.018" numOctaves="1" seed="0" />
+            <feDisplacementMap in="SourceGraphic" scale="5" xChannelSelector="R" yChannelSelector="G" />
+          </filter>
+        </defs>
+        <rect width="1080" height="1920" fill="#fbf7ea" />
+        <g id="lines" stroke="#a9c8ee" stroke-width="3"></g>
+        <line x1="120" y1="0" x2="120" y2="1920" stroke="#f0a3a8" stroke-width="4" />
+
+        <g id="art" filter="url(#boil)">
+          <path class="ink" d="M40,1252 C260,1244 520,1258 760,1248 S1000,1254 1040,1250" />
+
+          <!-- little rain cloud over Inky -->
+          <g id="cloud">
+            <path d="M190,700 C170,640 240,610 270,640 C290,590 370,600 375,650 C420,640 440,700 400,712 Z" fill="#c9ced8" stroke="#1d1d2b" stroke-width="8" stroke-linejoin="round" />
+            <g id="rain" stroke="#5aa9e6" stroke-width="6" stroke-linecap="round"></g>
+          </g>
+
+          <!-- strokes drawn on screen -->
+          <g id="sketch"></g>
+
+          <!-- the dog (same shapes as its sketch, filled) -->
+          <g id="dog" opacity="0">
+            <path id="tail" d="M535,1150 Q505,1120 500,1105" fill="none" stroke="#1d1d2b" stroke-width="9" stroke-linecap="round" transform="rotate(0 535 1150)" />
+            <g stroke="#1d1d2b" stroke-width="9" stroke-linecap="round">
+              <line x1="570" y1="1195" x2="565" y2="1250" /><line x1="600" y1="1200" x2="600" y2="1250" />
+              <line x1="645" y1="1200" x2="645" y2="1250" /><line x1="675" y1="1195" x2="680" y2="1250" />
+            </g>
+            <ellipse cx="620" cy="1160" rx="85" ry="45" fill="#fff" stroke="#1d1d2b" stroke-width="9" />
+            <g id="dogHead">
+              <circle cx="720" cy="1100" r="42" fill="#fff" stroke="#1d1d2b" stroke-width="9" />
+              <path d="M700,1070 L688,1028 L716,1062" fill="#c98a5a" stroke="#1d1d2b" stroke-width="7" stroke-linejoin="round" />
+              <circle cx="728" cy="1090" r="7" fill="#1d1d2b" /><circle cx="758" cy="1102" r="9" fill="#1d1d2b" />
+              <path id="tongue" d="M740,1122 q6,22 16,0" fill="#ff7b9c" stroke="#1d1d2b" stroke-width="5" opacity="0" />
+            </g>
+          </g>
+
+          <g id="hero"></g>
+          <g id="fx"></g>
+        </g>
+        <g id="pens"></g>
+      </svg>
+
+      <div id="c1" class="clip cap" data-start="0" data-duration="1.8" data-track-index="1"><span>So lonely… 🥲</span></div>
+      <div id="c2" class="clip cap" data-start="1.9" data-duration="2.6" data-track-index="1"><span>Draws a friend ✏️</span></div>
+      <div id="c3" class="clip cap" data-start="6.85" data-duration="2.3" data-track-index="1"><span>"Inky 2.0" 😎</span></div>
+      <div id="c4" class="clip cap" data-start="9.3" data-duration="1.7" data-track-index="1"><span>…wow 😐</span></div>
+      <div id="c5" class="clip cap" data-start="11.1" data-duration="1.6" data-track-index="1"><span>Plan B 🐶</span></div>
+      <div id="c6" class="clip cap" data-start="12.8" data-duration="2.2" data-track-index="1"><span>Real friend ❤️</span></div>
+      <div id="c7" class="clip cap" data-start="15.8" data-duration="2.0" data-track-index="1"><span>…he ate the pencil</span></div>
+      <div id="c8" class="clip cap" data-start="17.9" data-duration="2.1" data-track-index="1"><span>Worth it 🐶</span></div>
+
+      <audio id="sound" src="assets/audio.wav" data-start="0" data-duration="20" data-volume="1"></audio>
+    </div>
+
+    <script>
+      const $ = (id) => document.getElementById(id);
+      const { figure, pencil, heart, mk, paper, kit } = Inky;
+      paper($("lines"));
+      $("hero").innerHTML = figure("inky") + figure("pal", { color: "#e63946" }) + figure("cool", { buff: true, glasses: true, width: 12 });
+      ["pal", "cool"].forEach((id) => $(id).setAttribute("opacity", "0"));
+      $("fx").innerHTML = heart("h1") + heart("h2") + heart("h3");
+      $("pens").innerHTML = pencil("penY", "#ffd23f", "#ff9fb2") + pencil("penR", "#e63946", "#2a2a3a");
+
+      const tl = gsap.timeline({ paused: true });
+      const K = kit(tl, 23);
+      const { drawAll, draw, ring, pop, penOn, penOff, face, hop } = K;
+      K.boil(20);
+      const sk = (cls = "ink", w) => { const e = mk("path", { class: cls, d: "" }, $("sketch")); if (w) e.style.strokeWidth = w; return e; };
+
+      // rain: two 120px tiles so a 120px shift loops
+      for (let r = 0; r < 3; r++) for (let i = 0; i < 5; i++) {
+        const x = 210 + i * 42 + (r % 2) * 18, y = 725 + r * 60;
+        mk("line", { x1: x, y1: y, x2: x - 6, y2: y + 26 }, $("rain"));
+      }
+
+      tl.set("#inky", { x: 300, y: 1250 }, 0);
+      tl.set("#pal", { x: 700, y: 1250, opacity: 0 }, 0);
+      tl.set("#cool", { x: 880, y: 1250, opacity: 0 }, 0);
+      face("inky", "sad", 0);
+
+      // ---- HOOK: alone under a rain cloud
+      pop("#c1", 0);
+      tl.fromTo("#rain", { y: 0 }, { y: 60, duration: 0.3, ease: "none", repeat: 10 }, 0);
+      tl.to("#inky-upper", { rotation: -3, transformOrigin: "50% 100%", duration: 0.6, yoyo: true, repeat: 1, ease: "sine.inOut" }, 0.2);
+
+      // ---- he draws a friend
+      pop("#c2", 1.9);
+      penOn("#penY", 1.85);
+      let t = drawAll([
+        [sk("red"), ring(700, 920, 55)],
+        [sk("red"), [[700, 975], [700, 1120]]],
+        [sk("red"), [[700, 1010], [630, 1080]]],
+        [sk("red"), [[700, 1010], [770, 1080]]],
+        [sk("red"), [[700, 1120], [655, 1250]]],
+        [sk("red"), [[700, 1120], [745, 1250]]],
+      ], 1.95, 1300, "#penY");
+      penOff("#penY", t);
+      tl.to("#sketch path", { opacity: 0, duration: 0.1 }, t + 0.05);
+      tl.to("#pal", { opacity: 1, duration: 0.1 }, t);
+      face("pal", "smile", t);
+      tl.to("#pal-armR", { keyframes: { rotation: [0, -120, -90, -120, -90, 0] }, transformOrigin: "0% 0%", duration: 1.2 }, t + 0.2);
+      tl.to("#cloud", { opacity: 0, y: -40, duration: 0.4 }, t + 0.2);
+      face("inky", "smile", t + 0.25);
+      hop("#inky", t + 0.35, 60, 2);
+      const T1 = t;
+
+      // ---- the friend draws a "better Inky"
+      penOn("#penR", 5.0);
+      tl.to("#pal-armR", { rotation: -50, transformOrigin: "0% 0%", duration: 0.2 }, 5.0);
+      const cool = [
+        [sk("ink", 12), ring(880, 920, 55)],
+        [sk("ink", 10), [[838, 906], [922, 906]]],
+        [sk("ink", 12), [[880, 975], [825, 988], [880, 1100], [935, 988], [880, 975]]],
+        [sk("ink", 12), [[880, 1010], [810, 1080]]],
+        [sk("ink", 12), [[880, 1010], [950, 1080]]],
+        [sk("ink", 12), [[880, 1120], [835, 1250]]],
+        [sk("ink", 12), [[880, 1120], [925, 1250]]],
+      ];
+      t = drawAll(cool, 5.1, 1500, "#penR");
+      penOff("#penR", t);
+      tl.to("#pal-armR", { rotation: 0, duration: 0.2 }, t);
+      tl.to(cool.map((c) => c[0]), { opacity: 0, duration: 0.1 }, t + 0.05);
+      tl.to("#cool", { opacity: 1, duration: 0.1 }, t);
+      pop("#c3", 6.85);
+      tl.to("#cool-armL", { keyframes: { rotation: [0, 110, 80, 110, 0] }, transformOrigin: "100% 0%", duration: 1.0 }, 7.0);
+      tl.to("#cool-armR", { keyframes: { rotation: [0, -110, -80, -110, 0] }, transformOrigin: "0% 0%", duration: 1.0 }, 7.0);
+      face("inky", "o", 7.0);
+      tl.set("#h1", { x: 760, y: 900 }, 7.6);
+      tl.fromTo("#h1", { opacity: 0, scale: 0.3 }, { opacity: 1, scale: 1.2, y: 820, duration: 0.5, ease: "back.out(2)" }, 7.6);
+      tl.to("#h1", { opacity: 0, duration: 0.3 }, 8.5);
+      face("inky", "sad", 8.4);
+
+      // they walk off together
+      tl.to(["#pal", "#cool"], { x: "+=640", duration: 1.6, ease: "power1.in" }, 9.0);
+      tl.to(["#pal", "#cool"], { keyframes: { y: [1250, 1236, 1250, 1236, 1250, 1236, 1250, 1236, 1250] }, duration: 1.6 }, 9.0);
+      pop("#c4", 9.3);
+      tl.to("#cloud", { opacity: 1, y: 0, duration: 0.4 }, 10.0);
+      tl.fromTo("#rain", { y: 0 }, { y: 60, duration: 0.3, ease: "none", repeat: 3 }, 10.0);
+
+      // ---- Plan B: he draws a dog
+      pop("#c5", 11.1);
+      penOn("#penY", 11.1);
+      const dogSk = [
+        [sk(), ring(620, 1160, 85, 45, 22)],
+        [sk(), ring(720, 1100, 42)],
+        [sk(), [[700, 1070], [688, 1028], [716, 1062]]],
+        [sk(), [[535, 1150], [515, 1125], [500, 1105]]],
+        [sk(), [[570, 1195], [565, 1250]]], [sk(), [[600, 1200], [600, 1250]]],
+        [sk(), [[645, 1200], [645, 1250]]], [sk(), [[675, 1195], [680, 1250]]],
+      ];
+      t = drawAll(dogSk, 11.15, 2100, "#penY");
+      penOff("#penY", t);
+      tl.to("#cloud", { opacity: 0, y: -40, duration: 0.3 }, t);
+      tl.to("#dog", { opacity: 1, duration: 0.1 }, t);
+      tl.to(dogSk.map((c) => c[0]), { opacity: 0, duration: 0.1 }, t + 0.05);
+      tl.fromTo("#tail", { attr: { transform: "rotate(-15 535 1150)" } }, { attr: { transform: "rotate(25 535 1150)" }, duration: 0.12, yoyo: true, repeat: 31, ease: "sine.inOut" }, t + 0.1);
+      const T3 = t;
+
+      // the dog runs over and loves him
+      tl.to("#dog", { x: -140, duration: 0.35, ease: "power2.inOut" }, T3 + 0.25);
+      tl.to("#dog", { keyframes: { y: [0, -30, 0] }, duration: 0.35 }, T3 + 0.25);
+      pop("#c6", 12.8);
+      face("inky", "smile", 12.9);
+      tl.to("#tongue", { opacity: 1, duration: 0.1 }, 13.0);
+      tl.to("#dogHead", { keyframes: { rotation: [0, -12, 0, -12, 0] }, transformOrigin: "30% 70%", duration: 0.8 }, 13.0);
+      tl.set(["#h2", "#h3"], { x: (i) => 380 + i * 110, y: 880 }, 13.1);
+      tl.fromTo(["#h2", "#h3"], { opacity: 0, scale: 0.3 }, { opacity: 1, scale: 1, y: 800, duration: 0.5, stagger: 0.2, ease: "back.out(2)" }, 13.1);
+      tl.to(["#h2", "#h3"], { opacity: 0, duration: 0.3 }, 14.5);
+      tl.to("#inky-armR", { rotation: 40, transformOrigin: "0% 0%", duration: 0.25, yoyo: true, repeat: 3 }, 13.4);
+      hop("#dog", 14.1, 40, 2);
+
+      // ---- the dog eats the pencil
+      tl.set("#penY", { x: 380, y: 1085, rotation: 0 }, 15.0);
+      penOn("#penY", 15.0);
+      tl.to("#tongue", { opacity: 0, duration: 0.1 }, 15.0);
+      tl.to("#dogHead", { rotation: -18, transformOrigin: "30% 70%", duration: 0.2, yoyo: true, repeat: 1 }, 15.15);
+      tl.to("#penY", { x: 605, y: 1120, rotation: 70, duration: 0.25, ease: "power2.in" }, 15.5);
+      tl.to("#penY", { opacity: 0, duration: 0.05 }, 15.75);
+      tl.to("#dog", { keyframes: { scaleY: [1, 0.92, 1, 0.92, 1, 0.92, 1] }, transformOrigin: "50% 100%", duration: 0.5 }, 15.75);
+      pop("#c7", 15.8);
+      face("inky", "o", 15.8);
+
+      // ---- burp: a heart doodle comes out
+      const hp = Array.from({ length: 33 }, (_, i) => { const a = (i / 32) * 6.2832; return [540 + 5.2 * 16 * Math.sin(a) ** 3, 900 - 5.2 * (13 * Math.cos(a) - 5 * Math.cos(2 * a) - 2 * Math.cos(3 * a) - Math.cos(4 * a))]; });
+      tl.to("#dogHead", { rotation: -25, transformOrigin: "30% 70%", duration: 0.15, yoyo: true, repeat: 1 }, 17.5);
+      draw(sk("red", 11), [[605, 1080], [600, 1030], [612, 990], [600, 960]].concat(hp.map(([x, y]) => [x + 60, y])), 17.6, 0.7);
+      pop("#c8", 17.9);
+      face("inky", "smile", 18.3);
+      tl.to("#inky-armR", { rotation: 40, transformOrigin: "0% 0%", duration: 0.25, yoyo: true, repeat: 3 }, 18.4);
+
+      window.__timelines = window.__timelines || {};
+      window.__timelines["main"] = tl;
+      tl.seek(0);
+    </script>
+  </body>
+</html>

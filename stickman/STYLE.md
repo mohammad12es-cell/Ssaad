@@ -18,9 +18,17 @@
 - Fonts are OFL (Patrick Hand), GSAP is free to use.
 
 ## Episodes
-1. `ep01-draw-battle`: Drawing Battle (eraser takes his legs, he draws giant ones).
+1. `ep01-draw-battle`: Drawing Battle (the eraser takes his legs, so he draws giant ones).
+2. `ep02-ink-blot`: Ink Blot (erasing makes it split, the hole spits out a giant blot, he escapes through a margin door).
+3. `ep03-draw-a-friend`: Draw a Friend (his friend draws "Inky 2.0" and leaves with him, Plan B is a dog that eats the pencil).
+
+## Building an episode
+- Shared rig and helpers: `shared/inky.js` (copy it into the episode's `assets/`). Shared synth: `shared/sfx.py`.
+- Copy an existing episode folder, change `index.html` and `make_audio.py`, then run `python3 make_audio.py` and `npx hyperframes render`.
+- Scale SVG groups with an attribute tween (`attr: { transform: "scale(...)" }`) when the pivot must be an exact point. A GSAP `transformOrigin` on a group scaled from 0 drifts.
 
 ## Next ideas
-- Inky draws a door to escape the page, and it opens onto another notebook page with the monster.
-- Inky vs. the ink blot: every drop he erases splits into two.
-- Inky draws a friend, and the friend draws a better Inky.
+- Inky draws a door off the page and walks into the back of the notebook.
+- Inky draws a ladder up to the caption box and steals the emoji.
+- Inky draws a phone charger, and the notebook's spiral binding eats the cable.
+- The page gets coffee spilled on it (a brown flood), so he draws a boat.

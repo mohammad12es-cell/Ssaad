@@ -78,7 +78,7 @@ def shot(t, tl):
             x0, y0, y1 = 540, 470, 1130
             lvl = ease(clamp((u - 0.5) / 2.8))
             cv.do.rounded_rectangle([x0 - 34, y0, x0 + 34, y1], radius=34, outline=(255, 255, 255, int(220 * a)), width=6)
-            ytop = y1 - (y1 - y0 - 30) * lvl
+            ytop = min(y1 - 16, y1 - (y1 - y0 - 30) * lvl)
             cv.do.rounded_rectangle([x0 - 20, ytop, x0 + 20, y1 - 14], radius=20, fill=(255, 40, 30, int(255 * a)))
             cv.dg.rounded_rectangle([x0 - 20, ytop, x0 + 20, y1 - 14], radius=20, fill=(int(255 * a), int(40 * a), 0))
             cv.dot(x0, y1 + 30, 58, RED, a, 1.0)

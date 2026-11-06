@@ -1,0 +1,25 @@
+<!doctype html><html><head><meta charset="utf-8">
+<style>html,body{margin:0;width:1920px;height:1080px;overflow:hidden;background:#efe3c8}</style>
+<script src="lib.js"></script></head><body><svg id="s" width="1920" height="1080" viewBox="0 0 1920 1080"></svg>
+<script>
+const P = [
+  ['ducat', 'JAMES DUCAT', 'Principal keeper · ~40s', 230],
+  ['marshall', 'THOMAS MARSHALL', 'Assistant keeper · late 20s', 600],
+  ['macarthur', 'DONALD MACARTHUR', 'Occasional keeper · no coat', 960],
+  ['moore', 'JOSEPH MOORE', 'Relief keeper · found it', 1320],
+  ['muirhead', 'ROBERT MUIRHEAD', 'Investigator · 1900', 1690],
+];
+let h = defs() + `<rect width="1920" height="1080" fill="${PAPER}"/>`;
+h += `<text x="960" y="92" text-anchor="middle" font-family="${SERIF}" font-size="58" font-weight="700" fill="${INK}" letter-spacing="6">THE LAST LOG</text>
+<text x="960" y="140" text-anchor="middle" font-family="${MONO}" font-size="26" fill="${RED}" letter-spacing="3">CASE 01 · EILEAN MÒR · DECEMBER 1900 · CHARACTER SHEET</text>
+<path d="M260,165 H1660" stroke="${INK}" stroke-width="2" stroke-dasharray="10 8"/>`;
+for (const [k, name, role, x] of P) {
+  h += `<rect x="${x - 165}" y="200" width="330" height="800" rx="8" fill="#e6d6b4" stroke="${INK}" stroke-width="2" opacity=".7"/>`;
+  h += `<g transform="translate(${x},880) scale(1.02)">${CAST[k]()}</g>`;
+  h += `<text x="${x}" y="935" text-anchor="middle" font-family="${SERIF}" font-size="30" font-weight="700" fill="${INK}">${name}</text>
+        <text x="${x}" y="972" text-anchor="middle" font-family="${MONO}" font-size="18" fill="#5a4a3a">${role}</text>`;
+}
+h += texture(1920, 1080);
+h += `<text x="1890" y="1060" text-anchor="end" font-family="${MONO}" font-size="16" fill="#5a4a3a">Illustrations · not portraits of the real men</text>`;
+document.getElementById('s').innerHTML = h;
+</script></body></html>

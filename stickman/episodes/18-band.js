@@ -15,7 +15,7 @@ EPISODE({ title: "The Band", seed: 195, music: "happy" }, (E) => {
   E.grin("mon").draw("mon", "drum", 1300, 1250, { id: "drum2", s: 1.9, speed: 2600 }).wait(0.2);
   E.quake(18, 0.4).sfx("slam", 1.0).sfx("thud", 60, 0.6, 1.0).to("#inky", { x: 180 }, 0.3).wait(0.2).to("#hp", { y: -500, rotation: 200, opacity: 0, transformOrigin: "50% 50%" }, 0.5).wait(0.8);
   E.face("inky", "o").cap("BOOM 💥").wait(1.2);
-  E.music("bright").dog("dog", -400).walk("dog", 560, 1.0).wait(1.0);
+  E.music("bright").dog("dog", -800).walk("dog", 560, 1.0).wait(1.0);
   E.sfx("bark", 0.4).wait(0.3).sfx("bark", 0.4).cap("…a howling dog? 🐶").wag("dog", 14).wait(1.2);
   E.face("inky", "smile").grin("mon");
   ["#inky", "#mon", "#dog"].forEach((s) => E.hop(s, 50, 3));

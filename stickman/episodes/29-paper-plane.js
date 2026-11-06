@@ -10,10 +10,11 @@ EPISODE({ title: "Paper Plane", seed: 316, music: "bright" }, (E) => {
   E.cap("Harder this time 💪").arm("inky", "R", -80, 0.15).sfx("whoosh", 0.5, 0.4);
   E.to("#pl", { x: 1400, y: -400, rotation: -15, ease: "power1.in" }, 0.8).wait(1.2);
   E.cap("…bye plane 👋").wait(1.2);
-  E.music("chase").monster("mon", 0, { layer: "front" });
+  E.music("chase").monster("mon", 0, { layer: "front", hidden: true });
   E.el("g", { id: "rider" }, E.$("front")).appendChild(E.$("mon"));
   E.set("#rider", { x: 1700, y: 0, scale: 0.4, transformOrigin: "50% 100%" }).set("#mon", { x: 0, y: 0 });
   E.set("#pl", { x: 1700, y: -300, rotation: 180, scaleY: -1 });
+  E.set("#mon", { opacity: 1 });
   E.to("#pl", { x: -1500, y: -120 }, 1.4).to("#rider", { x: -1000, y: -120 + 1050 - 20 }, 1.4).sfx("whoosh", 1.2, 0.6).wait(0.55);
   E.to("#inky", { rotation: -60, transformOrigin: "50% 100%" }, 0.2).wait(0.3).to("#inky", { rotation: 0 }, 0.3).wait(0.6);
   E.cap("Air Monster ✈️😈").face("inky", "o").wait(1.6);

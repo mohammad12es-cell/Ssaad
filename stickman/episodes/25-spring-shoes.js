@@ -14,7 +14,7 @@ EPISODE({ title: "Spring Shoes", seed: 272, music: "happy" }, (E) => {
   E.set("#inky", { rotation: 180, transformOrigin: "50% 50%", y: -900 }).to("#inky", { y: 1250 - 480, ease: "power2.in" }, 0.6).wait(0.6);
   E.quake(14).sfx("slam", 0.9).wait(0.5);
   E.cap("…help 🙃").wait(1.6);
-  E.music("bright").dog("dog", -400).walk("dog", 420, 0.9).wait(0.9).sfx("bark", 0.4);
+  E.music("bright").dog("dog", -800).walk("dog", 420, 0.9).wait(0.9).sfx("bark", 0.4);
   E.to("#inky", { rotation: 360, y: 1250, transformOrigin: "50% 50%" }, 0.5).wait(0.6).hide(["#s1", "#s2"], 0.1);
   E.to("#inky-upper", { y: 0 }, 0.2).to("#inky-legsWrap", { y: 0 }, 0.2).stars(600, 870, 1.6).wait(0.6);
   E.wag("dog", 8).cap("Good boy 🐶", 2.6).wait(2.6).end(0.3);

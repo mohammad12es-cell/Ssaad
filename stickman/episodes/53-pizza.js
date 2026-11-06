@@ -1,5 +1,5 @@
 EPISODE({ title: "Pizza Night", seed: 580, music: "happy" }, (E) => {
-  E.pageNo(53).fig("inky", 200).fig("pal", 1250, { color: "#e63946" }).monster("mon", 1480);
+  E.pageNo(53).fig("inky", 200).fig("pal", 1120, { color: "#e63946" }).monster("mon", 1380);
   const pizza = { s: [PROPS._ring(0, -20, 150, 40, 24), [[-150, -20], [150, -20]], [[0, -60], [0, 20]], [[-100, -48], [100, 8]], [[100, -48], [-100, 8]]], f: [{ p: PROPS._ring(0, -20, 150, 40, 24), c: "#ffc857" }] };
   E.cap("Pizza night 🍕", 1.8).wait(0.2).draw("inky", pizza, 720, 1250, { id: "pz", speed: 2600 }).wait(0.4);
   E.cap("8 slices, 3 friends…").wait(1.4);

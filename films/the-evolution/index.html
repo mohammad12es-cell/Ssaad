@@ -1,21 +1,19 @@
 <!doctype html>
-<html lang="en" data-resolution="portrait">
+<html lang="fa" dir="rtl" data-resolution="portrait">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=1080, height=1920" />
-    <title>The Evolution</title>
+    <title>تکامل — فصل ۲۷</title>
     <script src="assets/gsap.min.js"></script>
     <style>
-      @font-face { font-family: "Cinzel"; font-weight: 400; src: url(assets/cinzel-latin-400-normal.woff2) format("woff2"); }
-      @font-face { font-family: "Cinzel"; font-weight: 600; src: url(assets/cinzel-latin-600-normal.woff2) format("woff2"); }
-      @font-face { font-family: "Cinzel"; font-weight: 700; src: url(assets/cinzel-latin-700-normal.woff2) format("woff2"); }
-      @font-face { font-family: "Poppins"; font-weight: 200; src: url(assets/poppins-latin-200-normal.woff2) format("woff2"); }
-      @font-face { font-family: "Poppins"; font-weight: 300; src: url(assets/poppins-latin-300-normal.woff2) format("woff2"); }
-      @font-face { font-family: "Poppins"; font-weight: 500; src: url(assets/poppins-latin-500-normal.woff2) format("woff2"); }
+      @font-face { font-family: "Vaz"; font-weight: 300; src: url(assets/vazirmatn-arabic-300-normal.woff2) format("woff2"); }
+      @font-face { font-family: "Vaz"; font-weight: 500; src: url(assets/vazirmatn-arabic-500-normal.woff2) format("woff2"); }
+      @font-face { font-family: "Vaz"; font-weight: 800; src: url(assets/vazirmatn-arabic-800-normal.woff2) format("woff2"); }
+      @font-face { font-family: "Vaz"; font-weight: 900; src: url(assets/vazirmatn-arabic-900-normal.woff2) format("woff2"); }
       :root { --ink: #f3ece2; --warm: #ffb35c; --amber: #ffad42; --cold: #9fb7d6; }
       * { margin: 0; padding: 0; box-sizing: border-box; }
       html, body { width: 1080px; height: 1920px; overflow: hidden; background: #000; }
-      #root { position: relative; width: 1080px; height: 1920px; overflow: hidden; background: #000; }
+      #root { position: relative; width: 1080px; height: 1920px; overflow: hidden; background: #000; direction: ltr; }
       .layer { position: absolute; inset: 0; width: 1080px; height: 1920px; }
       #cam { z-index: 1; transform-origin: 540px 1000px; }
       .ph { position: absolute; inset: 0; overflow: hidden; opacity: 0; }
@@ -27,28 +25,31 @@
       #vig { z-index: 5; background: radial-gradient(ellipse 760px 1180px at 540px 960px, rgba(0,0,0,0) 55%, rgba(0,0,0,.7) 100%); }
       #black { z-index: 6; background: #000; opacity: 1; }
       #flash { z-index: 7; background: radial-gradient(circle at 540px 900px, #fff6e6, #ffb768 60%, #b8601c); opacity: 0; }
-      #grain { z-index: 20; width: 1080px; height: 1920px; mix-blend-mode: overlay; opacity: .55; image-rendering: auto; }
-      .t { position: absolute; left: 0; width: 1080px; z-index: 10; text-align: center; color: var(--ink); opacity: 0; }
-      .chap { top: 820px; }
-      .chap .k { font: 300 28px/1 "Poppins"; letter-spacing: .55em; color: var(--warm); text-indent: .55em; }
-      .chap .n { font: 600 66px/1.18 "Cinzel"; letter-spacing: .08em; margin-top: 30px; padding: 0 70px; text-shadow: 0 0 40px rgba(0,0,0,.8); }
-      .line { top: 1450px; font: 300 52px/1.3 "Poppins"; letter-spacing: .01em; padding: 0 90px; text-shadow: 0 2px 30px rgba(0,0,0,.9); }
-      .big { top: 880px; font: 700 112px/1 "Cinzel"; letter-spacing: .1em; text-indent: .1em; text-shadow: 0 0 60px rgba(0,0,0,.85); }
-      .tag { top: 200px; font: 500 26px/1.4 "Poppins"; letter-spacing: .45em; text-indent: .45em; color: var(--amber); }
-      .idl { top: 1500px; font: 600 74px/1 "Cinzel"; letter-spacing: .14em; text-indent: .14em; text-shadow: 0 0 50px rgba(0,0,0,.9); }
-      .thought { width: auto; text-align: left; font: 200 46px/1.2 "Poppins"; color: #c9d6ea; white-space: nowrap; }
-      .list { top: 300px; font: 300 50px/1.75 "Poppins"; text-shadow: 0 2px 30px rgba(0,0,0,.95); }
+      #grain { z-index: 20; width: 1080px; height: 1920px; mix-blend-mode: overlay; opacity: .55; }
+      .t { position: absolute; left: 0; width: 1080px; z-index: 10; text-align: center; color: var(--ink); opacity: 0; direction: rtl; font-family: "Vaz"; }
+      .chap { top: 800px; }
+      .chap .k { font: 500 36px/1 "Vaz"; color: var(--warm); }
+      .chap .n { font: 900 80px/1.35 "Vaz"; margin-top: 26px; padding: 0 70px; text-shadow: 0 0 40px rgba(0,0,0,.85); }
+      .line { top: 1440px; font: 500 58px/1.5 "Vaz"; padding: 0 80px; text-shadow: 0 2px 30px rgba(0,0,0,.95), 0 0 12px rgba(0,0,0,.8); }
+      .big { top: 870px; font: 900 124px/1.1 "Vaz"; text-shadow: 0 0 60px rgba(0,0,0,.9); }
+      .tag { top: 190px; font: 800 38px/1.4 "Vaz"; color: var(--amber); }
+      .idl { top: 1470px; font: 900 90px/1.25 "Vaz"; padding: 26px 0;
+        background: linear-gradient(90deg, transparent, rgba(0,0,0,.62) 22%, rgba(0,0,0,.62) 78%, transparent); text-shadow: 0 0 40px rgba(0,0,0,.9); }
+      .split { top: 1520px; width: 540px; font: 800 58px/1 "Vaz"; text-shadow: 0 2px 24px rgba(0,0,0,.95); }
+      .split small { display: block; margin-top: 16px; font: 300 30px/1 "Vaz"; color: #d9cdbd; }
+      .thought { width: auto; text-align: right; font: 300 52px/1.2 "Vaz"; color: #c9d6ea; white-space: nowrap; }
+      .list { top: 280px; font: 800 58px/1.8 "Vaz"; text-shadow: 0 2px 30px rgba(0,0,0,.95); }
       .list span { display: block; opacity: 0; }
-      .state { top: 900px; font: 400 50px/1.4 "Cinzel"; letter-spacing: .02em; padding: 0 50px; }
-      .fin { top: 760px; }
-      .fin .k { font: 500 34px/1 "Poppins"; letter-spacing: .6em; text-indent: .6em; color: var(--warm); }
-      .fin .n { font: 700 96px/1.1 "Cinzel"; letter-spacing: .1em; text-indent: .1em; margin-top: 34px; text-shadow: 0 0 70px rgba(255,170,80,.35); }
-      .fin .s { margin-top: 70px; font: 300 44px/1.7 "Poppins"; color: #d8cfc2; }
+      .state { top: 860px; font: 800 70px/1.6 "Vaz"; padding: 0 70px; text-shadow: 0 0 50px rgba(255,170,80,.18); }
+      .fin { top: 700px; }
+      .fin .k { font: 500 48px/1 "Vaz"; color: var(--warm); }
+      .fin .n { font: 900 170px/1.2 "Vaz"; margin-top: 20px; text-shadow: 0 0 80px rgba(255,170,80,.4); }
+      .fin .s { margin-top: 50px; font: 500 56px/1.75 "Vaz"; color: #e0d6c8; }
       .fin .s span { display: block; opacity: 0; }
-      #clock { position: absolute; z-index: 10; left: 0; width: 1080px; top: 520px; text-align: center; opacity: 0;
-        font: 200 210px/1 "Poppins"; letter-spacing: .04em; color: var(--amber);
+      #clock { position: absolute; z-index: 10; left: 0; width: 1080px; top: 500px; text-align: center; opacity: 0; direction: rtl;
+        font: 300 220px/1 "Vaz"; color: var(--amber);
         text-shadow: 0 0 30px rgba(255,150,40,.85), 0 0 90px rgba(255,120,20,.45); }
-      #clock small { font-size: 54px; letter-spacing: .2em; margin-left: 18px; }
+      #clock small { font-size: 60px; margin-right: 22px; }
     </style>
   </head>
   <body>
@@ -75,7 +76,7 @@
       <div id="vig" class="layer clip" data-start="0" data-duration="130" data-track-index="2"></div>
       <div id="black" class="layer clip" data-start="0" data-duration="130" data-track-index="2"></div>
       <div id="flash" class="layer clip" data-start="0" data-duration="130" data-track-index="2"></div>
-      <div id="clock" class="clip" data-start="0" data-duration="130" data-track-index="3">03:00<small>AM</small></div>
+      <div id="clock" class="clip" data-start="0" data-duration="130" data-track-index="3">۰۳:۰۰<small>بامداد</small></div>
       <div id="texts" class="layer clip" data-start="0" data-duration="130" data-track-index="3" style="z-index:10"></div>
       <canvas id="grain" class="layer clip" width="540" height="960" data-start="0" data-duration="130" data-track-index="4"></canvas>
       <audio id="score" src="assets/score.wav" data-start="0" data-duration="130" data-volume="1"></audio>
@@ -102,6 +103,7 @@
         return keys[keys.length - 1][1];
       }
       const rad = (d) => (d * Math.PI) / 180;
+      const faNum = (x) => String(x).replace(/\d/g, (d) => "۰۱۲۳۴۵۶۷۸۹"[d]);
 
       // ---------- photos ----------
       const P = {
@@ -120,6 +122,7 @@
         p.el.style.opacity = o.o;
         p.el.style.filter = o.f || "none";
         p.el.style.webkitMaskImage = p.el.style.maskImage = o.mask || "none";
+        p.el.style.clipPath = o.clip || "none";
       }
       const COLD = (b) => `saturate(.28) contrast(1.22) brightness(${b})`;
       const WARM = (b, bl = 0) => `saturate(.9) contrast(1.2) brightness(${b}) sepia(.16)` + (bl ? ` blur(${bl}px)` : "");
@@ -307,31 +310,36 @@
         if (p > 0.55) { c.save(); c.globalAlpha = sstep(0.55, 0.6, p); c.strokeStyle = "rgba(255,200,120,.9)"; c.lineWidth = 3; c.shadowColor = "#ffb35c"; c.shadowBlur = 20;
           c.beginPath(); c.arc(bx + (p > 0.72 ? (p - 0.72) * 3200 : 0), by, 34, 0, 6.28); c.stroke(); c.restore(); }
         if (!labels) return;
+        c.direction = "rtl";
         // joint angle readouts
         const kneeAng = Math.round(180 - Math.abs(th - sh)), hipAng = Math.round(180 - Math.abs(tr - th));
-        c.font = '500 26px "Poppins"'; c.fillStyle = "rgba(255,190,110,.95)"; c.textAlign = "left";
-        c.fillText(`KNEE  ${kneeAng}°`, knee[0] + 46, knee[1] + 8); c.fillText(`HIP  ${hipAng}°`, hip[0] + 46, hip[1] - 4);
+        c.font = '800 32px "Vaz"'; c.fillStyle = "rgba(255,190,110,.95)"; c.textAlign = "left";
+        c.fillText(`زانو: ${faNum(kneeAng)} درجه`, knee[0] + 46, knee[1] + 10); c.fillText(`لگن: ${faNum(hipAng)} درجه`, hip[0] + 46, hip[1] - 4);
         const label = (pt, txt, y, v) => {
-          c.strokeStyle = `rgba(200,220,235,${0.25 + 0.5 * v})`; c.lineWidth = 1.5; c.beginPath(); c.moveTo(pt[0], pt[1]); c.lineTo(760, y); c.lineTo(790, y); c.stroke();
-          c.fillStyle = `rgba(235,240,245,${0.4 + 0.6 * v})`; c.font = '500 22px "Poppins"'; c.fillText(txt, 800, y + 8);
-          c.fillStyle = `rgba(255,170,80,${0.4 + 0.6 * v})`; c.fillRect(800, y + 18, 180 * v, 4);
+          c.strokeStyle = `rgba(200,220,235,${0.25 + 0.5 * v})`; c.lineWidth = 1.5; c.beginPath(); c.moveTo(pt[0], pt[1]); c.lineTo(760, y); c.lineTo(800, y); c.stroke();
+          c.textAlign = "right"; c.fillStyle = `rgba(235,240,245,${0.45 + 0.55 * v})`; c.font = '800 32px "Vaz"'; c.fillText(txt, 1050, y + 11);
+          c.fillStyle = `rgba(255,170,80,${0.4 + 0.6 * v})`; c.fillRect(1050 - 200 * v, y + 26, 200 * v, 5);
         };
         const mid = (a, b) => [(a[0] + b[0]) / 2, (a[1] + b[1]) / 2];
-        label(mid(shoulder, elbow), "DELTOIDS", 520, aD); label([hip[0] - 20, hip[1]], "GLUTEUS MAX.", 640, aG);
-        label(mid(hip, knee), "QUADRICEPS", 760, aQ); label(mid(knee, ankle), "GASTROCNEMIUS", 880, aC);
+        label(mid(shoulder, elbow), "دلتوئید", 520, aD); label([hip[0] - 20, hip[1]], "سرینی بزرگ", 640, aG);
+        label(mid(hip, knee), "چهارسر ران", 760, aQ); label(mid(knee, ankle), "دوقلوی ساق", 880, aC);
         // ground reaction force graph
-        const gx = 120, gy = 1760, gw = 840, gh = 200;
+        const gx = 120, gy = 1800, gw = 840, gh = 190;
         c.strokeStyle = "rgba(160,200,220,.4)"; c.lineWidth = 1.5; c.strokeRect(gx, gy - gh, gw, gh);
-        c.fillStyle = "rgba(200,220,235,.75)"; c.font = '500 20px "Poppins"'; c.fillText("GROUND REACTION FORCE  ·  × BODY WEIGHT", gx, gy - gh - 18);
+        c.textAlign = "right"; c.fillStyle = "rgba(210,225,238,.85)"; c.font = '500 28px "Vaz"'; c.fillText("نیروی عکس‌العمل زمین  ·  چند برابرِ وزن بدن", gx + gw, gy - gh - 18);
         c.strokeStyle = "#ffb35c"; c.lineWidth = 3; c.shadowColor = "#ffb35c"; c.shadowBlur = 12; c.beginPath();
         for (let q = 0; q <= p; q += 0.004) { const x = gx + q * gw, y = gy - grf(q) / 4 * gh; q === 0 ? c.moveTo(x, y) : c.lineTo(x, y); }
         c.stroke(); c.shadowBlur = 0;
-        // phase caption
-        const cap = p < 0.15 ? "" : p < 0.42 ? "COUNTERMOVEMENT — muscles pre-stretch and store elastic energy"
-          : p < 0.58 ? "TRIPLE EXTENSION — hip · knee · ankle fire in sequence"
-          : p < 0.83 ? "ARM SWING adds height · the core transfers force to the hit"
-          : "LANDING — eccentric control absorbs 3–4× body weight";
-        c.textAlign = "center"; c.font = '300 30px "Poppins"'; c.fillStyle = "rgba(240,236,226,.92)"; c.fillText(cap, 540, 1500); c.textAlign = "left";
+        // phase caption (title + explanation)
+        const cap = p < 0.15 ? null : p < 0.42 ? ["حرکت متقابل", "عضله‌ها کشیده می‌شوند و انرژی کشسانی ذخیره می‌کنند"]
+          : p < 0.58 ? ["باز شدن سه‌گانه", "لگن · زانو · مچ پا، پشت سر هم نیرو می‌دهند"]
+          : p < 0.83 ? ["تاب دست‌ها", "ارتفاع را بیشتر می‌کند و تنه نیرو را به ضربه می‌رساند"]
+          : ["فرود", "کنترل اکسنتریک، ۳ تا ۴ برابر وزن بدن را جذب می‌کند"];
+        if (cap) {
+          c.textAlign = "center"; c.font = '900 44px "Vaz"'; c.fillStyle = "#ffb35c"; c.fillText(cap[0], 540, 1475);
+          c.font = '500 36px "Vaz"'; c.fillStyle = "rgba(240,236,226,.95)"; c.fillText(cap[1], 540, 1535);
+        }
+        c.direction = "ltr"; c.textAlign = "left";
       }
 
       // ---------- neural network universe ----------
@@ -372,70 +380,75 @@
       }
 
       // ---------- knowledge constellation ----------
-      const SUBJ = ["ARTIFICIAL INTELLIGENCE", "SPORTS SCIENCE", "BIOMECHANICS", "EXERCISE PHYSIOLOGY", "NEUROSCIENCE", "PSYCHOLOGY", "HUMAN ANATOMY", "BUSINESS", "CREATIVITY"];
+      const SUBJ = ["هوش مصنوعی", "علوم ورزشی", "بیومکانیک", "فیزیولوژی ورزشی", "علوم اعصاب", "روان‌شناسی", "آناتومی انسان", "کسب‌وکار", "خلاقیت"];
       function constellation(t) {
         c.fillStyle = "#03040a"; c.fillRect(0, 0, W, H);
         const conv = ease(clamp((t - 75.2) / 1.1, 0, 1));
         const pts = SUBJ.map((s, i) => {
           const ring = i % 3, ang = (i / SUBJ.length) * 6.283 + (t - 71) * (0.18 + ring * 0.06);
-          const rx = (260 + ring * 120) * (1 - conv), ry = (420 + ring * 140) * (1 - conv);
+          const rx = (250 + ring * 110) * (1 - conv), ry = (420 + ring * 140) * (1 - conv);
           const z = Math.sin(ang);
           return { s, x: 540 + Math.cos(ang) * rx, y: 930 + z * ry * 0.55 + (ring - 1) * 120 * (1 - conv), z, born: sstep(71.2 + i * 0.25, 71.7 + i * 0.25, t) };
         });
         c.save(); c.globalCompositeOperation = "lighter";
         for (let i = 0; i < pts.length; i++) for (let j = i + 1; j < pts.length; j++) {
-          const a = pts[i], b = pts[j], al = Math.min(a.born, b.born) * 0.12;
-          c.strokeStyle = `rgba(255,190,120,${al})`; c.lineWidth = 1; c.beginPath(); c.moveTo(a.x, a.y); c.lineTo(b.x, b.y); c.stroke();
+          const a = pts[i], b = pts[j], al = Math.min(a.born, b.born) * (0.12 + 0.25 * conv);
+          c.strokeStyle = `rgba(255,190,120,${al})`; c.lineWidth = 1 + conv; c.beginPath(); c.moveTo(a.x, a.y); c.lineTo(b.x, b.y); c.stroke();
         }
-        const core = c.createRadialGradient(540, 930, 0, 540, 930, 160 + conv * 500);
-        core.addColorStop(0, `rgba(255,220,170,${0.25 + conv * 0.75})`); core.addColorStop(1, "rgba(255,160,80,0)");
-        c.fillStyle = core; c.fillRect(0, 0, W, H);
+        const core = c.createRadialGradient(540, 930, 0, 540, 930, 90 + conv * 110);
+        core.addColorStop(0, `rgba(255,235,200,${0.2 + conv * 0.8})`); core.addColorStop(0.35, `rgba(255,180,100,${0.12 + conv * 0.3})`); core.addColorStop(1, "rgba(255,160,80,0)");
+        c.fillStyle = core; c.beginPath(); c.arc(540, 930, 90 + conv * 110, 0, 6.28); c.fill();
+        if (conv > 0.6) { // shockwave ring as everything becomes one idea
+          const k = (conv - 0.6) / 0.4;
+          c.strokeStyle = `rgba(255,205,150,${0.6 * (1 - k)})`; c.lineWidth = 3; c.beginPath(); c.arc(540, 930, 40 + k * 620, 0, 6.28); c.stroke();
+        }
         c.restore();
-        c.textAlign = "center";
+        c.textAlign = "center"; c.direction = "rtl";
         for (const p of pts.sort((a, b) => a.z - b.z)) {
-          const sz = 24 + (p.z + 1) * 8;
-          c.font = `500 ${sz}px "Poppins"`; c.fillStyle = `rgba(240,232,220,${p.born * (0.35 + 0.65 * (p.z + 1) / 2) * (1 - conv)})`;
+          const sz = 32 + (p.z + 1) * 10;
+          c.font = `800 ${sz}px "Vaz"`; c.fillStyle = `rgba(240,232,220,${p.born * (0.35 + 0.65 * (p.z + 1) / 2) * (1 - conv)})`;
           c.fillText(p.s, p.x, p.y);
-          c.fillStyle = `rgba(255,180,100,${p.born})`; c.beginPath(); c.arc(p.x, p.y + 18, 4, 0, 6.28); c.fill();
+          c.fillStyle = `rgba(255,180,100,${p.born})`; c.beginPath(); c.arc(p.x, p.y + 22, 4, 0, 6.28); c.fill();
         }
-        c.textAlign = "left";
+        c.textAlign = "left"; c.direction = "ltr";
       }
 
       // ---------- notebook of unfinished ideas ----------
       const NOTE = [
-        [79.0, "ideas —"],
-        [79.5, "1. jump-training plan for volleyball"],
-        [80.2, "2. sports-science videos: explain the body"],
-        [80.9, "3. learn AI → build tools for athletes"],
-        [81.6, "4. coaching?  study again?  both?"],
-        [82.3, "money: how long can I keep this up?"],
-        [83.0, "5. ..."],
+        [80.0, "ایده‌ها —"],
+        [80.5, "۱. برنامه‌ی تمرین پرش برای والیبالیست‌ها"],
+        [81.1, "۲. ویدئوهای علوم ورزشی: بدن را توضیح بده"],
+        [81.7, "۳. یاد گرفتن هوش مصنوعی ← ابزار برای ورزشکارها"],
+        [82.3, "۴. مربیگری؟ دوباره درس؟ هر دو؟"],
+        [82.8, "پول: تا کی می‌توانم ادامه بدهم؟"],
+        [83.2, "۵. ..."],
       ];
       function notebook(t, all = false) {
         c.fillStyle = "#050302"; c.fillRect(0, 0, W, H);
-        const lamp = c.createRadialGradient(620, 700, 50, 560, 900, 1000);
-        lamp.addColorStop(0, "rgba(255,170,80,.42)"); lamp.addColorStop(1, "rgba(255,120,30,0)");
-        const z = all ? 1.1 : 1 + (t - 78.5) * 0.02;
-        c.save(); c.translate(540, 960); c.scale(z, z); c.rotate(rad(-5)); c.translate(-540, -960);
-        c.fillStyle = "#cdbd9f"; c.fillRect(110, 380, 860, 1160);
-        c.strokeStyle = "rgba(70,90,130,.35)"; c.lineWidth = 2;
+        const z = all ? 1.1 : 1 + (t - 79.5) * 0.02;
+        c.save(); c.translate(540, 960); c.scale(z, z); c.rotate(rad(4)); c.translate(-540, -960);
+        c.fillStyle = "#8c7d64"; c.fillRect(110, 380, 860, 1160);
+        c.strokeStyle = "rgba(40,55,90,.35)"; c.lineWidth = 2;
         for (let y = 520; y < 1520; y += 92) { c.beginPath(); c.moveTo(130, y); c.lineTo(950, y); c.stroke(); }
-        c.strokeStyle = "rgba(170,60,60,.45)"; c.beginPath(); c.moveTo(220, 380); c.lineTo(220, 1540); c.stroke();
-        c.font = 'italic 300 33px "Poppins"'; c.fillStyle = "#1f2331";
+        c.strokeStyle = "rgba(140,40,40,.5)"; c.beginPath(); c.moveTo(880, 380); c.lineTo(880, 1540); c.stroke();
+        c.font = '300 35px "Vaz"'; c.fillStyle = "#14161e"; c.direction = "rtl"; c.textAlign = "right";
+        const ly = (i) => 505 + i * 92 + (i % 2) * 3;
         NOTE.forEach(([st, txt], i) => {
-          const n = all ? txt.length : Math.floor(clamp((t - st) / 0.55, 0, 1) * txt.length);
-          if (n > 0) c.fillText(txt.slice(0, n), 240, 505 + i * 92 + (i % 2) * 3);
+          const n = all ? txt.length : Math.floor(clamp((t - st) / 0.5, 0, 1) * txt.length);
+          if (n > 0) c.fillText(txt.slice(0, n), 860, ly(i));
         });
-        // second thoughts: strike-through, circle, question marks
-        const sk = all ? 1 : sstep(83.0, 83.5, t);
-        if (sk > 0) { c.strokeStyle = "#1f2331"; c.lineWidth = 3; c.beginPath(); c.moveTo(240, 590); c.lineTo(240 + 640 * sk, 585); c.stroke(); }
-        const ck = all ? 1 : sstep(83.3, 83.9, t);
-        if (ck > 0) { c.strokeStyle = "rgba(150,40,30,.85)"; c.lineWidth = 3; c.beginPath(); c.ellipse(500, 764, 300, 46, rad(-1), 0, 6.283 * ck); c.stroke(); }
+        // second thoughts: strike-through the first idea, circle the AI idea
+        const sk = all ? 1 : sstep(83.3, 83.6, t);
+        if (sk > 0) { const w1 = c.measureText(NOTE[1][1]).width; c.strokeStyle = "#14161e"; c.lineWidth = 3; c.beginPath(); c.moveTo(860, ly(1) - 12); c.lineTo(860 - w1 * sk, ly(1) - 15); c.stroke(); }
+        const ck = all ? 1 : sstep(83.4, 83.9, t);
+        if (ck > 0) { const w3 = c.measureText(NOTE[3][1]).width; c.strokeStyle = "rgba(150,30,25,.9)"; c.lineWidth = 3.5; c.beginPath(); c.ellipse(860 - w3 / 2, ly(3) - 12, w3 / 2 + 30, 44, rad(1), 0, 6.283 * ck); c.stroke(); }
+        c.direction = "ltr"; c.textAlign = "left";
         c.restore();
-        c.save(); c.globalCompositeOperation = "multiply"; c.fillStyle = lamp; c.restore();
+        const lamp = c.createRadialGradient(560, 700, 50, 540, 900, 950);
+        lamp.addColorStop(0, "rgba(255,170,80,.16)"); lamp.addColorStop(1, "rgba(255,120,30,0)");
         c.save(); c.globalCompositeOperation = "lighter"; c.fillStyle = lamp; c.fillRect(0, 0, W, H); c.restore();
-        const dark = c.createRadialGradient(560, 900, 300, 560, 900, 1150);
-        dark.addColorStop(0, "rgba(0,0,0,0)"); dark.addColorStop(1, "rgba(0,0,0,.92)"); c.fillStyle = dark; c.fillRect(0, 0, W, H);
+        const dark = c.createRadialGradient(560, 900, 260, 560, 900, 1100);
+        dark.addColorStop(0, "rgba(0,0,0,0)"); dark.addColorStop(1, "rgba(0,0,0,.94)"); c.fillStyle = dark; c.fillRect(0, 0, W, H);
       }
 
       // ---------- window at night, rain ----------
@@ -457,8 +470,8 @@
         c.fillRect(0, 0, W, 150); c.fillRect(0, 1720, W, 200); c.fillRect(0, 0, 90, H); c.fillRect(990, 0, 90, H);
         c.fillRect(515, 150, 50, 1570); c.fillRect(90, 900, 900, 44);
         // clock reflection in the glass
-        c.save(); c.globalCompositeOperation = "lighter"; c.font = '200 64px "Poppins"'; c.fillStyle = "rgba(255,160,60,.35)";
-        c.shadowColor = "rgba(255,140,40,.9)"; c.shadowBlur = 20; c.fillText("04:12", 690, 1640); c.restore();
+        c.save(); c.globalCompositeOperation = "lighter"; c.font = '300 70px "Vaz"'; c.fillStyle = "rgba(255,160,60,.38)";
+        c.shadowColor = "rgba(255,140,40,.9)"; c.shadowBlur = 20; c.fillText(faNum("04:12"), 690, 1640); c.restore();
       }
 
       function dawn(t) {
@@ -468,7 +481,7 @@
       }
       function clockShot(txt) {
         c.fillStyle = "#020205"; c.fillRect(0, 0, W, H);
-        c.save(); c.textAlign = "center"; c.font = '200 210px "Poppins"'; c.fillStyle = "#ffad42"; c.shadowColor = "rgba(255,140,30,.9)"; c.shadowBlur = 60;
+        c.save(); c.textAlign = "center"; c.font = '300 220px "Vaz"'; c.fillStyle = "#ffad42"; c.shadowColor = "rgba(255,140,30,.9)"; c.shadowBlur = 60;
         c.fillText(txt, 540, 1020); c.restore();
       }
       function rays(t, a) {
@@ -501,15 +514,25 @@
 
       // ---------- master render(t) ----------
       const blackKeys = [
-        [0, 1], [2.0, 1], [4.0, 0], [16.5, 0], [17.0, 1], [17.8, 1], [18.0, 0],
-        [34.4, 0], [35.0, 1], [36.3, 1], [37.3, 0], [45.95, 0], [46.0, 1], [47.3, 1], [48.3, 0],
-        [54.3, 0], [55.0, 1], [56.7, 1], [57.4, 0], [64.6, 0], [65.0, 1], [65.4, 0], [70.75, 0], [71.0, 1], [71.3, 0],
-        [77.0, 0], [77.0, 1], [78.3, 1], [79.0, 0], [83.7, 0], [84.0, 1], [84.4, 0], [88.4, 0], [89.0, 1], [89.99, 1], [90.0, 0],
-        [94.9, 0], [95.0, 1], [96.7, 1], [96.8, 0], [111.99, 0], [112.0, 1], [130, 1],
+        [0, 1], [0.15, 0], [1.35, 0], [1.7, 1], [2.0, 1], [3.6, 0],
+        [5.8, 0], [6.0, 0.9], [6.2, 0], [8.3, 0], [8.5, 0.9], [8.7, 0], [10.8, 0], [11.0, 0.9], [11.2, 0], [12.0, 0], [12.2, 0.9], [12.4, 0],
+        [16.5, 0], [17.0, 1], [17.8, 1], [18.0, 0],
+        [34.4, 0], [35.0, 1], [37.6, 1], [38.2, 0], [45.95, 0], [46.0, 1], [47.3, 1], [48.3, 0],
+        [54.3, 0], [55.0, 1], [57.6, 1], [58.1, 0], [64.6, 0], [65.0, 1], [65.4, 0], [70.85, 0], [71.0, 0.6], [71.2, 0],
+        [77.0, 0], [77.0, 1], [79.6, 1], [80.1, 0], [83.7, 0], [84.0, 1], [84.4, 0], [88.4, 0], [89.0, 1], [89.99, 1], [90.0, 0],
+        [94.9, 0], [95.0, 1], [96.7, 1], [96.8, 0], [111.99, 0], [112.0, 1], [113.3, 1], [113.7, 0], [129.0, 0], [130, 1],
       ];
-      const flashKeys = [[26.9, 0], [27.0, 0.85], [27.6, 0], [76.1, 0], [76.4, 0.9], [77.0, 0], [105.95, 0], [106.0, 0.9], [106.8, 0]];
+      const flashKeys = [[26.9, 0], [27.0, 0.3], [27.35, 0], [76.1, 0], [76.4, 0.06], [77.0, 0], [105.95, 0], [106.0, 0.7], [106.6, 0]];
 
       function hideP(p) { p.el.style.opacity = 0; }
+      function embers(t, a) {
+        c.save(); c.globalCompositeOperation = "lighter";
+        for (const m of motes) {
+          const y = (m.y - t * m.sp * 1.4 + H * 10) % H, x = m.x + Math.sin(t * 0.5 + m.ph) * 30, tw = 0.5 + 0.5 * Math.sin(t * 1.7 + m.ph * 3);
+          c.fillStyle = `rgba(255,${(150 + tw * 60) | 0},80,${0.5 * a * tw})`; c.beginPath(); c.arc(x, y, m.r * 0.9, 0, 6.28); c.fill();
+        }
+        c.restore();
+      }
       function render(t) {
         c.setTransform(1, 0, 0, 1, 0, 0); c.globalAlpha = 1; c.globalCompositeOperation = "source-over"; c.shadowBlur = 0;
         c.clearRect(0, 0, W, H);
@@ -518,15 +541,26 @@
         clockEl.style.opacity = 0;
 
         if (t < 17) { // I · THE COLLAPSE
-          const push = t < 12 ? lerp(1.8, 1.95, ease((t - 2) / 10)) : lerp(1.95, 1.8, ease((t - 12) / 5));
-          const b = t < 12 ? 0.58 : lerp(0.58, 0.0, ease((t - 12) / 4.6));
-          placePhoto(P.p1, { fx: 530, fy: 560, sx: 540, sy: 960 - (t > 12 ? (t - 12) * 6 : 0), s: push, cover: true, o: 1, f: COLD(b) + (t > 12 ? ` blur(${(t - 12) * 0.8}px)` : "") });
-          cold = 0.9; dust(t, sstep(3, 6, t) * (1 - sstep(13, 16.5, t)));
+          if (t < 1.7) { // flash-forward hook: a glimpse of who he is becoming
+            placePhoto(P.p2, { fx: 540, fy: 1060, sx: 540, sy: 1000, s: lerp(1.12, 1.06, t / 1.7), cover: true, o: 1, f: WARM(0.88) });
+            warm = 0.85; spot = 0.7; rays(t + 106, 1);
+          } else {
+            const SH = [[1.7, 6.0, 530, 560, 1.8, 1.86], [6.0, 8.5, 520, 540, 2.5, 2.6], [8.5, 11.0, 300, 190, 2.3, 2.4], [11.0, 12.2, 740, 940, 2.6, 2.7]];
+            const sh = SH.find((q) => t < q[1]);
+            if (sh) {
+              const k = (t - sh[0]) / (sh[1] - sh[0]);
+              placePhoto(P.p1, { fx: sh[2], fy: sh[3], sx: 540, sy: 960, s: lerp(sh[4], sh[5], k), cover: true, o: 1, f: COLD(0.58) });
+            } else { // he walks away into the dark
+              const k = ease((t - 12.2) / 4.8), b = lerp(0.58, 0, ease(clamp((t - 12.2) / 4.4, 0, 1)));
+              placePhoto(P.p1, { fx: 530, fy: 560, sx: 540, sy: 960 - (t - 12.2) * 8, s: lerp(1.95, 1.8, k), cover: true, o: 1, f: COLD(b) + ` blur(${(t - 12.2) * 0.9}px)` });
+            }
+            cold = 0.9; dust(t, sstep(3, 6, t) * (1 - sstep(13, 16.5, t)));
+          }
         } else if (t < 35) { // II · THE PHYSICAL REBIRTH
           cam = 1 + (t - 20) * 0.008;
-          if (t < 27.2) {
+          if (t < 27.0) {
             c.fillStyle = "#000"; if (t < 20.5) c.fillRect(0, 0, W, H);
-            const p1o = sstep(20, 21.6, t) * (1 - sstep(26.8, 27.2, t));
+            const p1o = sstep(20, 21.6, t) * (1 - sstep(26.7, 27.0, t));
             placePhoto(P.p1, { fx: 0, fy: 0, sx: -10, sy: 480, s: 1, o: p1o, f: COLD(0.6),
               mask: "radial-gradient(ellipse 430px 640px at 540px 1010px, #000 55%, transparent 100%)" });
             if (t > 24) {
@@ -543,8 +577,16 @@
               c.restore();
             }
             gymLights(t, 1 - sstep(23.5, 26, t)); cold = 0.6 * (1 - sstep(24, 27, t));
+          } else if (t < 28.6) { // before | after — right is then (Persian reads right to left), left is now
+            const sc = lerp(1.82, 1.87, (t - 27) / 1.6);
+            placePhoto(P.p1, { fx: 530, fy: 560, sx: 810, sy: 960, s: sc, cover: true, o: 1, f: COLD(0.62), clip: "inset(0 0 0 540px)" });
+            placePhoto(P.p2, { fx: 535, fy: 1000, sx: 270, sy: 960, s: sc, cover: true, o: 1, f: WARM(0.82), clip: "inset(0 540px 0 0)" });
+            const g = sstep(27.0, 27.5, t);
+            c.save(); c.globalCompositeOperation = "lighter"; c.shadowColor = "#ffb35c"; c.shadowBlur = 24;
+            c.fillStyle = "rgba(255,200,140,.85)"; c.fillRect(538.5, 960 - 960 * g, 3, 1920 * g); c.restore();
+            warm = 0.3; cam = 1;
           } else {
-            const shots = [[27.0, 28.5, "full", 1.0, 1.04], [28.5, 30.0, "shoulders", 1.7, 1.78], [30.0, 31.5, "arm", 2.3, 2.4], [31.5, 33.0, "legs", 1.8, 1.86], [33.0, 35.0, "full", 1.0, 1.05]];
+            const shots = [[28.6, 30.0, "shoulders", 1.7, 1.78], [30.0, 31.5, "arm", 2.3, 2.4], [31.5, 33.0, "legs", 1.8, 1.86], [33.0, 35.0, "full", 1.0, 1.05]];
             const sh = shots.find((s) => t < s[1]) || shots[shots.length - 1];
             const k = (t - sh[0]) / (sh[1] - sh[0]), [ffx, ffy] = FOCUS[sh[2]];
             const kick = Math.max(0, 1 - ((t - 27) % 0.5) / 0.12) * 4;
@@ -556,18 +598,18 @@
           if (t < 46.1) {
             bedroom(t);
             const mins = Math.min(47, Math.floor(Math.max(0, t - 37) * 5.3));
-            clockEl.firstChild.nodeValue = `03:${String(mins).padStart(2, "0")}`;
+            clockEl.firstChild.nodeValue = faNum(`03:${String(mins).padStart(2, "0")}`);
             clockEl.style.opacity = sstep(36.6, 37.6, t) * (1 - sstep(45.8, 46, t));
           } else city(t);
         } else if (t < 77) { // IV · KNOWLEDGE
-          if (t < 65) biomech(clamp((t - 57.4) / 7.2, 0, 1));
+          if (t < 65) biomech(clamp((t - 58.0) / 6.8, 0, 1));
           else if (t < 71) neural(t, 65);
           else constellation(t);
         } else if (t < 95) { // V · THE INVISIBLE BATTLE
           if (t < 84) notebook(t);
           else if (t < 89) windowScene(t);
           else if (t < 90) { c.fillStyle = "#000"; c.fillRect(0, 0, W, H);
-            clockEl.firstChild.nodeValue = "06:00"; clockEl.style.opacity = (Math.floor((t - 89) * 4) % 2 ? 0.25 : 1); }
+            clockEl.firstChild.nodeValue = faNum("06:00"); clockEl.style.opacity = (Math.floor((t - 89) * 4) % 2 ? 0.25 : 1); }
           else if (t < 91) dawn(t);
           else if (t < 92) { placePhoto(P.p2, { fx: FOCUS.arm[0], fy: FOCUS.arm[1], sx: 540, sy: 960, s: lerp(2.0, 2.1, t - 91), cover: true, o: 1, f: WARM(0.8) }); warm = 0.7; spot = 0.3; }
           else if (t < 93) neural(t, 60);
@@ -581,7 +623,7 @@
             if (kind === "p1") { placePhoto(P.p1, { fx: 530, fy: 560, sx: 540, sy: 960, s: lerp(1.85, 1.95, k), cover: true, o: 1, f: COLD(0.6) }); cold = 0.8; }
             else if (kind === "p2") { placePhoto(P.p2, { fx: FOCUS[part][0], fy: FOCUS[part][1], sx: 540, sy: 960, s: lerp(1.8, 1.9, k), cover: true, o: 1, f: WARM(0.82) }); warm = 0.7; spot = 0.3; }
             else if (kind === "bio") biomech(lerp(0.5, 0.72, k), false);
-            else if (kind === "clock") clockShot("03:47");
+            else if (kind === "clock") clockShot(faNum("03:47"));
             else if (kind === "neural") neural(t + 8, 50);
             else if (kind === "city") city(47 + k * 2);
             else if (kind === "note") notebook(t, true);
@@ -590,6 +632,13 @@
             const k = (t - 106) / 6;
             placePhoto(P.p2, { fx: 540, fy: 1060, sx: 540, sy: 1000, s: lerp(1.0, 1.08, ease(k)), cover: true, o: 1, f: WARM(lerp(0.8, 0.95, k)) });
             warm = 0.85; spot = 0.7; rays(t, sstep(106, 108, t));
+          }
+        } else { // FINAL — embers rise behind the words; the cut itself stays pure black
+          c.fillStyle = "#000"; c.fillRect(0, 0, W, H);
+          embers(t, sstep(113.4, 115.5, t) * 0.8);
+          if (t > 123) {
+            const g = c.createRadialGradient(540, 900, 0, 540, 900, 700), a = 0.16 * sstep(123, 125.5, t);
+            g.addColorStop(0, `rgba(255,150,60,${a})`); g.addColorStop(1, "rgba(255,120,40,0)"); c.fillStyle = g; c.fillRect(0, 0, W, H);
           }
         }
 
@@ -620,60 +669,61 @@
       const line = (s, a, b) => add(s, "line", a, b);
       const big = (s, a, b) => add(s, "big", a, b, { fin: 0.12, fout: 0.12, dy: 0 });
 
-      chap("CHAPTER I", "THE COLLAPSE", 3.6, 7.1, 1400);
-      line("The game ended.", 7.5, 9.3);
-      line("The question didn't.", 9.5, 11.7);
-      line("Who is he without it?", 12.0, 14.2);
-      line("This isn't the end.", 14.4, 15.7);
-      line("It's the beginning.", 15.8, 17.3);
+      chap("فصل اول", "فروپاشی", 3.6, 7.1, 1380);
+      line("بازی تمام شد.", 7.5, 9.3);
+      line("اما سؤالش تمام نشد.", 9.5, 11.7);
+      line("او بدون والیبال کیست؟", 12.0, 14.2);
+      line("این پایان نیست.", 14.4, 15.7);
+      line("این تازه آغاز است.", 15.8, 17.3);
 
-      chap("CHAPTER II", "THE PHYSICAL REBIRTH", 17.2, 20.2);
-      line("The man he was.", 21.2, 23.8);
-      line("The man he is building.", 24.2, 26.9);
-      line("Not just muscle.", 27.3, 28.9);
-      big("CONSISTENCY", 29.0, 30.7); big("PATIENCE", 31.0, 32.7); big("CONTROL", 33.0, 34.7);
+      chap("فصل دوم", "تولد دوباره‌ی جسم", 17.2, 20.2);
+      line("مردی که بود.", 21.2, 23.8);
+      line("مردی که دارد خودش را می‌سازد.", 24.2, 26.9);
+      add("آن روز", "split", 27.3, 28.6, { style: { left: "540px" }, fin: 0.35, fout: 0.25 });
+      add("امروز", "split", 27.5, 28.6, { style: { left: "0px" }, fin: 0.35, fout: 0.25 });
+      big("استمرار", 29.0, 30.7); big("صبر", 31.0, 32.7); big("کنترل", 33.0, 34.7);
 
-      chap("CHAPTER III", "THE MIND THAT NEVER STOPS", 35.2, 37.6);
+      chap("فصل سوم", "ذهنی که هرگز نمی‌ایستد", 35.2, 37.6);
       const TH = [
-        [38.4, "the future", 120, 1180], [39.3, "money", 690, 1320], [40.1, "what if I fail?", 160, 1430], [40.8, "opportunities", 560, 1120],
-        [41.4, "am I late?", 640, 1520], [41.9, "which path?", 110, 1290], [42.4, "am I enough?", 420, 1640], [42.8, "ambition", 700, 1230],
-        [43.2, "the person I want to become", 140, 1560], [43.6, "future", 760, 1420], [43.9, "fail", 300, 1210], [44.2, "money", 520, 1700],
-        [44.5, "time", 820, 1150], [44.8, "become", 180, 1360], [45.0, "what if", 600, 1480], [45.2, "next year", 330, 1760],
+        [38.4, "آینده", 120, 1180], [39.3, "پول", 690, 1320], [40.1, "اگر شکست بخورم؟", 160, 1430], [40.8, "فرصت‌ها", 560, 1120],
+        [41.4, "دیر نشده؟", 620, 1520], [41.9, "کدام مسیر؟", 110, 1290], [42.4, "آیا کافی‌ام؟", 420, 1640], [42.8, "بلندپروازی", 660, 1230],
+        [43.2, "آدمی که می‌خواهم بشوم", 120, 1560], [43.6, "آینده", 760, 1420], [43.9, "شکست", 300, 1210], [44.2, "پول", 520, 1700],
+        [44.5, "زمان", 820, 1150], [44.8, "شدن", 180, 1360], [45.0, "اگر...", 600, 1480], [45.2, "سال بعد", 330, 1760],
       ];
       for (const [a, s, x, y] of TH) {
         const el = add(s, "thought", a, Math.min(46.0, a + 1.7), { style: { left: x + "px", top: y + "px" }, fin: 0.35, fout: 0.5, dy: 0 });
         tl.fromTo(el, { x: 0 }, { x: (x > 500 ? -1 : 1) * 60, duration: 1.7, ease: "none" }, a);
       }
-      line("He gets up.", 46.2, 47.7);
-      line("Tired.", 49.0, 50.8);
-      line("But not finished.", 51.0, 52.8);
-      line("His ambition is still awake.", 53.0, 54.9);
+      line("بلند می‌شود.", 46.2, 47.7);
+      line("خسته است.", 49.0, 50.8);
+      line("اما تمام نشده.", 51.0, 52.8);
+      line("بلندپروازی‌اش هنوز بیدار است.", 53.0, 54.9);
 
-      chap("CHAPTER IV", "THE PURSUIT OF KNOWLEDGE", 55.2, 57.4);
-      add("BIOMECHANICS · EXERCISE PHYSIOLOGY", "tag", 57.6, 64.7);
-      add("NEUROSCIENCE", "tag", 65.3, 68.0);
-      add("ARTIFICIAL INTELLIGENCE", "tag", 68.1, 70.9);
-      line("AI is not the destination.", 68.2, 69.8);
-      line("It's a tool to reach further.", 69.8, 70.95);
-      add("EVERYTHING CONNECTS", "tag", 71.3, 76.2);
-      line("Knowledge changed how he sees the body, the mind and the world.", 72.4, 75.6);
+      chap("فصل چهارم", "در جست‌وجوی دانش", 55.2, 57.6);
+      add("بیومکانیک · فیزیولوژی ورزشی", "tag", 58.0, 64.7);
+      add("علوم اعصاب", "tag", 65.3, 68.0);
+      add("هوش مصنوعی", "tag", 68.1, 70.9);
+      line("هوش مصنوعی مقصد نیست.", 68.2, 69.8);
+      line("ابزاری است برای رفتن دورتر.", 69.8, 70.95);
+      add("همه‌چیز به هم وصل است", "tag", 71.3, 76.2);
+      line("دانش، نگاهش به بدن، ذهن و دنیا را عوض کرد.", 72.4, 75.6);
 
-      chap("CHAPTER V", "THE INVISIBLE BATTLE", 77.2, 79.4);
-      line("Every path costs something.", 80.6, 83.7);
-      line("Is this the right direction?", 84.7, 87.6);
-      line("He doesn't have it figured out.", 87.8, 89.7);
-      big("WAKE", 90.0, 90.95); big("TRAIN", 91.0, 91.95); big("LEARN", 92.0, 92.95); big("BUILD", 93.0, 93.95); big("TRY AGAIN", 94.0, 94.95);
-      line("But he refuses to stay stuck.", 92.1, 94.95);
+      chap("فصل پنجم", "نبرد نامرئی", 77.2, 79.6);
+      line("هر مسیری هزینه‌ای دارد.", 80.8, 83.7);
+      line("آیا راه را درست می‌روم؟", 84.7, 87.6);
+      line("هنوز همه‌چیز را نفهمیده است.", 87.8, 89.7);
+      big("بیدار شو", 90.0, 90.95); big("تمرین", 91.0, 91.95); big("یاد بگیر", 92.0, 92.95); big("بساز", 93.0, 93.95); big("دوباره تلاش کن", 94.0, 94.95);
+      line("اما حاضر نیست درجا بزند.", 92.1, 94.95);
 
-      chap("CHAPTER VI", "BEYOND THE OLD IDENTITY", 95.1, 96.8);
-      [["THE ATHLETE", 96.9], ["THE STUDENT", 98.3], ["THE CREATOR", 99.7], ["THE THINKER", 101.1], ["THE SEEKER", 102.5], ["THE BUILDER", 103.9]]
+      chap("فصل ششم", "فراتر از هویت قدیمی", 95.1, 96.8);
+      [["ورزشکار", 96.9], ["یادگیرنده", 98.3], ["خالق", 99.7], ["اندیشمند", 101.1], ["جوینده", 102.5], ["سازنده", 103.9]]
         .forEach(([s, a], i, arr) => add(s, "idl", a, i === arr.length - 1 ? 105.9 : arr[i + 1][1] - 0.05, { fin: 0.25, fout: 0.2, dy: 0 }));
-      const list = add("<span>Not defined by one failure.</span><span>One profession.</span><span>One difficult year.</span><span>One version of himself.</span>", "list", 106.6, 111.8, { fin: 0.01 });
+      const list = add("<span>او با یک شکست تعریف نمی‌شود.</span><span>نه با یک شغل.</span><span>نه با یک سال سخت.</span><span>نه با یک نسخه از خودش.</span>", "list", 106.6, 111.8, { fin: 0.01 });
       list.querySelectorAll("span").forEach((s, i) => tl.fromTo(s, { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.6 }, 106.8 + i * 1.0));
 
-      add("I am not chasing who I was.", "state", 113.5, 117.3, { fin: 1.4, fout: 1.0 });
-      add("I am building who I could become.", "state", 118.0, 122.3, { fin: 1.4, fout: 1.0 });
-      const fin = add(`<div class="k">CHAPTER 27</div><div class="n">THE EVOLUTION</div><div class="s"><span>A new year.</span><span>A new mindset.</span><span>An unfinished mission.</span></div>`, "fin", 123.0, 129.8, { fin: 1.6, fout: 1.2 });
+      add("من دنبالِ کسی که بودم نیستم.", "state", 113.8, 117.4, { fin: 1.4, fout: 1.0 });
+      add("من دارم کسی را می‌سازم<br>که می‌توانم باشم.", "state", 118.0, 122.3, { fin: 1.4, fout: 1.0 });
+      const fin = add(`<div class="k">فصل ۲۷</div><div class="n">تکامل</div><div class="s"><span>یک سال تازه.</span><span>یک ذهنیت تازه.</span><span>یک مأموریت ناتمام.</span></div>`, "fin", 123.0, 129.8, { fin: 1.6, fout: 1.2 });
       tl.fromTo(fin.querySelector(".n"), { scale: 1.08 }, { scale: 1, duration: 6.8, ease: "power1.out" }, 123.0);
       fin.querySelectorAll(".s span").forEach((s, i) => tl.fromTo(s, { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.9 }, 125.4 + i * 0.85));
 

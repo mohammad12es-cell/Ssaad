@@ -3,9 +3,9 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "score": "python3 -I tools/score.py assets/score_raw.wav && ffmpeg -y -i assets/score_raw.wav -af loudnorm=I=-15:TP=-1.5:LRA=14 -ar 48000 assets/score.wav && rm assets/score_raw.wav",
+    "score": "bash tools/master.sh",
     "dev": "npx --yes hyperframes@0.9.13 preview",
     "check": "npx --yes hyperframes@0.9.13 check",
-    "render": "npx --yes hyperframes@0.9.13 render -q delivery -o ../../output/the-evolution-chapter27.mp4"
+    "render": "npx --yes hyperframes@0.9.13 render -q delivery -o ../../output/the-evolution-chapter27-fa.mp4"
   }
 }

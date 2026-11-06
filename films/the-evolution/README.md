@@ -1,6 +1,6 @@
 # THE EVOLUTION — Chapter 27
 
-A 130-second vertical (1080×1920, 30 fps) cinematic birthday film made in HyperFrames.
+A 130-second vertical (1080×1920, 30 fps) cinematic birthday film made in HyperFrames. **All on-screen text is in Persian** (Vazirmatn font, right-to-left, Persian numerals). The first, English version is in git history (commit `a8ff77b`) and in `output/the-evolution-chapter27-share.mp4`.
 
 | Time | Chapter | What you see |
 |---|---|---|
@@ -18,8 +18,24 @@ The only images of the protagonist are the two real photographs in `assets/`. No
 
 ```bash
 cd films/the-evolution
-npm run score     # rebuild assets/score.wav from tools/score.py (numpy + ffmpeg)
+npm run score     # rebuild assets/score.wav: tools/score.py + fixed-gain mastering (tools/master.sh)
 npx hyperframes snapshot --at 5,25,60,108   # check frames
 npm run check     # lint + runtime checks
-npm run render    # → output/the-evolution-chapter27.mp4 (delivery quality)
+npm run render    # → output/the-evolution-chapter27-fa.mp4 (delivery quality)
 ```
+
+## Revision 2 (Persian)
+- Opens on a 1.5 s flash-forward of the current physique, then cuts to the court.
+- The single court photo is now four shots (wide, the number 6, the empty seats, his hand), joined by dips to black.
+- A right/left "آن روز | امروز" (then | now) split at the transformation moment, with a softer flash.
+- Chapter titles no longer overlap the next scene.
+- The notebook is darker, to match the grade.
+- A cleaner convergence in the knowledge constellation.
+- Larger text everywhere. The identity labels sit on a dark band.
+- Embers behind the final message instead of 18 s of pure black.
+- The faces of other people in both photos are blurred.
+- Score:
+  - a real dynamic arc: Chapter I about −23 dBFS RMS → climax about −9 dBFS;
+  - true silence at the cut to black;
+  - a softer final chord;
+  - fixed-gain mastering to −16.5 LUFS, with no automatic gain riding.

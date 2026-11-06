@@ -174,7 +174,7 @@ def ch(*names):
 place(noise_bed(17, 250, 3, 2), 0, 0.05, 0, 0.0)  # empty-arena room tone
 t, gap, amp = 0.6, 0.95, 1.0
 while gap > 0.08:
-    place(bounce(amp), t, 0.55, -0.2, 0.9)
+    place(bounce(amp), t, 0.6, -0.2, 0.9)
     t += gap
     gap *= 0.8
     amp *= 0.8
@@ -257,20 +257,32 @@ while tt < 106.0:
     tt += gap
     gap = max(0.2, gap * 0.94)
 place(riser(3.0), 103.0, 0.45)
-place(impact(5), 106.0, 0.9)
+place(impact(5), 106.0, 1.0)
 for tt, n in [(106.0, "A4"), (107.5, "D5"), (109.0, "F#5"), (110.5, "A5")]:
     place(piano(NOTE[n], 4), tt, 0.2, 0, 0.7)
+
+# the peak itself: full, sustained and driving until the hard cut
+place(strings(ch("D4", "F#4", "A4", "D5"), 6.4, a=0.3, r=0.2), 106.0, 0.42)
+place(strings(ch("D2", "A2", "D3"), 6.4, a=0.2, r=0.2), 106.0, 0.38)
+place(pad(ch("D2", "A2", "F#3", "A3", "D4"), 6.2, 0.4, 0.2, 0.5), 106.0, 0.45)
+for i in range(12):
+    place(kick(), 106.0 + 0.5 * i, 0.6 if i % 2 == 0 else 0.35, 0, 0.2)
+swell = noise_bed(6.0, 7000, 2.5, 0.1)
+swell = (swell - lowpass(swell, 2500)) * np.linspace(0.3, 1.0, len(swell))
+place(swell, 106.0, 0.5, 0, 0.4)
 
 # hard cut to black at 112
 cut = int(112.0 * SR)
 dry[cut:] = 0
 send[cut:] = 0
 
+send_pre = send.copy()
+
 # ---------- FINAL MESSAGE (112–130) ----------
 place(piano(NOTE["D3"], 6) + piano(NOTE["A3"], 6), 113.5, 0.2, 0, 0.8)
 place(piano(NOTE["F3"], 6) + piano(NOTE["C4"], 6), 118.0, 0.2, 0, 0.8)
-place(impact(5), 123.0, 0.55)
-place(pad(ch("D2", "A2", "F#3", "D4"), 7, 0.8, 4.5, 0.35), 123.0, 0.32)
+place(impact(5), 123.0, 0.3)
+place(pad(ch("D2", "A2", "F#3", "D4"), 7, 1.2, 4.5, 0.3), 123.0, 0.26)
 for tt, n in [(125.5, "A4"), (126.4, "F#4"), (127.3, "D5")]:
     place(piano(NOTE[n], 4), tt, 0.16, 0, 0.8)
 
@@ -281,9 +293,22 @@ ir[:, 0] = lowpass(ir[:, 0], 5000)
 ir[:, 1] = lowpass(ir[:, 1], 5000)
 ir /= np.sqrt((ir**2).sum(0))
 L = 1 << int(np.ceil(np.log2(N + len(ir))))
-wet = np.stack([np.fft.irfft(np.fft.rfft(send[:, c], L) * np.fft.rfft(ir[:, c], L), L)[:N] for c in (0, 1)], 1)
+def reverb(x):
+    return np.stack([np.fft.irfft(np.fft.rfft(x[:, c], L) * np.fft.rfft(ir[:, c], L), L)[:N] for c in (0, 1)], 1)
+
+
+tsec = np.arange(N) / SR
+gate = np.clip((112.0 - tsec) / 0.01, 0, 1)[:, None]  # true silence at the cut to black
+wet = reverb(send_pre) * gate + reverb(send - send_pre)
 mix = dry + wet * 0.9
-mix = np.tanh(mix * 1.4) / 1.4
+
+# dramatic arc: quiet collapse, controlled middle, the peak at 106 s, a gentle ending
+DYN = [(0, 1.1), (17, 1.1), (17.5, 0.7), (26.5, 0.6), (27, 0.52), (34.5, 0.52), (35.5, 1.3), (46.5, 1.3), (47.5, 1.0),
+       (55, 1.35), (65, 1.4), (77, 1.3), (89, 1.3), (90, 1.35), (95, 1.2), (96.5, 1.1), (105.9, 1.35), (106, 1.0), (111.9, 1.0),
+       (112, 0.8), (122.5, 0.8), (123, 0.8), (130, 0.8)]
+mix *= np.interp(tsec, [k for k, _ in DYN], [v for _, v in DYN])[:, None]
+mix /= np.abs(mix).max()
+mix = np.tanh(mix * 1.6) / np.tanh(1.6)  # gentle peak saturation, applied after level so the arc survives
 end = np.clip((DUR - np.arange(N) / SR) / 2.0, 0, 1)
 mix *= end[:, None]
 mix /= np.abs(mix).max() / 0.89

@@ -1,19 +1,27 @@
 # CHAPTER 27 — Review / delivery note
 
 ## What was built
-A 100 s, 1920×1080, 24 fps cinematic birthday film in HyperFrames, seven scenes (one sub-composition
-each, `compositions/s1…s7`) plus a `finish` layer (film grain re-seeded per frame, vignette, 2.39:1
+A 113 s, 1920×1080, 24 fps cinematic birthday film in HyperFrames, eight scenes (one sub-composition
+each, `compositions/s1…s7` + `s4b-grind`) plus a `finish` layer (film grain re-seeded per frame, vignette, 2.39:1
 letterbox). The story follows the brief exactly; no alternative storylines were built.
 
 | # | Time | Scene | How it's made |
 |---|------|-------|---------------|
-| 1 | 0–13 | The Beginning | Gold line of light → light sweep across **reference photo 1** (graded with `media-treatment`) → "15 ABAN 1378 / A STORY BEGINS." |
+| 1 | 0–13 | The Beginning | Gold line of light → light sweep across **photo 3** (#6, volleyball court; graded with `media-treatment`) → "15 ABAN 1378 / A STORY BEGINS." |
 | 2 | 13–26 | The Dreamer | Drawn dusk landscape, 3-layer parallax dolly, the boy (protagonist rig at child proportions) on a rock; push into the sun |
 | 3 | 26–42 | The Warrior | Drawn arena, one flood light, dust; wide dribble → slow-mo **left-arm** spike → ball hits the floor |
 | 4 | 42–55 | The Silence | Lights cut one by one, ball rolls to rest, he walks away into the door light; door closes |
-| 5 | 55–68 | The Return | Door opens, he walks back in, light banks slam on, full-speed spike with camera shake |
-| 6 | 68–84 | The Search | Gold line-art: independence · build · create (AI, his face in a film frame) · beyond → **reference photo 2** |
-| 7 | 84–100 | Chapter 27 | Silhouette (photo-1 matte) against sunrise, camera forward, his real face revealed, final title |
+| 4b | 55–68 | **The Grind** (v2) | Training montage: block jumps, sprints, spike after spike, barbell squats, rapid hits, exhausted → looks up; DAY 001→730 counter |
+| 5 | 68–81 | The Return | Door opens, he walks back in, light banks slam on, full-speed spike with camera shake |
+| 6 | 81–97 | The Search | Gold line-art: independence · build · create (AI, his face in a film frame) · beyond → **photo 4** (gym, from behind) |
+| 7 | 97–113 | Chapter 27 | Silhouette (photo-1 matte) against sunrise, camera forward, his real face revealed, final title |
+
+## v2 changes
+- Photo 3 (volleyball #6) replaces the portrait in the opening; photo 4 (gym) replaces the elevator
+  selfie in the Search finale. Photo 1 is still used for the final face reveal and the "create" film frame.
+- New 13 s training montage between leaving and returning; the film is now 113 s.
+- Harder hits: shockwave + ball streak on the return spike, letter-slam and a light sheen on the title,
+  flash frames and camera kicks on every montage cut, music cuts dead to a heartbeat before the return.
 
 ## Identity
 - Your real photographs are the only faces in the film: photo 1 (scenes 1, 6, 7) and photo 2 (scene 6).

@@ -3,7 +3,7 @@
 GOAL:    The viewer (and the subject) ends feeling that 27 years of struggle were the prologue — the
          story is not over. Last frame: his real face, lit by sunrise, under "CHAPTER 27".
 OUTPUT:  HyperFrames, 1920 x 1080, 24 fps, 16:9 (YouTube)
-TIME:    100 s x 24 = 2400 frames. Placeholder score at 72 BPM → 20 frames per beat, bar = 80 frames (3.333 s).
+TIME:    113 s x 24 = 2712 frames (v2: +13 s training montage at 55 s). Placeholder score at 72 BPM → 20 frames per beat, bar = 80 frames (3.333 s).
 
 LOOK:    Medium = "light in a dark room": every scene is near-black, lit by ONE warm source.
          ground   #0a0806 (warm black), never pure #000 except the head/tail of the film
@@ -27,7 +27,7 @@ MOTION:  enter = expo.out / power4.out; camera = power2.inOut / sine.inOut (slow
          Letters 0.1 s apart (names / dates), words 0.08 s apart. Slow-mo spike = 3.5 s for a 0.9 s action.
 SHOTS:
   S1  0.0–13.0   Black → a thin gold line of light opens at centre (0.5–3 s) → light becomes a sweep across
-                 his real portrait (ref-01) left→right (3–9 s) → "15 ABAN 1378" per letter (4.0 s) and
+                 his real photo, #6 on the volleyball court (ref-03) left→right (3–9 s) → "15 ABAN 1378" per letter (4.0 s) and
                  "A STORY BEGINS." (6.2 s). Hand-off: portrait sinks to black, the gold line remains = horizon.
   S2 13.0–26.0   Horizon line becomes a dusk sky. Boy silhouette on a rock, left third, looking right to the
                  low sun. 12 s dolly-in 1.0→1.12 with 3-layer parallax. Grass sways. Hand-off: push into the sun,
@@ -37,13 +37,17 @@ SHOTS:
                  impact. Floor (38–42): ball hits, dust ring. Hand-off: lights cut, one by one.
   S4 42.0–55.0   Same court, cold & dim. Ball alone rolls to rest. He walks away toward a door of light at
                  the back, shrinking; the door closes → black (54.2).
-  S5 55.0–68.0   The door opens again. He walks in; light banks slam on (58.5). Run-up, jump, spike at full
+  S4b 55.0–68.0 THE GRIND: one light, every night. Hard cuts on the beat with gold flash frames:
+                 block jumps at the net → sprint the court → spike after spike → barbell squats → four 0.4 s
+                 hits of all of it → spent, hands on knees, he looks up at the light. "DAY 001 → 730" rolls.
+                 Music stops dead at 66.6, heartbeat only, black.
+  S5 68.0–81.0   The door opens again. He walks in; light banks slam on (58.5). Run-up, jump, spike at full
                  speed with camera shake; dust shock ring. Hand-off: impact flash → gold line art.
-  S6 68.0–84.0   "The Search": gold line-art on deep brown, cut every ~2.6 s: rising graph (independence) →
+  S6 81.0–97.0   "The Search": gold line-art on deep brown, cut every ~2.6 s: rising graph (independence) →
                  a storefront drawn line by line (business) → a node network that becomes a film frame
-                 (AI content) → globe arc with a plane (abroad) → his real photo (ref-02, graded), lines
+                 (AI content) → globe arc with a plane (abroad) → his real photo (ref-04 gym photo, graded), lines
                  orbiting him. Hand-off: the photo darkens to silhouette.
-  S7 84.0–100.0  Sunrise behind his silhouette (ref-01 cutout as a matte). Camera moves forward 1.0→1.15.
+  S7 97.0–113.0  Sunrise behind his silhouette (ref-01 cutout as a matte). Camera moves forward 1.0→1.15.
                  The light comes round and reveals his real face (91 s). "CHAPTER 27" per letter (92.5),
                  "THE STORY CONTINUES." (95.0). Hold. Fade to black 98.8–100.
 SOUND:   placeholder score (assets/audio/score-placeholder.wav, generated, replace with a licensed track):

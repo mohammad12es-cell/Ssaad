@@ -29,7 +29,7 @@
     #finish-bar-bottom { bottom: 0; }
   </style>
   <div id="root" data-composition-id="finish" data-width="1920" data-height="1080">
-    <div id="finish-layer" class="clip" data-start="0" data-duration="100" data-layout-ignore>
+    <div id="finish-layer" class="clip" data-start="0" data-duration="113" data-layout-ignore>
       <div id="finish-grain"></div>
       <div id="finish-vignette"></div>
       <div id="finish-bar-top" class="finish-bar"></div>
@@ -46,7 +46,7 @@
       for (let i = 0; i < 97; i++) offs.push([Math.floor(rnd() * 150) - 75, Math.floor(rnd() * 150) - 75]);
       const o = { t: 0 };
       tl.fromTo(o, { t: 0 }, {
-        t: 100, duration: 100, ease: "none",
+        t: 113, duration: 113, ease: "none",
         onUpdate: () => {
           const f = Math.floor(o.t * 24 + 0.0001) % offs.length;
           grain.style.transform = "translate(" + offs[f][0] + "px," + offs[f][1] + "px)";

@@ -201,7 +201,7 @@ for i, m in enumerate([62, 66, 69, 74, 73, 69, 74]):
 music = np.stack([reverb(music[0], 3.4, 0.38), reverb(music[1], 3.6, 0.38)])
 music *= np.interp(tt, [0, 0.5, 98.0, 100], [0, 1, 1, 0])
 music *= 0.89 / (np.abs(music).max() + 1e-9)   # ≈ -1 dBFS peak
-write(os.path.join(ROOT, "score-placeholder.wav"), music)
+score_100 = music
 
 # ---------------------------------------------------------------- sfx (one stem, on-screen causes only)
 sfx = np.zeros((2, N))
@@ -231,10 +231,60 @@ place(sfx, riser(2.4, 0.5), 81.6)                                    # S6 → S7
 place(sfx, boom(5, 55, 26, 1.0), 84.0)                               # S7 impact into the sunrise
 place(sfx, boom(4, 45, 28, 0.45), 92.5)                              # S7 title lands
 sfx *= 0.89 / (np.abs(sfx).max() + 1e-9)
-write(os.path.join(ROOT, "sfx.wav"), sfx)
+sfx_100 = sfx
+
+# ---------------------------------------------------------------- THE GRIND (inserted at 55 s, 13 s long)
+# The 100 s stems above are the original cut; the training montage is spliced in at 55 s and
+# everything after it moves 13 s later (film = 113 s).
+G_AT, G_LEN = 55.0, 13.0
+GN = int(G_LEN * SR)
+gm = np.zeros((2, GN))
+gs = np.zeros((2, GN))
+E = BEAT / 2                                   # eighth note at 72 BPM (0.417 s)
+place(gm, pad([38, 45, 50], 11.8, attack=0.08, release=0.4), 0.0, gain=0.34)
+for i in range(int(11.6 / E)):
+    place(gm, boom(0.5, 110, 45, vel=0.75 if i % 2 == 0 else 0.4), i * E)
+    m = [62, 65, 69, 72][i % 4] if i < 16 else [64, 67, 70, 74][i % 4]
+    place(gm, piano(m, d=0.4, vel=0.2), i * E, pan=-0.35 + 0.7 * (i % 2))
+place(gm, riser(3.6, 0.55), 8.0)
+for at in [2.5, 4.5, 7.6, 10.0, 10.4, 10.8, 11.2]:
+    place(gm, boom(1.4, 70, 30, 0.9), at)
+gm[:, int(11.6 * SR):] *= 0                    # the music stops dead: he is spent
+for at in [11.9, 12.18, 12.55, 12.83]:         # heartbeat
+    place(gm, boom(0.35, 62, 40, 0.55), at)
+gm = np.stack([reverb(gm[0], 1.8, 0.25), reverb(gm[1], 1.9, 0.25)])
+gm *= 0.89 / (np.abs(gm).max() + 1e-9)
+for at in [1.25, 2.35]:                        # block-jump landings
+    place(gs, hit(0.7, 200, 2200, 12, 70, 0.8), at)
+for i in range(12):                            # sprint footfalls
+    place(gs, hit(0.15, 500, 4000, 60, 120, 0.22), 2.55 + i * 0.16, pan=-0.6 + 0.1 * i)
+for k, c in enumerate([5.25, 6.2, 7.15]):        # spike after spike
+    place(gs, hit(1.0, 400, 6000, 11, 75, 1.0 - 0.05 * k), c)
+    place(gs, hit(0.6, 300, 3000, 14, 90, 0.5), c + 0.24, pan=0.4)
+for at in [7.62, 8.3, 9.25, 9.85]:              # plate rattle on the bar
+    place(gs, hit(0.5, 2500, 9000, 22, 180, 0.28), at, pan=-0.2)
+for i, at in enumerate([2.5, 4.5, 7.6, 10.0, 10.4, 10.8, 11.2, 11.6]):
+    place(gs, whoosh(0.5 + 0.08 * (i % 3), 0.32, 600 + 150 * (i % 4), 8000, 0.35), at - 0.32, pan=-0.3 + 0.2 * (i % 4))
+for at, v in [(11.7, 0.35), (12.25, 0.28)]:      # breath out
+    place(gs, whoosh(0.7, 0.12, 400, 2200, v), at)
+gs *= 0.89 / (np.abs(gs).max() + 1e-9)
+
+
+def splice(base, ins, at):
+    i = int(at * SR)
+    f = int(0.04 * SR)
+    a, b = base[:, :i].copy(), base[:, i:].copy()
+    a[:, -f:] *= np.linspace(1, 0, f)
+    b[:, :f] *= np.linspace(0, 1, f)
+    ins = ins.copy(); ins[:, :f] *= np.linspace(0, 1, f); ins[:, -f:] *= np.linspace(1, 0, f)
+    return np.concatenate([a, ins, b], axis=1)
+
+
+write(os.path.join(ROOT, "score-placeholder.wav"), splice(score_100, gm * 0.95, G_AT))
+write(os.path.join(ROOT, "sfx.wav"), splice(sfx_100, gs, G_AT))
 
 # ---------------------------------------------------------------- voiceover slots (silent placeholders)
-VO = [(2.5, 9.5), (14.0, 23.5), (28.0, 39.5), (43.5, 53.5), (56.0, 66.0), (69.0, 82.5), (86.0, 96.0)]
+VO = [(2.5, 9.5), (14.0, 23.5), (28.0, 39.5), (43.5, 53.5), (56.5, 66.0), (69.0, 79.0), (82.0, 95.5), (99.0, 109.0)]
 os.makedirs(os.path.join(ROOT, "vo"), exist_ok=True)
 for i, (a, z) in enumerate(VO, start=1):
     write(os.path.join(ROOT, "vo", f"vo-{i:02d}.wav"), np.zeros((2, int((z - a) * SR))))

@@ -37,6 +37,9 @@
     contact: { torso: 22, neck: -6, shL: -172, elL: -2, shR: -50, elR: -40, hipL: -18, knL: 34, hipR: -6, knR: 46 },
     follow: { torso: 38, neck: 4, shL: -38, elL: -14, shR: 18, elR: -30, hipL: -34, knL: 30, hipR: -16, knR: 40 },
     land: { torso: 30, neck: -6, shL: 20, elL: -30, shR: 10, elR: -30, hipL: -60, knL: 88, hipR: -50, knR: 80 },
+    squatTop: { torso: 8, neck: -4, shL: 40, elL: -150, shR: 40, elR: -150, hipL: -6, knL: 6, hipR: -6, knR: 6 },
+    squatBottom: { torso: 38, neck: -18, shL: 40, elL: -150, shR: 40, elR: -150, hipL: -95, knL: 115, hipR: -95, knR: 115 },
+    tired: { torso: 55, neck: -28, shL: -22, elL: -8, shR: -18, elR: -10, hipL: -48, knL: 58, hipR: -42, knR: 54 },
   };
 
   function HFFig(rootSelector) {

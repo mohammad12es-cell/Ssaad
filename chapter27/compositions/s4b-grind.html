@@ -1,0 +1,297 @@
+<template>
+  <style>
+    #root { position: absolute; inset: 0; background: #000; overflow: hidden; }
+    #gr-stage { position: absolute; inset: 0; }
+    #gr-cam { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; }
+    #gr-world { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; overflow: visible; }
+    #gr-world .cone { mix-blend-mode: screen; }
+    #gr-world .door, #gr-world .bank1 .glow, #gr-world .bank1 .bulbs-on, #gr-world .bank3 .glow, #gr-world .bank3 .bulbs-on { opacity: 0; }
+    .gr-fig path, .gr-fig circle { stroke: currentColor; fill: currentColor; stroke-linecap: round; stroke-linejoin: round; }
+    .gr-canvas { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; }
+    #gr-grade { position: absolute; inset: 0; background: radial-gradient(ellipse 70% 80% at 40% 45%, rgba(0,0,0,0) 40%, rgba(0,0,0,.55) 100%); }
+    #gr-flash { position: absolute; inset: 0; background: #f6e3b4; opacity: 0; }
+    #gr-dark { position: absolute; inset: 0; background: #000; opacity: 0; }
+    #gr-counter { position: absolute; left: 232px; top: 760px; opacity: 0; }
+    #gr-day-label {
+      font-family: "Montserrat", sans-serif; font-weight: 500; font-size: 28px; letter-spacing: .6em; color: rgba(233,220,192,.8);
+    }
+    #gr-day {
+      font-family: "Oswald", sans-serif; font-weight: 600; font-size: 92px; line-height: 1; letter-spacing: .02em; color: #d9bd7e;
+      font-variant-numeric: tabular-nums; margin-top: 6px;
+    }
+  </style>
+  <div id="root" data-composition-id="grind" data-width="1920" data-height="1080">
+    <div id="gr-stage" class="clip" data-start="0" data-duration="13" data-layout-allow-overflow>
+      <div id="gr-cam">
+        <svg id="gr-world" viewBox="0 0 1920 1080">
+          <!--ARENA gr-->
+<!-- arena set (scripts/build-arena.py) -->
+<defs>
+  <linearGradient id="gr-wall" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#060504"/><stop offset="1" stop-color="#140e0a"/></linearGradient>
+  <linearGradient id="gr-wood" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2e1e10"/><stop offset=".45" stop-color="#5a391c"/><stop offset="1" stop-color="#24170c"/></linearGradient>
+  <linearGradient id="gr-cone" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff1cf" stop-opacity=".42"/><stop offset=".55" stop-color="#f1dcaa" stop-opacity=".13"/><stop offset="1" stop-color="#f1dcaa" stop-opacity=".04"/></linearGradient>
+  <radialGradient id="gr-pool" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#f6dfa8" stop-opacity=".5"/><stop offset=".6" stop-color="#c9a45c" stop-opacity=".14"/><stop offset="1" stop-color="#c9a45c" stop-opacity="0"/></radialGradient>
+  <radialGradient id="gr-bulbglow" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#fff1cf" stop-opacity=".75"/><stop offset=".35" stop-color="#f1dcaa" stop-opacity=".18"/><stop offset="1" stop-color="#f1dcaa" stop-opacity="0"/></radialGradient>
+  <linearGradient id="gr-doorspill" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f1dcaa" stop-opacity=".35"/><stop offset="1" stop-color="#f1dcaa" stop-opacity="0"/></linearGradient>
+  <filter id="gr-rim" x="-30%" y="-30%" width="160%" height="160%">
+    <feOffset in="SourceAlpha" dx="3" dy="4" result="off"/>
+    <feComposite in="SourceAlpha" in2="off" operator="out" result="edge"/>
+    <feGaussianBlur in="edge" stdDeviation="1.1" result="edgeb"/>
+    <feFlood flood-color="#f1dcaa" flood-opacity=".95"/>
+    <feComposite in2="edgeb" operator="in" result="rim"/>
+    <feMerge><feMergeNode in="SourceGraphic"/><feMergeNode in="rim"/></feMerge>
+  </filter>
+</defs>
+<rect class="wall" x="-700" y="-200" width="3320" height="1480" fill="url(#gr-wall)"/>
+<g class="stands" stroke="#21170f" stroke-width="2"><path d="M-700 196 L2620 196" stroke-dasharray="none"/><path d="M-700 222 L2620 222" stroke-dasharray="16 9"/><path d="M-700 248 L2620 248" stroke-dasharray="none"/><path d="M-700 274 L2620 274" stroke-dasharray="16 9"/><path d="M-700 300 L2620 300" stroke-dasharray="none"/><path d="M-700 326 L2620 326" stroke-dasharray="16 9"/><path d="M-700 352 L2620 352" stroke-dasharray="none"/><path d="M-700 378 L2620 378" stroke-dasharray="16 9"/><path d="M-700 404 L2620 404" stroke-dasharray="none"/><path d="M-700 430 L2620 430" stroke-dasharray="16 9"/><path d="M-700 456 L2620 456" stroke-dasharray="none"/><path d="M-700 482 L2620 482" stroke-dasharray="16 9"/><path d="M-700 508 L2620 508" stroke-dasharray="none"/><path d="M-700 534 L2620 534" stroke-dasharray="16 9"/><path d="M-700 560 L2620 560" stroke-dasharray="none"/></g>
+<g class="door"><rect class="door-light" x="1560" y="476" width="72" height="124" fill="#f4dba2"/><path class="door-spill" d="M1560 600 L1632 600 L1840 1080 L1300 1080 Z" fill="url(#gr-doorspill)"/></g>
+<g class="bank bank1">
+  <circle class="glow" cx="380" cy="166" r="210" fill="url(#gr-bulbglow)"/>
+  <rect x="298" y="148" width="164" height="36" rx="3" fill="#120d09" stroke="#2c2118" stroke-width="2"/>
+  <g class="bulbs-off" fill="#2b2119"><circle cx="318" cy="166" r="8"/><circle cx="343" cy="166" r="8"/><circle cx="368" cy="166" r="8"/><circle cx="393" cy="166" r="8"/><circle cx="418" cy="166" r="8"/><circle cx="443" cy="166" r="8"/></g>
+  <g class="bulbs-on" fill="#fff4d6"><circle cx="318" cy="166" r="8"/><circle cx="343" cy="166" r="8"/><circle cx="368" cy="166" r="8"/><circle cx="393" cy="166" r="8"/><circle cx="418" cy="166" r="8"/><circle cx="443" cy="166" r="8"/></g>
+</g>
+<g class="bank bank2">
+  <circle class="glow" cx="760" cy="166" r="210" fill="url(#gr-bulbglow)"/>
+  <rect x="678" y="148" width="164" height="36" rx="3" fill="#120d09" stroke="#2c2118" stroke-width="2"/>
+  <g class="bulbs-off" fill="#2b2119"><circle cx="698" cy="166" r="8"/><circle cx="723" cy="166" r="8"/><circle cx="748" cy="166" r="8"/><circle cx="773" cy="166" r="8"/><circle cx="798" cy="166" r="8"/><circle cx="823" cy="166" r="8"/></g>
+  <g class="bulbs-on" fill="#fff4d6"><circle cx="698" cy="166" r="8"/><circle cx="723" cy="166" r="8"/><circle cx="748" cy="166" r="8"/><circle cx="773" cy="166" r="8"/><circle cx="798" cy="166" r="8"/><circle cx="823" cy="166" r="8"/></g>
+</g>
+<g class="bank bank3">
+  <circle class="glow" cx="1340" cy="166" r="210" fill="url(#gr-bulbglow)"/>
+  <rect x="1258" y="148" width="164" height="36" rx="3" fill="#120d09" stroke="#2c2118" stroke-width="2"/>
+  <g class="bulbs-off" fill="#2b2119"><circle cx="1278" cy="166" r="8"/><circle cx="1303" cy="166" r="8"/><circle cx="1328" cy="166" r="8"/><circle cx="1353" cy="166" r="8"/><circle cx="1378" cy="166" r="8"/><circle cx="1403" cy="166" r="8"/></g>
+  <g class="bulbs-on" fill="#fff4d6"><circle cx="1278" cy="166" r="8"/><circle cx="1303" cy="166" r="8"/><circle cx="1328" cy="166" r="8"/><circle cx="1353" cy="166" r="8"/><circle cx="1378" cy="166" r="8"/><circle cx="1403" cy="166" r="8"/></g>
+</g>
+<path class="floor" d="M-700 600 L2620 600 L2620 1280 L-700 1280 Z" fill="url(#gr-wood)"/>
+<g class="planks" stroke="#1d1209" stroke-opacity=".55" stroke-width="1.6"><path d="M-700 612 L2620 612"/><path d="M-700 626 L2620 626"/><path d="M-700 643 L2620 643"/><path d="M-700 663 L2620 663"/><path d="M-700 686 L2620 686"/><path d="M-700 712 L2620 712"/><path d="M-700 742 L2620 742"/><path d="M-700 776 L2620 776"/><path d="M-700 814 L2620 814"/><path d="M-700 856 L2620 856"/><path d="M-700 902 L2620 902"/><path d="M-700 952 L2620 952"/><path d="M-700 1006 L2620 1006"/><path d="M-700 1064 L2620 1064"/></g>
+<g class="court" fill="none" stroke="#efe3c8" stroke-opacity=".72" stroke-linecap="round">
+  <path d="M-700 962 L2620 962" stroke-width="7"/>
+  <path d="M300 642 L1880 642" stroke-width="3"/>
+  <path d="M300 642 L-40 962" stroke-width="4"/>
+  <path d="M880 642 L800 962" stroke-width="3" stroke-opacity=".45"/>
+  <path d="M1330 642 L1450 962" stroke-width="3" stroke-opacity=".45"/>
+  <path d="M1105 642 L1135 962" stroke-width="4"/>
+</g>
+<ellipse class="pool" cx="800" cy="850" rx="430" ry="110" fill="url(#gr-pool)"/>
+<g class="net">
+  <rect x="1099" y="380" width="9" height="262" fill="#120c08"/>
+  <path d="M1135 585 L1105 395 L1105 505 L1135 735 Z" fill="#0d0907" fill-opacity=".55"/>
+  <g stroke="#5a4634" stroke-width="1.3" stroke-opacity=".9"><path d="M1108 414 L1108 528"/><path d="M1111 433 L1111 551"/><path d="M1114 452 L1114 574"/><path d="M1117 471 L1117 597"/><path d="M1120 490 L1120 620"/><path d="M1123 509 L1123 643"/><path d="M1126 528 L1126 666"/><path d="M1129 547 L1129 689"/><path d="M1132 566 L1132 712"/><path d="M1135 615 L1105 417"/><path d="M1135 645 L1105 439"/><path d="M1135 675 L1105 461"/><path d="M1135 705 L1105 483"/></g>
+  <path d="M1135 585 L1105 395" stroke="#efe3c8" stroke-width="6" stroke-linecap="round"/>
+  <path d="M1135 735 L1105 505" stroke="#efe3c8" stroke-width="3" stroke-opacity=".7"/>
+  <rect x="1129" y="560" width="14" height="402" fill="#120c08"/>
+</g>
+<polygon class="cone" points="700,184 820,184 1200,1010 400,1010" fill="url(#gr-cone)"/>
+<!--/ARENA-->
+          <ellipse id="gr-shadow" cx="0" cy="0" rx="62" ry="11" fill="#000" opacity="0.5" />
+          <g id="gr-fig" class="gr-fig" filter="url(#gr-rim)" style="color:#080605">
+            <!--FIGURE-->
+<!-- protagonist rig (see assets/lib/figure.js) · faces right · L = left/near/hitting side -->
+<g class="j-hipR"><path d="M0 0 L0 92" stroke-width="31"/><g class="j-knR"><path d="M0 92 L0 182" stroke-width="22"/><path d="M-4 186 L17 190" stroke-width="12"/></g></g>
+<g class="j-torso">
+  <g class="j-shR"><path d="M0 -98 L0 -36" stroke-width="19"/><g class="j-elR"><path d="M0 -36 L0 18" stroke-width="15"/><circle cx="0" cy="24" r="8.5"/></g></g>
+  <path d="M-20 8 C-25 -40 -29 -84 -21 -103 C-9 -114 13 -114 25 -103 C30 -80 24 -40 20 8 Z" stroke-width="0"/>
+  <g class="j-neck">
+    <path d="M1 -100 L3 -116" stroke-width="15"/>
+    <circle cx="3" cy="-131" r="18.5"/><circle cx="19" cy="-129" r="4"/><circle cx="12" cy="-118" r="10"/>
+    <circle cx="-7" cy="-146" r="11"/><circle cx="6" cy="-151" r="11"/><circle cx="17" cy="-145" r="8.5"/>
+    <circle cx="-15" cy="-136" r="10"/><circle cx="-3" cy="-141" r="10"/><circle cx="-12" cy="-150" r="7"/>
+  </g>
+  <g class="j-shL"><path d="M0 -98 L0 -36" stroke-width="19"/><g class="j-elL"><path d="M0 -36 L0 18" stroke-width="15"/><circle cx="0" cy="24" r="8.5"/></g></g>
+</g>
+<g class="j-hipL"><path d="M0 0 L0 92" stroke-width="31"/><g class="j-knL"><path d="M0 92 L0 182" stroke-width="22"/><path d="M-4 186 L17 190" stroke-width="12"/></g></g>
+<!--/FIGURE-->
+          </g>
+          <!-- barbell seen end-on: the plate at his shoulders -->
+          <g id="gr-plate" opacity="0">
+            <circle r="38" fill="#0b0806" stroke="#b08a4c" stroke-width="3" />
+            <circle r="25" fill="none" stroke="#3a2b1d" stroke-width="2" />
+            <circle r="9" fill="#c9a45c" />
+          </g>
+          <g id="gr-ball" opacity="0">
+            <circle r="14" fill="#efe6d0" />
+            <path d="M-13 -4 C-4 -2 4 -8 8 -11 M-12 6 C-2 4 8 -2 13 -6 M-4 13 C0 4 6 0 13 2" fill="none" stroke="#9c8762" stroke-width="1.8" />
+          </g>
+        </svg>
+        <canvas id="gr-dust" class="gr-canvas" width="1920" height="1080"></canvas>
+        <canvas id="gr-burst" class="gr-canvas" width="1920" height="1080"></canvas>
+      </div>
+      <div id="gr-grade"></div>
+      <div id="gr-counter">
+        <div id="gr-day-label">DAY</div>
+        <div id="gr-day">001</div>
+      </div>
+      <div id="gr-flash"></div>
+      <div id="gr-dark"></div>
+    </div>
+  </div>
+  <script>
+    (function () {
+      const tl = gsap.timeline({ paused: true });
+      const W = "#gr-world ";
+      const fig = window.HFFig("#gr-fig");
+      const F = "#gr-fig", B = "#gr-ball", P = "#gr-plate", S = "#gr-shadow", CAM = "#gr-cam";
+      gsap.set([B, P, S], { svgOrigin: "0 0" });
+      const flash = (at, peak) => {
+        tl.to("#gr-flash", { opacity: peak || 0.55, duration: 0.04, ease: "none" }, at);
+        tl.to("#gr-flash", { opacity: 0, duration: 0.16, ease: "power2.out" }, at + 0.04);
+      };
+      const cam = (at, scale, ox, oy, x, y) => tl.set(CAM, { scale, transformOrigin: ox + "px " + oy + "px", x: x || 0, y: y || 0 }, at);
+      const punch = (at, from, to, d) => tl.to(CAM, { scale: to, duration: d, ease: "sine.out" }, at);
+      tl.set("#gr-flash", { opacity: 0 }, 0);
+
+      // Night practice: one light, every night.
+      tl.fromTo(W + ".bank2 .bulbs-on", { opacity: 1 }, { opacity: 1, duration: 0.01 }, 0);
+      tl.fromTo(W + ".bank2 .glow", { opacity: 1 }, { opacity: 1, duration: 0.01 }, 0);
+      tl.fromTo([W + ".cone", W + ".pool"], { opacity: 1 }, { opacity: 1, duration: 0.01 }, 0);
+
+      // ── A (0 – 2.5): block jumps at the net.
+      cam(0, 1.35, 1040, 560);
+      punch(0, 1.35, 1.42, 2.5);
+      tl.fromTo("#gr-dark", { opacity: 1 }, { opacity: 0, duration: 0.25, ease: "power2.out" }, 0);
+      tl.set(F, { x: 1040, y: 668, scale: 0.87, opacity: 1 }, 0);
+      tl.set(S, { x: 1040, y: 832, scale: 1, opacity: 0.5 }, 0);
+      fig.setPose(tl, "stand", 0);
+      [[0.25, 0.95], [1.4, 2.05]].forEach(([a, l]) => {
+        fig.pose(tl, "load", a, 0.25, "power2.out");
+        tl.to(F, { y: 700, duration: 0.25, ease: "power2.out" }, a);
+        fig.pose(tl, "rise", a + 0.25, 0.3, "power3.out");
+        tl.to(F, { y: 498, duration: 0.3, ease: "power3.out" }, a + 0.25);
+        tl.to(S, { scale: 0.45, opacity: 0.18, duration: 0.3, ease: "power3.out" }, a + 0.25);
+        fig.pose(tl, "land", l, 0.3, "power2.in");
+        tl.to(F, { y: 690, duration: 0.3, ease: "power2.in" }, l);
+        tl.to(S, { scale: 1, opacity: 0.5, duration: 0.3, ease: "power2.in" }, l);
+      });
+
+      // ── B (2.5 – 4.5): sprint the length of the court.
+      flash(2.5);
+      cam(2.5, 1.6, 960, 540, 1056, -60);
+      tl.to(CAM, { x: -1024, duration: 2.0, ease: "none" }, 2.5);
+      tl.set(F, { x: 200, y: 668 }, 2.5);
+      tl.set(S, { opacity: 0 }, 2.5);
+      fig.setPose(tl, "runA", 2.5);
+      fig.cycle(tl, "runB", "runA", 2.5, 0.16, 12);
+      tl.to(F, { x: 1500, duration: 2.0, ease: "none" }, 2.5);
+
+      // ── C (4.5 – 7.6): spike after spike.
+      flash(4.5);
+      cam(4.5, 1.5, 760, 430, -150, 90);
+      tl.set(S, { x: 700, y: 832, scale: 1, opacity: 0.5 }, 4.5);
+      [5.25, 6.2, 7.15].forEach((c, k) => {
+        const a = c - 0.6;
+        tl.set(F, { x: 700, y: 668 }, a);
+        tl.set(S, { x: 700 }, a);
+        fig.setPose(tl, "stand", a);
+        fig.pose(tl, "load", a, 0.13, "power2.out");
+        tl.to(F, { x: 765, y: 700, duration: 0.13, ease: "power1.out" }, a);
+        fig.pose(tl, "rise", a + 0.13, 0.17, "power2.out");
+        tl.to(F, { x: 840, y: 470, duration: 0.17, ease: "power2.out" }, a + 0.13);
+        tl.to(S, { x: 840, scale: 0.45, opacity: 0.18, duration: 0.17, ease: "power2.out" }, a + 0.13);
+        fig.pose(tl, "cock", a + 0.3, 0.2, "sine.inOut");
+        tl.to(F, { x: 858, y: 452, duration: 0.2, ease: "sine.out" }, a + 0.3);
+        fig.pose(tl, "contact", c - 0.1, 0.1, "power4.in");
+        fig.pose(tl, "follow", c, 0.2, "power2.out");
+        tl.to(F, { x: 900, y: 560, duration: 0.2, ease: "sine.in" }, c);
+        fig.pose(tl, "land", c + 0.2, 0.14, "power2.out");
+        tl.to(F, { x: 925, y: 698, duration: 0.14, ease: "power2.out" }, c + 0.2);
+        tl.to(S, { x: 925, scale: 1, opacity: 0.5, duration: 0.34, ease: "power2.in" }, c);
+        tl.set(B, { x: 860, y: 140, opacity: 1, rotation: 0, scale: 0.87 }, a + 0.1);
+        tl.to(B, { x: 950, y: 280, duration: c - a - 0.1, ease: "power1.in" }, a + 0.1);
+        tl.to(B, { x: 1800, y: 905, rotation: 900, duration: 0.24, ease: "power1.in" }, c);
+        flash(c, 0.35);
+        tl.to(CAM, { x: -150 + (k % 2 ? -10 : 12), y: 98, duration: 0.05, ease: "none" }, c);
+        tl.to(CAM, { x: -150, y: 90, duration: 0.18, ease: "power2.out" }, c + 0.05);
+      });
+      tl.set(B, { opacity: 0 }, 7.6);
+
+      // ── D (7.6 – 10.0): squats under the bar.
+      flash(7.6);
+      cam(7.6, 1.7, 720, 600, 0, 0);
+      punch(7.6, 1.7, 1.78, 2.4);
+      tl.set(F, { x: 720, y: 668 }, 7.6);
+      tl.set(S, { x: 720, y: 832, scale: 1, opacity: 0.5 }, 7.6);
+      fig.setPose(tl, "squatTop", 7.6);
+      const top = { x: 720 + 11.9 - 20, y: 668 - 84.5 + 10 }, bot = { x: 720 - 53 + 52.5 - 26, y: 668 + 92 - 67.2 + 14 };
+      tl.set(P, { x: top.x, y: top.y, opacity: 1 }, 7.6);
+      [[7.85, 0.42, 0.42], [8.8, 0.45, 0.6]].forEach(([d, down, up]) => {
+        fig.pose(tl, "squatBottom", d, down, "power2.inOut");
+        tl.to(F, { x: 667, y: 760, duration: down, ease: "power2.inOut" }, d);
+        tl.to(P, { x: bot.x, y: bot.y, duration: down, ease: "power2.inOut" }, d);
+        fig.pose(tl, "squatTop", d + down + 0.05, up, "power2.inOut");
+        tl.to(F, { x: 720, y: 668, duration: up, ease: "power2.inOut" }, d + down + 0.05);
+        tl.to(P, { x: top.x, y: top.y, duration: up, ease: "power2.inOut" }, d + down + 0.05);
+      });
+      tl.set(P, { opacity: 0 }, 10.0);
+
+      // ── E (10.0 – 11.6): it all, faster — four hard cuts.
+      const hits = [
+        [10.0, () => { cam(10.0, 2.0, 1040, 450); tl.set(F, { x: 1040, y: 500 }, 10.0); fig.setPose(tl, "rise", 10.0); tl.set(S, { x: 1040, scale: 0.45, opacity: 0.18 }, 10.0); }],
+        [10.4, () => { cam(10.4, 2.2, 900, 350); tl.set(F, { x: 858, y: 452 }, 10.4); fig.setPose(tl, "contact", 10.4); tl.set(B, { x: 950, y: 280, opacity: 1 }, 10.4); tl.set(S, { opacity: 0 }, 10.4); }],
+        [10.8, () => { cam(10.8, 2.0, 700, 640); tl.set(B, { opacity: 0 }, 10.8); tl.set(F, { x: 667, y: 760 }, 10.8); fig.setPose(tl, "squatBottom", 10.8); tl.set(P, { x: bot.x, y: bot.y, opacity: 1 }, 10.8); }],
+        [11.2, () => { cam(11.2, 2.2, 900, 560); tl.set(P, { opacity: 0 }, 11.2); tl.set(F, { x: 900, y: 668 }, 11.2); fig.setPose(tl, "runA", 11.2); }],
+      ];
+      hits.forEach(([at, fn]) => { flash(at, 0.6); fn(); });
+      [10.0, 10.4, 10.8, 11.2].forEach((at, i) => {
+        tl.to(CAM, { scale: "+=0.07", duration: 0.38, ease: "sine.out" }, at + 0.01);
+      });
+      fig.pose(tl, "runB", 11.2, 0.2, "none");
+
+      // ── F (11.6 – 13): spent. Hands on knees, then he looks up at the light.
+      flash(11.6, 0.3);
+      cam(11.6, 1.3, 760, 600);
+      tl.to(CAM, { scale: 1.38, duration: 1.4, ease: "sine.inOut" }, 11.6);
+      tl.set(F, { x: 760, y: 690 }, 11.6);
+      tl.set(S, { x: 760, y: 832, scale: 1, opacity: 0.5 }, 11.6);
+      fig.setPose(tl, "tired", 11.6);
+      tl.to(fig.parts.torso, { rotation: 50, duration: 0.25, ease: "sine.inOut", yoyo: true, repeat: 1 }, 11.65);
+      fig.pose(tl, "look", 12.15, 0.55, "power2.inOut");
+      tl.to(F, { y: 668, duration: 0.55, ease: "power2.inOut" }, 12.15);
+      tl.to(fig.parts.neck, { rotation: -24, duration: 0.4, ease: "sine.out" }, 12.55);
+      tl.to([W + ".bank2 .bulbs-on", W + ".bank2 .glow", W + ".cone", W + ".pool"], { opacity: 0.35, duration: 0.05, ease: "none" }, 12.45);
+      tl.to([W + ".bank2 .bulbs-on", W + ".bank2 .glow", W + ".cone", W + ".pool"], { opacity: 1, duration: 0.05, ease: "none" }, 12.55);
+      tl.to("#gr-dark", { opacity: 1, duration: 0.12, ease: "power2.in" }, 12.83);
+
+      // The days roll: 001 → 730.
+      tl.fromTo("#gr-counter", { opacity: 0, filter: "blur(8px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.2, ease: "power2.out" }, 0.4);
+      const day = document.getElementById("gr-day");
+      const dc = { d: 1 };
+      const setDay = () => { day.textContent = String(Math.round(dc.d)).padStart(3, "0"); };
+      tl.fromTo(dc, { d: 1 }, { d: 730, duration: 11.0, ease: "power2.in", onUpdate: setDay }, 0.4);
+      tl.to("#gr-counter", { opacity: 0, filter: "blur(6px)", duration: 0.2, ease: "power2.in" }, 12.6);
+      setDay();
+
+      // Dust in the light; sweat on every landing, every hit, the last rep.
+      const dust = window.HFDust(document.getElementById("gr-dust"), {
+        seed: 9, count: 150, minR: 0.6, maxR: 2.1, drift: [4, -7], sway: 18, alpha: 0.75,
+        region: { x: 300, y: 180, w: 1300, h: 830 }, light: { x: 780, y: 620, r: 560 },
+      });
+      const bctx = document.getElementById("gr-burst").getContext("2d");
+      const R = window.HFRand(730);
+      const mk = (n, sp, up, spread) => Array.from({ length: n }, () => {
+        const a = -Math.PI / 2 + (R() - 0.5) * spread, v = sp * (0.3 + R());
+        return { vx: Math.cos(a) * v, vy: Math.sin(a) * v * up, r: 0.8 + R() * 2.4, a: 0.5 + R() * 0.5 };
+      });
+      const sweat = mk(28, 220, 1, Math.PI * 1.6), floor = mk(60, 240, 0.35, Math.PI * 1.25);
+      const ev = [
+        [sweat, 0.8, 1040, 360], [floor, 1.25, 1040, 860], [sweat, 1.95, 1040, 355], [floor, 2.35, 1040, 860],
+        [sweat, 5.25, 930, 300], [sweat, 6.2, 930, 300], [sweat, 7.15, 930, 300], [floor, 5.6, 935, 862], [floor, 7.5, 935, 862],
+        [sweat, 9.9, 735, 560], [sweat, 11.7, 800, 600],
+      ];
+      const burst = (ps, t0, t, x0, y0) => {
+        const k = t - t0;
+        if (k < 0 || k > 1.3) return;
+        ps.forEach((p) => {
+          bctx.fillStyle = "rgba(240,224,190," + (p.a * Math.pow(1 - k / 1.3, 1.6)).toFixed(3) + ")";
+          bctx.beginPath(); bctx.arc(x0 + p.vx * k, y0 + p.vy * k + 150 * k * k, p.r, 0, 6.283); bctx.fill();
+        });
+      };
+      window.HFDrive(tl, (t) => {
+        dust(t);
+        bctx.clearRect(0, 0, 1920, 1080);
+        ev.forEach(([ps, t0, x, y]) => burst(ps, t0, t, x, y));
+      }, 0, 13);
+      window.__timelines["grind"] = tl;
+    })();
+  </script>
+</template>

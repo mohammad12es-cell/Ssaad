@@ -1,0 +1,45 @@
+=== NAME ===
+Margin Man
+
+=== HANDLE ===
+@marginman.a
+
+=== DESCRIPTION (Customization → Profile → Description) ===
+Margin Man is a stickman who lives in the margin of a notebook and draws his way out of trouble ✏️
+Every problem gets a drawing. Every drawing makes it worse. 😅
+
+Rockets, portals, a dog that eats pencils, and a monster who just wants cake.
+Funny animated Shorts every week, plus long 20-minute episodes for when you want more. No dialogue, so it's funny in any language.
+
+Subscribe and tell us in the comments what Inky should draw next! 👇
+
+=== CHANNEL KEYWORDS (Settings → Channel → Basic info → Keywords) ===
+stickman, stickman animation, stick figure, animation, cartoon, funny animation, notebook animation, drawing animation, animated shorts, stickman compilation, no dialogue animation, margin man
+
+=== PLAYLISTS TO CREATE ===
+1. Margin Man – Full Episodes (long videos)
+   "Long Margin Man adventures. Grab a snack 🍿"
+2. Margin Man Shorts
+   "Quick drawings gone wrong ✏️"
+3. Inky vs. the Scribble Monster
+   "Every battle between Inky and the monster 😈"
+
+=== UPLOAD DEFAULTS (Settings → Upload defaults) ===
+Title: (leave empty)
+Description footer:
+✏️ Margin Man: a stickman who draws his way out of trouble. Subscribe for new pages every week!
+All characters, animation, music and sound effects are original.
+#stickman #animation #cartoon
+Tags: stickman, stickman animation, animation, cartoon, margin man
+Category: Film & Animation
+Language: English
+Audience: No, not made for kids (choose Yes only if your audience is mainly children)
+
+=== CHANNEL HOME (Customization → Layout) ===
+Channel trailer for people who haven't subscribed: the 20-minute video "Margin Man: Lost in the Notebook"
+Featured sections: Shorts, Margin Man – Full Episodes, Popular videos
+
+=== BRANDING (Customization → Branding) ===
+Picture: avatar.png (800×800)
+Banner: banner.png (2560×1440)
+Video watermark: watermark.png (300×300, transparent), display time: Entire video

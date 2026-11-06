@@ -2,7 +2,9 @@
 
 ## Identity
 - **Name:** Margin Man
-- **Handle (try in order):** @MarginManToons · @MarginManAnimation · @TheMarginMan
+- **Handle:** @marginman.a
+- **Paste-ready text (description, keywords, playlists, upload defaults):** `brand/channel-text.txt`
+- **Video watermark:** `brand/watermark.png` (300×300, transparent)
 - **Avatar:** `brand/avatar.png` (800×800) · **Banner:** `brand/banner.png` (2560×1440, title inside the 1546×423 safe area)
 - **Characters:** Inky (the hero, black ink), Scribble (the monster), the Eraser (frenemy), the Blots.
 

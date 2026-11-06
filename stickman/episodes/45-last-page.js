@@ -1,5 +1,5 @@
 EPISODE({ title: "The Last Page", seed: 492, music: "dreamy" }, (E) => {
-  E.pageNo(45).fig("inky", 120);
+  E.pageNo(58).fig("inky", 120);
   const end = E.text("THE END", 1000, 1080, { size: 140 });
   E.walk("inky", 560, 2.0).wait(2.0);
   E.face("inky", "sad").cap("The last page? 😢", 2.0).wait(2.0);

@@ -17,8 +17,9 @@ def order():
     eps = sorted(f[:-3] for f in os.listdir(os.path.join(ROOT, "episodes")) if f.endswith(".js"))
     intro = [e for e in eps if e.startswith("00")]
     outro = [e for e in eps if e.startswith("99")]
-    mid = [e for e in eps if e not in intro + outro]
-    return intro + list(HAND) + mid + outro
+    finale = [e for e in eps if e.endswith("last-page")]
+    mid = [e for e in eps if e not in intro + outro + finale]
+    return intro + list(HAND) + mid + finale + outro
 
 
 def title(ep):
@@ -58,6 +59,10 @@ def main(out):
            "-c:v", "libx264", "-preset", "medium", "-crf", "20", "-pix_fmt", "yuv420p", "-c:a", "aac", "-b:a", "192k", "-movflags", "+faststart", out]
     subprocess.run(cmd, check=True)
     lines = []
+    # YouTube chapters must be >= 10 s: the short intro is folded into the first episode's chapter
+    if eps and eps[0].startswith("00") and len(eps) > 1:
+        starts = [0.0] + starts[2:]
+        eps = eps[1:]
     for e, s in zip(eps, starts):
         mm, ss = divmod(int(round(s)), 60)
         t = title(e)

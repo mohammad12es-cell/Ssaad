@@ -36,7 +36,13 @@ letterbox). The story follows the brief exactly; no alternative storylines were 
 - `npx hyperframes check`: passes (0 errors). Warnings kept on purpose:
   `first_frame_empty` (the film opens on black by design), `audio_clip_silent` ×7 (VO placeholders).
 - Every scene and every seam was snapshotted and looked at (contact sheets, seams ±0.2 s).
-- Audio was **measured, not heard**: score −13.6 LUFS integrated, −1.0 dBTP before mix gain.
+- Audio was **measured, not heard**: score file −13.6 LUFS / −1.0 dBTP; final mix (silent VO slots)
+  −20.3 LUFS integrated, −2.6 dBTP peak. That leaves room for the narration; after adding the voice, aim
+  for about −14 LUFS for YouTube (`npx hyperframes normalize-audio`).
+
+## Outputs
+- `renders/chapter-27.mp4`: master, 531 MB, CRF 15 (ignored by git, re-create with `npm run render -- --fps 24 --quality delivery`).
+- `../output/chapter-27.mp4`: YouTube upload copy, 47 MB, H.264 CRF 23 tune=grain, AAC 192k, faststart.
 
 ## Weakest shot / next steps
 - Scene 6 finale: photo 2 is a lit selfie (elevator ceiling shows faintly through the curls); it reads as

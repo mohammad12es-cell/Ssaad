@@ -1,0 +1,22 @@
+EPISODE({ title: "Selfie", seed: 184, music: "bright" }, (E) => {
+  E.pageNo(17).fig("inky", 560);
+  E.monster("mon", 1950, { layer: "back" });
+  E.cap("Selfie time 📸", 1.8).wait(0.2);
+  E.draw("inky", "camera", 680, 900, { id: "cam", s: 0.6, attach: "inky" }).arm("inky", "R", -70, 0.2).wait(0.6);
+  const snap = () => { E.face("inky", "smile").wait(0.4).flash().wait(0.5); };
+  snap();
+  E.cap("Click 😁").wait(0.8);
+  E.to("#mon", { x: 1420 }, 0.3).wait(0.6);
+  E.music("sneaky"); snap();
+  E.to("#mon", { x: 1950 }, 0.15).wait(0.3).cap("Click 😎").wait(0.8);
+  E.to("#mon", { x: 1050 }, 0.3).grin("mon").wait(0.5); snap();
+  E.to("#mon", { x: 1950 }, 0.15).wait(0.3).cap("Click 🤩").wait(0.8);
+  E.to("#mon", { x: 820 }, 0.3).wait(0.5); snap();
+  E.cap("…wait.").face("inky", "o").wait(0.8);
+  E.to("#inky", { scaleX: -1, transformOrigin: "50% 50%" }, 0.15).wait(0.4).music("chase");
+  E.hop("#inky", 120, 1).cap("AAAH 😱").sfx("whoosh", 0.3, 0.4).laugh("mon").wait(1.4);
+  E.to("#inky", { scaleX: 1 }, 0.15).music("bright").wait(0.4);
+  E.face("inky", "smile").cap("…one more? 🤝").wait(0.6);
+  E.to("#mon", { x: 900 }, 0.3).arm("mon", "L", 30, 0.2).wait(0.5);
+  E.flash().wait(0.4).hearts(730, 640, 2).cap("Best friends 📸", 2.6).wait(2.6).end(0.3);
+});

@@ -1,0 +1,20 @@
+EPISODE({ title: "Portrait Contest", seed: 426, music: "bright" }, (E) => {
+  E.pageNo(39).fig("inky", 260).monster("mon", 1250);
+  E.cap("Portrait contest 🎨", 1.8).wait(0.4);
+  const frame = { s: [PROPS._rect(-110, -300, 110, -60), [[-80, -60], [-100, 0]], [[80, -60], [100, 0]]], f: [{ p: PROPS._rect(-110, -300, 110, -60), c: "#ffffff" }] };
+  E.draw("inky", frame, 480, 1250, { id: "f1", speed: 2600 }).draw("mon", frame, 1010, 1250, { id: "f2", speed: 2600 }).wait(0.3);
+  E.cap("Inky paints the monster…").wait(0.2);
+  const mini = { s: [PROPS._ring(0, -180, 70, 70, 18), PROPS._ring(-25, -195, 15, 15, 10), PROPS._ring(25, -195, 15, 15, 10), [[-30, -150], [0, -135], [30, -150]]], f: [{ p: PROPS._ring(0, -180, 70, 70, 18), c: "#2a2a3a" }, { p: PROPS._ring(-25, -195, 15, 15, 10), c: "#ffffff" }, { p: PROPS._ring(25, -195, 15, 15, 10), c: "#ffffff" }], w: 6 };
+  E.draw("inky", mini, 480, 1250, { id: "art1", speed: 1400 }).wait(0.3);
+  E.hearts(480, 900, 3).cap("Beautiful 😍").wait(1.4);
+  E.cap("…the monster paints Inky").wait(0.2);
+  let s = 9, pts = [];
+  const r = () => (s = (s * 16807) % 2147483647) / 2147483647;
+  for (let i = 0; i < 26; i++) pts.push([-80 + r() * 160, -280 + r() * 200]);
+  E.draw("mon", { s: [pts], w: 6 }, 1010, 1250, { id: "art2", speed: 2600 }).wait(0.4);
+  E.face("inky", "sad").cap("…that's me? 😑").wait(1.6);
+  E.music("dreamy").to(["#f1", "#art1"], { x: 380 }, 0.6).wait(0.6);
+  E.to("#mon-eyes", { scale: 1.2, transformOrigin: "50% 50%" }, 0.3).hearts(1150, 780, 3).cap("He loves it 🥹").wait(1.8);
+  E.music("bright").grin("mon").draw("mon", { s: [[[-30, -200], [-30, -196]], [[30, -200], [30, -196]], [[-40, -160], [0, -135], [40, -160]]], w: 10 }, 1010, 1250, { id: "smiley" }).wait(0.3);
+  E.face("inky", "smile").cap("Now it's perfect 😊", 2.6).wait(2.6).end(0.3);
+});

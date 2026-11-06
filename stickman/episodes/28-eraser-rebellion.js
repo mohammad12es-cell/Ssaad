@@ -1,0 +1,25 @@
+EPISODE({ title: "Eraser Rebellion", seed: 305, music: "sneaky" }, (E) => {
+  E.pageNo(28).fig("inky", 360);
+  E.prop("eraser", 900, 1205, { id: "er" });
+  E.prop({ s: [[[-20, -10], [-20, -6]], [[20, -10], [20, -6]]], w: 12 }, 940, 1190, { id: "erEyes", layer: "er", hidden: true });
+  E.cap("Just an eraser…", 1.6).wait(1.6);
+  E.show("#erEyes", 0.05).sfx("blip", 300, 0.4, false).cap("…it woke up 😳").face("inky", "o").wait(1.4);
+  E.music("chase");
+  E.to("#er", { keyframes: [{ x: -100, y: -40, duration: 0.2 }, { x: -200, y: 0, duration: 0.2 }, { x: -300, y: -40, duration: 0.2 }, { x: -380, y: 0, duration: 0.2 }] }, 0.8).sfx("rub", 0.8, 0.4).walk("inky", 120, 0.8).wait(0.9);
+  E.face("inky", "worry").draw("inky", "wall", 300, 1250, { id: "wall", s: 0.8, speed: 2600 }).wait(0.2);
+  E.cap("A wall 🧱").wait(0.8);
+  E.to("#er", { x: -500, y: -140, rotation: 20, transformOrigin: "50% 50%" }, 0.3).wait(0.3);
+  E.to("#er", { keyframes: [{ y: -250, duration: 0.15 }, { y: -100, duration: 0.15 }, { y: -250, duration: 0.15 }, { y: -100, duration: 0.15 }] }, 0.6).sfx("rub", 0.6, 0.45).to("#wall", { opacity: 0 }, 0.6).wait(0.8);
+  E.to("#er", { x: -380, y: 0, rotation: 0 }, 0.3).cap("…gone 😩").wait(1.2);
+  E.music("bright").face("inky", "smile");
+  const sign = { s: [PROPS._rect(-150, -330, 150, -180), [[0, -180], [0, 0]]], f: [{ p: PROPS._rect(-150, -330, 150, -180), c: "#ffffff" }] };
+  E.draw("inky", sign, 330, 1250, { id: "sign", speed: 2600 }).wait(0.1);
+  E.text("DO", 250, 1100, { size: 50 }); const no = E.text("NOT", 330, 1100, { size: 50, color: "#e63946" }); E.text("ERASE", 330, 1150, { size: 50 });
+  E.cap("Read the sign 🪧").wait(1.2);
+  E.to("#er", { rotation: -25, transformOrigin: "50% 50%" }, 0.3).wait(0.6).to("#er", { rotation: 0 }, 0.2).wait(0.4);
+  E.cap("…it's reading").wait(1.2);
+  E.music("sneaky").to("#er", { x: -540, y: -110 }, 0.3).wait(0.3).to("#er", { keyframes: { x: [-560, -520, -560, -520, -540] } }, 0.5).sfx("rub", 0.5, 0.4).to(no, { opacity: 0 }, 0.4).wait(0.6);
+  E.to("#er", { x: -380, y: 0 }, 0.3).cap("\"DO ERASE\" 😱").face("inky", "o").wait(1.2);
+  E.music("chase").walk("inky", -700, 0.9).to("#er", { x: -1500 }, 1.0, 0.15).sfx("rub", 1.0, 0.4).wait(1.2);
+  E.cap("Read the fine print 🙃", 2.6).wait(2.6).end(0.3);
+});

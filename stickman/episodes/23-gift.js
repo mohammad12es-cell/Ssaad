@@ -1,0 +1,21 @@
+EPISODE({ title: "The Gift", seed: 250, music: "sneaky" }, (E) => {
+  E.pageNo(23).fig("inky", 300);
+  E.monster("mon", 1950);
+  E.prop("gift", 1950, 1250, { id: "gift" });
+  E.walk("mon", 1150, 1.2).to("#gift", { x: -1150 }, 1.2).wait(1.3);
+  E.grin("mon").wait(0.4).walk("mon", 1950, 1.0).wait(1.0);
+  E.cap("A gift? 🎁").face("inky", "smile").wait(1.2);
+  E.walk("inky", 680, 1.0).wait(1.1);
+  E.hide("#gift", 0.05).prop("spring", 800, 1250, { id: "spr", s: 1.6, hidden: true }).prop({ s: [PROPS._ring(0, 0, 45)], f: [{ p: PROPS._ring(0, 0, 45), c: "#e63946" }] }, 800, 1060, { id: "glove", hidden: true });
+  E.show(["#spr", "#glove"], 0.02).fromTo(["#spr"], { scaleY: 0.1, transformOrigin: "50% 100%" }, { scaleY: 1 }, 0.12).sfx("boing", 0.5);
+  E.to("#inky", { x: 280, rotation: -30, transformOrigin: "50% 100%" }, 0.35, 0.05).wait(0.4).to("#inky", { rotation: 0 }, 0.2);
+  E.stars(280, 870, 1.8).cap("PRANK 😵").face("inky", "sad").wait(1.8);
+  E.hide(["#spr", "#glove"], 0.2).music("bright").face("inky", "smile").cap("My turn 😏").wait(0.4);
+  E.draw("inky", "gift", 420, 1250, { id: "g2", s: 0.8 }).wait(0.2);
+  E.to("#g2", { x: 640 }, 0.6).sfx("whoosh", 0.4, 0.3).wait(0.6);
+  E.walk("mon", 1200, 1.0).wait(1.0).laugh("mon", 0.5).wait(0.4);
+  E.hide("#g2", 0.05).puff(1060, 1180, 1).wait(0.1);
+  E.erase("#mon-brows", 1200, 900, { w: 100, from: [1060, 1180] }).wait(0.2);
+  E.grin("mon").cap("…new look 😇").wait(1.6);
+  E.hearts(1200, 760, 2).face("inky", "smile").cap("Cute, right? 💕", 2.6).wait(2.6).end(0.3);
+});

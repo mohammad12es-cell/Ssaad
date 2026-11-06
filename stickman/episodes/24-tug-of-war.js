@@ -1,0 +1,20 @@
+EPISODE({ title: "Tug of War", seed: 261, music: "happy" }, (E) => {
+  E.pageNo(24).fig("inky", 360).monster("mon", 1150);
+  E.prop("rope", 430, 1085, { id: "rope", s: 1.65 });
+  E.cap("Tug of war 💪", 1.8).wait(1.0);
+  const pull = (dx, d = 0.5) => E.to(["#inky", "#rope", "#mon"], { x: `+=${dx}` }, d).sfx("rub", d, 0.35);
+  pull(140); E.face("inky", "worry").wait(0.7);
+  pull(-40, 0.3); E.wait(0.4); pull(120); E.wait(0.6);
+  E.cap("He's strong 😰").sweat("inky").wait(1.4);
+  E.face("inky", "smile").draw("inky", "tree", 300, 1250, { id: "tree", s: 0.9, speed: 2600 }).wait(0.2);
+  E.cap("Tied to a tree 🌳").wait(1.2);
+  E.laugh("mon").wait(0.3);
+  E.to("#tree", { rotation: 25, x: 240, y: -40, transformOrigin: "50% 100%" }, 0.4).sfx("rumble", 0.5, 0.6).wait(0.4);
+  pull(160, 0.4); E.to("#tree", { x: 400 }, 0.4).wait(0.6);
+  E.cap("…uprooted 😩").face("inky", "o").wait(1.4);
+  E.music("bright").face("inky", "smile").dog("dog", -400).walk("dog", 380, 0.9).wait(0.9).sfx("bark", 0.4).wag("dog", 10);
+  E.cap("Team work 🐶").wait(0.6);
+  pull(-250, 0.5); E.wait(0.4); pull(-200, 0.5); E.wait(0.4);
+  E.to("#mon", { rotation: -70, transformOrigin: "50% 100%", x: "-=80" }, 0.4).sfx("slam", 0.8).quake(12).wait(0.8);
+  E.hop("#inky", 60, 2).hop("#dog", 40, 2).cap("WE WIN 🏆", 2.6).wait(2.6).end(0.3);
+});

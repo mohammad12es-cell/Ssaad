@@ -1,0 +1,26 @@
+EPISODE({ title: "Copy Machine", seed: 151, music: "bright" }, (E) => {
+  E.pageNo(14).fig("inky", 300);
+  E.cap("A copy machine 🖨️", 2.0).wait(0.2);
+  E.draw("inky", "copier", 760, 1250, { id: "copier", speed: 2600 }).wait(0.4);
+  E.walk("inky", 700, 1.0).wait(1.0).hide("#inky", 0.1).sfx("blip", 500, 0.3).wait(0.3);
+  E.shake("#copier", 6, 0.6).sfx("rumble", 0.8, 0.4).wait(0.6);
+  const xs = [1000, 1140, 1280];
+  xs.forEach((x, i) => { E.fig("c" + i, x, { hidden: true }); });
+  xs.forEach((x, i) => { E.show("#c" + i, 0.05).puff(x, 1100, 0.8).sfx("blip", 700 + i * 120, 0.3).wait(0.45); });
+  E.set("#inky", { x: 560 }).show("#inky", 0.1).wait(0.3);
+  E.cap("Copy ×3 😄").wait(1.4);
+  ["inky", "c0", "c1", "c2"].forEach((id) => { E.arms(id, 80, -80, 0.2); });
+  E.wait(0.2);
+  ["inky", "c0", "c1", "c2"].forEach((id) => E.hop("#" + id, 60, 3));
+  E.cap("Dance party 🕺").wait(2.4);
+  ["inky", "c0", "c1", "c2"].forEach((id) => E.arms(id, 0, 0, 0.2));
+  E.music("sneaky").wait(0.4).shake("#copier", 10, 0.8).sfx("rumble", 1.0, 0.6).wait(0.9);
+  E.monster("mon", 760, { hidden: true });
+  E.show("#mon", 0.05).puff(760, 1050, 2).quake(10).sfx("slam", 0.8).wait(0.4);
+  E.laugh("mon").cap("…paper jam 😱").wait(0.3);
+  ["inky", "c0", "c1", "c2"].forEach((id) => { E.face(id, "o"); });
+  E.wait(0.8).music("chase");
+  ["c2", "c1", "c0"].forEach((id) => E.walk(id, 1950, 1.0));
+  E.walk("inky", -700, 1.2).wait(1.6);
+  E.grin("mon").cap("Copy me? 😈", 2.4).wait(2.6).end(0.3);
+});

@@ -54,7 +54,7 @@
   }
 
   function paper(linesGroup) {
-    for (let y = 160; y < 1920; y += 64) mk("line", { x1: 0, y1: y, x2: 1080, y2: y }, linesGroup);
+    for (let y = -480; y < 2400; y += 64) mk("line", { x1: -1000, y1: y, x2: 2100, y2: y }, linesGroup);
   }
 
   function kit(tl, seed = 7) {
@@ -66,17 +66,19 @@
       Array.from({ length: n + 1 }, (_, i) => [cx + Math.cos((i / n) * 6.2832 - 1.5708) * rx, cy + Math.sin((i / n) * 6.2832 - 1.5708) * ry]);
 
     // a stroke drawn on screen with a pencil tracing it (pencil keyframes match dash progress)
-    function draw(el, pts, t0, dur, pen) {
+    function draw(el, pts, t0, dur, pen, penPts, k = 1) {
       if (typeof el === "string") el = document.querySelector(el);
       el.setAttribute("d", pd(pts));
       el.setAttribute("pathLength", 1);
-      tl.set(el, { opacity: 0, attr: { "stroke-dasharray": "1 1", "stroke-dashoffset": 1 } }, 0);
+      // k: screen/user scale for non-scaling strokes (their dashes are measured on screen)
+      tl.set(el, { opacity: 0, attr: { "stroke-dasharray": `${k} ${k}`, "stroke-dashoffset": k } }, 0);
       tl.set(el, { opacity: 1 }, t0);
       tl.to(el, { attr: { "stroke-dashoffset": 0 }, duration: dur, ease: "none" }, t0);
+      tl.set(el, { attr: { "stroke-dasharray": "none" } }, t0 + dur + 0.01);
       if (!pen) return;
-      const L = len(pts);
-      tl.set(pen, { x: pts[0][0], y: pts[0][1] }, t0);
-      tl.to(pen, { keyframes: pts.slice(1).map((q, i) => ({ x: q[0], y: q[1], duration: (dur * Math.hypot(q[0] - pts[i][0], q[1] - pts[i][1])) / L, ease: "none" })) }, t0);
+      const pp = penPts || pts, L = len(pp) || 1;
+      tl.set(pen, { x: pp[0][0], y: pp[0][1] }, t0);
+      tl.to(pen, { keyframes: pp.slice(1).map((q, i) => ({ x: q[0], y: q[1], duration: Math.max(0.0001, (dur * Math.hypot(q[0] - pp[i][0], q[1] - pp[i][1])) / L), ease: "none" })) }, t0);
     }
     // several strokes back to back with one pencil; returns the end time
     function drawAll(list, t0, speed, pen) {

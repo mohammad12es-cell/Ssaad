@@ -1,0 +1,21 @@
+EPISODE({ title: "Paper Plane", seed: 316, music: "bright" }, (E) => {
+  E.pageNo(29).fig("inky", 360);
+  E.cap("Paper plane ✈️", 1.8).wait(0.2);
+  E.draw("inky", "plane", 470, 1050, { id: "pl", s: 0.9 }).wait(0.4);
+  E.arm("inky", "R", -60, 0.15).sfx("whoosh", 0.4, 0.3);
+  E.to("#pl", { keyframes: [{ x: 500, y: -250, rotation: -10, duration: 0.6 }, { x: 800, y: -150, rotation: 40, duration: 0.4 }, { x: 600, y: 50, rotation: 180, duration: 0.4 }, { x: 150, y: -60, rotation: 180, duration: 0.5 }, { x: -60, y: -110, rotation: 180, duration: 0.25 }], transformOrigin: "50% 50%", ease: "none" }, 2.15).wait(2.15 / 1.25);
+  E.sfx("thud", 280, 0.15, 0.6).squash("#inky", 0.25, 0.85).to("#pl", { y: 180, x: -40, rotation: 200, opacity: 0.0 }, 0.4).wait(0.3);
+  E.stars(360, 870, 1.4).cap("Boomerang 😵").face("inky", "sad").wait(1.8);
+  E.face("inky", "smile").set("#pl", { x: 0, y: 0, rotation: 0, opacity: 1 }).wait(0.3);
+  E.cap("Harder this time 💪").arm("inky", "R", -80, 0.15).sfx("whoosh", 0.5, 0.4);
+  E.to("#pl", { x: 1400, y: -400, rotation: -15, ease: "power1.in" }, 0.8).wait(1.2);
+  E.cap("…bye plane 👋").wait(1.2);
+  E.music("chase").monster("mon", 0, { layer: "front" });
+  E.el("g", { id: "rider" }, E.$("front")).appendChild(E.$("mon"));
+  E.set("#rider", { x: 1700, y: 0, scale: 0.4, transformOrigin: "50% 100%" }).set("#mon", { x: 0, y: 0 });
+  E.set("#pl", { x: 1700, y: -300, rotation: 180, scaleY: -1 });
+  E.to("#pl", { x: -1500, y: -120 }, 1.4).to("#rider", { x: -1000, y: -120 + 1050 - 20 }, 1.4).sfx("whoosh", 1.2, 0.6).wait(0.55);
+  E.to("#inky", { rotation: -60, transformOrigin: "50% 100%" }, 0.2).wait(0.3).to("#inky", { rotation: 0 }, 0.3).wait(0.6);
+  E.cap("Air Monster ✈️😈").face("inky", "o").wait(1.6);
+  E.cap("…he took my plane 😑", 2.6).face("inky", "sad").wait(2.6).end(0.3);
+});

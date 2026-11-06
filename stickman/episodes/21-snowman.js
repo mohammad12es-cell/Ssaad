@@ -1,0 +1,21 @@
+EPISODE({ title: "Snow Day", seed: 228, music: "bright" }, (E) => {
+  E.pageNo(21).fig("inky", 360);
+  E.cap("Snow day ⛄", 1.8).wait(0.2);
+  E.draw("inky", "snowman", 700, 1250, { id: "snow", speed: 2400 }).wait(0.3).hearts(700, 880, 1).wait(1.2);
+  E.music("sneaky").monster("mon", 1950).walk("mon", 1250, 1.2).wait(1.2);
+  E.grin("mon").draw("mon", "sun", 1000, 560, { id: "sun", s: 0.9 }).wait(0.3);
+  E.cap("Too hot! 🥵").to("#snow", { scaleY: 0.7, scaleX: 1.1, transformOrigin: "50% 100%" }, 1.4).sfx("rumble", 1.4, 0.2).face("inky", "o").wait(1.6);
+  E.face("inky", "worry").draw("inky", "fridge", 470, 1250, { id: "fridge", s: 0.9, speed: 2600 }).wait(0.2);
+  E.to("#snow", { x: -230, scale: 0.6, transformOrigin: "50% 100%" }, 0.4).wait(0.4).to("#snow", { opacity: 0 }, 0.1).sfx("slam", 0.5);
+  E.face("inky", "smile").cap("Safe ❄️").wait(1.4);
+  E.laugh("mon").draw("mon", "sun", 1050, 520, { id: "sun2", s: 1.8, speed: 2600 }).hide("#sun", 0.1).wait(0.3);
+  E.to("#fridge", { scaleY: 0.8, scaleX: 1.05, transformOrigin: "50% 100%" }, 1.2).sfx("rumble", 1.2, 0.4).cap("BIGGER sun 😈").wait(1.4);
+  E.music("bright").face("inky", "smile").cap("Calling a friend… ☁️").wait(0.6);
+  E.prop("cloud", -700, 520, { id: "pet", s: 0.45 });
+  E.to("#pet", { x: 1700 }, 1.0, 0).wait(1.0);
+  E.prop("rain", 1000, 560, { id: "pr", hidden: true, s: 0.9 });
+  E.show("#pr", 0.05).to("#pr", { y: 120, opacity: 0 }, 0.5).sfx("splat", 0.4).wait(0.4);
+  E.to("#sun2", { scale: 0.05, opacity: 0, transformOrigin: "50% 50%" }, 0.6).puff(1050, 520, 2).wait(0.8);
+  E.to("#fridge", { scaleY: 1, scaleX: 1 }, 0.3).to("#snow", { opacity: 1, x: 0, scale: 1, scaleY: 1, scaleX: 1 }, 0.4, 0.2).wait(0.7);
+  E.face("inky", "smile").hop("#inky", 50, 2).cap("Thanks, buddy ☁️", 2.6).wait(2.6).end(0.3);
+});

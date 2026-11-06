@@ -1,0 +1,20 @@
+EPISODE({ title: "Lights Out", seed: 283, music: "dreamy" }, (E) => {
+  E.pageNo(26).fig("inky", 520);
+  E.monster("mon", 1950, { layer: "back" });
+  E.dark(false);
+  const eyes = (id, pts, c, r) => { const g = E.el("g", { id, opacity: 0 }, E.$("fx")); pts.forEach(([x, y]) => E.el("circle", { cx: x, cy: y, r, fill: c }, g)); };
+  eyes("iEyes", [[501, 908], [539, 908]], "#ffffff", 9);
+  eyes("mEyes", [[838, 950], [962, 950]], "#e63946", 18);
+  E.cap("Bedtime 💡", 1.8).wait(0.2);
+  E.draw("inky", "switch", 300, 950, { id: "sw", s: 0.9 }).wait(0.3);
+  E.walk("inky", 380, 0.6).wait(0.6).arm("inky", "L", -50, 0.15).wait(0.2);
+  E.dark(true).show("#iEyes", 0.05).wait(1.2);
+  E.cap("…", 1.4).wait(1.4);
+  E.music("sneaky").show("#mEyes", 0.05).sfx("blip", 200, 0.4, false).wait(1.0);
+  E.cap("…👀").to("#iEyes", { x: 14 }, 0.2).wait(1.4);
+  E.set("#mon", { x: 900 }).dark(false).hide(["#iEyes", "#mEyes"], 0.05).wait(0.1);
+  E.music("chase").face("inky", "o").scared("mon").hop("#inky", 120, 1).hop("#mon", 80, 1).cap("AAAH 😱").wait(1.4);
+  E.dark(true).wait(0.5).dark(false).wait(0.1);
+  E.walk("inky", -700, 1.0).walk("mon", 1950, 1.0).wait(1.1);
+  E.music("dreamy").cap("…nobody sleeps tonight 😅", 2.6).wait(2.6).end(0.3);
+});

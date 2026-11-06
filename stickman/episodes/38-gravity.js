@@ -1,0 +1,22 @@
+EPISODE({ title: "Gravity", seed: 415, music: "dreamy" }, (E) => {
+  E.pageNo(38).fig("inky", 360).monster("mon", 1150);
+  E.prop("ball", 700, 1250, { id: "ball", s: 0.8 });
+  E.cap("A normal day…", 1.6).wait(1.4);
+  const sign = (ch, id) => { E.draw("inky", { s: [PROPS._rect(-60, -230, 60, -120), [[0, -120], [0, 0]]], f: [{ p: PROPS._rect(-60, -230, 60, -120), c: "#ffffff" }] }, 200, 1250, { id }).wait(0.1); return E.text(ch, 200, 1205 - 30, { size: 90 }); };
+  const up = sign("↑", "s1");
+  E.music("chase").cap("Gravity: UP 🙃").wait(0.3);
+  E.to("#inky", { y: 280 + 385, rotation: 180, transformOrigin: "50% 50%", ease: "power2.in" }, 0.6);
+  E.to("#mon", { y: 280 + 450, rotation: 180, transformOrigin: "50% 50%", ease: "power2.in" }, 0.7, 0.1);
+  E.to("#ball", { y: -880, ease: "power2.in" }, 0.5, 0.05).wait(0.8);
+  E.quake(10).sfx("slam", 0.8).wait(0.5);
+  E.face("inky", "o").scared("mon").cap("Upside down 😵").wait(1.6);
+  E.face("inky", "smile").cap("…fixing it").wait(0.6);
+  E.to(up, { opacity: 0 }, 0.1).wait(0.1);
+  const down = E.text("↓", 200, 1175, { size: 90 });
+  E.sfx("ding", 0.3).wait(0.3);
+  E.music("happy").to("#inky", { y: 1250, rotation: 360, ease: "power2.in" }, 0.6);
+  E.to("#mon", { y: 1250, rotation: 360, ease: "power2.in" }, 0.7, 0.1);
+  E.to("#ball", { y: 0, ease: "bounce.out" }, 0.9, 0.05).wait(0.9);
+  E.quake(12).sfx("slam", 0.8).stars(1150, 860, 1.6).wait(1.2);
+  E.cap("Gravity: back to normal ✅", 2.6).wait(2.6).end(0.3);
+});

@@ -1,6 +1,6 @@
 # EP01 · The Lighthouse Where Three Men Vanished: and the Clues That Were Invented
 
-**Channel:** The Last Log · **Target length:** ~12 min (≈1,750 words at 145 wpm) · **Status:** draft v1, needs a fact check
+**Channel:** The Last Log · **Target length:** ~7 min (≈980 words at 145 wpm; expand Acts 1 and 4 to reach 10–12 min) · **Status:** draft v1, needs a fact check
 
 ## Video idea
 In December 1900, three keepers vanished from a brand-new lighthouse on a remote Scottish island. The story everyone retells (an overturned chair, an uneaten meal, a log full of terror) is partly **invented**. We tell the legend, then open the record, then decide what most likely happened.
@@ -99,5 +99,5 @@ Lines tagged **[V]** are confirmed by at least one independent source found 2026
 *(End card: subscribe and next file teaser)*
 
 ---
-**Word count target:** about 1,700. Run `wc -w` after edits and aim for 1,650–1,850.
+**Word count target:** currently 978. Expanding to 1,450–1,750 (10–12 min) is optional; a tight 7 min is fine for EP01.
 **Retention devices used:** a cold-open contradiction (S3); an open loop on the "west landing" (planted at S9, paid off at S24); the "only one coat" clue (S16, paid off at S27); a myth-vs-record reveal midway (S21); a fake storm (S22); an unresolved questions ending (S29).

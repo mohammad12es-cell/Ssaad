@@ -6,11 +6,11 @@
 In December 1900, three keepers disappeared from the lighthouse on Eilean Mòr in Scotland's Flannan Isles. The version most people know, with an overturned chair, an uneaten meal and a terrified final log entry, doesn't match the official record. We tell the legend, open the archive, and follow the evidence to the west landing.
 
 00:00 The legend
-00:45 The rock
-03:00 The light goes dark
-05:30 How a legend gets built
-08:00 The west landing
-10:30 What we still don't know
+00:30 The rock
+01:45 The light goes dark
+03:15 How a legend gets built
+04:45 The west landing
+06:15 What we still don't know
 
 Sources:
 - National Records of Scotland: The Flannan Islands Lighthouse, a disappearance: https://nrscotland.gov.uk/learning-and-events/for-the-safety-of-all-scotlands-lighthouses/the-flannan-islands-lighthouse-a-disappearance/

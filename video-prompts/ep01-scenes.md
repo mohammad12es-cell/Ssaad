@@ -1,5 +1,7 @@
 # EP01 · Scene breakdown and AI prompts
 
+> Time column is based on a 12 min cut; at the current ~7 min script, scale each time by 0.6.
+
 **Do not generate yet.** These are image and video prompts. Paid generation needs approval first.
 
 ## Global style block (prepend to EVERY prompt)

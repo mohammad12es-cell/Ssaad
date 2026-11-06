@@ -104,7 +104,7 @@
       E.capSel = "#" + id + " span";
       const c = document.createElement("div");
       c.id = id; c.className = "clip cap";
-      c.dataset.start = E.t.toFixed(2); c.dataset.duration = d.toFixed(2); c.dataset.trackIndex = "1";
+      c.dataset.start = E.t.toFixed(2); c.dataset.duration = (o.keep ? d : d * PACE).toFixed(2); c.dataset.trackIndex = "1";
       c.innerHTML = `<span>${text}</span>`;
       $("root").insertBefore(c, $("sound"));
       if (o.keep) c.dataset.trackIndex = "2";

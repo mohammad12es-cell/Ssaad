@@ -1,0 +1,58 @@
+<!-- arena set (scripts/build-arena.py) -->
+<defs>
+  <linearGradient id="__P__-wall" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#060504"/><stop offset="1" stop-color="#140e0a"/></linearGradient>
+  <linearGradient id="__P__-wood" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2e1e10"/><stop offset=".45" stop-color="#5a391c"/><stop offset="1" stop-color="#24170c"/></linearGradient>
+  <linearGradient id="__P__-cone" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff1cf" stop-opacity=".42"/><stop offset=".55" stop-color="#f1dcaa" stop-opacity=".13"/><stop offset="1" stop-color="#f1dcaa" stop-opacity=".04"/></linearGradient>
+  <radialGradient id="__P__-pool" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#f6dfa8" stop-opacity=".5"/><stop offset=".6" stop-color="#c9a45c" stop-opacity=".14"/><stop offset="1" stop-color="#c9a45c" stop-opacity="0"/></radialGradient>
+  <radialGradient id="__P__-bulbglow" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#fff1cf" stop-opacity=".75"/><stop offset=".35" stop-color="#f1dcaa" stop-opacity=".18"/><stop offset="1" stop-color="#f1dcaa" stop-opacity="0"/></radialGradient>
+  <linearGradient id="__P__-doorspill" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f1dcaa" stop-opacity=".35"/><stop offset="1" stop-color="#f1dcaa" stop-opacity="0"/></linearGradient>
+  <filter id="__P__-rim" x="-30%" y="-30%" width="160%" height="160%">
+    <feOffset in="SourceAlpha" dx="3" dy="4" result="off"/>
+    <feComposite in="SourceAlpha" in2="off" operator="out" result="edge"/>
+    <feGaussianBlur in="edge" stdDeviation="1.1" result="edgeb"/>
+    <feFlood flood-color="#f1dcaa" flood-opacity=".95"/>
+    <feComposite in2="edgeb" operator="in" result="rim"/>
+    <feMerge><feMergeNode in="SourceGraphic"/><feMergeNode in="rim"/></feMerge>
+  </filter>
+</defs>
+<rect class="wall" x="-200" y="-200" width="2320" height="1480" fill="url(#__P__-wall)"/>
+<g class="stands" stroke="#21170f" stroke-width="2"><path d="M-200 196 L2120 196" stroke-dasharray="none"/><path d="M-200 222 L2120 222" stroke-dasharray="16 9"/><path d="M-200 248 L2120 248" stroke-dasharray="none"/><path d="M-200 274 L2120 274" stroke-dasharray="16 9"/><path d="M-200 300 L2120 300" stroke-dasharray="none"/><path d="M-200 326 L2120 326" stroke-dasharray="16 9"/><path d="M-200 352 L2120 352" stroke-dasharray="none"/><path d="M-200 378 L2120 378" stroke-dasharray="16 9"/><path d="M-200 404 L2120 404" stroke-dasharray="none"/><path d="M-200 430 L2120 430" stroke-dasharray="16 9"/><path d="M-200 456 L2120 456" stroke-dasharray="none"/><path d="M-200 482 L2120 482" stroke-dasharray="16 9"/><path d="M-200 508 L2120 508" stroke-dasharray="none"/><path d="M-200 534 L2120 534" stroke-dasharray="16 9"/><path d="M-200 560 L2120 560" stroke-dasharray="none"/></g>
+<g class="door"><rect class="door-light" x="1560" y="476" width="72" height="124" fill="#f4dba2"/><path class="door-spill" d="M1560 600 L1632 600 L1840 1080 L1300 1080 Z" fill="url(#__P__-doorspill)"/></g>
+<g class="bank bank1">
+  <circle class="glow" cx="380" cy="166" r="210" fill="url(#__P__-bulbglow)"/>
+  <rect x="298" y="148" width="164" height="36" rx="3" fill="#120d09" stroke="#2c2118" stroke-width="2"/>
+  <g class="bulbs-off" fill="#2b2119"><circle cx="318" cy="166" r="8"/><circle cx="343" cy="166" r="8"/><circle cx="368" cy="166" r="8"/><circle cx="393" cy="166" r="8"/><circle cx="418" cy="166" r="8"/><circle cx="443" cy="166" r="8"/></g>
+  <g class="bulbs-on" fill="#fff4d6"><circle cx="318" cy="166" r="8"/><circle cx="343" cy="166" r="8"/><circle cx="368" cy="166" r="8"/><circle cx="393" cy="166" r="8"/><circle cx="418" cy="166" r="8"/><circle cx="443" cy="166" r="8"/></g>
+</g>
+<g class="bank bank2">
+  <circle class="glow" cx="760" cy="166" r="210" fill="url(#__P__-bulbglow)"/>
+  <rect x="678" y="148" width="164" height="36" rx="3" fill="#120d09" stroke="#2c2118" stroke-width="2"/>
+  <g class="bulbs-off" fill="#2b2119"><circle cx="698" cy="166" r="8"/><circle cx="723" cy="166" r="8"/><circle cx="748" cy="166" r="8"/><circle cx="773" cy="166" r="8"/><circle cx="798" cy="166" r="8"/><circle cx="823" cy="166" r="8"/></g>
+  <g class="bulbs-on" fill="#fff4d6"><circle cx="698" cy="166" r="8"/><circle cx="723" cy="166" r="8"/><circle cx="748" cy="166" r="8"/><circle cx="773" cy="166" r="8"/><circle cx="798" cy="166" r="8"/><circle cx="823" cy="166" r="8"/></g>
+</g>
+<g class="bank bank3">
+  <circle class="glow" cx="1340" cy="166" r="210" fill="url(#__P__-bulbglow)"/>
+  <rect x="1258" y="148" width="164" height="36" rx="3" fill="#120d09" stroke="#2c2118" stroke-width="2"/>
+  <g class="bulbs-off" fill="#2b2119"><circle cx="1278" cy="166" r="8"/><circle cx="1303" cy="166" r="8"/><circle cx="1328" cy="166" r="8"/><circle cx="1353" cy="166" r="8"/><circle cx="1378" cy="166" r="8"/><circle cx="1403" cy="166" r="8"/></g>
+  <g class="bulbs-on" fill="#fff4d6"><circle cx="1278" cy="166" r="8"/><circle cx="1303" cy="166" r="8"/><circle cx="1328" cy="166" r="8"/><circle cx="1353" cy="166" r="8"/><circle cx="1378" cy="166" r="8"/><circle cx="1403" cy="166" r="8"/></g>
+</g>
+<path class="floor" d="M-200 600 L2120 600 L2120 1280 L-200 1280 Z" fill="url(#__P__-wood)"/>
+<g class="planks" stroke="#1d1209" stroke-opacity=".55" stroke-width="1.6"><path d="M-200 612 L2120 612"/><path d="M-200 626 L2120 626"/><path d="M-200 643 L2120 643"/><path d="M-200 663 L2120 663"/><path d="M-200 686 L2120 686"/><path d="M-200 712 L2120 712"/><path d="M-200 742 L2120 742"/><path d="M-200 776 L2120 776"/><path d="M-200 814 L2120 814"/><path d="M-200 856 L2120 856"/><path d="M-200 902 L2120 902"/><path d="M-200 952 L2120 952"/><path d="M-200 1006 L2120 1006"/><path d="M-200 1064 L2120 1064"/></g>
+<g class="court" fill="none" stroke="#efe3c8" stroke-opacity=".72" stroke-linecap="round">
+  <path d="M-200 962 L2120 962" stroke-width="7"/>
+  <path d="M300 642 L1880 642" stroke-width="3"/>
+  <path d="M300 642 L-40 962" stroke-width="4"/>
+  <path d="M880 642 L800 962" stroke-width="3" stroke-opacity=".45"/>
+  <path d="M1330 642 L1450 962" stroke-width="3" stroke-opacity=".45"/>
+  <path d="M1105 642 L1135 962" stroke-width="4"/>
+</g>
+<ellipse class="pool" cx="800" cy="850" rx="430" ry="110" fill="url(#__P__-pool)"/>
+<g class="net">
+  <rect x="1099" y="380" width="9" height="262" fill="#120c08"/>
+  <path d="M1135 585 L1105 395 L1105 505 L1135 735 Z" fill="#0d0907" fill-opacity=".55"/>
+  <g stroke="#5a4634" stroke-width="1.3" stroke-opacity=".9"><path d="M1108 414 L1108 528"/><path d="M1111 433 L1111 551"/><path d="M1114 452 L1114 574"/><path d="M1117 471 L1117 597"/><path d="M1120 490 L1120 620"/><path d="M1123 509 L1123 643"/><path d="M1126 528 L1126 666"/><path d="M1129 547 L1129 689"/><path d="M1132 566 L1132 712"/><path d="M1135 615 L1105 417"/><path d="M1135 645 L1105 439"/><path d="M1135 675 L1105 461"/><path d="M1135 705 L1105 483"/></g>
+  <path d="M1135 585 L1105 395" stroke="#efe3c8" stroke-width="6" stroke-linecap="round"/>
+  <path d="M1135 735 L1105 505" stroke="#efe3c8" stroke-width="3" stroke-opacity=".7"/>
+  <rect x="1129" y="560" width="14" height="402" fill="#120c08"/>
+</g>
+<polygon class="cone" points="700,184 820,184 1200,1010 400,1010" fill="url(#__P__-cone)"/>

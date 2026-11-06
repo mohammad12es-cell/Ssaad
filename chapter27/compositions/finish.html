@@ -1,0 +1,58 @@
+<template>
+  <style>
+    #root {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+    }
+    #finish-grain {
+      position: absolute;
+      inset: -160px;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 300 300' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.5 0 0 0 0 0.45 0 0 0 0 0.38 0 0 0 1.4 -0.2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      background-size: 300px 300px;
+      opacity: 0.11;
+      mix-blend-mode: overlay;
+    }
+    #finish-vignette {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 75% 70% at 50% 50%, rgba(0, 0, 0, 0) 55%, rgba(0, 0, 0, 0.62) 100%);
+    }
+    .finish-bar {
+      position: absolute;
+      left: 0;
+      width: 100%;
+      height: 138px;
+      background: #000;
+    }
+    #finish-bar-top { top: 0; }
+    #finish-bar-bottom { bottom: 0; }
+  </style>
+  <div id="root" data-composition-id="finish" data-width="1920" data-height="1080">
+    <div id="finish-layer" class="clip" data-start="0" data-duration="100" data-layout-ignore>
+      <div id="finish-grain"></div>
+      <div id="finish-vignette"></div>
+      <div id="finish-bar-top" class="finish-bar"></div>
+      <div id="finish-bar-bottom" class="finish-bar"></div>
+    </div>
+  </div>
+  <script>
+    (function () {
+      const tl = gsap.timeline({ paused: true });
+      const grain = document.getElementById("finish-grain");
+      // Re-seed the grain every frame (24 fps) from the frame index only.
+      const rnd = window.HFRand(1378);
+      const offs = [];
+      for (let i = 0; i < 97; i++) offs.push([Math.floor(rnd() * 150) - 75, Math.floor(rnd() * 150) - 75]);
+      const o = { t: 0 };
+      tl.fromTo(o, { t: 0 }, {
+        t: 100, duration: 100, ease: "none",
+        onUpdate: () => {
+          const f = Math.floor(o.t * 24 + 0.0001) % offs.length;
+          grain.style.transform = "translate(" + offs[f][0] + "px," + offs[f][1] + "px)";
+        },
+      }, 0);
+      window.__timelines["finish"] = tl;
+    })();
+  </script>
+</template>

@@ -1,0 +1,145 @@
+<template>
+  <style>
+    #root { position: absolute; inset: 0; background: #0a0806; overflow: hidden; }
+    #s2-stage { position: absolute; inset: 0; }
+    #s2-cam { position: absolute; inset: 0; }
+    .s2-layer { position: absolute; left: -120px; top: 0; width: 2160px; height: 1080px; }
+    .s2-layer svg { position: absolute; inset: 0; width: 2160px; height: 1080px; overflow: visible; }
+    #s2-sky {
+      position: absolute; inset: -80px;
+      background: linear-gradient(180deg, #070504 0%, #140d08 26%, #3a2414 46%, #8a5726 58%, #d39a52 64.5%, #e8c07a 66%, #3a2516 67%, #120c08 100%);
+    }
+    #s2-sunglow {
+      position: absolute; left: 930px; top: 260px; width: 900px; height: 780px;
+      background: radial-gradient(ellipse 50% 50% at 50% 50%, rgba(255,226,160,.55) 0%, rgba(232,170,90,.22) 26%, rgba(201,140,60,0) 62%);
+    }
+    #s2-sun {
+      position: absolute; left: 1308px; top: 600px; width: 124px; height: 124px; border-radius: 50%;
+      background: radial-gradient(circle at 50% 50%, #fff6dc 0%, #ffe2a2 45%, #f0b866 70%, rgba(240,184,102,0) 72%);
+    }
+    #s2-rays {
+      position: absolute; left: 370px; top: -340px; width: 2000px; height: 2000px;
+      background: conic-gradient(from 200deg at 50% 50%,
+        rgba(241,220,170,0) 0deg, rgba(241,220,170,.07) 6deg, rgba(241,220,170,0) 12deg,
+        rgba(241,220,170,0) 22deg, rgba(241,220,170,.05) 27deg, rgba(241,220,170,0) 33deg,
+        rgba(241,220,170,0) 46deg, rgba(241,220,170,.06) 52deg, rgba(241,220,170,0) 60deg,
+        rgba(241,220,170,0) 360deg);
+    }
+    .s2-fig path, .s2-fig circle { stroke: currentColor; fill: currentColor; stroke-linecap: round; stroke-linejoin: round; }
+    #s2-dust { position: absolute; inset: 0; width: 1920px; height: 1080px; }
+    #s2-flash { position: absolute; inset: 0; background: #f6e3b4; opacity: 0; }
+  </style>
+  <div id="root" data-composition-id="s2" data-width="1920" data-height="1080">
+    <div id="s2-stage" class="clip" data-start="0" data-duration="13" data-layout-allow-overflow>
+      <div id="s2-cam">
+        <div id="s2-sky"></div>
+        <div id="s2-rays"></div>
+        <div id="s2-sunglow"></div>
+        <div id="s2-sun"></div>
+
+        <!-- birds, far -->
+        <div class="s2-layer" id="s2-birds">
+          <svg viewBox="0 0 2160 1080">
+            <g fill="none" stroke="#1a110b" stroke-width="2.4" stroke-linecap="round">
+              <path id="s2-bird1" d="M0 0 q7 -6 14 0 q7 -6 14 0" transform="translate(900 380)" />
+              <path id="s2-bird2" d="M0 0 q6 -5 12 0 q6 -5 12 0" transform="translate(950 405)" />
+              <path id="s2-bird3" d="M0 0 q5 -4 10 0 q5 -4 10 0" transform="translate(860 420)" />
+            </g>
+          </svg>
+        </div>
+
+        <!-- far hills -->
+        <div class="s2-layer" id="s2-far">
+          <svg viewBox="0 0 2160 1080">
+            <path d="M0 655 C180 628 330 640 470 622 C640 600 760 646 930 640 C1090 634 1180 650 1300 662 C1420 660 1560 620 1720 628 C1880 636 2020 612 2160 630 L2160 1080 L0 1080 Z" fill="#4a3020" opacity=".85" />
+            <path d="M0 690 C200 668 380 700 560 680 C760 660 900 700 1120 702 C1340 704 1500 668 1700 676 C1900 684 2040 664 2160 672 L2160 1080 L0 1080 Z" fill="#2b1b11" />
+          </svg>
+        </div>
+
+        <!-- mid ground -->
+        <div class="s2-layer" id="s2-mid">
+          <svg viewBox="0 0 2160 1080">
+            <path d="M0 770 C220 736 420 760 640 740 C900 716 1100 772 1380 770 C1640 768 1900 730 2160 742 L2160 1080 L0 1080 Z" fill="#150e09" />
+          </svg>
+        </div>
+
+        <!-- foreground: the rock, the boy, the grass -->
+        <div class="s2-layer" id="s2-fg">
+          <svg viewBox="0 0 2160 1080">
+            <path d="M-40 1080 L-40 840 C120 820 300 812 460 790 C540 772 600 768 690 778 C770 788 820 800 900 830 C1100 870 1400 900 2200 920 L2200 1080 Z" fill="#080605" />
+            <!-- rim of warm light along the rock's top -->
+            <path d="M380 800 C470 784 560 770 690 778 C770 788 820 800 900 830" fill="none" stroke="#c9905a" stroke-width="2.2" opacity=".55" />
+            <g id="s2-boy" class="s2-fig" style="color:#060404">
+              <!--FIGURE-->
+<!-- protagonist rig (see assets/lib/figure.js) · faces right · L = left/near/hitting side -->
+<g class="j-hipR"><path d="M0 0 L0 92" stroke-width="31"/><g class="j-knR"><path d="M0 92 L0 182" stroke-width="22"/><path d="M-4 186 L17 190" stroke-width="12"/></g></g>
+<g class="j-torso">
+  <g class="j-shR"><path d="M0 -98 L0 -36" stroke-width="19"/><g class="j-elR"><path d="M0 -36 L0 18" stroke-width="15"/><circle cx="0" cy="24" r="8.5"/></g></g>
+  <path d="M-20 8 C-25 -40 -29 -84 -21 -103 C-9 -114 13 -114 25 -103 C30 -80 24 -40 20 8 Z" stroke-width="0"/>
+  <g class="j-neck">
+    <path d="M1 -100 L3 -116" stroke-width="15"/>
+    <circle cx="3" cy="-131" r="18.5"/><circle cx="19" cy="-129" r="4"/><circle cx="12" cy="-118" r="10"/>
+    <circle cx="-7" cy="-146" r="11"/><circle cx="6" cy="-151" r="11"/><circle cx="17" cy="-145" r="8.5"/>
+    <circle cx="-15" cy="-136" r="10"/><circle cx="-3" cy="-141" r="10"/><circle cx="-12" cy="-150" r="7"/>
+  </g>
+  <g class="j-shL"><path d="M0 -98 L0 -36" stroke-width="19"/><g class="j-elL"><path d="M0 -36 L0 18" stroke-width="15"/><circle cx="0" cy="24" r="8.5"/></g></g>
+</g>
+<g class="j-hipL"><path d="M0 0 L0 92" stroke-width="31"/><g class="j-knL"><path d="M0 92 L0 182" stroke-width="22"/><path d="M-4 186 L17 190" stroke-width="12"/></g></g>
+<!--/FIGURE-->
+            </g>
+            <g fill="#070504">
+              <g id="s2-grass1"><path d="M300 850 q-6 -60 -2 -110 q8 50 10 110 z"/><path d="M314 852 q4 -50 22 -92 q-6 46 -10 92 z"/><path d="M290 852 q-18 -40 -34 -70 q26 30 40 70 z"/></g>
+              <g id="s2-grass2"><path d="M820 860 q-4 -50 4 -96 q6 46 6 96 z"/><path d="M836 862 q10 -40 30 -70 q-12 36 -20 70 z"/><path d="M808 864 q-14 -34 -30 -58 q22 24 36 58 z"/></g>
+              <g id="s2-grass3"><path d="M1500 935 q-6 -70 2 -130 q8 60 10 130 z"/><path d="M1518 936 q8 -60 30 -104 q-10 50 -16 104 z"/><path d="M1486 938 q-20 -46 -40 -80 q30 34 46 80 z"/><path d="M1530 940 q20 -40 44 -62 q-22 30 -34 62 z"/></g>
+            </g>
+          </svg>
+        </div>
+      </div>
+      <canvas id="s2-dust" width="1920" height="1080"></canvas>
+      <div id="s2-flash"></div>
+    </div>
+  </div>
+  <script>
+    (function () {
+      const tl = gsap.timeline({ paused: true });
+      const boy = window.HFFig("#s2-boy");
+      // A child: smaller body, larger head. Stands on the rock, left third, looking at the sun.
+      gsap.set("#s2-boy", { x: 600, y: 650, scale: 0.64 });
+      gsap.set(boy.parts.neck, { scale: 1.42 });
+      boy.setPose(tl, "look", 0);
+      // He lifts his head slowly toward the horizon, weight shifts once.
+      tl.to(boy.parts.neck, { rotation: -20, duration: 5, ease: "sine.inOut" }, 2.0);
+      tl.to(boy.parts.torso, { rotation: -5, duration: 4, ease: "sine.inOut" }, 3.0);
+      tl.to(boy.parts.shL, { rotation: -4, duration: 4, ease: "sine.inOut" }, 3.0);
+
+      // Camera: one slow dolly-in with 3-layer parallax.
+      tl.fromTo("#s2-cam", { scale: 1.0, transformOrigin: "1100px 640px" }, { scale: 1.12, duration: 11.3, ease: "sine.inOut" }, 0);
+      tl.fromTo("#s2-far", { x: 0 }, { x: -24, duration: 11.4, ease: "sine.inOut" }, 0);
+      tl.fromTo("#s2-mid", { x: 0 }, { x: -60, duration: 11.4, ease: "sine.inOut" }, 0);
+      tl.fromTo("#s2-fg", { x: 0 }, { x: -150, duration: 11.4, ease: "sine.inOut" }, 0);
+      tl.fromTo("#s2-sun", { y: 14 }, { y: 0, duration: 12, ease: "sine.out" }, 0);
+      tl.fromTo("#s2-rays", { rotation: -4, opacity: 0.6 }, { rotation: 3, opacity: 1, duration: 13, ease: "none" }, 0);
+      tl.fromTo("#s2-birds", { x: -60 }, { x: 260, duration: 13, ease: "none" }, 0);
+
+      // Grass sways (finite repeats).
+      [["#s2-grass1", 2.2, 3], ["#s2-grass2", 2.6, -2.5], ["#s2-grass3", 1.9, 4]].forEach(([sel, half, amp], i) => {
+        tl.fromTo(sel, { rotation: -amp, transformOrigin: "50% 100%" },
+          { rotation: amp, duration: half, ease: "sine.inOut", yoyo: true, repeat: Math.max(0, Math.floor(13 / half) - 1) }, 0.2 * i);
+      });
+
+      // Opening: rise from the S1 black, horizon first.
+      tl.fromTo("#s2-stage", { opacity: 0 }, { opacity: 1, duration: 1.4, ease: "power2.out" }, 0);
+
+      // Hand-off: push into the sun until the frame whites out to gold.
+      tl.to("#s2-cam", { scale: 4.2, transformOrigin: "1370px 662px", duration: 1.7, ease: "power3.in" }, 11.3);
+      tl.to("#s2-flash", { opacity: 1, duration: 0.7, ease: "power2.in" }, 12.25);
+
+      const dust = window.HFDust(document.getElementById("s2-dust"), {
+        seed: 2, count: 90, minR: 0.7, maxR: 2.4, drift: [9, -3], sway: 14, alpha: 0.55,
+        light: { x: 1370, y: 660, r: 900 },
+      });
+      window.HFDrive(tl, (t) => dust(t, t > 11.3 ? Math.max(0, 1 - (t - 11.3) / 1) : 1), 0, 13);
+      window.__timelines["s2"] = tl;
+    })();
+  </script>
+</template>

@@ -1,0 +1,14 @@
+<!-- protagonist rig (see assets/lib/figure.js) · faces right · L = left/near/hitting side -->
+<g class="j-hipR"><path d="M0 0 L0 92" stroke-width="31"/><g class="j-knR"><path d="M0 92 L0 182" stroke-width="22"/><path d="M-4 186 L17 190" stroke-width="12"/></g></g>
+<g class="j-torso">
+  <g class="j-shR"><path d="M0 -98 L0 -36" stroke-width="19"/><g class="j-elR"><path d="M0 -36 L0 18" stroke-width="15"/><circle cx="0" cy="24" r="8.5"/></g></g>
+  <path d="M-20 8 C-25 -40 -29 -84 -21 -103 C-9 -114 13 -114 25 -103 C30 -80 24 -40 20 8 Z" stroke-width="0"/>
+  <g class="j-neck">
+    <path d="M1 -100 L3 -116" stroke-width="15"/>
+    <circle cx="3" cy="-131" r="18.5"/><circle cx="19" cy="-129" r="4"/><circle cx="12" cy="-118" r="10"/>
+    <circle cx="-7" cy="-146" r="11"/><circle cx="6" cy="-151" r="11"/><circle cx="17" cy="-145" r="8.5"/>
+    <circle cx="-15" cy="-136" r="10"/><circle cx="-3" cy="-141" r="10"/><circle cx="-12" cy="-150" r="7"/>
+  </g>
+  <g class="j-shL"><path d="M0 -98 L0 -36" stroke-width="19"/><g class="j-elL"><path d="M0 -36 L0 18" stroke-width="15"/><circle cx="0" cy="24" r="8.5"/></g></g>
+</g>
+<g class="j-hipL"><path d="M0 0 L0 92" stroke-width="31"/><g class="j-knL"><path d="M0 92 L0 182" stroke-width="22"/><path d="M-4 186 L17 190" stroke-width="12"/></g></g>

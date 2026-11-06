@@ -1,0 +1,117 @@
+<html data-composition-variables="[
+  {&quot;id&quot;:&quot;title&quot;,&quot;type&quot;:&quot;string&quot;,&quot;label&quot;:&quot;Final title&quot;,&quot;default&quot;:&quot;CHAPTER 27&quot;},
+  {&quot;id&quot;:&quot;tagline&quot;,&quot;type&quot;:&quot;string&quot;,&quot;label&quot;:&quot;Final tagline&quot;,&quot;default&quot;:&quot;THE STORY CONTINUES.&quot;}
+]"><head></head><body></body>
+<template>
+  <style>
+    @font-face { font-family: "Cinzel"; src: url("assets/fonts/cinzel-latin-400-normal.woff2") format("woff2"); font-weight: 400; }
+    @font-face { font-family: "Cinzel"; src: url("assets/fonts/cinzel-latin-700-normal.woff2") format("woff2"); font-weight: 700; }
+    #root { position: absolute; inset: 0; background: #050403; overflow: hidden; }
+    #s7-stage { position: absolute; inset: 0; }
+    #s7-cam { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; }
+    #s7-sky { position: absolute; inset: -60px; background: linear-gradient(180deg, #050403 0%, #0d0907 45%, #1c130c 70%, #2a1c12 100%); }
+    #s7-sky-warm {
+      position: absolute; inset: -60px;
+      background: linear-gradient(180deg, #0b0806 0%, #2a1a0f 28%, #6b4220 50%, #c78a44 66%, #f0c57c 76%, #f8e2b0 82%, #5a3a20 90%, #1a110b 100%);
+    }
+    #s7-glow {
+      position: absolute; left: 760px; top: 60px; width: 1200px; height: 1100px;
+      background: radial-gradient(ellipse 50% 50% at 50% 50%, rgba(255,232,180,.75) 0%, rgba(240,190,110,.32) 25%, rgba(201,140,60,0) 62%);
+    }
+    #s7-sun {
+      position: absolute; left: 1260px; top: 0; width: 220px; height: 220px; border-radius: 50%;
+      background: radial-gradient(circle, #fffaf0 0%, #ffecc0 48%, #f6c97e 68%, rgba(246,201,126,0) 71%);
+    }
+    #s7-hills { position: absolute; left: -60px; top: 0; width: 2040px; height: 1080px; }
+    .s7-person { position: absolute; left: 928px; top: -105px; width: 864px; height: 1152px; }
+    .s7-matte {
+      -webkit-mask-image: url("assets/cutouts/face-cutout.png"); mask-image: url("assets/cutouts/face-cutout.png");
+      -webkit-mask-size: 100% 100%; mask-size: 100% 100%;
+    }
+    #s7-rim { background: #ffd690; filter: blur(7px); }
+    #s7-sil { background: #050403; }
+    #s7-face-wrap { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; }
+    #s7-keylight {
+      background: linear-gradient(105deg, rgba(0,0,0,.55) 0%, rgba(0,0,0,.1) 40%, rgba(255,200,120,.12) 70%, rgba(255,214,150,.25) 100%);
+      mix-blend-mode: soft-light;
+    }
+    #s7-title { position: absolute; left: 190px; top: 420px; width: 1000px; }
+    #s7-chapter {
+      font-family: "Cinzel", serif; font-weight: 700; font-size: 108px; letter-spacing: .1em; line-height: 1;
+      color: #dcbc77; white-space: nowrap;
+    }
+    #s7-chapter span { display: inline-block; }
+    #s7-rule { width: 140px; height: 1px; background: #c9a45c; margin: 40px 0 30px 6px; transform-origin: 0 50%; }
+    #s7-tag {
+      font-family: "Montserrat", sans-serif; font-weight: 300; font-size: 30px; letter-spacing: .5em;
+      color: rgba(240,226,196,.9); white-space: nowrap; margin-left: 6px;
+    }
+    #s7-tag span { display: inline-block; }
+    #s7-black { position: absolute; inset: 0; background: #000; opacity: 0; }
+  </style>
+  <div id="root" data-composition-id="s7" data-width="1920" data-height="1080">
+    <div id="s7-stage" class="clip" data-start="0" data-duration="16" data-layout-allow-overflow="">
+      <div id="s7-cam">
+        <div id="s7-sky"></div>
+        <div id="s7-sky-warm"></div>
+        <div id="s7-glow"></div>
+        <div id="s7-sun"></div>
+        <svg id="s7-hills" viewBox="0 0 2040 1080">
+          <path d="M0 830 C240 800 420 820 640 806 C900 790 1120 826 1380 818 C1640 810 1840 792 2040 800 L2040 1080 L0 1080 Z" fill="#1a110b" />
+          <path d="M0 880 C300 856 560 872 820 862 C1100 852 1400 884 1700 874 C1860 870 1960 862 2040 864 L2040 1080 L0 1080 Z" fill="#0a0705" />
+        </svg>
+        <div id="s7-rim" class="s7-person s7-matte"></div>
+        <div id="s7-sil" class="s7-person s7-matte"></div>
+        <div id="s7-face-wrap">
+          <img data-color-grading="{&quot;preset&quot;:null,&quot;intensity&quot;:1,&quot;adjust&quot;:{&quot;exposure&quot;:-0.05,&quot;contrast&quot;:0.2,&quot;highlights&quot;:-0.15,&quot;shadows&quot;:0,&quot;whites&quot;:0,&quot;blacks&quot;:-0.2,&quot;temperature&quot;:0.28,&quot;tint&quot;:0.03,&quot;vibrance&quot;:0,&quot;saturation&quot;:-0.05},&quot;details&quot;:{&quot;vignette&quot;:0,&quot;vignetteMidpoint&quot;:0.5,&quot;vignetteRoundness&quot;:0,&quot;vignetteFeather&quot;:0.65,&quot;grain&quot;:0,&quot;grainSize&quot;:0.25,&quot;grainRoughness&quot;:0.5},&quot;effects&quot;:{&quot;blur&quot;:0,&quot;pixelate&quot;:0,&quot;chromaBleed&quot;:0,&quot;tapeDamage&quot;:0,&quot;tapeTracking&quot;:0,&quot;tapeNoise&quot;:1,&quot;tapeSpeed&quot;:0.5,&quot;filmArtifacts&quot;:0,&quot;halftone&quot;:0,&quot;halftoneSize&quot;:0,&quot;twoInkPrint&quot;:0,&quot;twoInkPrintSize&quot;:0,&quot;ascii&quot;:0,&quot;asciiSize&quot;:0.06578947368421052,&quot;asciiInvert&quot;:0,&quot;asciiStyle&quot;:0,&quot;asciiColor&quot;:1,&quot;asciiRotation&quot;:0,&quot;dither&quot;:0,&quot;ditherSize&quot;:0,&quot;bloom&quot;:0,&quot;bloomRadius&quot;:8,&quot;monoScreen&quot;:0,&quot;monoScreenSize&quot;:0,&quot;monoScreenAngle&quot;:0,&quot;monoScreenSpread&quot;:0,&quot;monoScreenShape&quot;:0,&quot;monoScreenInvert&quot;:0,&quot;scanlines&quot;:0,&quot;scanlineCount&quot;:0,&quot;scanlineSoftness&quot;:0,&quot;chromaticAberration&quot;:0,&quot;chromaticAngle&quot;:0,&quot;crtCurvature&quot;:0,&quot;digitalGlitch&quot;:0,&quot;digitalGlitchColorSplit&quot;:0,&quot;digitalGlitchLineTear&quot;:0,&quot;digitalGlitchPixelate&quot;:0,&quot;digitalGlitchBlockAmount&quot;:0,&quot;digitalGlitchBlockDisplacement&quot;:0,&quot;digitalGlitchBlockOpacity&quot;:0,&quot;digitalGlitchSpeed&quot;:0,&quot;engraving&quot;:0,&quot;engravingSpacing&quot;:0.4117647058823529,&quot;engravingMinThickness&quot;:0.2,&quot;engravingMaxThickness&quot;:0.4571428571428572,&quot;engravingAngle&quot;:0.25,&quot;engravingContrast&quot;:0.4666666666666667,&quot;engravingSharpness&quot;:0.59,&quot;engravingWave&quot;:0.2,&quot;engravingWaveFrequency&quot;:0.2222222222222222,&quot;crosshatch&quot;:0,&quot;crosshatchSpacing&quot;:0.28,&quot;crosshatchThickness&quot;:0.25,&quot;crosshatchAngle&quot;:0.25,&quot;crosshatchContrast&quot;:0.3333333333333333,&quot;crosshatchEdges&quot;:0.5,&quot;crosshatchLineWeight&quot;:0,&quot;crosshatchWave&quot;:0.33,&quot;crosshatchWaveFrequency&quot;:0.2222222222222222,&quot;kuwahara&quot;:0,&quot;kuwaharaRadius&quot;:0.14285714285714285,&quot;kuwaharaSharpness&quot;:0.3125,&quot;kuwaharaSaturation&quot;:0.5},&quot;lut&quot;:null,&quot;colorSpace&quot;:&quot;rec709&quot;}" id="s7-face" class="s7-person" src="assets/cutouts/face-cutout.png" alt="The protagonist, lit by sunrise">
+          <div id="s7-keylight" class="s7-person s7-matte"></div>
+        </div>
+      </div>
+      <div id="s7-title" data-layout-allow-overflow="">
+        <div id="s7-chapter" data-var-text="title">CHAPTER 27</div>
+        <div id="s7-rule"></div>
+        <div id="s7-tag" data-var-text="tagline">THE STORY CONTINUES.</div>
+      </div>
+      <div id="s7-black"></div>
+    </div>
+  </div>
+  <script>
+    (function () {
+      const tl = gsap.timeline({ paused: true });
+      const split = (el) => {
+        const t = el.textContent; el.textContent = "";
+        return [...t].map((c) => { const s = document.createElement("span"); s.textContent = c === " " ? " " : c; el.appendChild(s); return s; });
+      };
+      const chap = split(document.getElementById("s7-chapter"));
+      const tag = split(document.getElementById("s7-tag"));
+
+      // The camera moves forward the whole scene.
+      tl.fromTo("#s7-cam", { scale: 1.0, transformOrigin: "1360px 520px" }, { scale: 1.14, duration: 16, ease: "sine.inOut" }, 0);
+
+      // 84.0: impact — the dawn breaks behind the silhouette, then keeps rising.
+      tl.fromTo("#s7-sky-warm", { opacity: 0 }, { opacity: 0.45, duration: 0.6, ease: "expo.out" }, 0);
+      tl.to("#s7-sky-warm", { opacity: 1, duration: 8, ease: "sine.inOut" }, 0.6);
+      tl.fromTo("#s7-sun", { y: 760 }, { y: 300, duration: 11, ease: "sine.out" }, 0);
+      tl.fromTo("#s7-glow", { opacity: 0.25, y: 260 }, { opacity: 1, y: 0, duration: 10, ease: "sine.out" }, 0);
+      tl.fromTo("#s7-rim", { opacity: 0.15 }, { opacity: 0.95, duration: 6.4, ease: "sine.inOut" }, 0);
+
+      // 90.4 – 92.6: the light comes round — his real face.
+      tl.fromTo("#s7-face-wrap", { opacity: 0 }, { opacity: 1, duration: 2.2, ease: "power2.inOut" }, 6.4);
+      tl.to("#s7-rim", { opacity: 0.55, duration: 2.2, ease: "power2.inOut" }, 6.4);
+
+      // 92.5: CHAPTER 27, letter by letter; 95.0: the tagline.
+      chap.forEach((s, i) => {
+        tl.fromTo(s, { opacity: 0.0, filter: "blur(8px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.45, ease: "power2.out" }, 8.5 + i * 0.1);
+      });
+      tl.fromTo("#s7-rule", { scaleX: 0 }, { scaleX: 1, duration: 1.0, ease: "expo.out" }, 10.3);
+      tag.forEach((s, i) => {
+        tl.fromTo(s, { opacity: 0 }, { opacity: 1, duration: 0.3, ease: "power1.out" }, 11.0 + i * 0.045);
+      });
+
+      // 98.8 – 100: fade to black.
+      tl.to("#s7-black", { opacity: 1, duration: 1.15, ease: "power2.in" }, 14.8);
+      window.__timelines["s7"] = tl;
+    })();
+  </script>
+</template>
+</html>

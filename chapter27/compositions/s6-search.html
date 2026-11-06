@@ -1,0 +1,187 @@
+<template>
+  <style>
+    #root { position: absolute; inset: 0; background: #0a0806; overflow: hidden; }
+    #s6-stage { position: absolute; inset: 0; }
+    #s6-bg { position: absolute; inset: 0; background: radial-gradient(ellipse 60% 70% at 58% 50%, #2c1c10 0%, #150e09 55%, #070504 100%); }
+    .s6-v { position: absolute; inset: 0; opacity: 0; }
+    .s6-v svg { position: absolute; inset: 0; width: 1920px; height: 1080px; overflow: visible; }
+    .s6-line { fill: none; stroke: #d2ad66; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+    .s6-thin { fill: none; stroke: #8f7444; stroke-width: 1.5; stroke-linecap: round; }
+    .s6-word {
+      position: absolute; left: 230px; top: 690px;
+      font-family: "Montserrat", sans-serif; font-weight: 500; font-size: 30px; letter-spacing: .6em;
+      color: #d9bd7e; white-space: nowrap;
+    }
+    .s6-rule { position: absolute; left: 232px; top: 668px; width: 64px; height: 1px; background: #c9a45c; }
+    #s6-film-img { position: absolute; left: 0; top: 0; width: 300px; height: 400px; object-fit: cover; }
+    #s6-film-win { position: absolute; left: 960px; top: 345px; width: 300px; height: 390px; overflow: hidden; opacity: 0; }
+    #s6-photo-wrap { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; overflow: hidden; }
+    #s6-photo { position: absolute; left: 843px; top: -208px; width: 1078px; height: 1437px; }
+    #s6-photo-shade {
+      position: absolute; left: 843px; top: -208px; width: 1078px; height: 1437px;
+      background: linear-gradient(90deg, rgba(6,4,3,.7) 0%, rgba(6,4,3,.25) 45%, rgba(255,205,130,.10) 80%, rgba(6,4,3,.2) 100%),
+                  linear-gradient(180deg, rgba(0,0,0,0) 55%, rgba(6,4,3,.75) 80%);
+      -webkit-mask-image: url("assets/cutouts/body-cutout.png"); mask-image: url("assets/cutouts/body-cutout.png");
+      -webkit-mask-size: 100% 100%; mask-size: 100% 100%;
+    }
+    #s6-flash { position: absolute; inset: 0; background: #f6e3b4; }
+    #s6-photo-dark {
+      position: absolute; left: 843px; top: -208px; width: 1078px; height: 1437px; background: #060403; opacity: 0;
+      -webkit-mask-image: url("assets/cutouts/body-cutout.png"); mask-image: url("assets/cutouts/body-cutout.png");
+      -webkit-mask-size: 100% 100%; mask-size: 100% 100%;
+    }
+  </style>
+  <div data-hf-id="hf-7obi" id="root" data-composition-id="s6" data-width="1920" data-height="1080">
+    <div data-hf-id="hf-mc3y" id="s6-stage" class="clip" data-start="0" data-duration="16" data-layout-allow-overflow="">
+      <div data-hf-id="hf-k1me" id="s6-bg"></div>
+
+      <!-- v1 · independence: a line that falls, and keeps rising -->
+      <div data-hf-id="hf-14yn" id="s6-v1" class="s6-v">
+        <svg data-hf-id="hf-ff52" viewBox="0 0 1920 1080">
+          <path data-hf-id="hf-22if" class="s6-thin" d="M760 800 L1660 800 M760 800 L760 300" opacity=".6" />
+          <path data-hf-id="hf-aevb" id="s6-area" d="M760 760 L860 700 L940 735 L1030 640 L1120 690 L1220 560 L1310 600 L1420 450 L1520 400 L1640 300 L1640 800 L760 800 Z" fill="#c9a45c" opacity="0" />
+          <path data-hf-id="hf-jg56" id="s6-graph" class="s6-line" pathLength="1" d="M760 760 L860 700 L940 735 L1030 640 L1120 690 L1220 560 L1310 600 L1420 450 L1520 400 L1640 300" />
+          <circle data-hf-id="hf-6jzk" id="s6-graph-dot" cx="1640" cy="300" r="9" fill="#f1dcaa" />
+        </svg>
+        <div data-hf-id="hf-jkoi" class="s6-rule"></div><div data-hf-id="hf-flpc" class="s6-word" id="s6-w1">INDEPENDENCE</div>
+      </div>
+
+      <!-- v2 · build: a business, drawn floor by floor -->
+      <div data-hf-id="hf-sh2s" id="s6-v2" class="s6-v">
+        <svg data-hf-id="hf-ry7e" viewBox="0 0 1920 1080">
+          <path data-hf-id="hf-l5jw" class="s6-thin" d="M700 800 L1700 800" />
+          <path data-hf-id="hf-dmue" id="s6-bld" class="s6-line" pathLength="1" d="M900 800 L900 420 L1150 340 L1150 800 M1150 800 L1150 520 L1420 520 L1420 800 M1420 800 L1420 610 L1560 610 L1560 800" />
+          <g data-hf-id="hf-39zw" id="s6-windows" fill="#e3c27e">
+            <rect data-hf-id="hf-nn7a" x="940" y="460" width="34" height="46" /><rect data-hf-id="hf-50v3" x="1010" y="440" width="34" height="46" /><rect data-hf-id="hf-u05u" x="1080" y="420" width="34" height="46" />
+            <rect data-hf-id="hf-vksr" x="940" y="560" width="34" height="46" /><rect data-hf-id="hf-sqi0" x="1010" y="560" width="34" height="46" /><rect data-hf-id="hf-t47v" x="1080" y="560" width="34" height="46" />
+            <rect data-hf-id="hf-qkmk" x="940" y="660" width="34" height="46" /><rect data-hf-id="hf-3it8" x="1080" y="660" width="34" height="46" />
+            <rect data-hf-id="hf-q1ip" x="1190" y="570" width="60" height="40" /><rect data-hf-id="hf-5zu2" x="1320" y="570" width="60" height="40" />
+            <rect data-hf-id="hf-fbo1" x="1255" y="680" width="50" height="120" /><rect data-hf-id="hf-ykhq" x="1460" y="650" width="58" height="38" />
+          </g>
+        </svg>
+        <div data-hf-id="hf-clkm" class="s6-rule"></div><div data-hf-id="hf-t65z" class="s6-word" id="s6-w2">BUILD</div>
+      </div>
+
+      <!-- v3 · create: a network that becomes a film frame (AI content) -->
+      <div data-hf-id="hf-t8ql" id="s6-v3" class="s6-v">
+        <svg data-hf-id="hf-scif" viewBox="0 0 1920 1080">
+          <g data-hf-id="hf-ulo3" id="s6-edges" class="s6-thin">
+            <path data-hf-id="hf-5mur" pathLength="1" d="M820 380 L1110 300 M820 380 L1110 540 M820 540 L1110 300 M820 540 L1110 540 M820 540 L1110 780 M820 700 L1110 540 M820 700 L1110 780 M1110 300 L1400 420 M1110 540 L1400 420 M1110 540 L1400 660 M1110 780 L1400 660 M1110 300 L1400 660" />
+          </g>
+          <g data-hf-id="hf-115y" id="s6-nodes" fill="#d2ad66">
+            <circle data-hf-id="hf-zxz8" cx="820" cy="380" r="9" /><circle data-hf-id="hf-owmq" cx="820" cy="540" r="9" /><circle data-hf-id="hf-77so" cx="820" cy="700" r="9" />
+            <circle data-hf-id="hf-o6fh" cx="1110" cy="300" r="9" /><circle data-hf-id="hf-o4hv" cx="1110" cy="540" r="9" /><circle data-hf-id="hf-oqdl" cx="1110" cy="780" r="9" />
+            <circle data-hf-id="hf-7wpe" cx="1400" cy="420" r="9" /><circle data-hf-id="hf-ppwo" cx="1400" cy="660" r="9" />
+          </g>
+          <g data-hf-id="hf-kii3" id="s6-film" opacity="0">
+            <rect data-hf-id="hf-5nky" class="s6-line" x="930" y="320" width="360" height="440" rx="4" />
+            <g data-hf-id="hf-n5un" fill="#d2ad66">
+              <rect data-hf-id="hf-pp5x" x="942" y="336" width="12" height="18" /><rect data-hf-id="hf-h09u" x="942" y="384" width="12" height="18" /><rect data-hf-id="hf-354q" x="942" y="432" width="12" height="18" /><rect data-hf-id="hf-d149" x="942" y="480" width="12" height="18" /><rect data-hf-id="hf-q3hq" x="942" y="528" width="12" height="18" /><rect data-hf-id="hf-5j9n" x="942" y="576" width="12" height="18" /><rect data-hf-id="hf-q83h" x="942" y="624" width="12" height="18" /><rect data-hf-id="hf-i44w" x="942" y="672" width="12" height="18" /><rect data-hf-id="hf-d0ys" x="942" y="720" width="12" height="18" />
+              <rect data-hf-id="hf-griz" x="1266" y="336" width="12" height="18" /><rect data-hf-id="hf-97vk" x="1266" y="384" width="12" height="18" /><rect data-hf-id="hf-2rng" x="1266" y="432" width="12" height="18" /><rect data-hf-id="hf-jk43" x="1266" y="480" width="12" height="18" /><rect data-hf-id="hf-e3r8" x="1266" y="528" width="12" height="18" /><rect data-hf-id="hf-11bh" x="1266" y="576" width="12" height="18" /><rect data-hf-id="hf-g8wn" x="1266" y="624" width="12" height="18" /><rect data-hf-id="hf-dmhq" x="1266" y="672" width="12" height="18" /><rect data-hf-id="hf-xpz2" x="1266" y="720" width="12" height="18" />
+            </g>
+          </g>
+        </svg>
+        <div data-hf-id="hf-dbcw" id="s6-film-win"><img data-color-grading="{&quot;preset&quot;:null,&quot;intensity&quot;:1,&quot;adjust&quot;:{&quot;exposure&quot;:-0.1,&quot;contrast&quot;:0.22,&quot;highlights&quot;:-0.2,&quot;shadows&quot;:0,&quot;whites&quot;:0,&quot;blacks&quot;:-0.3,&quot;temperature&quot;:0.22,&quot;tint&quot;:0,&quot;vibrance&quot;:0,&quot;saturation&quot;:-0.15},&quot;details&quot;:{&quot;vignette&quot;:0,&quot;vignetteMidpoint&quot;:0.5,&quot;vignetteRoundness&quot;:0,&quot;vignetteFeather&quot;:0.65,&quot;grain&quot;:0,&quot;grainSize&quot;:0.25,&quot;grainRoughness&quot;:0.5},&quot;effects&quot;:{&quot;blur&quot;:0,&quot;pixelate&quot;:0,&quot;chromaBleed&quot;:0,&quot;tapeDamage&quot;:0,&quot;tapeTracking&quot;:0,&quot;tapeNoise&quot;:1,&quot;tapeSpeed&quot;:0.5,&quot;filmArtifacts&quot;:0,&quot;halftone&quot;:0,&quot;halftoneSize&quot;:0,&quot;twoInkPrint&quot;:0,&quot;twoInkPrintSize&quot;:0,&quot;ascii&quot;:0,&quot;asciiSize&quot;:0.06578947368421052,&quot;asciiInvert&quot;:0,&quot;asciiStyle&quot;:0,&quot;asciiColor&quot;:1,&quot;asciiRotation&quot;:0,&quot;dither&quot;:0,&quot;ditherSize&quot;:0,&quot;bloom&quot;:0,&quot;bloomRadius&quot;:8,&quot;monoScreen&quot;:0,&quot;monoScreenSize&quot;:0,&quot;monoScreenAngle&quot;:0,&quot;monoScreenSpread&quot;:0,&quot;monoScreenShape&quot;:0,&quot;monoScreenInvert&quot;:0,&quot;scanlines&quot;:0,&quot;scanlineCount&quot;:0,&quot;scanlineSoftness&quot;:0,&quot;chromaticAberration&quot;:0,&quot;chromaticAngle&quot;:0,&quot;crtCurvature&quot;:0,&quot;digitalGlitch&quot;:0,&quot;digitalGlitchColorSplit&quot;:0,&quot;digitalGlitchLineTear&quot;:0,&quot;digitalGlitchPixelate&quot;:0,&quot;digitalGlitchBlockAmount&quot;:0,&quot;digitalGlitchBlockDisplacement&quot;:0,&quot;digitalGlitchBlockOpacity&quot;:0,&quot;digitalGlitchSpeed&quot;:0,&quot;engraving&quot;:0,&quot;engravingSpacing&quot;:0.4117647058823529,&quot;engravingMinThickness&quot;:0.2,&quot;engravingMaxThickness&quot;:0.4571428571428572,&quot;engravingAngle&quot;:0.25,&quot;engravingContrast&quot;:0.4666666666666667,&quot;engravingSharpness&quot;:0.59,&quot;engravingWave&quot;:0.2,&quot;engravingWaveFrequency&quot;:0.2222222222222222,&quot;crosshatch&quot;:0,&quot;crosshatchSpacing&quot;:0.28,&quot;crosshatchThickness&quot;:0.25,&quot;crosshatchAngle&quot;:0.25,&quot;crosshatchContrast&quot;:0.3333333333333333,&quot;crosshatchEdges&quot;:0.5,&quot;crosshatchLineWeight&quot;:0,&quot;crosshatchWave&quot;:0.33,&quot;crosshatchWaveFrequency&quot;:0.2222222222222222,&quot;kuwahara&quot;:0,&quot;kuwaharaRadius&quot;:0.14285714285714285,&quot;kuwaharaSharpness&quot;:0.3125,&quot;kuwaharaSaturation&quot;:0.5},&quot;lut&quot;:null,&quot;colorSpace&quot;:&quot;rec709&quot;}" data-hf-id="hf-zl50" id="s6-film-img" src="assets/cutouts/face-cutout.png" alt="The protagonist inside a film frame"></div>
+        <div data-hf-id="hf-czvn" class="s6-rule"></div><div data-hf-id="hf-hedg" class="s6-word" id="s6-w3">CREATE</div>
+      </div>
+
+      <!-- v4 · beyond: a globe, a route, a plane -->
+      <div data-hf-id="hf-c0ga" id="s6-v4" class="s6-v">
+        <svg data-hf-id="hf-sqtg" viewBox="0 0 1920 1080">
+          <g data-hf-id="hf-sz02" class="s6-thin" opacity=".9">
+            <circle data-hf-id="hf-tjjs" cx="1180" cy="560" r="250" />
+            <ellipse data-hf-id="hf-qwxv" id="s6-mer1" cx="1180" cy="560" rx="150" ry="250" />
+            <ellipse data-hf-id="hf-7gja" id="s6-mer2" cx="1180" cy="560" rx="60" ry="250" />
+            <path data-hf-id="hf-abqn" d="M930 560 L1430 560 M955 450 L1405 450 M955 670 L1405 670" />
+          </g>
+          <path data-hf-id="hf-lb98" id="s6-route" class="s6-line" pathLength="1" stroke-dasharray="0.012 0.012" d="M1010 640 C1060 360 1400 300 1560 440" />
+          <circle data-hf-id="hf-z9cr" cx="1010" cy="640" r="8" fill="#f1dcaa" />
+          <g data-hf-id="hf-3ff8" id="s6-plane" fill="#f1dcaa">
+            <path data-hf-id="hf-c1yt" d="M18 0 L-10 -4 L-16 -14 L-20 -14 L-16 -3 L-22 -2 L-26 -8 L-29 -8 L-27 0 L-29 8 L-26 8 L-22 2 L-16 3 L-20 14 L-16 14 L-10 4 Z" />
+          </g>
+        </svg>
+        <div data-hf-id="hf-de6o" class="s6-rule"></div><div data-hf-id="hf-py78" class="s6-word" id="s6-w4">BEYOND</div>
+      </div>
+
+      <!-- v5 · him, today (reference photo 2, cut out, graded) -->
+      <div data-hf-id="hf-fykb" id="s6-v5" class="s6-v">
+        <svg data-hf-id="hf-t54h" viewBox="0 0 1920 1080">
+          <circle data-hf-id="hf-hzg2" id="s6-halo" class="s6-line" pathLength="1" cx="1400" cy="500" r="330" stroke-width="2" opacity=".75" />
+          <path data-hf-id="hf-etjv" id="s6-route2" class="s6-thin" pathLength="1" d="M700 760 C900 380 1500 220 1880 380" stroke-dasharray="0.01 0.012" />
+        </svg>
+        <div data-hf-id="hf-se7y" id="s6-photo-wrap">
+          <img data-color-grading="{&quot;preset&quot;:null,&quot;intensity&quot;:1,&quot;adjust&quot;:{&quot;exposure&quot;:-0.1,&quot;contrast&quot;:0.22,&quot;highlights&quot;:-0.2,&quot;shadows&quot;:0,&quot;whites&quot;:0,&quot;blacks&quot;:-0.3,&quot;temperature&quot;:0.22,&quot;tint&quot;:0,&quot;vibrance&quot;:0,&quot;saturation&quot;:-0.15},&quot;details&quot;:{&quot;vignette&quot;:0,&quot;vignetteMidpoint&quot;:0.5,&quot;vignetteRoundness&quot;:0,&quot;vignetteFeather&quot;:0.65,&quot;grain&quot;:0,&quot;grainSize&quot;:0.25,&quot;grainRoughness&quot;:0.5},&quot;effects&quot;:{&quot;blur&quot;:0,&quot;pixelate&quot;:0,&quot;chromaBleed&quot;:0,&quot;tapeDamage&quot;:0,&quot;tapeTracking&quot;:0,&quot;tapeNoise&quot;:1,&quot;tapeSpeed&quot;:0.5,&quot;filmArtifacts&quot;:0,&quot;halftone&quot;:0,&quot;halftoneSize&quot;:0,&quot;twoInkPrint&quot;:0,&quot;twoInkPrintSize&quot;:0,&quot;ascii&quot;:0,&quot;asciiSize&quot;:0.06578947368421052,&quot;asciiInvert&quot;:0,&quot;asciiStyle&quot;:0,&quot;asciiColor&quot;:1,&quot;asciiRotation&quot;:0,&quot;dither&quot;:0,&quot;ditherSize&quot;:0,&quot;bloom&quot;:0,&quot;bloomRadius&quot;:8,&quot;monoScreen&quot;:0,&quot;monoScreenSize&quot;:0,&quot;monoScreenAngle&quot;:0,&quot;monoScreenSpread&quot;:0,&quot;monoScreenShape&quot;:0,&quot;monoScreenInvert&quot;:0,&quot;scanlines&quot;:0,&quot;scanlineCount&quot;:0,&quot;scanlineSoftness&quot;:0,&quot;chromaticAberration&quot;:0,&quot;chromaticAngle&quot;:0,&quot;crtCurvature&quot;:0,&quot;digitalGlitch&quot;:0,&quot;digitalGlitchColorSplit&quot;:0,&quot;digitalGlitchLineTear&quot;:0,&quot;digitalGlitchPixelate&quot;:0,&quot;digitalGlitchBlockAmount&quot;:0,&quot;digitalGlitchBlockDisplacement&quot;:0,&quot;digitalGlitchBlockOpacity&quot;:0,&quot;digitalGlitchSpeed&quot;:0,&quot;engraving&quot;:0,&quot;engravingSpacing&quot;:0.4117647058823529,&quot;engravingMinThickness&quot;:0.2,&quot;engravingMaxThickness&quot;:0.4571428571428572,&quot;engravingAngle&quot;:0.25,&quot;engravingContrast&quot;:0.4666666666666667,&quot;engravingSharpness&quot;:0.59,&quot;engravingWave&quot;:0.2,&quot;engravingWaveFrequency&quot;:0.2222222222222222,&quot;crosshatch&quot;:0,&quot;crosshatchSpacing&quot;:0.28,&quot;crosshatchThickness&quot;:0.25,&quot;crosshatchAngle&quot;:0.25,&quot;crosshatchContrast&quot;:0.3333333333333333,&quot;crosshatchEdges&quot;:0.5,&quot;crosshatchLineWeight&quot;:0,&quot;crosshatchWave&quot;:0.33,&quot;crosshatchWaveFrequency&quot;:0.2222222222222222,&quot;kuwahara&quot;:0,&quot;kuwaharaRadius&quot;:0.14285714285714285,&quot;kuwaharaSharpness&quot;:0.3125,&quot;kuwaharaSaturation&quot;:0.5},&quot;lut&quot;:null,&quot;colorSpace&quot;:&quot;rec709&quot;}" data-hf-id="hf-h355" id="s6-photo" src="assets/cutouts/body-cutout.png" alt="The protagonist today — reference photo 2">
+          <div data-hf-id="hf-2dme" id="s6-photo-dark"></div>
+        </div>
+      </div>
+      <div id="s6-flash"></div>
+    </div>
+  </div>
+  <script>
+    (function () {
+      const tl = gsap.timeline({ paused: true });
+      const cuts = [0, 2.6, 5.2, 7.8, 10.4];
+      // Open on the impact light from S5, which settles into the brown ground.
+      tl.fromTo("#s6-flash", { opacity: 1 }, { opacity: 0, duration: 0.7, ease: "power2.out" }, 0);
+      const vs = ["#s6-v1", "#s6-v2", "#s6-v3", "#s6-v4", "#s6-v5"];
+
+      // Blur swap on one stage: the brown ground never cuts.
+      vs.forEach((v, i) => {
+        const a = cuts[i];
+        tl.fromTo(v, { opacity: 0, filter: "blur(10px)", scale: 1.04 }, { opacity: 1, filter: "blur(0px)", scale: 1.0, duration: i === 0 ? 0.6 : 0.22, ease: "power3.out" }, a);
+        if (i < 4) tl.to(v, { opacity: 0, filter: "blur(8px)", duration: 0.18, ease: "power3.in" }, cuts[i + 1] - 0.18);
+      });
+      // Words: whole line blurs in, holds still, leaves with its scene.
+      ["#s6-w1", "#s6-w2", "#s6-w3", "#s6-w4"].forEach((w, i) => {
+        tl.fromTo(w, { opacity: 0, filter: "blur(8px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.2, ease: "power2.out" }, cuts[i] + 0.55);
+      });
+
+      // v1 — the graph dips, then climbs.
+      tl.fromTo("#s6-graph", { strokeDasharray: 1, strokeDashoffset: 1 }, { strokeDashoffset: 0, duration: 1.7, ease: "power2.inOut" }, 0.2);
+      tl.fromTo("#s6-area", { opacity: 0 }, { opacity: 0.12, duration: 0.8, ease: "power1.out" }, 1.4);
+      tl.fromTo("#s6-graph-dot", { scale: 0, svgOrigin: "1640 300" }, { scale: 1, duration: 0.35, ease: "back.out(2)" }, 1.85);
+
+      // v2 — the building draws, windows light one by one.
+      tl.fromTo("#s6-bld", { strokeDasharray: 1, strokeDashoffset: 1 }, { strokeDashoffset: 0, duration: 1.4, ease: "power2.inOut" }, 2.75);
+      tl.fromTo("#s6-windows rect", { opacity: 0 }, { opacity: 0.85, duration: 0.12, ease: "none", stagger: 0.07 }, 3.6);
+
+      // v3 — the network fires, then becomes a frame with his face inside.
+      tl.fromTo("#s6-edges path", { strokeDasharray: 1, strokeDashoffset: 1 }, { strokeDashoffset: 0, duration: 0.9, ease: "power2.inOut" }, 5.3);
+      tl.fromTo("#s6-nodes circle", { scale: 0, transformOrigin: "50% 50%" }, { scale: 1, duration: 0.25, ease: "back.out(2)", stagger: 0.05 }, 5.3);
+      tl.to(["#s6-edges", "#s6-nodes"], { opacity: 0, filter: "blur(6px)", duration: 0.3, ease: "power2.in" }, 6.35);
+      tl.fromTo("#s6-film", { opacity: 0, scale: 0.85, svgOrigin: "1110 540" }, { opacity: 1, scale: 1, duration: 0.45, ease: "expo.out" }, 6.5);
+      tl.fromTo("#s6-film-win", { opacity: 0 }, { opacity: 1, duration: 0.6, ease: "power2.out" }, 6.75);
+
+      // v4 — the globe turns, the route draws, the plane flies it.
+      tl.fromTo("#s6-mer1", { attr: { rx: 210 } }, { attr: { rx: 40 }, duration: 2.6, ease: "none" }, 7.8);
+      tl.fromTo("#s6-mer2", { attr: { rx: 120 } }, { attr: { rx: 230 }, duration: 2.6, ease: "none" }, 7.8);
+      tl.fromTo("#s6-route", { opacity: 0 }, { opacity: 1, duration: 0.3 }, 8.0);
+      const route = document.getElementById("s6-route");
+      const L = route.getTotalLength();
+      const pts = [];
+      for (let i = 0; i <= 120; i++) { const p = route.getPointAtLength((L * i) / 120); pts.push([p.x, p.y]); }
+      const plane = document.getElementById("s6-plane");
+      const fly = { u: 0 };
+      const placePlane = () => {
+        const i = Math.min(119, Math.floor(fly.u * 120));
+        const [x0, y0] = pts[i], [x1, y1] = pts[i + 1];
+        const f = fly.u * 120 - i;
+        const ang = (Math.atan2(y1 - y0, x1 - x0) * 180) / Math.PI;
+        plane.setAttribute("transform", "translate(" + (x0 + (x1 - x0) * f) + " " + (y0 + (y1 - y0) * f) + ") rotate(" + ang + ")");
+      };
+      tl.fromTo(fly, { u: 0 }, { u: 1, duration: 2.0, ease: "power1.inOut", onUpdate: placePlane }, 8.1);
+      placePlane();
+
+      // v5 — him, today. The halo draws behind; the route passes.
+      tl.fromTo("#s6-halo", { strokeDasharray: 1, strokeDashoffset: 1 }, { strokeDashoffset: 0, duration: 2.4, ease: "power2.inOut" }, 10.6);
+      tl.fromTo("#s6-route2", { opacity: 0 }, { opacity: 0.8, duration: 1.2, ease: "power1.out" }, 11.0);
+      tl.fromTo("#s6-photo-wrap", { x: 60 }, { x: 0, duration: 5.6, ease: "power2.out" }, 10.4);
+      // Hand-off: he darkens into a silhouette (the one S7 opens on).
+      tl.to("#s6-photo-dark", { opacity: 1, duration: 1.4, ease: "power2.inOut" }, 14.2);
+      tl.to(["#s6-halo", "#s6-route2"], { opacity: 0, duration: 1.0, ease: "power2.in" }, 14.6);
+      tl.to("#s6-bg", { opacity: 0.35, duration: 1.2, ease: "power2.in" }, 14.6);
+
+      window.__timelines["s6"] = tl;
+    })();
+  </script>
+</template>

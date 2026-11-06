@@ -1,0 +1,10 @@
+<!doctype html><html><head><meta charset="utf-8">
+<style>html,body{margin:0;background:transparent;overflow:hidden}</style>
+<script src="../design/lib.js"></script><script src="art.js"></script></head><body><svg id="s"></svg>
+<script>
+// ?s=<scene> → 1920 square scene · ?c=<character> → 700x700 transparent character
+const q = new URLSearchParams(location.search), s = q.get('s'), c = q.get('c'), svg = document.getElementById('s');
+if (c) { svg.setAttribute('width', 700); svg.setAttribute('height', 700); svg.setAttribute('viewBox', '-350 -660 700 700'); svg.innerHTML = defs() + CAST[c](); }
+else { svg.setAttribute('width', W); svg.setAttribute('height', H); svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
+  svg.innerHTML = defs() + SCENES[s]() + (OVERLAYS.includes(s) ? '' : texture(W, H)); }
+</script></body></html>

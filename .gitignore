@@ -2,3 +2,7 @@ node_modules/
 .hyperframes/
 output/work-*/
 output/.*hf-transaction*/
+long-form/ep01/build/out/
+long-form/ep01/design/out/*.png
+!long-form/ep01/design/out/cast.png
+!long-form/ep01/design/out/scenes-sheet.png

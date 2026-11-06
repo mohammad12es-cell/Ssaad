@@ -1,16 +1,18 @@
 # EP01 upload package
 
+**Video file:** `long-form/ep01/renders/ep01-flannan-isles-8min.mp4` (8:00, 1920×1080, 24 fps) · **Captions:** `ep01-flannan-isles-8min.en.srt`
+
 **Title:** Three Men Vanished From This Lighthouse. The Famous Clues Were Fake.
 
 **Description:**
 In December 1900, three keepers disappeared from the lighthouse on Eilean Mòr in Scotland's Flannan Isles. The version most people know, with an overturned chair, an uneaten meal and a terrified final log entry, doesn't match the official record. We tell the legend, open the archive, and follow the evidence to the west landing.
 
 00:00 The legend
-00:30 The rock
-01:45 The light goes dark
-03:15 How a legend gets built
-04:45 The west landing
-06:15 What we still don't know
+00:37 The rock
+02:00 The light goes dark
+03:46 How a legend gets built
+05:20 The west landing
+06:41 What we still don't know
 
 Sources:
 - National Records of Scotland: The Flannan Islands Lighthouse, a disappearance: https://nrscotland.gov.uk/learning-and-events/for-the-safety-of-all-scotlands-lighthouses/the-flannan-islands-lighthouse-a-disappearance/

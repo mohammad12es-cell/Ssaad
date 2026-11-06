@@ -1,0 +1,689 @@
+<!doctype html>
+<html lang="en" data-resolution="portrait">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <title>The Evolution</title>
+    <script src="assets/gsap.min.js"></script>
+    <style>
+      @font-face { font-family: "Cinzel"; font-weight: 400; src: url(assets/cinzel-latin-400-normal.woff2) format("woff2"); }
+      @font-face { font-family: "Cinzel"; font-weight: 600; src: url(assets/cinzel-latin-600-normal.woff2) format("woff2"); }
+      @font-face { font-family: "Cinzel"; font-weight: 700; src: url(assets/cinzel-latin-700-normal.woff2) format("woff2"); }
+      @font-face { font-family: "Poppins"; font-weight: 200; src: url(assets/poppins-latin-200-normal.woff2) format("woff2"); }
+      @font-face { font-family: "Poppins"; font-weight: 300; src: url(assets/poppins-latin-300-normal.woff2) format("woff2"); }
+      @font-face { font-family: "Poppins"; font-weight: 500; src: url(assets/poppins-latin-500-normal.woff2) format("woff2"); }
+      :root { --ink: #f3ece2; --warm: #ffb35c; --amber: #ffad42; --cold: #9fb7d6; }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1080px; height: 1920px; overflow: hidden; background: #000; }
+      #root { position: relative; width: 1080px; height: 1920px; overflow: hidden; background: #000; }
+      .layer { position: absolute; inset: 0; width: 1080px; height: 1920px; }
+      #cam { z-index: 1; transform-origin: 540px 1000px; }
+      .ph { position: absolute; inset: 0; overflow: hidden; opacity: 0; }
+      .ph img { position: absolute; left: 0; top: 0; transform-origin: 0 0; }
+      #fx { z-index: 2; }
+      #tintCold { z-index: 3; background: #1d3d66; mix-blend-mode: soft-light; opacity: 0; }
+      #tintWarm { z-index: 3; background: radial-gradient(ellipse 900px 1100px at 540px 500px, #ff9a3c, #5a2a0a 70%); mix-blend-mode: soft-light; opacity: 0; }
+      #spot { z-index: 4; background: radial-gradient(ellipse 520px 900px at 540px 1120px, rgba(0,0,0,0) 35%, rgba(0,0,0,.88) 100%); opacity: 0; }
+      #vig { z-index: 5; background: radial-gradient(ellipse 760px 1180px at 540px 960px, rgba(0,0,0,0) 55%, rgba(0,0,0,.7) 100%); }
+      #black { z-index: 6; background: #000; opacity: 1; }
+      #flash { z-index: 7; background: radial-gradient(circle at 540px 900px, #fff6e6, #ffb768 60%, #b8601c); opacity: 0; }
+      #grain { z-index: 20; width: 1080px; height: 1920px; mix-blend-mode: overlay; opacity: .55; image-rendering: auto; }
+      .t { position: absolute; left: 0; width: 1080px; z-index: 10; text-align: center; color: var(--ink); opacity: 0; }
+      .chap { top: 820px; }
+      .chap .k { font: 300 28px/1 "Poppins"; letter-spacing: .55em; color: var(--warm); text-indent: .55em; }
+      .chap .n { font: 600 66px/1.18 "Cinzel"; letter-spacing: .08em; margin-top: 30px; padding: 0 70px; text-shadow: 0 0 40px rgba(0,0,0,.8); }
+      .line { top: 1450px; font: 300 52px/1.3 "Poppins"; letter-spacing: .01em; padding: 0 90px; text-shadow: 0 2px 30px rgba(0,0,0,.9); }
+      .big { top: 880px; font: 700 112px/1 "Cinzel"; letter-spacing: .1em; text-indent: .1em; text-shadow: 0 0 60px rgba(0,0,0,.85); }
+      .tag { top: 200px; font: 500 26px/1.4 "Poppins"; letter-spacing: .45em; text-indent: .45em; color: var(--amber); }
+      .idl { top: 1500px; font: 600 74px/1 "Cinzel"; letter-spacing: .14em; text-indent: .14em; text-shadow: 0 0 50px rgba(0,0,0,.9); }
+      .thought { width: auto; text-align: left; font: 200 46px/1.2 "Poppins"; color: #c9d6ea; white-space: nowrap; }
+      .list { top: 300px; font: 300 50px/1.75 "Poppins"; text-shadow: 0 2px 30px rgba(0,0,0,.95); }
+      .list span { display: block; opacity: 0; }
+      .state { top: 900px; font: 400 50px/1.4 "Cinzel"; letter-spacing: .02em; padding: 0 50px; }
+      .fin { top: 760px; }
+      .fin .k { font: 500 34px/1 "Poppins"; letter-spacing: .6em; text-indent: .6em; color: var(--warm); }
+      .fin .n { font: 700 96px/1.1 "Cinzel"; letter-spacing: .1em; text-indent: .1em; margin-top: 34px; text-shadow: 0 0 70px rgba(255,170,80,.35); }
+      .fin .s { margin-top: 70px; font: 300 44px/1.7 "Poppins"; color: #d8cfc2; }
+      .fin .s span { display: block; opacity: 0; }
+      #clock { position: absolute; z-index: 10; left: 0; width: 1080px; top: 520px; text-align: center; opacity: 0;
+        font: 200 210px/1 "Poppins"; letter-spacing: .04em; color: var(--amber);
+        text-shadow: 0 0 30px rgba(255,150,40,.85), 0 0 90px rgba(255,120,20,.45); }
+      #clock small { font-size: 54px; letter-spacing: .2em; margin-left: 18px; }
+    </style>
+  </head>
+  <body>
+    <!--
+      THE EVOLUTION — 130 s, 1080x1920, 30 fps.
+      TIMING (s) — shared with tools/score.py
+        0–17   I   The Collapse          (photo 1, court)
+        17–35  II  The Physical Rebirth  (gym lights, photo 1 → photo 2 transformation at 24–27)
+        35–55  III The Mind That Never Stops (03:00 bedroom 36–46, night city 47–55)
+        55–77  IV  The Pursuit of Knowledge (biomechanics 57–65, neural net 65–71, constellation 71–77)
+        77–95  V   The Invisible Battle  (notebook 78–84, window 84–89, alarm 89, cuts 90–95)
+        95–112 VI  Beyond the Old Identity (intercut 96.8–106, final stand 106–112)
+        112–130    Final message, "Chapter 27 — The Evolution"
+    -->
+    <div id="root" data-composition-id="main" data-start="0" data-duration="130" data-width="1080" data-height="1920">
+      <div id="cam" class="layer clip" data-start="0" data-duration="130" data-track-index="0">
+        <div class="ph" id="p1"><img src="assets/photo1-court.jpg" width="1080" height="1089" alt="" /></div>
+        <div class="ph" id="p2"><img src="assets/photo2-gym.jpg" width="1080" height="1920" alt="" /></div>
+      </div>
+      <canvas id="fx" class="layer clip" width="1080" height="1920" data-start="0" data-duration="130" data-track-index="1"></canvas>
+      <div id="tintCold" class="layer clip" data-start="0" data-duration="130" data-track-index="2"></div>
+      <div id="tintWarm" class="layer clip" data-start="0" data-duration="130" data-track-index="2"></div>
+      <div id="spot" class="layer clip" data-start="0" data-duration="130" data-track-index="2"></div>
+      <div id="vig" class="layer clip" data-start="0" data-duration="130" data-track-index="2"></div>
+      <div id="black" class="layer clip" data-start="0" data-duration="130" data-track-index="2"></div>
+      <div id="flash" class="layer clip" data-start="0" data-duration="130" data-track-index="2"></div>
+      <div id="clock" class="clip" data-start="0" data-duration="130" data-track-index="3">03:00<small>AM</small></div>
+      <div id="texts" class="layer clip" data-start="0" data-duration="130" data-track-index="3" style="z-index:10"></div>
+      <canvas id="grain" class="layer clip" width="540" height="960" data-start="0" data-duration="130" data-track-index="4"></canvas>
+      <audio id="score" src="assets/score.wav" data-start="0" data-duration="130" data-volume="1"></audio>
+    </div>
+
+    <script>
+      const W = 1080, H = 1920, DUR = 130;
+      const $ = (s) => document.querySelector(s);
+      const fx = $("#fx"), c = fx.getContext("2d");
+      const clockEl = $("#clock");
+
+      // ---------- helpers ----------
+      function mulberry32(a) { return function () { a |= 0; a = (a + 0x6d2b79f5) | 0; let t = Math.imul(a ^ (a >>> 15), 1 | a); t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t; return ((t ^ (t >>> 14)) >>> 0) / 4294967296; }; }
+      const clamp = (x, a, b) => Math.min(b, Math.max(a, x));
+      const lerp = (a, b, k) => a + (b - a) * k;
+      const sstep = (a, b, x) => { const k = clamp((x - a) / (b - a), 0, 1); return k * k * (3 - 2 * k); };
+      const ease = (k) => k * k * (3 - 2 * k);
+      function kf(t, keys) {
+        if (t <= keys[0][0]) return keys[0][1];
+        for (let i = 1; i < keys.length; i++) if (t <= keys[i][0]) {
+          const [t0, v0] = keys[i - 1], [t1, v1] = keys[i];
+          return t1 === t0 ? v1 : lerp(v0, v1, (t - t0) / (t1 - t0));
+        }
+        return keys[keys.length - 1][1];
+      }
+      const rad = (d) => (d * Math.PI) / 180;
+
+      // ---------- photos ----------
+      const P = {
+        p1: { el: $("#p1"), img: $("#p1 img"), w: 1080, h: 1089 },
+        p2: { el: $("#p2"), img: $("#p2 img"), w: 1080, h: 1920 },
+      };
+      // place focus point (fx,fy in image px) at screen (sx,sy) with scale s; cover clamps so the frame stays filled
+      function placePhoto(p, o) {
+        let s = o.s, tx = o.sx - o.fx * s, ty = o.sy - o.fy * s;
+        if (o.cover) {
+          s = Math.max(s, W / p.w, H / p.h);
+          tx = clamp(o.sx - o.fx * s, W - p.w * s, 0);
+          ty = clamp(o.sy - o.fy * s, H - p.h * s, 0);
+        }
+        p.img.style.transform = `translate(${tx}px,${ty}px) scale(${s})`;
+        p.el.style.opacity = o.o;
+        p.el.style.filter = o.f || "none";
+        p.el.style.webkitMaskImage = p.el.style.maskImage = o.mask || "none";
+      }
+      const COLD = (b) => `saturate(.28) contrast(1.22) brightness(${b})`;
+      const WARM = (b, bl = 0) => `saturate(.9) contrast(1.2) brightness(${b}) sepia(.16)` + (bl ? ` blur(${bl}px)` : "");
+      const FOCUS = {
+        court: [530, 560], shoulders: [535, 960], arm: [690, 1150], legs: [540, 1600], full: [540, 1000],
+      };
+
+      // ---------- procedural scenes ----------
+      const R = mulberry32(27);
+      const motes = Array.from({ length: 140 }, () => ({ x: R() * W, y: R() * H, r: 0.6 + R() * 2.4, sp: 6 + R() * 18, ph: R() * 6.28 }));
+      function dust(t, a) {
+        c.save(); c.globalCompositeOperation = "lighter";
+        const g = c.createRadialGradient(540, -200, 50, 540, 600, 1300);
+        g.addColorStop(0, `rgba(255,236,200,${0.16 * a})`); g.addColorStop(1, "rgba(255,236,200,0)");
+        c.fillStyle = g; c.beginPath(); c.moveTo(380, 0); c.lineTo(700, 0); c.lineTo(1080, 1920); c.lineTo(0, 1920); c.fill();
+        for (const m of motes) {
+          const y = (m.y - t * m.sp + H * 10) % H, x = m.x + Math.sin(t * 0.4 + m.ph) * 20;
+          const tw = 0.5 + 0.5 * Math.sin(t * 1.3 + m.ph * 3);
+          c.fillStyle = `rgba(255,230,190,${0.35 * a * tw})`; c.beginPath(); c.arc(x, y, m.r, 0, 6.28); c.fill();
+        }
+        c.restore();
+      }
+
+      // gym ceiling light bars switching on (echoes the real ceiling in photo 2)
+      function gymLights(t, a) {
+        c.save(); c.globalAlpha = a; c.globalCompositeOperation = "lighter";
+        for (let i = 0; i < 8; i++) {
+          const on = 18 + i * 0.45; if (t < on) continue;
+          const flick = t - on < 0.25 ? (Math.sin((t - on) * 140) > 0 ? 1 : 0.25) : 1;
+          const k = i / 7, y = 60 + 520 * Math.pow(k, 1.35), w = 520 - 330 * k;
+          c.shadowColor = "rgba(255,244,225,1)"; c.shadowBlur = 40;
+          c.strokeStyle = `rgba(255,248,235,${0.95 * flick})`; c.lineWidth = 9 - 6 * k;
+          c.beginPath(); c.moveTo(540 - w, y); c.lineTo(540 + w, y); c.stroke();
+          // floor reflection
+          c.shadowBlur = 0; c.strokeStyle = `rgba(255,240,220,${0.09 * flick})`; c.lineWidth = 3;
+          const fy = 1900 - 650 * Math.pow(k, 1.1);
+          c.beginPath(); c.moveTo(540 - w * 0.9, fy); c.lineTo(540 + w * 0.9, fy); c.stroke();
+        }
+        c.restore();
+      }
+
+      function bedroom(t) {
+        c.fillStyle = "#04060b"; c.fillRect(0, 0, W, H);
+        const g = c.createRadialGradient(540, 700, 100, 540, 900, 1300);
+        g.addColorStop(0, "#0d1422"); g.addColorStop(1, "#020306"); c.fillStyle = g; c.fillRect(0, 0, W, H);
+        // moonlight through blinds on the ceiling
+        c.save(); c.translate(540, 900); c.rotate(rad(-24 + (t - 36) * 0.4)); c.globalCompositeOperation = "lighter";
+        for (let i = 0; i < 11; i++) {
+          const y = -700 + i * 120 + ((t - 36) * 6) % 120;
+          const gg = c.createLinearGradient(-500, 0, 700, 0);
+          gg.addColorStop(0, "rgba(120,150,210,0)"); gg.addColorStop(0.5, "rgba(120,150,210,.075)"); gg.addColorStop(1, "rgba(120,150,210,0)");
+          c.fillStyle = gg; c.fillRect(-600, y, 1300, 46);
+        }
+        c.restore();
+        // passing headlights sweep across the ceiling
+        const hk = sstep(40.2, 42.4, t);
+        if (hk > 0 && hk < 1) {
+          c.save(); c.globalCompositeOperation = "lighter";
+          const x = lerp(-500, 1600, hk);
+          const hg = c.createLinearGradient(x - 260, 0, x + 260, 0);
+          hg.addColorStop(0, "rgba(255,190,120,0)"); hg.addColorStop(0.5, "rgba(255,190,120,.13)"); hg.addColorStop(1, "rgba(255,190,120,0)");
+          c.fillStyle = hg; c.translate(0, 0); c.transform(1, 0, -0.5, 1, 0, 0); c.fillRect(-400, 0, 2400, H); c.restore();
+        }
+      }
+
+      const BR = mulberry32(9);
+      const buildings = []; { let x = -40; while (x < 1160) { const w = 40 + BR() * 110, h = 120 + BR() * 520 * (1 - Math.abs(x - 540) / 900); buildings.push({ x, w, h, seed: BR() }); x += w + BR() * 10; } }
+      const bokeh = Array.from({ length: 60 }, () => ({ x: BR() * 1300 - 110, y: 950 + BR() * 330, r: 14 + BR() * 46, warm: BR() < 0.7, a: 0.15 + BR() * 0.35 }));
+      function city(t, walk = 1) {
+        const hz = 1180, bob = Math.sin(t * 5.6) * 5 * walk, drift = (t - 47) * 6 * walk;
+        const sky = c.createLinearGradient(0, 0, 0, hz);
+        sky.addColorStop(0, "#03050b"); sky.addColorStop(0.75, "#0b1020"); sky.addColorStop(1, "#3a2414");
+        c.fillStyle = sky; c.fillRect(0, 0, W, H);
+        c.save(); c.translate(-drift * 0.3, bob * 0.3);
+        for (const b of buildings) {
+          c.fillStyle = "#05070d"; c.fillRect(b.x, hz - b.h, b.w, b.h);
+          const r = mulberry32(Math.floor(b.seed * 1e6));
+          for (let y = hz - b.h + 12; y < hz - 8; y += 16) for (let x = b.x + 6; x < b.x + b.w - 8; x += 13) {
+            const v = r(); if (v < 0.78) continue;
+            const fl = Math.sin(t * (0.5 + v) + x) > -0.9 ? 1 : 0.2;
+            c.fillStyle = `rgba(255,${180 + v * 50},${100 + v * 60},${(v - 0.7) * 1.6 * fl})`; c.fillRect(x, y, 5, 7);
+          }
+        }
+        c.restore();
+        c.save(); c.globalCompositeOperation = "lighter";
+        for (const k of bokeh) {
+          const x = k.x - drift * 0.8, y = k.y + bob;
+          const g = c.createRadialGradient(x, y, 0, x, y, k.r);
+          const col = k.warm ? "255,170,90" : "150,190,255";
+          g.addColorStop(0, `rgba(${col},${k.a})`); g.addColorStop(0.7, `rgba(${col},${k.a * 0.6})`); g.addColorStop(1, `rgba(${col},0)`);
+          c.fillStyle = g; c.beginPath(); c.arc(x, y, k.r, 0, 6.28); c.fill();
+        }
+        c.restore();
+        // the street: wet asphalt and approaching street lamps
+        const road = c.createLinearGradient(0, hz, 0, H);
+        road.addColorStop(0, "#0a0a0d"); road.addColorStop(1, "#020203");
+        c.fillStyle = road; c.fillRect(0, hz + bob, W, H);
+        c.save(); c.globalCompositeOperation = "lighter";
+        for (let i = 0; i < 9; i++) {
+          let z = ((i * 1.0 - (t - 47) * 0.55 * walk) % 9 + 9) % 9 + 0.6;
+          const sc = 1 / z, side = i % 2 ? 1 : -1;
+          const x = 540 + side * 520 * sc, top = hz - 900 * sc + bob, base = hz + 600 * sc + bob;
+          c.strokeStyle = `rgba(40,40,46,${clamp(sc * 2, 0, 1)})`; c.lineWidth = 10 * sc; c.beginPath(); c.moveTo(x, base); c.lineTo(x, top); c.stroke();
+          const g = c.createRadialGradient(x, top, 0, x, top, 220 * sc);
+          g.addColorStop(0, `rgba(255,190,110,${0.9 * clamp(sc * 1.5, 0, 1)})`); g.addColorStop(1, "rgba(255,150,60,0)");
+          c.fillStyle = g; c.beginPath(); c.arc(x, top, 220 * sc, 0, 6.28); c.fill();
+          // reflection pool on wet ground
+          const rg = c.createRadialGradient(x, base + 40 * sc, 0, x, base + 40 * sc, 260 * sc);
+          rg.addColorStop(0, `rgba(255,170,90,${0.18 * clamp(sc * 1.5, 0, 1)})`); rg.addColorStop(1, "rgba(255,170,90,0)");
+          c.fillStyle = rg; c.fillRect(x - 300 * sc, base - 220 * sc, 600 * sc, 520 * sc);
+        }
+        c.restore();
+      }
+
+      // ---------- biomechanics of a volleyball jump (side view) ----------
+      const BK = [ // p, shank, thigh, trunk, upperArm, forearm (deg)
+        [0.00, 3, -3, 4, 5, 12], [0.15, 3, -3, 4, 5, 12], [0.40, 38, -62, 48, -65, -45], [0.50, 22, -10, 25, 110, 130],
+        [0.56, 8, 6, 8, 165, 175], [0.70, -25, 20, -4, 178, 140], [0.80, -10, 10, 8, 120, 95], [0.88, 30, -45, 35, 40, 50], [1.00, 6, -8, 10, 10, 20],
+      ];
+      function pose(p) {
+        let i = 1; while (i < BK.length - 1 && p > BK[i][0]) i++;
+        const a = BK[i - 1], b = BK[i], k = ease(clamp((p - a[0]) / (b[0] - a[0]), 0, 1));
+        return a.map((v, j) => lerp(v, b[j], k));
+      }
+      const L = { shank: 197, thigh: 205, trunk: 238, neck: 52, head: 40, uarm: 144, farm: 131, foot: 70 };
+      function act(p, ranges) { let v = 0.12; for (const [a, b, m] of ranges) v = Math.max(v, m * Math.sin(Math.PI * clamp((p - a) / (b - a), 0, 1))); return v; }
+      function grf(p) {
+        if (p < 0.15) return 1; if (p < 0.3) return lerp(1, 0.4, ease((p - 0.15) / 0.15));
+        if (p < 0.47) return lerp(0.4, 2.6, ease((p - 0.3) / 0.17)); if (p < 0.56) return lerp(2.6, 0, ease((p - 0.47) / 0.09));
+        if (p < 0.86) return 0; if (p < 0.88) return lerp(0, 3.8, (p - 0.86) / 0.02); return lerp(3.8, 1, ease(clamp((p - 0.88) / 0.1, 0, 1)));
+      }
+      function biomech(p, labels = true) {
+        c.fillStyle = "#03060a"; c.fillRect(0, 0, W, H);
+        c.strokeStyle = "rgba(90,140,170,.08)"; c.lineWidth = 1;
+        for (let x = 0; x <= W; x += 60) { c.beginPath(); c.moveTo(x, 0); c.lineTo(x, H); c.stroke(); }
+        for (let y = 0; y <= H; y += 60) { c.beginPath(); c.moveTo(0, y); c.lineTo(W, y); c.stroke(); }
+        const [sh, th, tr, ua, fa] = pose(p);
+        const ground = 1430;
+        const heel = p < 0.44 ? 0 : p < 0.56 ? 58 * ease((p - 0.44) / 0.12) : p < 0.86 ? 58 : 58 * (1 - ease(clamp((p - 0.86) / 0.04, 0, 1)));
+        const lift = p > 0.56 && p < 0.86 ? 230 * Math.sin(Math.PI * (p - 0.56) / 0.3) : 0;
+        const ankle = [420, ground - 11 - heel - lift];
+        const up = (o, a, l) => [o[0] + Math.sin(rad(a)) * l, o[1] - Math.cos(rad(a)) * l];
+        const dn = (o, a, l) => [o[0] + Math.sin(rad(a)) * l, o[1] + Math.cos(rad(a)) * l];
+        const knee = up(ankle, sh, L.shank), hip = up(knee, th, L.thigh), shoulder = up(hip, tr, L.trunk), head = up(shoulder, tr * 0.6, L.neck + L.head);
+        const elbow = dn(shoulder, ua, L.uarm), wrist = dn(elbow, fa, L.farm);
+        const fang = rad(lift > 0 ? 55 : Math.asin(clamp(heel / L.foot, 0, 1)) * 57.3);
+        const toe = [ankle[0] + Math.cos(fang) * L.foot, ankle[1] + Math.sin(fang) * L.foot];
+        // ground + centre-of-mass trace
+        c.strokeStyle = "rgba(160,200,220,.35)"; c.lineWidth = 2; c.beginPath(); c.moveTo(120, ground); c.lineTo(960, ground); c.stroke();
+        c.fillStyle = "rgba(255,179,92,.6)";
+        for (let q = 0; q <= p; q += 0.012) {
+          const l2 = q > 0.56 && q < 0.86 ? 230 * Math.sin(Math.PI * (q - 0.56) / 0.3) : 0;
+          const [s2, t2] = pose(q); const h2 = q < 0.44 ? 0 : q < 0.56 ? 58 * ease((q - 0.44) / 0.12) : q < 0.86 ? 58 : 0;
+          const k2 = up([420, ground - 11 - h2 - l2], s2, L.shank), hp2 = up(k2, t2, L.thigh);
+          c.beginPath(); c.arc(hp2[0], hp2[1], 3, 0, 6.28); c.fill();
+        }
+        // muscles: activation glows from cool teal to hot amber
+        const aQ = act(p, [[0.3, 0.58, 1], [0.84, 0.98, 0.9]]), aG = act(p, [[0.35, 0.58, 1], [0.85, 0.97, 0.6]]),
+              aC = act(p, [[0.42, 0.6, 1], [0.85, 0.95, 0.8]]), aD = act(p, [[0.42, 0.62, 0.9], [0.62, 0.8, 1]]), aH = act(p, [[0.3, 0.5, 0.6]]);
+        const musc = (a, b, off, wd, v) => {
+          const dx = b[0] - a[0], dy = b[1] - a[1], ln = Math.hypot(dx, dy), nx = -dy / ln, ny = dx / ln;
+          const col = `rgb(${lerp(40, 255, v) | 0},${lerp(120, 140, v) | 0},${lerp(140, 50, v) | 0})`;
+          c.save(); c.shadowColor = col; c.shadowBlur = 10 + 50 * v; c.strokeStyle = col; c.globalAlpha = 0.55 + 0.45 * v;
+          c.lineWidth = wd; c.lineCap = "round"; c.beginPath();
+          c.moveTo(a[0] + nx * off + dx * 0.12, a[1] + ny * off + dy * 0.12); c.quadraticCurveTo(a[0] + dx * 0.5 + nx * off * 1.6, a[1] + dy * 0.5 + ny * off * 1.6, a[0] + nx * off + dx * 0.88, a[1] + ny * off + dy * 0.88);
+          c.stroke(); c.restore();
+        };
+        musc(hip, knee, -14, 30, aQ);  // quadriceps (front of thigh)
+        musc(hip, knee, 14, 22, aH);   // hamstrings
+        musc([hip[0] - 4, hip[1] - 40], [hip[0] - 10, hip[1] + 50], 22, 30, aG); // gluteus maximus
+        musc(knee, ankle, 13, 22, aC); // gastrocnemius
+        musc(shoulder, elbow, 0, 22, aD); // deltoid / arm swing
+        musc(shoulder, hip, 10, 18, 0.25 + 0.5 * aG); // core / erectors
+        // skeleton
+        c.save(); c.strokeStyle = "rgba(235,245,255,.92)"; c.lineWidth = 6; c.lineCap = "round"; c.shadowColor = "rgba(170,220,255,.9)"; c.shadowBlur = 16;
+        const seg = (a, b) => { c.beginPath(); c.moveTo(a[0], a[1]); c.lineTo(b[0], b[1]); c.stroke(); };
+        // far arm (dim, slightly lagging)
+        c.globalAlpha = 0.35; const e2 = dn(shoulder, ua - 22, L.uarm), w2 = dn(e2, fa - 30, L.farm); seg(shoulder, e2); seg(e2, w2); c.globalAlpha = 1;
+        seg(ankle, knee); seg(knee, hip); seg(hip, shoulder); seg(shoulder, elbow); seg(elbow, wrist); seg(ankle, toe); seg(shoulder, up(shoulder, tr * 0.6, L.neck));
+        c.beginPath(); c.arc(head[0], head[1], L.head, 0, 6.28); c.stroke();
+        c.fillStyle = "#fff"; for (const j of [ankle, knee, hip, shoulder, elbow, wrist]) { c.beginPath(); c.arc(j[0], j[1], 8, 0, 6.28); c.fill(); }
+        c.restore();
+        // ball, reached at peak
+        const bk = sstep(0.62, 0.72, p), bx = lerp(820, wrist[0] + 30, bk), by = lerp(260, wrist[1] - 34, bk) - (p > 0.72 ? (p - 0.72) * 2400 : 0);
+        if (p > 0.55) { c.save(); c.globalAlpha = sstep(0.55, 0.6, p); c.strokeStyle = "rgba(255,200,120,.9)"; c.lineWidth = 3; c.shadowColor = "#ffb35c"; c.shadowBlur = 20;
+          c.beginPath(); c.arc(bx + (p > 0.72 ? (p - 0.72) * 3200 : 0), by, 34, 0, 6.28); c.stroke(); c.restore(); }
+        if (!labels) return;
+        // joint angle readouts
+        const kneeAng = Math.round(180 - Math.abs(th - sh)), hipAng = Math.round(180 - Math.abs(tr - th));
+        c.font = '500 26px "Poppins"'; c.fillStyle = "rgba(255,190,110,.95)"; c.textAlign = "left";
+        c.fillText(`KNEE  ${kneeAng}°`, knee[0] + 46, knee[1] + 8); c.fillText(`HIP  ${hipAng}°`, hip[0] + 46, hip[1] - 4);
+        const label = (pt, txt, y, v) => {
+          c.strokeStyle = `rgba(200,220,235,${0.25 + 0.5 * v})`; c.lineWidth = 1.5; c.beginPath(); c.moveTo(pt[0], pt[1]); c.lineTo(760, y); c.lineTo(790, y); c.stroke();
+          c.fillStyle = `rgba(235,240,245,${0.4 + 0.6 * v})`; c.font = '500 22px "Poppins"'; c.fillText(txt, 800, y + 8);
+          c.fillStyle = `rgba(255,170,80,${0.4 + 0.6 * v})`; c.fillRect(800, y + 18, 180 * v, 4);
+        };
+        const mid = (a, b) => [(a[0] + b[0]) / 2, (a[1] + b[1]) / 2];
+        label(mid(shoulder, elbow), "DELTOIDS", 520, aD); label([hip[0] - 20, hip[1]], "GLUTEUS MAX.", 640, aG);
+        label(mid(hip, knee), "QUADRICEPS", 760, aQ); label(mid(knee, ankle), "GASTROCNEMIUS", 880, aC);
+        // ground reaction force graph
+        const gx = 120, gy = 1760, gw = 840, gh = 200;
+        c.strokeStyle = "rgba(160,200,220,.4)"; c.lineWidth = 1.5; c.strokeRect(gx, gy - gh, gw, gh);
+        c.fillStyle = "rgba(200,220,235,.75)"; c.font = '500 20px "Poppins"'; c.fillText("GROUND REACTION FORCE  ·  × BODY WEIGHT", gx, gy - gh - 18);
+        c.strokeStyle = "#ffb35c"; c.lineWidth = 3; c.shadowColor = "#ffb35c"; c.shadowBlur = 12; c.beginPath();
+        for (let q = 0; q <= p; q += 0.004) { const x = gx + q * gw, y = gy - grf(q) / 4 * gh; q === 0 ? c.moveTo(x, y) : c.lineTo(x, y); }
+        c.stroke(); c.shadowBlur = 0;
+        // phase caption
+        const cap = p < 0.15 ? "" : p < 0.42 ? "COUNTERMOVEMENT — muscles pre-stretch and store elastic energy"
+          : p < 0.58 ? "TRIPLE EXTENSION — hip · knee · ankle fire in sequence"
+          : p < 0.83 ? "ARM SWING adds height · the core transfers force to the hit"
+          : "LANDING — eccentric control absorbs 3–4× body weight";
+        c.textAlign = "center"; c.font = '300 30px "Poppins"'; c.fillStyle = "rgba(240,236,226,.92)"; c.fillText(cap, 540, 1500); c.textAlign = "left";
+      }
+
+      // ---------- neural network universe ----------
+      const NR = mulberry32(4);
+      const nodes = Array.from({ length: 190 }, () => {
+        const u = NR() * 2 - 1, th = NR() * 6.283, r = 430 * Math.cbrt(NR());
+        return { x: r * Math.sqrt(1 - u * u) * Math.cos(th), y: r * u * 1.25, z: r * Math.sqrt(1 - u * u) * Math.sin(th), d: r, warm: NR() < 0.18 };
+      }).sort((a, b) => a.d - b.d);
+      const edges = [];
+      for (let i = 0; i < nodes.length; i++) for (let j = i + 1; j < nodes.length; j++) {
+        const a = nodes[i], b = nodes[j]; if (Math.hypot(a.x - b.x, a.y - b.y, a.z - b.z) < 135) edges.push([i, j, NR()]);
+      }
+      function neural(t, t0) {
+        c.fillStyle = "#02040a"; c.fillRect(0, 0, W, H);
+        const ay = (t - 60) * 0.22, ax = 0.32, ca = Math.cos(ay), sa = Math.sin(ay), cx = Math.cos(ax), sx = Math.sin(ax);
+        const pr = nodes.map((n, i) => {
+          let x = n.x * ca + n.z * sa, z = -n.x * sa + n.z * ca, y = n.y * cx - z * sx; z = n.y * sx + z * cx;
+          const s = 1100 / (1250 + z);
+          return { x: 540 + x * s, y: 930 + y * s, s, born: sstep(t0 + (i / nodes.length) * 2.2, t0 + (i / nodes.length) * 2.2 + 0.4, t) };
+        });
+        c.save(); c.globalCompositeOperation = "lighter";
+        for (const [i, j, h] of edges) {
+          const a = pr[i], b = pr[j], al = Math.min(a.born, b.born); if (al <= 0) continue;
+          c.strokeStyle = `rgba(110,170,255,${0.16 * al * a.s})`; c.lineWidth = 1.2; c.beginPath(); c.moveTo(a.x, a.y); c.lineTo(b.x, b.y); c.stroke();
+          if (h < 0.3) {
+            const f = (t * 0.7 + h * 9) % 1, px = lerp(a.x, b.x, f), py = lerp(a.y, b.y, f);
+            c.fillStyle = `rgba(255,214,150,${0.85 * al})`; c.beginPath(); c.arc(px, py, 2.6, 0, 6.28); c.fill();
+          }
+        }
+        for (const [i, p] of pr.entries()) {
+          if (p.born <= 0) continue; const n = nodes[i], r = (n.warm ? 5 : 3.2) * p.s;
+          const g = c.createRadialGradient(p.x, p.y, 0, p.x, p.y, r * 6);
+          const col = n.warm ? "255,180,100" : "160,210,255";
+          g.addColorStop(0, `rgba(${col},${0.9 * p.born})`); g.addColorStop(1, `rgba(${col},0)`);
+          c.fillStyle = g; c.beginPath(); c.arc(p.x, p.y, r * 6, 0, 6.28); c.fill();
+        }
+        c.restore();
+      }
+
+      // ---------- knowledge constellation ----------
+      const SUBJ = ["ARTIFICIAL INTELLIGENCE", "SPORTS SCIENCE", "BIOMECHANICS", "EXERCISE PHYSIOLOGY", "NEUROSCIENCE", "PSYCHOLOGY", "HUMAN ANATOMY", "BUSINESS", "CREATIVITY"];
+      function constellation(t) {
+        c.fillStyle = "#03040a"; c.fillRect(0, 0, W, H);
+        const conv = ease(clamp((t - 75.2) / 1.1, 0, 1));
+        const pts = SUBJ.map((s, i) => {
+          const ring = i % 3, ang = (i / SUBJ.length) * 6.283 + (t - 71) * (0.18 + ring * 0.06);
+          const rx = (260 + ring * 120) * (1 - conv), ry = (420 + ring * 140) * (1 - conv);
+          const z = Math.sin(ang);
+          return { s, x: 540 + Math.cos(ang) * rx, y: 930 + z * ry * 0.55 + (ring - 1) * 120 * (1 - conv), z, born: sstep(71.2 + i * 0.25, 71.7 + i * 0.25, t) };
+        });
+        c.save(); c.globalCompositeOperation = "lighter";
+        for (let i = 0; i < pts.length; i++) for (let j = i + 1; j < pts.length; j++) {
+          const a = pts[i], b = pts[j], al = Math.min(a.born, b.born) * 0.12;
+          c.strokeStyle = `rgba(255,190,120,${al})`; c.lineWidth = 1; c.beginPath(); c.moveTo(a.x, a.y); c.lineTo(b.x, b.y); c.stroke();
+        }
+        const core = c.createRadialGradient(540, 930, 0, 540, 930, 160 + conv * 500);
+        core.addColorStop(0, `rgba(255,220,170,${0.25 + conv * 0.75})`); core.addColorStop(1, "rgba(255,160,80,0)");
+        c.fillStyle = core; c.fillRect(0, 0, W, H);
+        c.restore();
+        c.textAlign = "center";
+        for (const p of pts.sort((a, b) => a.z - b.z)) {
+          const sz = 24 + (p.z + 1) * 8;
+          c.font = `500 ${sz}px "Poppins"`; c.fillStyle = `rgba(240,232,220,${p.born * (0.35 + 0.65 * (p.z + 1) / 2) * (1 - conv)})`;
+          c.fillText(p.s, p.x, p.y);
+          c.fillStyle = `rgba(255,180,100,${p.born})`; c.beginPath(); c.arc(p.x, p.y + 18, 4, 0, 6.28); c.fill();
+        }
+        c.textAlign = "left";
+      }
+
+      // ---------- notebook of unfinished ideas ----------
+      const NOTE = [
+        [79.0, "ideas —"],
+        [79.5, "1. jump-training plan for volleyball"],
+        [80.2, "2. sports-science videos: explain the body"],
+        [80.9, "3. learn AI → build tools for athletes"],
+        [81.6, "4. coaching?  study again?  both?"],
+        [82.3, "money: how long can I keep this up?"],
+        [83.0, "5. ..."],
+      ];
+      function notebook(t, all = false) {
+        c.fillStyle = "#050302"; c.fillRect(0, 0, W, H);
+        const lamp = c.createRadialGradient(620, 700, 50, 560, 900, 1000);
+        lamp.addColorStop(0, "rgba(255,170,80,.42)"); lamp.addColorStop(1, "rgba(255,120,30,0)");
+        const z = all ? 1.1 : 1 + (t - 78.5) * 0.02;
+        c.save(); c.translate(540, 960); c.scale(z, z); c.rotate(rad(-5)); c.translate(-540, -960);
+        c.fillStyle = "#cdbd9f"; c.fillRect(110, 380, 860, 1160);
+        c.strokeStyle = "rgba(70,90,130,.35)"; c.lineWidth = 2;
+        for (let y = 520; y < 1520; y += 92) { c.beginPath(); c.moveTo(130, y); c.lineTo(950, y); c.stroke(); }
+        c.strokeStyle = "rgba(170,60,60,.45)"; c.beginPath(); c.moveTo(220, 380); c.lineTo(220, 1540); c.stroke();
+        c.font = 'italic 300 33px "Poppins"'; c.fillStyle = "#1f2331";
+        NOTE.forEach(([st, txt], i) => {
+          const n = all ? txt.length : Math.floor(clamp((t - st) / 0.55, 0, 1) * txt.length);
+          if (n > 0) c.fillText(txt.slice(0, n), 240, 505 + i * 92 + (i % 2) * 3);
+        });
+        // second thoughts: strike-through, circle, question marks
+        const sk = all ? 1 : sstep(83.0, 83.5, t);
+        if (sk > 0) { c.strokeStyle = "#1f2331"; c.lineWidth = 3; c.beginPath(); c.moveTo(240, 590); c.lineTo(240 + 640 * sk, 585); c.stroke(); }
+        const ck = all ? 1 : sstep(83.3, 83.9, t);
+        if (ck > 0) { c.strokeStyle = "rgba(150,40,30,.85)"; c.lineWidth = 3; c.beginPath(); c.ellipse(500, 764, 300, 46, rad(-1), 0, 6.283 * ck); c.stroke(); }
+        c.restore();
+        c.save(); c.globalCompositeOperation = "multiply"; c.fillStyle = lamp; c.restore();
+        c.save(); c.globalCompositeOperation = "lighter"; c.fillStyle = lamp; c.fillRect(0, 0, W, H); c.restore();
+        const dark = c.createRadialGradient(560, 900, 300, 560, 900, 1150);
+        dark.addColorStop(0, "rgba(0,0,0,0)"); dark.addColorStop(1, "rgba(0,0,0,.92)"); c.fillStyle = dark; c.fillRect(0, 0, W, H);
+      }
+
+      // ---------- window at night, rain ----------
+      const RR = mulberry32(12);
+      const drops = Array.from({ length: 170 }, () => ({ x: RR() * W, y: RR() * H, l: 20 + RR() * 70, sp: 300 + RR() * 700, s: RR() }));
+      const beads = Array.from({ length: 260 }, () => ({ x: RR() * W, y: RR() * H, r: 1 + RR() * 4 }));
+      function windowScene(t) {
+        city(t, 0);
+        c.save(); c.filter = "blur(0px)"; c.fillStyle = "rgba(4,6,12,.35)"; c.fillRect(0, 0, W, H); c.restore();
+        c.save(); c.globalCompositeOperation = "lighter";
+        for (const d of drops) {
+          const y = (d.y + t * d.sp) % (H + 100) - 100;
+          c.strokeStyle = `rgba(190,210,240,${0.07 + d.s * 0.12})`; c.lineWidth = 1.4; c.beginPath(); c.moveTo(d.x, y); c.lineTo(d.x - 4, y + d.l); c.stroke();
+        }
+        for (const b of beads) { c.fillStyle = "rgba(200,215,240,.10)"; c.beginPath(); c.arc(b.x, b.y, b.r, 0, 6.28); c.fill(); }
+        c.restore();
+        // window frame
+        c.fillStyle = "#020203";
+        c.fillRect(0, 0, W, 150); c.fillRect(0, 1720, W, 200); c.fillRect(0, 0, 90, H); c.fillRect(990, 0, 90, H);
+        c.fillRect(515, 150, 50, 1570); c.fillRect(90, 900, 900, 44);
+        // clock reflection in the glass
+        c.save(); c.globalCompositeOperation = "lighter"; c.font = '200 64px "Poppins"'; c.fillStyle = "rgba(255,160,60,.35)";
+        c.shadowColor = "rgba(255,140,40,.9)"; c.shadowBlur = 20; c.fillText("04:12", 690, 1640); c.restore();
+      }
+
+      function dawn(t) {
+        const g = c.createLinearGradient(0, 0, 0, H);
+        g.addColorStop(0, "#03060f"); g.addColorStop(0.55, "#101a33"); g.addColorStop(0.78, "#7a4423"); g.addColorStop(0.86, "#e09a52"); g.addColorStop(1, "#1a0f08");
+        c.fillStyle = g; c.fillRect(0, 0, W, H);
+      }
+      function clockShot(txt) {
+        c.fillStyle = "#020205"; c.fillRect(0, 0, W, H);
+        c.save(); c.textAlign = "center"; c.font = '200 210px "Poppins"'; c.fillStyle = "#ffad42"; c.shadowColor = "rgba(255,140,30,.9)"; c.shadowBlur = 60;
+        c.fillText(txt, 540, 1020); c.restore();
+      }
+      function rays(t, a) {
+        c.save(); c.globalCompositeOperation = "lighter";
+        for (let i = 0; i < 7; i++) {
+          const bx = -300 + i * 170 + Math.sin(t * 0.3 + i) * 30, w = 50 + (i % 3) * 30;
+          const g = c.createLinearGradient(1000, -100, bx, 1920);
+          g.addColorStop(0, `rgba(255,190,120,${0.07 * a})`); g.addColorStop(1, "rgba(255,190,120,0)");
+          c.fillStyle = g; c.beginPath(); c.moveTo(980, -100); c.lineTo(1040, -100); c.lineTo(bx + w, 1920); c.lineTo(bx - w, 1920); c.fill();
+        }
+        c.restore();
+      }
+
+      // ---------- chapter VI intercut ----------
+      const CUTS = []; { let tt = 96.8, d = 0.95, k = 0;
+        const kinds = ["p1", "bio", "p2:shoulders", "clock", "neural", "city", "note", "p2:arm", "const", "p2:legs"];
+        while (tt < 106) { CUTS.push({ a: tt, b: Math.min(106, tt + d), kind: kinds[k % kinds.length] }); tt += d; d = Math.max(0.28, d * 0.9); k++; } }
+
+      // ---------- grain ----------
+      const gr = $("#grain"), gc = gr.getContext("2d");
+      const tiles = [0, 1, 2, 3].map((s) => {
+        const cv = document.createElement("canvas"); cv.width = cv.height = 256; const x = cv.getContext("2d"), im = x.createImageData(256, 256), r = mulberry32(100 + s);
+        for (let i = 0; i < im.data.length; i += 4) { const v = 128 + (r() + r() + r() - 1.5) * 70; im.data[i] = im.data[i + 1] = im.data[i + 2] = v; im.data[i + 3] = 255; }
+        x.putImageData(im, 0, 0); return cv;
+      });
+      function grain(t) {
+        const f = Math.floor(t * 30), r = mulberry32(f * 7919 + 1);
+        for (let y = 0; y < 960; y += 256) for (let x = 0; x < 540; x += 256) gc.drawImage(tiles[Math.floor(r() * 4)], x - Math.floor(r() * 64), y - Math.floor(r() * 64));
+      }
+
+      // ---------- master render(t) ----------
+      const blackKeys = [
+        [0, 1], [2.0, 1], [4.0, 0], [16.5, 0], [17.0, 1], [17.8, 1], [18.0, 0],
+        [34.4, 0], [35.0, 1], [36.3, 1], [37.3, 0], [45.95, 0], [46.0, 1], [47.3, 1], [48.3, 0],
+        [54.3, 0], [55.0, 1], [56.7, 1], [57.4, 0], [64.6, 0], [65.0, 1], [65.4, 0], [70.75, 0], [71.0, 1], [71.3, 0],
+        [77.0, 0], [77.0, 1], [78.3, 1], [79.0, 0], [83.7, 0], [84.0, 1], [84.4, 0], [88.4, 0], [89.0, 1], [89.99, 1], [90.0, 0],
+        [94.9, 0], [95.0, 1], [96.7, 1], [96.8, 0], [111.99, 0], [112.0, 1], [130, 1],
+      ];
+      const flashKeys = [[26.9, 0], [27.0, 0.85], [27.6, 0], [76.1, 0], [76.4, 0.9], [77.0, 0], [105.95, 0], [106.0, 0.9], [106.8, 0]];
+
+      function hideP(p) { p.el.style.opacity = 0; }
+      function render(t) {
+        c.setTransform(1, 0, 0, 1, 0, 0); c.globalAlpha = 1; c.globalCompositeOperation = "source-over"; c.shadowBlur = 0;
+        c.clearRect(0, 0, W, H);
+        let cold = 0, warm = 0, spot = 0, cam = 1;
+        hideP(P.p1); hideP(P.p2);
+        clockEl.style.opacity = 0;
+
+        if (t < 17) { // I · THE COLLAPSE
+          const push = t < 12 ? lerp(1.8, 1.95, ease((t - 2) / 10)) : lerp(1.95, 1.8, ease((t - 12) / 5));
+          const b = t < 12 ? 0.58 : lerp(0.58, 0.0, ease((t - 12) / 4.6));
+          placePhoto(P.p1, { fx: 530, fy: 560, sx: 540, sy: 960 - (t > 12 ? (t - 12) * 6 : 0), s: push, cover: true, o: 1, f: COLD(b) + (t > 12 ? ` blur(${(t - 12) * 0.8}px)` : "") });
+          cold = 0.9; dust(t, sstep(3, 6, t) * (1 - sstep(13, 16.5, t)));
+        } else if (t < 35) { // II · THE PHYSICAL REBIRTH
+          cam = 1 + (t - 20) * 0.008;
+          if (t < 27.2) {
+            c.fillStyle = "#000"; if (t < 20.5) c.fillRect(0, 0, W, H);
+            const p1o = sstep(20, 21.6, t) * (1 - sstep(26.8, 27.2, t));
+            placePhoto(P.p1, { fx: 0, fy: 0, sx: -10, sy: 480, s: 1, o: p1o, f: COLD(0.6),
+              mask: "radial-gradient(ellipse 430px 640px at 540px 1010px, #000 55%, transparent 100%)" });
+            if (t > 24) {
+              const h = ease(clamp((t - 24) / 3, 0, 1)) * 2200, front = H - h;
+              placePhoto(P.p2, { fx: 0, fy: 0, sx: 0, sy: 0, s: 1, o: 1, f: WARM(0.72),
+                mask: `linear-gradient(to bottom, transparent ${front - 160}px, #000 ${front + 40}px)` });
+              spot = 0.75; warm = 0.6 * sstep(24, 27, t);
+              c.save(); c.globalCompositeOperation = "lighter"; // scanning light front
+              const g = c.createLinearGradient(0, front - 140, 0, front + 80);
+              g.addColorStop(0, "rgba(255,190,110,0)"); g.addColorStop(0.65, "rgba(255,200,130,.55)"); g.addColorStop(1, "rgba(255,190,110,0)");
+              c.fillStyle = g; c.fillRect(0, front - 140, W, 220);
+              const sr = mulberry32(Math.floor(t * 30));
+              for (let i = 0; i < 40; i++) { const x = sr() * W, y = front - sr() * 260; c.fillStyle = `rgba(255,210,150,${sr() * 0.8})`; c.fillRect(x, y, 2, 2 + sr() * 6); }
+              c.restore();
+            }
+            gymLights(t, 1 - sstep(23.5, 26, t)); cold = 0.6 * (1 - sstep(24, 27, t));
+          } else {
+            const shots = [[27.0, 28.5, "full", 1.0, 1.04], [28.5, 30.0, "shoulders", 1.7, 1.78], [30.0, 31.5, "arm", 2.3, 2.4], [31.5, 33.0, "legs", 1.8, 1.86], [33.0, 35.0, "full", 1.0, 1.05]];
+            const sh = shots.find((s) => t < s[1]) || shots[shots.length - 1];
+            const k = (t - sh[0]) / (sh[1] - sh[0]), [ffx, ffy] = FOCUS[sh[2]];
+            const kick = Math.max(0, 1 - ((t - 27) % 0.5) / 0.12) * 4;
+            const b = t > 34 ? lerp(0.8, 0, (t - 34) / 0.5) : 0.8;
+            placePhoto(P.p2, { fx: sh[2] === "full" ? 540 : ffx, fy: sh[2] === "full" ? 960 : ffy, sx: 540 + kick, sy: 960 - kick, s: lerp(sh[3], sh[4], k), cover: true, o: 1, f: WARM(b) });
+            warm = 0.75; spot = sh[2] === "full" ? 0.8 : 0.35; cam = 1;
+          }
+        } else if (t < 55) { // III · THE MIND
+          if (t < 46.1) {
+            bedroom(t);
+            const mins = Math.min(47, Math.floor(Math.max(0, t - 37) * 5.3));
+            clockEl.firstChild.nodeValue = `03:${String(mins).padStart(2, "0")}`;
+            clockEl.style.opacity = sstep(36.6, 37.6, t) * (1 - sstep(45.8, 46, t));
+          } else city(t);
+        } else if (t < 77) { // IV · KNOWLEDGE
+          if (t < 65) biomech(clamp((t - 57.4) / 7.2, 0, 1));
+          else if (t < 71) neural(t, 65);
+          else constellation(t);
+        } else if (t < 95) { // V · THE INVISIBLE BATTLE
+          if (t < 84) notebook(t);
+          else if (t < 89) windowScene(t);
+          else if (t < 90) { c.fillStyle = "#000"; c.fillRect(0, 0, W, H);
+            clockEl.firstChild.nodeValue = "06:00"; clockEl.style.opacity = (Math.floor((t - 89) * 4) % 2 ? 0.25 : 1); }
+          else if (t < 91) dawn(t);
+          else if (t < 92) { placePhoto(P.p2, { fx: FOCUS.arm[0], fy: FOCUS.arm[1], sx: 540, sy: 960, s: lerp(2.0, 2.1, t - 91), cover: true, o: 1, f: WARM(0.8) }); warm = 0.7; spot = 0.3; }
+          else if (t < 93) neural(t, 60);
+          else if (t < 94) notebook(t, true);
+          else { placePhoto(P.p1, { fx: 530, fy: 560, sx: 540, sy: 960, s: lerp(1.85, 1.9, t - 94), cover: true, o: 1, f: WARM(0.68) }); warm = 0.5; }
+        } else if (t < 112) { // VI · BEYOND THE OLD IDENTITY
+          if (t < 96.8) { /* title on black */ }
+          else if (t < 106) {
+            const cut = CUTS.find((q) => t < q.b) || CUTS[CUTS.length - 1], k = (t - cut.a) / (cut.b - cut.a);
+            const [kind, part] = cut.kind.split(":");
+            if (kind === "p1") { placePhoto(P.p1, { fx: 530, fy: 560, sx: 540, sy: 960, s: lerp(1.85, 1.95, k), cover: true, o: 1, f: COLD(0.6) }); cold = 0.8; }
+            else if (kind === "p2") { placePhoto(P.p2, { fx: FOCUS[part][0], fy: FOCUS[part][1], sx: 540, sy: 960, s: lerp(1.8, 1.9, k), cover: true, o: 1, f: WARM(0.82) }); warm = 0.7; spot = 0.3; }
+            else if (kind === "bio") biomech(lerp(0.5, 0.72, k), false);
+            else if (kind === "clock") clockShot("03:47");
+            else if (kind === "neural") neural(t + 8, 50);
+            else if (kind === "city") city(47 + k * 2);
+            else if (kind === "note") notebook(t, true);
+            else if (kind === "const") constellation(73 + k);
+          } else {
+            const k = (t - 106) / 6;
+            placePhoto(P.p2, { fx: 540, fy: 1060, sx: 540, sy: 1000, s: lerp(1.0, 1.08, ease(k)), cover: true, o: 1, f: WARM(lerp(0.8, 0.95, k)) });
+            warm = 0.85; spot = 0.7; rays(t, sstep(106, 108, t));
+          }
+        }
+
+        $("#cam").style.transform = `scale(${cam})`;
+        $("#tintCold").style.opacity = cold;
+        $("#tintWarm").style.opacity = warm;
+        $("#spot").style.opacity = spot;
+        $("#black").style.opacity = kf(t, blackKeys);
+        $("#flash").style.opacity = kf(t, flashKeys);
+        grain(t);
+      }
+
+      // ---------- typography (GSAP) ----------
+      const texts = $("#texts");
+      const tl = gsap.timeline({ paused: true });
+      function add(html, cls, a, b, extra = {}) {
+        const el = document.createElement("div"); el.className = "t " + cls; el.innerHTML = html; texts.appendChild(el);
+        Object.assign(el.style, extra.style || {});
+        const fin = extra.fin ?? 0.7, fout = extra.fout ?? 0.6;
+        tl.fromTo(el, { opacity: 0, y: extra.dy ?? 18, filter: "blur(10px)" }, { opacity: 1, y: 0, filter: "blur(0px)", duration: fin, ease: "power2.out" }, a);
+        tl.to(el, { opacity: 0, filter: "blur(8px)", duration: fout, ease: "power2.in" }, b - fout);
+        return el;
+      }
+      const chap = (k, n, a, b, top) => {
+        const el = add(`<div class="k">${k}</div><div class="n">${n}</div>`, "chap", a, b, { fin: 1.1, fout: 0.7, style: top ? { top: top + "px" } : {} });
+        tl.fromTo(el.querySelector(".k"), { scale: 0.9 }, { scale: 1, duration: b - a, ease: "none" }, a);
+      };
+      const line = (s, a, b) => add(s, "line", a, b);
+      const big = (s, a, b) => add(s, "big", a, b, { fin: 0.12, fout: 0.12, dy: 0 });
+
+      chap("CHAPTER I", "THE COLLAPSE", 3.6, 7.1, 1400);
+      line("The game ended.", 7.5, 9.3);
+      line("The question didn't.", 9.5, 11.7);
+      line("Who is he without it?", 12.0, 14.2);
+      line("This isn't the end.", 14.4, 15.7);
+      line("It's the beginning.", 15.8, 17.3);
+
+      chap("CHAPTER II", "THE PHYSICAL REBIRTH", 17.2, 20.2);
+      line("The man he was.", 21.2, 23.8);
+      line("The man he is building.", 24.2, 26.9);
+      line("Not just muscle.", 27.3, 28.9);
+      big("CONSISTENCY", 29.0, 30.7); big("PATIENCE", 31.0, 32.7); big("CONTROL", 33.0, 34.7);
+
+      chap("CHAPTER III", "THE MIND THAT NEVER STOPS", 35.2, 37.6);
+      const TH = [
+        [38.4, "the future", 120, 1180], [39.3, "money", 690, 1320], [40.1, "what if I fail?", 160, 1430], [40.8, "opportunities", 560, 1120],
+        [41.4, "am I late?", 640, 1520], [41.9, "which path?", 110, 1290], [42.4, "am I enough?", 420, 1640], [42.8, "ambition", 700, 1230],
+        [43.2, "the person I want to become", 140, 1560], [43.6, "future", 760, 1420], [43.9, "fail", 300, 1210], [44.2, "money", 520, 1700],
+        [44.5, "time", 820, 1150], [44.8, "become", 180, 1360], [45.0, "what if", 600, 1480], [45.2, "next year", 330, 1760],
+      ];
+      for (const [a, s, x, y] of TH) {
+        const el = add(s, "thought", a, Math.min(46.0, a + 1.7), { style: { left: x + "px", top: y + "px" }, fin: 0.35, fout: 0.5, dy: 0 });
+        tl.fromTo(el, { x: 0 }, { x: (x > 500 ? -1 : 1) * 60, duration: 1.7, ease: "none" }, a);
+      }
+      line("He gets up.", 46.2, 47.7);
+      line("Tired.", 49.0, 50.8);
+      line("But not finished.", 51.0, 52.8);
+      line("His ambition is still awake.", 53.0, 54.9);
+
+      chap("CHAPTER IV", "THE PURSUIT OF KNOWLEDGE", 55.2, 57.4);
+      add("BIOMECHANICS · EXERCISE PHYSIOLOGY", "tag", 57.6, 64.7);
+      add("NEUROSCIENCE", "tag", 65.3, 68.0);
+      add("ARTIFICIAL INTELLIGENCE", "tag", 68.1, 70.9);
+      line("AI is not the destination.", 68.2, 69.8);
+      line("It's a tool to reach further.", 69.8, 70.95);
+      add("EVERYTHING CONNECTS", "tag", 71.3, 76.2);
+      line("Knowledge changed how he sees the body, the mind and the world.", 72.4, 75.6);
+
+      chap("CHAPTER V", "THE INVISIBLE BATTLE", 77.2, 79.4);
+      line("Every path costs something.", 80.6, 83.7);
+      line("Is this the right direction?", 84.7, 87.6);
+      line("He doesn't have it figured out.", 87.8, 89.7);
+      big("WAKE", 90.0, 90.95); big("TRAIN", 91.0, 91.95); big("LEARN", 92.0, 92.95); big("BUILD", 93.0, 93.95); big("TRY AGAIN", 94.0, 94.95);
+      line("But he refuses to stay stuck.", 92.1, 94.95);
+
+      chap("CHAPTER VI", "BEYOND THE OLD IDENTITY", 95.1, 96.8);
+      [["THE ATHLETE", 96.9], ["THE STUDENT", 98.3], ["THE CREATOR", 99.7], ["THE THINKER", 101.1], ["THE SEEKER", 102.5], ["THE BUILDER", 103.9]]
+        .forEach(([s, a], i, arr) => add(s, "idl", a, i === arr.length - 1 ? 105.9 : arr[i + 1][1] - 0.05, { fin: 0.25, fout: 0.2, dy: 0 }));
+      const list = add("<span>Not defined by one failure.</span><span>One profession.</span><span>One difficult year.</span><span>One version of himself.</span>", "list", 106.6, 111.8, { fin: 0.01 });
+      list.querySelectorAll("span").forEach((s, i) => tl.fromTo(s, { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.6 }, 106.8 + i * 1.0));
+
+      add("I am not chasing who I was.", "state", 113.5, 117.3, { fin: 1.4, fout: 1.0 });
+      add("I am building who I could become.", "state", 118.0, 122.3, { fin: 1.4, fout: 1.0 });
+      const fin = add(`<div class="k">CHAPTER 27</div><div class="n">THE EVOLUTION</div><div class="s"><span>A new year.</span><span>A new mindset.</span><span>An unfinished mission.</span></div>`, "fin", 123.0, 129.8, { fin: 1.6, fout: 1.2 });
+      tl.fromTo(fin.querySelector(".n"), { scale: 1.08 }, { scale: 1, duration: 6.8, ease: "power1.out" }, 123.0);
+      fin.querySelectorAll(".s span").forEach((s, i) => tl.fromTo(s, { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.9 }, 125.4 + i * 0.85));
+
+      // the frame clock drives every procedural layer, so any seek renders the exact frame
+      const state = { t: 0 };
+      tl.fromTo(state, { t: 0 }, { t: DUR, duration: DUR, ease: "none", onUpdate: () => render(state.t) }, 0);
+      window.__timelines = window.__timelines || {};
+      window.__timelines["main"] = tl;
+      render(0);
+      tl.seek(0);
+    </script>
+  </body>
+</html>

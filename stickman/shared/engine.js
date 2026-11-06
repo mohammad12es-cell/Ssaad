@@ -76,13 +76,54 @@
     E.sfx = (name, ...a) => (E.sfxList.push([name, +E.t.toFixed(3), ...a]), E);
     E.music = (name) => (E.musicList.push([name, +E.t.toFixed(3)]), E);
     E.mute = (d) => (E.mutes.push([E.t, E.t + d]), E);
-    E.to = (sel, vars, d = 0.3, off = 0) => (tl.to(sel, { duration: d, ...vars }, E.t + off), E);
-    E.set = (sel, vars, off = 0) => (tl.set(sel, vars, E.t + off), E);
+    // rotation/scale aimed at whole characters goes to their pose group with an exact pivot
+    const POSE = ["rotation", "scaleX", "scaleY", "scale"], SHARED = ["ease", "yoyo", "repeat", "stagger", "immediateRender"];
+    const lastPivot = {};
+    const pivotFor = (id, o) => {
+      const h = HEIGHT[id] || 385;
+      if (o === undefined) return lastPivot[id] || `0 ${-h / 2}`;
+      const m = /([\d.]+)%\s+([\d.]+)%/.exec(o);
+      return (lastPivot[id] = m ? `0 ${(-h * (100 - +m[2])) / 100}` : `0 ${-h / 2}`);
+    };
+    const route = (sel, vars) => {
+      const arr = Array.isArray(sel) ? sel : [sel];
+      if (!arr.every((x) => typeof x === "string" && x[0] === "#" && $(x.slice(1) + "-pose"))) return null;
+      const kfPose = vars.keyframes && !Array.isArray(vars.keyframes) && Object.keys(vars.keyframes).every((k) => POSE.includes(k));
+      const pose = {}, rest = {};
+      for (const k in vars) {
+        if (POSE.includes(k) || (k === "keyframes" && kfPose)) pose[k] = vars[k];
+        else if (k !== "transformOrigin") rest[k] = vars[k];
+      }
+      if (!Object.keys(pose).length) return null;
+      SHARED.forEach((k) => { if (k in vars) pose[k] = vars[k]; });
+      return { ids: arr.map((x) => x.slice(1)), pose, rest, origin: vars.transformOrigin };
+    };
+    const hasMotion = (v) => Object.keys(v).some((k) => !SHARED.includes(k) && k !== "duration");
+    E.to = (sel, vars, d = 0.3, off = 0) => {
+      const r = route(sel, vars);
+      if (!r) return tl.to(sel, { duration: d, ...vars }, E.t + off), E;
+      r.ids.forEach((id) => tl.to(`#${id}-pose`, { duration: d, ...r.pose, svgOrigin: pivotFor(id, r.origin) }, E.t + off));
+      if (hasMotion(r.rest)) tl.to(sel, { duration: d, ...r.rest }, E.t + off);
+      return E;
+    };
+    E.set = (sel, vars, off = 0) => {
+      const r = route(sel, vars);
+      if (!r) return tl.set(sel, vars, E.t + off), E;
+      r.ids.forEach((id) => tl.set(`#${id}-pose`, { ...r.pose, svgOrigin: pivotFor(id, r.origin) }, E.t + off));
+      if (hasMotion(r.rest)) tl.set(sel, r.rest, E.t + off);
+      return E;
+    };
     E.fromTo = (sel, a, b, d = 0.3, off = 0) => (tl.fromTo(sel, a, { duration: d, immediateRender: false, ...b }, E.t + off), E);
 
     // ---------- placement ----------
-    const place = (id, x, y, hidden) => {
+    const HEIGHT = {};
+    const place = (id, x, y, hidden, h = 385) => {
       const n = $(id);
+      // inner pose group: rotations/flips pivot on exact points (feet = 0,0) instead of a drifting bbox
+      const pose = el("g", { id: id + "-pose" });
+      while (n.firstChild) pose.appendChild(n.firstChild);
+      n.appendChild(pose);
+      HEIGHT[id] = h;
       n.setAttribute("transform", `translate(${x},${y})`);
       if (hidden) n.setAttribute("opacity", "0");
       E.chars[id] = { x, y };
@@ -90,9 +131,9 @@
       return E;
     };
     E.fig = (id, x, o = {}) => { html($(o.layer || "figs"), Inky.figure(id, o)); E.pen[id] = o.pen || "penY"; return place(id, x, o.y ?? 1250, o.hidden); };
-    E.monster = (id, x, o = {}) => { html($(o.layer || "figs"), monster(id, o.color)); E.pen[id] = "penR"; return place(id, x, o.y ?? 1250, o.hidden); };
-    E.blot = (id, x, o = {}) => { html($(o.layer || "figs"), blot(id, o.seed || 3)); E.pen[id] = "penR"; place(id, x, o.y ?? 1250, o.hidden); if (o.s) $(id).setAttribute("transform", `translate(${x},${o.y ?? 1250}) scale(${o.s})`); return E; };
-    E.dog = (id, x, o = {}) => { html($(o.layer || "figs"), dog(id)); return place(id, x, o.y ?? 1250, o.hidden); };
+    E.monster = (id, x, o = {}) => { html($(o.layer || "figs"), monster(id, o.color)); E.pen[id] = "penR"; return place(id, x, o.y ?? 1250, o.hidden, 445); };
+    E.blot = (id, x, o = {}) => { html($(o.layer || "figs"), blot(id, o.seed || 3)); E.pen[id] = "penR"; place(id, x, o.y ?? 1250, o.hidden, 120); if (o.s) $(id).setAttribute("transform", `translate(${x},${o.y ?? 1250}) scale(${o.s})`); return E; };
+    E.dog = (id, x, o = {}) => { html($(o.layer || "figs"), dog(id)); return place(id, x, o.y ?? 1250, o.hidden, 190); };
     E.show = (sel, d = 0.12) => E.to(sel, { opacity: 1 }, d);
     E.hide = (sel, d = 0.12) => E.to(sel, { opacity: 0 }, d);
 

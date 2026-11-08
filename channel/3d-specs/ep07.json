@@ -1,0 +1,12 @@
+{"id":"ep07-shortcut","duration":16,
+ "caption":"When your friend says<br />“trust me, I know a shortcut” 🗺️",
+ "script":"ep07.js",
+ "overlays":[
+  {"id":"shortcut","text":"Trust me, I know a shortcut 😏","style":"left:0;right:0;text-align:center;top:30px;font-size:62px;"},
+  {"id":"hour1","text":"Hour 1… 🌿","style":"left:50px;top:40px;font-size:76px;"},
+  {"id":"splash","text":"SPLASH 😵","style":"left:60px;top:40px;font-size:96px;color:#8fd3ff;"},
+  {"id":"meanwhile","text":"Meanwhile, on the normal road 🐌","style":"left:0;right:0;text-align:center;top:30px;font-size:58px;"},
+  {"id":"hours","text":"The shortcut took 3 hours 💀","style":"left:0;right:0;text-align:center;top:30px;font-size:62px;"},
+  {"id":"better","text":"I know an even better one 😏","style":"left:0;right:0;text-align:center;top:30px;font-size:62px;"}],
+ "cues":[["bed","happy",0,16,0.8],["glint",1.0],["whoosh",2.7],["rustle",3.4,0.8],["rustle",4.3,0.5],["pop",4.45],["rustle",5.7,0.5],["skid",6.6],["fall",6.9],["splash",7.5],["bonk",7.6],
+  ["pop",9.0],["sparkle",10.0],["pant",12.3,6],["sad",13.4],["glint",14.6]]}

@@ -1,0 +1,15 @@
+<circle cx="860" cy="560" r="90" fill="#ffe27a" />
+<g id="garland"><path d="M160,1150 Q540,1230 920,1150" stroke="#fff" stroke-width="5" fill="none" />
+  <g>${''}</g></g>
+<g id="flags"></g>
+<g id="table"><rect x="410" y="1420" width="260" height="18" rx="6" fill="#8a5a35" /><rect x="428" y="1438" width="14" height="70" fill="#7a4a2a" /><rect x="638" y="1438" width="14" height="70" fill="#7a4a2a" /></g>
+<g id="cake"><rect x="465" y="1365" width="150" height="56" rx="12" fill="#ff8fb1" /><rect x="482" y="1328" width="116" height="40" rx="10" fill="#fff3e6" />
+  <path d="M465,1380 Q480,1395 495,1380 Q510,1395 525,1380 Q540,1395 555,1380 Q570,1395 585,1380 Q600,1395 615,1380" stroke="#fff" stroke-width="8" fill="none" /></g>
+<g id="candle"><rect x="533" y="1290" width="14" height="40" rx="4" fill="#6a7bff" /><rect x="533" y="1300" width="14" height="6" fill="#fff" /><rect x="533" y="1316" width="14" height="6" fill="#fff" />
+  <g id="flame"><path d="M540,1290 C530,1280 532,1266 540,1252 C548,1266 550,1280 540,1290 Z" fill="#ffb347" /><path d="M540,1288 C535,1282 536,1274 540,1266 C544,1274 545,1282 540,1288 Z" fill="#fff3b0" /></g></g>
+<g id="smoke" fill="#ccc"></g>
+<g id="pip"></g>
+<g id="peb"></g>
+<g id="wind" stroke="#fff" stroke-width="7" stroke-linecap="round" opacity="0"><line x1="400" y1="1350" x2="470" y2="1340" /><line x1="405" y1="1375" x2="480" y2="1372" /><line x1="400" y1="1400" x2="465" y2="1405" /></g>
+<g id="splat"></g>
+<g id="conf"></g>

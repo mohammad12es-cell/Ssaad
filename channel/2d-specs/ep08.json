@@ -1,0 +1,3 @@
+{"id":"ep08v-birthday","duration":14,"sky":["#b28dff","#ffc1d9","#fff3e6"],"svg":"ep08.svg","script":"ep08.js",
+ "captions":[["c1",0,1.6,"Pip's birthday! 🎂"],["c2",1.6,1.4,"Make a wish… 🙏"],["c3",3.6,1.2,"…wait 🕯️"],["c4",4.8,2.3,"BLOW HARDER 😤"],["c5",7.2,1.4,"MAXIMUM POWER 💨"],["c6",8.6,1.1,"💥🎂💥"],["c7",9.8,1.4,"…still lit 🕯️😐"],["c8",11.2,1.5,"Pebble: *achoo* 🤧"],["c9",12.7,1.3,"Happy birthday Pip 😂"]],
+ "cues":[["bed","happy",0,14,0.8],["sparkle",0.2],["pop",0.4],["riser",1.7,1.3],["whoosh",3.0],["sparkle",3.6],["whoosh",4.9],["sparkle",5.35],["whoosh",6.0],["sparkle",6.45],["riser",7.2,1.4],["boom",8.6],["splash",8.7],["sparkle",9.0],["rustle",11.2,0.25],["whoosh",11.3],["sad",11.7],["sparkle",12.7],["ding",12.8]]}

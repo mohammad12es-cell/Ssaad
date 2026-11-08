@@ -1,0 +1,14 @@
+<circle cx="860" cy="560" r="90" fill="#ffe27a" />
+<g id="sign"><rect x="222" y="1250" width="14" height="190" fill="#7a4a2a" />
+  <path d="M236,1258 L390,1258 L412,1280 L390,1302 L236,1302 Z" fill="#a0673e" /><text x="315" y="1290" text-anchor="middle" font-family="Fredoka" font-weight="700" font-size="26" fill="#fff">BUFFET</text>
+  <path d="M236,1312 L380,1330 L398,1356 L374,1372 L236,1354 Z" fill="#c94f63" /><text x="312" y="1352" text-anchor="middle" font-family="Fredoka" font-weight="700" font-size="22" fill="#fff" transform="rotate(7 312 1345)">SHORTCUT</text></g>
+<g id="bushes"><circle class="bush" cx="500" cy="1330" r="70" fill="#2f7d3a" /><circle class="bush" cx="600" cy="1310" r="85" fill="#3c8a3f" /><circle class="bush" cx="690" cy="1340" r="60" fill="#2f7d3a" /></g>
+<g id="blanket"><ellipse cx="830" cy="1495" rx="110" ry="26" fill="#ff8fb1" /><path d="M740,1490 L920,1490" stroke="#fff" stroke-width="6" stroke-dasharray="14 12" />
+  <g id="food"><circle cx="810" cy="1475" r="18" fill="#7ed957" /><circle cx="846" cy="1475" r="18" fill="#5fcf6a" /><circle cx="828" cy="1458" r="18" fill="#9be36f" /></g></g>
+<ellipse cx="520" cy="1620" rx="170" ry="48" fill="#2f9de0" />
+<ellipse id="ripple" cx="520" cy="1620" rx="70" ry="18" fill="none" stroke="#fff" stroke-width="6" opacity="0" />
+<g id="peb"></g>
+<g id="pip"></g>
+<path d="M340,1620 A180,52 0 0,0 700,1620 L700,1700 L340,1700 Z" fill="#5fcf6a" />
+<path d="M350,1620 A170,48 0 0,0 690,1620" fill="none" stroke="#1e88e5" stroke-width="8" />
+<g id="dust"></g>

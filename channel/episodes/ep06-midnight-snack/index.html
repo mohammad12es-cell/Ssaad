@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en" data-resolution="portrait">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <script src="assets/gsap.min.js"></script>
+    <script type="importmap">{ "imports": { "three": "./assets/three.module.js" } }</script>
+    <style>
+      @font-face { font-family: "Fredoka"; font-weight: 700; src: url("assets/fredoka-latin-700-normal.woff2") format("woff2"); }
+      @font-face { font-family: "Fredoka"; font-weight: 500; src: url("assets/fredoka-latin-500-normal.woff2") format("woff2"); }
+      :root { --ground: #000; --ink: #fff; --font-display: "Fredoka", sans-serif; }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { margin: 0; width: 1080px; height: 1920px; overflow: hidden; background: #000; }
+      #root { position: relative; width: 100%; height: 100%; overflow: hidden; font-family: var(--font-display); background: #000; }
+      .clip { position: absolute; inset: 0; }
+      #topcap { position: absolute; left: 70px; right: 70px; top: 360px; text-align: center; color: var(--ink); font-weight: 700; font-size: 66px; line-height: 1.15; }
+      #brand { position: absolute; left: 0; right: 0; top: 1340px; text-align: center; color: #9a9ab5; font-weight: 500; font-size: 42px; }
+      #film { position: absolute; left: 0; top: 656px; width: 1080px; height: 607.5px; overflow: hidden; }
+      #gl { position: absolute; inset: 0; width: 1080px; height: 607.5px; display: block; }
+      #vig { position: absolute; inset: 0; background: radial-gradient(ellipse at center, rgba(0,0,0,0) 55%, rgba(0,0,0,0.45) 100%); }
+      #flash { position: absolute; inset: 0; background: #fff; opacity: 0; }
+      .fx { position: absolute; font-weight: 700; color: #fff; -webkit-text-stroke: 12px #2b2a6e; paint-order: stroke fill; opacity: 0; white-space: nowrap; }
+      .card { -webkit-text-stroke: 0; background: #fff; color: #2b2a6e; border-radius: 26px; padding: 18px 28px; font-size: 40px; box-shadow: 0 12px 40px rgba(0,0,0,.35); }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="16" data-width="1080" data-height="1920">
+      <div id="caps" class="clip" data-start="0" data-duration="16" data-track-index="1">
+        <div id="topcap">When you sneak downstairs<br />for a midnight snack 🌙</div>
+        <div id="brand">Pip &amp; Pebble 🐸🐌</div>
+      </div>
+      <div id="filmClip" class="clip" data-start="0" data-duration="16" data-track-index="0">
+        <div id="film">
+          <canvas id="gl" width="1440" height="810"></canvas>
+          <div id="vig"></div>
+          <div id="zzz" class="fx" style="right:80px;top:60px;font-size:80px;">Zzz…</div>
+<div id="growl1" class="fx" style="left:60px;top:60px;font-size:84px;color:#ffd166;">*grrrowl*</div>
+<div id="late" class="fx" style="right:40px;top:40px;font-size:80px;">…you're late 😎</div>
+<div id="burp" class="fx" style="right:70px;top:60px;font-size:110px;color:#ffd166;">BURP!</div>
+<div id="growl2" class="fx" style="left:60px;top:60px;font-size:84px;color:#ffd166;">*grrrowl* 😭</div>
+          <div id="flash"></div>
+        </div>
+      </div>
+      <audio id="sound" src="assets/audio.wav" data-start="0" data-duration="16" data-volume="1"></audio>
+    </div>
+    <script type="module">
+      import { build, THREE, v3, lerp, cl, ease, easeIn } from "./assets/kit.js";
+      const K = build({ canvas: document.getElementById("gl"), night: true });
+      const $ = (id) => document.getElementById(id);
+      const show = (id, on) => { $(id).style.opacity = on ? 1 : 0; };
+      const OVER = ["zzz", "growl1", "late", "burp", "growl2"];
+      // ---- EP06: midnight snack (night) ----
+      const moon = K.mesh(K.SPH, new THREE.MeshBasicMaterial({ color: 0xfff4c8, fog: false }), K.scene, [26, 9, -26], [1.6, 1.6, 1.6]); moon.castShadow = false;
+      const flies = []; for (let i = 0; i < 16; i++) { const f = new THREE.Mesh(K.SPH, new THREE.MeshBasicMaterial({ color: 0xfff27a })); f.scale.setScalar(0.035); K.scene.add(f); flies.push(f); }
+      const lamp = new THREE.PointLight(0xffd27a, 0, 7, 1.4); lamp.position.set(20.6, 1.7, 2.4); K.scene.add(lamp);
+      function fireflies(t, cx, cz) { flies.forEach((f, i) => { const a = i * 1.7 + t * (0.4 + (i % 4) * 0.1); f.position.set(cx + Math.cos(a) * (1.5 + (i % 5) * 0.5), 0.5 + (i % 4) * 0.35 + Math.sin(t * 2 + i) * 0.12, cz + Math.sin(a * 1.3) * 1.6); }); }
+      function render(t) {
+        fireflies(t, t < 6 ? 16 : 21.5, 1);
+        if (t < 2.6) { // asleep -> growl -> eyes snap open
+          K.peb.visible = false; K.pip.position.set(15.5, 0, 0.6); K.pip.rotation.y = 0.5;
+          K.table.visible = false; const wake = t > 2.0; K.lids.forEach((l) => (l.rotation.x = wake ? -1.6 : 1.35));
+          K.pipBody.scale.set(1, 1 + Math.sin(t * 3) * 0.03, 1);
+          if (t > 1.3 && t < 2.0) K.pipBody.scale.set(1 + Math.sin(t * 40) * 0.04, 1, 1);
+          if (wake) K.pipEyes.forEach((e) => e.scale.setScalar(1.25));
+          show("zzz", t < 1.3); show("growl1", t > 1.3 && t < 2.3);
+          K.cam(v3(16.2, 1.0, 2.9), v3(15.5, 0.85, 0.6), 30, 0.008);
+        } else if (t < 6.0) { // tiptoe in the moonlight
+          const lt = t - 2.6; K.peb.visible = false; K.table.visible = false; K.pip.rotation.y = Math.PI / 2;
+          const px = 15.5 + 4.6 * (lt / 3.4); const step = Math.abs(Math.sin(lt * 7.2));
+          K.pip.position.set(px, step * 0.16, 0.5); K.pipBody.rotation.x = 0.22; K.lids.forEach((l) => (l.rotation.x = -0.75));
+          K.cam(v3(px - 1.2, 0.75, 4.4), v3(px + 0.5, 0.6, 0.4), 32, 0.005);
+        } else if (t < 8.0) { // sly look, door creaks open
+          const lt = t - 6.0; K.peb.visible = false; K.table.visible = false; K.pip.position.set(21.0, 0, 0.5); K.pip.rotation.y = 0.35;
+          K.lids.forEach((l) => (l.rotation.x = -0.7));
+          const dk = ease(cl((lt - 1.0) / 0.8)); K.doorHinge.rotation.y = -dk * 0.45; K.doorway.visible = dk > 0.01; K.doorLight.intensity = dk * 4;
+          K.cam(v3(21.5, 1.15, 3.4), v3(21.2, 0.95, -0.4), 32, 0.006);
+        } else if (t < 10.5) { // LIGHTS ON: Pebble is already there
+          const lt = t - 8.0; K.table.visible = true; K.pip.position.set(20.2, 0, 0.9); K.pip.rotation.y = 0.9;
+          K.smile.visible = false; K.mouthO.visible = true; K.pipEyes.forEach((e) => e.scale.setScalar(1.35));
+          K.doorHinge.rotation.y = -1.6; K.doorway.visible = true; K.doorLight.intensity = 4.5; lamp.intensity = 3.5;
+          K.peb.position.set(22.5, 0, 1.7); K.peb.rotation.y = -2.2;
+          K.glint.scale.setScalar(Math.max(0.001, Math.sin(cl((lt - 0.5) / 0.4) * Math.PI) * 0.06));
+          $("flash").style.opacity = Math.max(0, 0.8 - lt * 3);
+          show("late", lt > 0.4);
+          K.cam(v3(21.1, 1.5, 6.4), v3(21.5, 0.8, 1.0), 34, 0.003);
+        } else if (t < 13.0) { // Pebble eats everything, burp
+          const lt = t - 10.5; K.table.visible = true; K.pip.position.set(20.2, 0, 0.9); K.pip.rotation.y = 0.9; K.smile.visible = false; K.mouthO.visible = true;
+          K.doorHinge.rotation.y = -1.6; K.doorway.visible = true; K.doorLight.intensity = 4.5; lamp.intensity = 3.5;
+          K.peb.position.set(22.5, 0, 1.7); K.peb.rotation.y = -2.2;
+          const eat = cl(lt / 1.6); K.plateFood.scale.setScalar(Math.max(0.001, 1 - eat)); K.pebBody.rotation.z = lt < 1.6 ? Math.sin(lt * 18) * 0.06 : 0;
+          if (lt > 1.8) K.pebBody.scale.set(1.2, 1.1, 1.2);
+          show("burp", lt > 1.8 && lt < 2.5);
+          K.cam(v3(20.9, 1.25, 5.4), v3(22.3, 1.05, 1.7), 30, 0.005);
+        } else { // growl again, pull back to the moon (loops to the start)
+          const lt = t - 13.0; K.table.visible = true; K.pip.position.set(20.2, 0, 0.9); K.pip.rotation.y = 0.9; K.plateFood.visible = false;
+          K.doorHinge.rotation.y = -1.6; K.doorway.visible = true; K.doorLight.intensity = 4.5; lamp.intensity = 3.5;
+          K.peb.position.set(22.5, 0, 1.7); K.peb.rotation.y = -2.2; K.pebBody.scale.set(1.2, 1.1, 1.2);
+          K.pipBody.scale.set(1.06, lerp(1, 0.82, ease(cl((lt - 0.4) / 0.6))), 1.06);
+          if (lt < 0.6) K.pipBody.scale.x = 1 + Math.sin(lt * 40) * 0.05;
+          show("growl2", lt < 1.4);
+          const k = ease(cl((lt - 1.2) / 1.8));
+          K.cam(v3(21.1, lerp(1.5, 2.2, k), lerp(6.4, 9.5, k)), v3(lerp(21.4, 25, k), lerp(0.8, 8, k), lerp(1.0, -24, k)), 34, 0.002);
+        }
+      }
+
+      function frame(t) { K.reset(t); OVER.forEach((id) => show(id, false)); $("flash").style.opacity = 0; render(t); K.render(); }
+      const state = { t: 0 };
+      frame(0);
+      const tl = gsap.timeline({ paused: true });
+      tl.fromTo(state, { t: 0 }, { t: 16, duration: 16, ease: "none", onUpdate: () => frame(state.t) }, 0);
+      window.__timelines = window.__timelines || {};
+      window.__timelines["main"] = tl;
+      tl.seek(0);
+    </script>
+  </body>
+</html>

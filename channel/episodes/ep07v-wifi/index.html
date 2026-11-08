@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en" data-resolution="portrait">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <script src="assets/gsap.min.js"></script>
+    <script src="assets/characters.js"></script>
+    <style>
+      @font-face { font-family: "Fredoka"; font-weight: 700; src: url("assets/fredoka-latin-700-normal.woff2") format("woff2"); }
+      @font-face { font-family: "Fredoka"; font-weight: 500; src: url("assets/fredoka-latin-500-normal.woff2") format("woff2"); }
+      :root { --ground: #6fd3ff; --ink: #ffffff; --stroke: #2b2a6e; --font-display: "Fredoka", sans-serif; }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { margin: 0; width: 1080px; height: 1920px; overflow: hidden; background: var(--ground); }
+      #root { position: relative; width: 100%; height: 100%; overflow: hidden; font-family: var(--font-display); }
+      .clip { position: absolute; inset: 0; }
+      svg.stage { width: 1080px; height: 1920px; }
+      .cap { position: absolute; left: 50px; right: 50px; top: 250px; bottom: auto; text-align: center; color: var(--ink); font-weight: 700; font-size: 96px; line-height: 1.05;
+        -webkit-text-stroke: 16px var(--stroke); paint-order: stroke fill; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="14" data-width="1080" data-height="1920">
+      <svg id="world" class="clip stage" data-start="0" data-duration="14" data-track-index="0" viewBox="0 0 1080 1920">
+        <defs>
+          <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6fd3ff" /><stop offset="0.6" stop-color="#b8ecff" /><stop offset="1" stop-color="#e8fbff" /></linearGradient>
+          <radialGradient id="glow" cx="0.5" cy="0.5" r="0.5"><stop offset="0" stop-color="#fff6c4" /><stop offset="0.5" stop-color="#ffd27a" stop-opacity="0.7" /><stop offset="1" stop-color="#ffb347" stop-opacity="0" /></radialGradient>
+        </defs>
+        <rect width="1080" height="1920" fill="url(#sky)" />
+        
+        <g id="zoom" transform="translate(540,1300) scale(1.35) translate(-540,-1300)">
+          <path d="M0,1250 C300,1180 700,1320 1080,1230 L1080,1920 L0,1920 Z" fill="#8be08f" />
+          <path d="M0,1520 C320,1470 760,1580 1080,1500 L1080,1920 L0,1920 Z" fill="#5fcf6a" />
+          <circle cx="860" cy="560" r="90" fill="#ffe27a" />
+<g id="house" transform="translate(-90,0)">
+  <rect x="772" y="1280" width="136" height="150" rx="16" fill="#f3e2c8" />
+  <rect x="812" y="1335" width="56" height="95" rx="24" fill="#3fa3a8" />
+  <path d="M700,1300 C700,1150 980,1150 980,1300 Z" fill="#e63946" />
+  <g fill="#fff"><circle cx="760" cy="1250" r="16" /><circle cx="840" cy="1205" r="20" /><circle cx="920" cy="1255" r="14" /></g>
+</g>
+<g id="lounger" transform="translate(40,0)"><ellipse cx="215" cy="1495" rx="95" ry="20" fill="#3fa34d" /><path d="M130,1490 Q120,1440 150,1430" stroke="#3fa34d" stroke-width="16" fill="none" stroke-linecap="round" />
+  <g id="cup"><rect x="300" y="1440" width="26" height="40" rx="6" fill="#ff8fb1" /><line x1="318" y1="1440" x2="330" y2="1410" stroke="#fff" stroke-width="5" /></g></g>
+<g id="peb"></g>
+<g id="pip"></g>
+<g id="stars" fill="#ffd166" opacity="0"></g>
+<path id="glint" d="M0,-24 L5,-5 L24,0 L5,5 L0,24 L-5,5 L-24,0 L-5,-5 Z" fill="#fff" opacity="0" />
+<text id="bangP" x="330" y="1270" font-family="Fredoka" font-weight="700" font-size="70" fill="#ff5a5f" stroke="#2b2a6e" stroke-width="7" paint-order="stroke" opacity="0">!!</text>
+
+        </g>
+        
+      </svg>
+      <div id="c1" class="clip cap" data-start="0" data-duration="1.4" data-track-index="1">Me watching<br />cat videos 😺</div>
+<div id="c2" class="clip cap" data-start="1.4" data-duration="1.6" data-track-index="1">NO WI-FI?! ❌😱</div>
+<div id="c3" class="clip cap" data-start="3.0" data-duration="1.6" data-track-index="1">Searching… 📡</div>
+<div id="c4" class="clip cap" data-start="5.6" data-duration="1.6" data-track-index="1">1 bar… 📶</div>
+<div id="c5" class="clip cap" data-start="7.85" data-duration="0.9" data-track-index="1">BONK 💫</div>
+<div id="c6" class="clip cap" data-start="8.7" data-duration="2.3" data-track-index="1">Pebble:<br />touching grass 🌿😎</div>
+<div id="c7" class="clip cap" data-start="11.0" data-duration="1.3" data-track-index="1">Connected ✅</div>
+<div id="c8" class="clip cap" data-start="12.3" data-duration="1.7" data-track-index="1">🔋 1%… 💀</div>
+      <audio id="sound" src="assets/audio.wav" data-start="0" data-duration="14" data-volume="1"></audio>
+    </div>
+    <script>
+      const NS = "http://www.w3.org/2000/svg";
+      const $ = (id) => document.getElementById(id);
+      const mk = (tag, attrs, parent) => { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); parent.appendChild(e); return e; };
+      const pipSVG = (s = 0.5) => `<g transform="scale(${s})">${PIP(0, -165, 1)}</g>`;
+      const pebSVG = (s = 0.5, shades = false) => `<g transform="scale(${s})">${PEBBLE(0, -92, 1)}${shades ? `<g><rect x="105" y="-245" width="62" height="44" rx="14" fill="#111"/><rect x="167" y="-240" width="62" height="44" rx="14" fill="#111"/><rect x="150" y="-232" width="30" height="8" fill="#111"/><rect x="115" y="-238" width="18" height="8" rx="4" fill="#fff" opacity=".6"/></g>` : ""}</g>`;
+      // eyelids for Pip (scaled 0.5): eye centres (+/-42.5, -158.5), r 29
+      const lidsSVG = (s = 0.5) => `<g transform="scale(${s / 0.5})"><circle cx="-42.5" cy="-158.5" r="31" fill="#5fcf6a"/><circle cx="42.5" cy="-158.5" r="31" fill="#5fcf6a"/><path d="M-62,-156 C-50,-146 -35,-146 -23,-156 M23,-156 C35,-146 50,-146 62,-156" stroke="#1b1a2e" stroke-width="5" fill="none" stroke-linecap="round"/></g>`;
+      const winkSVG = (s = 0.5) => `<g transform="scale(${s / 0.5})"><circle cx="42.5" cy="-158.5" r="31" fill="#5fcf6a"/><path d="M23,-156 C35,-146 50,-146 62,-156" stroke="#1b1a2e" stroke-width="5" fill="none" stroke-linecap="round"/></g>`;
+      const star = (x, y, s) => `M${x},${y - s} L${x + s * 0.25},${y - s * 0.25} L${x + s},${y} L${x + s * 0.25},${y + s * 0.25} L${x},${y + s} L${x - s * 0.25},${y + s * 0.25} L${x - s},${y} L${x - s * 0.25},${y - s * 0.25} Z`;
+      const tl = gsap.timeline({ paused: true });
+      const pop = (id, t) => tl.fromTo(id, { scale: 0.4, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.22, ease: "back.out(2.5)" }, t);
+      // dust/splash puff helper: creates n circles in group g around (x,y) and animates them at t
+      function puff(g, x, y, t, color = "#e8d6b0", n = 6, spread = 60) {
+        const els = []; for (let i = 0; i < n; i++) els.push(mk("circle", { cx: x, cy: y, r: 22 + (i % 3) * 8, fill: color, opacity: 0 }, $(g)));
+        els.forEach((e, i) => tl.fromTo(e, { opacity: 0.9, x: 0, y: 0, scale: 0.5, transformOrigin: "50% 50%" }, { opacity: 0, x: (i - n / 2) * spread * 0.5, y: -40 - (i % 2) * 40, scale: 1.8, transformOrigin: "50% 50%", duration: 0.7, immediateRender: false }, t));
+        tl.set(els, { opacity: 0 }, 0);
+      }
+      const scr = (id, bg, lines) => `<g id="${id}" opacity="0"><rect x="-26" y="-46" width="52" height="92" rx="6" fill="${bg}"/>${lines}</g>`;
+      const phone = `<g id="phone" transform="translate(95,-150)"><rect x="-32" y="-54" width="64" height="108" rx="12" fill="#22213a"/>
+        ${scr("sc0", "#ffd9a8", '<polygon points="-10,-14 14,0 -10,14" fill="#2b2a6e"/><text x="0" y="36" text-anchor="middle" font-size="20">😺</text>')}
+        ${scr("sc1", "#ff5a5f", '<text x="0" y="12" text-anchor="middle" font-size="34">❌</text>')}
+        ${scr("sc2", "#ffd166", '<rect x="-14" y="10" width="8" height="12" fill="#2b2a6e"/><rect x="-3" y="2" width="8" height="20" fill="#2b2a6e" opacity=".25"/><rect x="8" y="-8" width="8" height="30" fill="#2b2a6e" opacity=".25"/>')}
+        ${scr("sc3", "#5fcf6a", '<text x="0" y="12" text-anchor="middle" font-size="34">✅</text>')}
+        ${scr("sc4", "#2b2a3e", '<rect x="-16" y="-8" width="30" height="16" rx="3" fill="none" stroke="#fff" stroke-width="3"/><rect x="-14" y="-6" width="3" height="12" fill="#ff5a5f"/><text x="0" y="34" text-anchor="middle" font-family="Fredoka" font-weight="700" font-size="16" fill="#fff">1%</text>')}
+        ${scr("sc5", "#000", "")}</g>`;
+      $("pip").innerHTML = `<g id="pipIn">${pipSVG(0.5)}${phone}</g>`;
+      $("peb").innerHTML = `<g id="pebIn">${pebSVG(0.5, true)}</g>`;
+      for (let i = 0; i < 3; i++) mk("path", { d: star(-40 + i * 40, -20 * (i % 2), 18) }, $("stars"));
+      const screen = (n, t) => { for (let i = 0; i < 6; i++) tl.set("#sc" + i, { opacity: i === n ? 1 : 0 }, t); };
+      tl.set("#pip", { x: 440, y: 1450 }, 0); tl.set("#peb", { x: 255, y: 1480, rotation: -8 }, 0); screen(0, 0);
+      tl.to("#pipIn", { y: -10, duration: 0.35, yoyo: true, repeat: 3, ease: "sine.inOut" }, 0);
+      // No Wi-Fi
+      screen(1, 1.4);
+      tl.fromTo("#bangP", { opacity: 0, scale: 0.3, transformOrigin: "50% 50%" }, { opacity: 1, scale: 1, transformOrigin: "50% 50%", duration: 0.2, ease: "back.out(3)" }, 1.5);
+      tl.to("#bangP", { opacity: 0, duration: 0.2 }, 2.6);
+      tl.to("#pipIn", { x: 10, duration: 0.05, yoyo: true, repeat: 11 }, 1.5);
+      // panic: phone up, hop around
+      tl.to("#phone", { x: 0, y: -280, duration: 0.25 }, 3.0);
+      tl.to("#pip", { keyframes: [{ x: 400, duration: 0.4 }, { x: 520, duration: 0.5 }, { x: 440, duration: 0.5 }] }, 3.0);
+      tl.to("#pipIn", { y: -60, duration: 0.12, yoyo: true, repeat: 11, ease: "power1.out" }, 3.0);
+      // climb the mushroom
+      tl.to("#pip", { keyframes: [{ x: 560, y: 1300, duration: 0.45, ease: "power2.out" }, { x: 600, y: 1320, duration: 0.2 }, { x: 700, y: 1192, duration: 0.45, ease: "power2.out" }] }, 4.6);
+      screen(2, 5.6);
+      tl.to("#pipIn", { rotation: 10, transformOrigin: "50% 100%", duration: 0.25, yoyo: true, repeat: 5, ease: "sine.inOut" }, 5.7);
+      // slip and BONK
+      tl.to("#pip", { keyframes: [{ x: 640, y: 1150, duration: 0.2, ease: "power2.out" }, { x: 560, y: 1460, duration: 0.45, ease: "power2.in" }] }, 7.2);
+      tl.to("#pipIn", { rotation: -100, transformOrigin: "50% 50%", duration: 0.6 }, 7.2);
+      tl.to("#pipIn", { rotation: -90, duration: 0.1 }, 7.85);
+      tl.set("#stars", { x: 560, y: 1330 }, 7.9);
+      tl.to("#stars", { opacity: 1, duration: 0.1 }, 7.9);
+      tl.fromTo("#stars", { rotation: 0, transformOrigin: "50% 50%" }, { rotation: 720, transformOrigin: "50% 50%", duration: 3.0, ease: "none" }, 7.9);
+      tl.to("#stars", { opacity: 0, duration: 0.2 }, 10.9);
+      // Pebble touching grass
+      tl.to("#cup", { y: -6, duration: 0.3, yoyo: true, repeat: 3 }, 8.7);
+      tl.set("#glint", { x: 340, y: 1360 }, 9.2);
+      tl.fromTo("#glint", { opacity: 0, scale: 0.2, rotation: 0, transformOrigin: "50% 50%" }, { opacity: 1, scale: 1, rotation: 90, transformOrigin: "50% 50%", duration: 0.25, yoyo: true, repeat: 1 }, 9.2);
+      // Connected... 1%... dead
+      tl.to("#pipIn", { rotation: 0, duration: 0.3, ease: "back.out(2)" }, 10.9);
+      screen(3, 11.0);
+      tl.to("#pipIn", { y: -70, duration: 0.15, yoyo: true, repeat: 3, ease: "power1.out" }, 11.1);
+      screen(4, 12.3); screen(5, 12.9);
+      tl.to("#pipIn", { scaleY: 0.78, scaleX: 1.1, transformOrigin: "50% 100%", duration: 0.5 }, 13.0);
+
+      pop("#c1", 0.02);
+      pop("#c2", 1.42);
+      pop("#c3", 3.02);
+      pop("#c4", 5.619999999999999);
+      pop("#c5", 7.869999999999999);
+      pop("#c6", 8.719999999999999);
+      pop("#c7", 11.02);
+      pop("#c8", 12.32);
+      window.__timelines = window.__timelines || {};
+      window.__timelines["main"] = tl;
+      tl.seek(0);
+    </script>
+  </body>
+</html>

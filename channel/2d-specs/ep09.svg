@@ -1,0 +1,6 @@
+<g id="sun"><circle cx="840" cy="1000" r="70" fill="#ffd166" /><circle cx="840" cy="1000" r="95" fill="#ffd166" opacity="0.3" /></g>
+<g id="heat" stroke="#ffffff" stroke-width="5" fill="none" opacity="0.6"><path d="M300,1180 q15,-20 0,-40 q-15,-20 0,-40" /><path d="M560,1160 q15,-20 0,-40 q-15,-20 0,-40" /><path d="M760,1190 q15,-20 0,-40 q-15,-20 0,-40" /></g>
+<g id="peb"></g>
+<g id="pip"></g>
+<g id="ice" fill="#bfe9ff" opacity="0"></g>
+<g id="sweat"></g>

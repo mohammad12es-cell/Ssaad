@@ -1,0 +1,3 @@
+{"id":"ep12c-hide-and-seek","duration":14,"style":"cast","zoom":1.4,"cx":560,"cy":1320,"sky":["#c6f0ff","#e6f9ff","#f6fffb"],"svg":"ep12.svg","script":"ep12.js",
+ "captions":[["c1",0,1.8,"Hide and seek 🙈"],["c2",2.0,2.4,"Perfect hiding spot 😏"],["c3",4.5,1.4,"Found you 👀"],["c4",6.0,2.0,"Pebble's turn 🐌"],["c5",8.2,2.4,"Where is he?! 🔍"],["c6",10.6,1.6,"*sits on a rock*"],["c7",12.2,1.8,"…hi 😎"]],
+ "cues":[["bed","sneaky",0,6,0.9],["whoosh",0.5],["pop",2.0],["ding",4.6],["sad",4.9],["bed","sneaky",6,12,0.9],["pop",7.3],["whoosh",8.2],["rustle",9.2,0.5],["pop",11.0],["glint",12.2],["fall",12.6],["bonk",13.2],["bed","happy",12.2,14,0.7]]}

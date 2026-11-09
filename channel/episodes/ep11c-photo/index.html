@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en" data-resolution="portrait">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <script src="assets/gsap.min.js"></script>
+    <script src="assets/characters.js"></script>
+    <style>
+      @font-face { font-family: "Fredoka"; font-weight: 700; src: url("assets/fredoka-latin-700-normal.woff2") format("woff2"); }
+      @font-face { font-family: "Fredoka"; font-weight: 500; src: url("assets/fredoka-latin-500-normal.woff2") format("woff2"); }
+      :root { --ground: #9fd8ff; --ink: #ffffff; --stroke: #2b2a6e; --font-display: "Fredoka", sans-serif; }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { margin: 0; width: 1080px; height: 1920px; overflow: hidden; background: var(--ground); }
+      #root { position: relative; width: 100%; height: 100%; overflow: hidden; font-family: var(--font-display); }
+      .clip { position: absolute; inset: 0; }
+      svg.stage { width: 1080px; height: 1920px; }
+      .cap { position: absolute; left: 50px; right: 50px; top: 250px; bottom: auto; text-align: center; color: var(--ink); font-weight: 700; font-size: 96px; line-height: 1.05;
+        -webkit-text-stroke: 16px var(--stroke); paint-order: stroke fill; }
+      .cap { top: 300px; color: #2b2a6e; -webkit-text-stroke: 0; font-size: 78px; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="14" data-width="1080" data-height="1920">
+      <svg id="world" class="clip stage" data-start="0" data-duration="14" data-track-index="0" viewBox="0 0 1080 1920">
+        <defs>
+          <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#9fd8ff" /><stop offset="0.6" stop-color="#d6f1ff" /><stop offset="1" stop-color="#f3fbff" /></linearGradient>
+          <clipPath id="cardclip"><rect x="40" y="520" width="1000" height="1180" rx="60" /></clipPath>
+          <radialGradient id="glow" cx="0.5" cy="0.5" r="0.5"><stop offset="0" stop-color="#fff6c4" /><stop offset="0.5" stop-color="#ffd27a" stop-opacity="0.7" /><stop offset="1" stop-color="#ffb347" stop-opacity="0" /></radialGradient>
+        </defs>
+        <rect width="1080" height="1920" fill="#fff7ea" />
+        <g clip-path="url(#cardclip)"><rect width="1080" height="1920" fill="url(#sky)" />
+        
+        <g id="zoom" transform="translate(540,1110) scale(1.45) translate(-545,-1280)">
+          <path d="M0,1250 C300,1180 700,1320 1080,1230 L1080,1920 L0,1920 Z" fill="#8be08f" />
+          <path d="M0,1520 C320,1470 760,1580 1080,1500 L1080,1920 L0,1920 Z" fill="#5fcf6a" />
+          <g id="lady"><g transform="scale(1.6)"><ellipse cx="0" cy="0" rx="35" ry="25" fill="#ff3b3b" /><circle cx="-31" cy="-3" r="15" fill="#1b1a2e" /><line x1="0" y1="-25" x2="0" y2="25" stroke="#1b1a2e" stroke-width="4" />
+  <circle cx="-12" cy="-10" r="6" fill="#1b1a2e" /><circle cx="12" cy="-11" r="6" fill="#1b1a2e" /><circle cx="14" cy="9" r="5" fill="#1b1a2e" /><circle cx="-11" cy="10" r="5" fill="#1b1a2e" /><circle cx="-35" cy="-6" r="4" fill="#fff" /></g></g>
+<g id="peb"></g>
+<g id="pip"></g>
+<path id="glint" d="M0,-24 L5,-5 L24,0 L5,5 L0,24 L-5,5 L-24,0 L-5,-5 Z" fill="#fff" opacity="0" />
+
+        </g>
+        <g transform="translate(0,140)"><g id="polaroid" opacity="0"><rect x="350" y="420" width="380" height="380" rx="14" fill="#fff" stroke="#2b2a6e" stroke-width="5" />
+  <rect x="372" y="442" width="336" height="280" fill="#bfe9ff" /><rect x="372" y="640" width="336" height="82" fill="#8be08f" />
+  <g id="ph"></g>
+  <text id="phTxt" x="540" y="775" text-anchor="middle" font-family="Fredoka" font-weight="700" font-size="34" fill="#2b2a6e"></text></g>
+<rect id="flash" x="40" y="380" width="1000" height="1180" fill="#fff" opacity="0" />
+</g>
+        </g><rect x="40" y="520" width="1000" height="1180" rx="60" fill="none" stroke="#2b2a6e" stroke-width="6" /><text x="540" y="1800" text-anchor="middle" font-family="Fredoka" font-weight="700" font-size="58" fill="#2b2a6e">Pip &amp; Pebble 🐸🐌</text>
+      </svg>
+      <div id="c1" class="clip cap" data-start="0" data-duration="1.5" data-track-index="1">Picture time! 📸</div>
+<div id="c2" class="clip cap" data-start="1.7" data-duration="1.3" data-track-index="1">Take 1 😑</div>
+<div id="c3" class="clip cap" data-start="3.3" data-duration="1.3" data-track-index="1">Take 2 😵</div>
+<div id="c4" class="clip cap" data-start="4.9" data-duration="1.3" data-track-index="1">Take 3 🦶</div>
+<div id="c5" class="clip cap" data-start="6.5" data-duration="1.5" data-track-index="1">Take 4 🐞</div>
+<div id="c6" class="clip cap" data-start="8.3" data-duration="2.1" data-track-index="1">Pebble: one take 😎</div>
+<div id="c7" class="clip cap" data-start="11.5" data-duration="2.5" data-track-index="1">Group photo… 😂</div>
+      <audio id="sound" src="assets/audio.wav" data-start="0" data-duration="14" data-volume="1"></audio>
+    </div>
+    <script>
+      const NS = "http://www.w3.org/2000/svg";
+      const $ = (id) => document.getElementById(id);
+      const mk = (tag, attrs, parent) => { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); parent.appendChild(e); return e; };
+      const pipSVG = (s = 0.5) => `<g transform="scale(${s})">${PIP(0, -165, 1)}</g>`;
+      const pebSVG = (s = 0.5, shades = false) => `<g transform="scale(${s})">${PEBBLE(0, -92, 1)}${shades ? `<g><rect x="105" y="-245" width="62" height="44" rx="14" fill="#111"/><rect x="167" y="-240" width="62" height="44" rx="14" fill="#111"/><rect x="150" y="-232" width="30" height="8" fill="#111"/><rect x="115" y="-238" width="18" height="8" rx="4" fill="#fff" opacity=".6"/></g>` : ""}</g>`;
+      // eyelids for Pip (scaled 0.5): eye centres (+/-42.5, -158.5), r 29
+      const lidsSVG = (s = 0.5) => `<g transform="scale(${s / 0.5})"><circle cx="-42.5" cy="-158.5" r="31" fill="#5fcf6a"/><circle cx="42.5" cy="-158.5" r="31" fill="#5fcf6a"/><path d="M-62,-156 C-50,-146 -35,-146 -23,-156 M23,-156 C35,-146 50,-146 62,-156" stroke="#1b1a2e" stroke-width="5" fill="none" stroke-linecap="round"/></g>`;
+      const winkSVG = (s = 0.5) => `<g transform="scale(${s / 0.5})"><circle cx="42.5" cy="-158.5" r="31" fill="#5fcf6a"/><path d="M23,-156 C35,-146 50,-146 62,-156" stroke="#1b1a2e" stroke-width="5" fill="none" stroke-linecap="round"/></g>`;
+      const star = (x, y, s) => `M${x},${y - s} L${x + s * 0.25},${y - s * 0.25} L${x + s},${y} L${x + s * 0.25},${y + s * 0.25} L${x},${y + s} L${x - s * 0.25},${y + s * 0.25} L${x - s},${y} L${x - s * 0.25},${y - s * 0.25} Z`;
+      const tl = gsap.timeline({ paused: true });
+      const pop = (id, t) => tl.fromTo(id, { scale: 0.4, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.22, ease: "back.out(2.5)" }, t);
+      // dust/splash puff helper: creates n circles in group g around (x,y) and animates them at t
+      function puff(g, x, y, t, color = "#e8d6b0", n = 6, spread = 60) {
+        const els = []; for (let i = 0; i < n; i++) els.push(mk("circle", { cx: x, cy: y, r: 22 + (i % 3) * 8, fill: color, opacity: 0 }, $(g)));
+        els.forEach((e, i) => tl.fromTo(e, { opacity: 0.9, x: 0, y: 0, scale: 0.5, transformOrigin: "50% 50%" }, { opacity: 0, x: (i - n / 2) * spread * 0.5, y: -40 - (i % 2) * 40, scale: 1.8, transformOrigin: "50% 50%", duration: 0.7, immediateRender: false }, t));
+        tl.set(els, { opacity: 0 }, 0);
+      }
+      $("pip").innerHTML = `<g id="pipIn">${pipSVG(0.5)}<g id="lids" opacity="0">${lidsSVG(0.5)}</g></g>`;
+      $("peb").innerHTML = `<g id="pebIn">${pebSVG(0.5, true)}</g>`;
+      const pipMini = (x, y, extra = "", tr = "") => `<g transform="translate(${x},${y}) ${tr}"><g transform="scale(0.95)">${pipSVG(0.5)}${extra}</g></g>`;
+      const pebMini = (x, y) => `<g transform="translate(${x},${y})"><g transform="scale(0.95)">${pebSVG(0.5, true)}</g></g>`;
+      const spark = (x, y) => `<path d="${star(x, y, 12)}" fill="#ffd166"/>`;
+      const clip = (inner) => `<svg x="372" y="442" width="336" height="280" viewBox="372 442 336 280" overflow="hidden">${inner}</svg>`;
+      const PH = [
+        clip(pipMini(540, 712, lidsSVG(0.5))),
+        clip(`<g opacity="0.45">${pipMini(520, 712, "", "rotate(25)")}</g><g opacity="0.45">${pipMini(570, 700, "", "rotate(35)")}</g>`),
+        clip(`<ellipse cx="380" cy="715" rx="40" ry="16" fill="#5fcf6a"/>`),
+        clip(pipMini(540, 712) + `<g transform="translate(530,640) scale(3)"><ellipse cx="0" cy="0" rx="35" ry="25" fill="#ff3b3b"/><circle cx="-31" cy="-3" r="15" fill="#1b1a2e"/><circle cx="-12" cy="-10" r="6" fill="#1b1a2e"/><circle cx="12" cy="-11" r="6" fill="#1b1a2e"/></g>`),
+        clip(pebMini(530, 712) + spark(440, 520) + spark(640, 500) + spark(600, 600)),
+        clip(pebMini(620, 712) + `<g opacity="0.5">${pipMini(460, 540, "", "rotate(170)")}</g>` + spark(660, 520)),
+      ];
+      const LBL = ["Blinked 😑", "Too early 😵", "Too late 🦶", "Photobomb 🐞", "Perfect ✨", "Group photo 😂"];
+      tl.set("#pip", { x: 380, y: 1450 }, 0); tl.set("#peb", { x: 720, y: 1480 }, 0); tl.set("#lady", { x: -100, y: 1520 }, 0);
+      const shot = (t, i) => {
+        tl.fromTo("#flash", { opacity: 0.9 }, { opacity: 0, duration: 0.35, immediateRender: false }, t);
+        tl.call(() => {}, null, t);
+        tl.set("#ph", { innerHTML: PH[i] }, t + 0.05); tl.set("#phTxt", { textContent: LBL[i] }, t + 0.05);
+        tl.fromTo("#polaroid", { opacity: 0, y: -60, rotation: -8, transformOrigin: "50% 50%" }, { opacity: 1, y: 0, rotation: i % 2 ? 4 : -4, transformOrigin: "50% 50%", duration: 0.35, ease: "back.out(2)", immediateRender: false }, t + 0.1);
+      };
+      tl.set("#ph", { innerHTML: "" }, 0);
+      tl.to("#pipIn", { y: -20, duration: 0.2, yoyo: true, repeat: 3 }, 0.3);
+      // 1 blink
+      tl.set("#lids", { opacity: 1 }, 1.5); tl.set("#lids", { opacity: 0 }, 1.8); shot(1.6, 0);
+      // 2 too early
+      tl.to("#pip", { y: 1300, duration: 0.25, ease: "power2.out", yoyo: true, repeat: 1 }, 3.0); tl.to("#pipIn", { rotation: 25, transformOrigin: "50% 100%", duration: 0.2, yoyo: true, repeat: 1 }, 3.0); shot(3.15, 1);
+      // 3 too late
+      tl.to("#pip", { x: 120, duration: 0.3, ease: "power2.in" }, 4.4); shot(4.8, 2); tl.to("#pip", { x: 380, duration: 0.35, ease: "power2.out" }, 5.0);
+      // 4 photobomb
+      tl.to("#lady", { x: 400, duration: 0.5, ease: "power2.out" }, 5.8); shot(6.4, 3); tl.to("#lady", { x: 1200, duration: 0.8, ease: "power1.in" }, 7.2);
+      tl.to("#pipIn", { scaleY: 0.85, transformOrigin: "50% 100%", duration: 0.3 }, 7.2);
+      // 5 Pebble one take
+      tl.to("#pip", { x: 200, duration: 0.4 }, 7.8); shot(8.4, 4);
+      tl.set("#glint", { x: 790, y: 1350 }, 8.5);
+      tl.fromTo("#glint", { opacity: 0, scale: 0.2, rotation: 0, transformOrigin: "50% 50%" }, { opacity: 1, scale: 1, rotation: 90, transformOrigin: "50% 50%", duration: 0.25, yoyo: true, repeat: 1 }, 8.5);
+      // 6 group photo: Pip slides in and flips
+      tl.to("#pipIn", { scaleY: 1, duration: 0.2 }, 10.3);
+      tl.to("#pip", { keyframes: [{ x: 420, duration: 0.5, ease: "power2.in" }, { x: 520, y: 1350, duration: 0.25 }] }, 10.5);
+      tl.to("#pipIn", { rotation: 180, transformOrigin: "50% 50%", duration: 0.3 }, 11.0);
+      shot(11.35, 5);
+      tl.to("#pip", { y: 1450, duration: 0.3, ease: "power2.in" }, 11.6);
+      tl.to("#pipIn", { rotation: 180, duration: 0.01 }, 11.9);
+      tl.to("#polaroid", { rotation: 10, transformOrigin: "50% 50%", duration: 0.15, yoyo: true, repeat: 5 }, 12.6);
+
+      pop("#c1", 0.02);
+      pop("#c2", 1.72);
+      pop("#c3", 3.32);
+      pop("#c4", 4.92);
+      pop("#c5", 6.52);
+      pop("#c6", 8.32);
+      pop("#c7", 11.52);
+      window.__timelines = window.__timelines || {};
+      window.__timelines["main"] = tl;
+      tl.seek(0);
+    </script>
+  </body>
+</html>

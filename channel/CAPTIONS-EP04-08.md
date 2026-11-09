@@ -10,3 +10,11 @@
 
 Descriptions: see the chat message / each one ends with
 "New Pip & Pebble episodes every week. Subscribe! #animation #cartoon #funnyanimation #shorts"
+
+# Episodes 9–12 (card style)
+| Ep | File | Title |
+|---|---|---|
+| 9 | output/pip-pebble-ep09-ice-cream-card.mp4 | When it's 40°C and you eat ice cream in ONE bite 🍦🥶 #animation #cartoon #shorts |
+| 10 | output/pip-pebble-ep10-alarm-card.mp4 | When you wake up at 8:59… on a Saturday ⏰💀 #animation #cartoon #shorts |
+| 11 | output/pip-pebble-ep11-photo-card.mp4 | When you try to take ONE good photo 📸😂 #animation #cartoon #shorts |
+| 12 | output/pip-pebble-ep12-hide-and-seek-card.mp4 | Pip vs. Pebble: hide and seek 🙈😂 #animation #cartoon #shorts |

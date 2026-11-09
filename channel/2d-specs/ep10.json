@@ -1,0 +1,3 @@
+{"id":"ep10c-alarm","duration":14,"style":"cast","zoom":1.45,"cx":545,"cy":1310,"sky":["#ffd9e8","#ffe9c8","#fff7ea"],"svg":"ep10.svg","script":"ep10.js",
+ "captions":[["c1",0,1.4,"6:00 AM ⏰"],["c2",1.4,1.2,"Snooze 😴"],["c3",2.7,1.8,"Snooze… 😴😴"],["c4",4.6,1.4,"8:59?! 😱"],["c5",6.0,2.8,"LATE!! 🏃💨"],["c6",8.8,2.6,"Pebble: up since 5 AM ☕😎"],["c7",11.8,2.2,"…it's Saturday 💀"]],
+ "cues":[["bed","happy",0,14,0.7],["ding",0.3],["ding",0.7],["ding",1.1],["bonk",1.45],["ding",2.7],["bonk",3.25],["ding",3.7],["bonk",4.25],["ding",4.6],["ding",4.9],["ding",5.2],["error",5.5],["whoosh",6.0],["whoosh",6.6],["glint",9.6],["pop",11.9],["sad",12.3],["pop",13.3]]}

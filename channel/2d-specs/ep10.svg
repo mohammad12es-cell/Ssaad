@@ -1,0 +1,12 @@
+<g id="window"><rect x="430" y="1080" width="170" height="130" rx="14" fill="#bfe9ff" stroke="#fff" stroke-width="10" /><circle cx="560" cy="1120" r="22" fill="#ffd166" /><line x1="515" y1="1080" x2="515" y2="1210" stroke="#fff" stroke-width="8" /></g>
+<g id="cal" opacity="0"><rect x="660" y="1090" width="150" height="120" rx="12" fill="#fff" stroke="#2b2a6e" stroke-width="5" /><rect x="660" y="1090" width="150" height="34" rx="10" fill="#ff5a5f" />
+  <text x="735" y="1180" text-anchor="middle" font-family="Fredoka" font-weight="700" font-size="34" fill="#2b2a6e">SAT</text></g>
+<g id="bed"><rect x="215" y="1360" width="22" height="120" rx="8" fill="#a0673e" /><rect x="225" y="1420" width="290" height="40" rx="12" fill="#c98a5a" /><rect x="230" y="1460" width="16" height="30" fill="#a0673e" /><rect x="495" y="1460" width="16" height="30" fill="#a0673e" /></g>
+<g id="stand"><rect x="560" y="1400" width="90" height="80" rx="10" fill="#c98a5a" /></g>
+<g id="clock"><circle cx="0" cy="0" r="34" fill="#ff5a5f" /><circle cx="0" cy="0" r="26" fill="#fff" /><circle cx="-26" cy="-30" r="10" fill="#ffd166" /><circle cx="26" cy="-30" r="10" fill="#ffd166" />
+  <text id="time" x="0" y="8" text-anchor="middle" font-family="Fredoka" font-weight="700" font-size="20" fill="#2b2a6e">6:00</text></g>
+<g id="peb"></g>
+<g id="pip"></g>
+<g id="ring" stroke="#2b2a6e" stroke-width="5" fill="none" opacity="0"><path d="M-55,-20 q-10,20 0,40" /><path d="M55,-20 q10,20 0,40" /></g>
+<path id="glint" d="M0,-24 L5,-5 L24,0 L5,5 L0,24 L-5,5 L-24,0 L-5,-5 Z" fill="#fff" opacity="0" />
+<text id="zzz" x="380" y="1260" font-family="Fredoka" font-weight="700" font-size="50" fill="#fff" stroke="#2b2a6e" stroke-width="6" paint-order="stroke">Z z z</text>

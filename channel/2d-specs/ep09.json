@@ -1,0 +1,3 @@
+{"id":"ep09c-ice-cream","duration":14,"style":"cast","zoom":1.45,"cx":545,"cy":1330,"sky":["#ffb347","#ffd9a8","#fff3d6"],"svg":"ep09.svg","script":"ep09.js",
+ "captions":[["c1",0,1.6,"It's 40°C outside 🥵"],["c2",1.7,1.5,"ICE CREAM! 🍦"],["c3",3.3,1.1,"One bite 😤"],["c4",4.4,2.8,"BRAIN FREEZE 🥶"],["c5",7.2,2.4,"Pebble: slow licks 😌"],["c6",9.8,2.0,"Mine 😎🐌"],["c7",12.2,1.8,"Still 40°C 🥵"]],
+ "cues":[["bed","happy",0,14,0.8],["pop",1.7],["pop",1.9],["sparkle",2.0],["whoosh",3.3],["pop",3.65],["sparkle",4.4],["growl",4.5],["glint",8.0],["whoosh",9.8],["pop",9.95],["bonk",10.4],["pop",11.4],["sad",12.6]]}

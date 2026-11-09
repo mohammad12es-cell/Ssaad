@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en" data-resolution="portrait">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <script src="assets/gsap.min.js"></script>
+    <script src="assets/characters.js"></script>
+    <style>
+      @font-face { font-family: "Fredoka"; font-weight: 700; src: url("assets/fredoka-latin-700-normal.woff2") format("woff2"); }
+      @font-face { font-family: "Fredoka"; font-weight: 500; src: url("assets/fredoka-latin-500-normal.woff2") format("woff2"); }
+      :root { --ground: #ffd9e8; --ink: #ffffff; --stroke: #2b2a6e; --font-display: "Fredoka", sans-serif; }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { margin: 0; width: 1080px; height: 1920px; overflow: hidden; background: var(--ground); }
+      #root { position: relative; width: 100%; height: 100%; overflow: hidden; font-family: var(--font-display); }
+      .clip { position: absolute; inset: 0; }
+      svg.stage { width: 1080px; height: 1920px; }
+      .cap { position: absolute; left: 50px; right: 50px; top: 250px; bottom: auto; text-align: center; color: var(--ink); font-weight: 700; font-size: 96px; line-height: 1.05;
+        -webkit-text-stroke: 16px var(--stroke); paint-order: stroke fill; }
+      .cap { top: 300px; color: #2b2a6e; -webkit-text-stroke: 0; font-size: 78px; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="14" data-width="1080" data-height="1920">
+      <svg id="world" class="clip stage" data-start="0" data-duration="14" data-track-index="0" viewBox="0 0 1080 1920">
+        <defs>
+          <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffd9e8" /><stop offset="0.6" stop-color="#ffe9c8" /><stop offset="1" stop-color="#fff7ea" /></linearGradient>
+          <clipPath id="cardclip"><rect x="40" y="520" width="1000" height="1180" rx="60" /></clipPath>
+          <radialGradient id="glow" cx="0.5" cy="0.5" r="0.5"><stop offset="0" stop-color="#fff6c4" /><stop offset="0.5" stop-color="#ffd27a" stop-opacity="0.7" /><stop offset="1" stop-color="#ffb347" stop-opacity="0" /></radialGradient>
+        </defs>
+        <rect width="1080" height="1920" fill="#fff7ea" />
+        <g clip-path="url(#cardclip)"><rect width="1080" height="1920" fill="url(#sky)" />
+        
+        <g id="zoom" transform="translate(540,1110) scale(1.45) translate(-545,-1310)">
+          <path d="M0,1250 C300,1180 700,1320 1080,1230 L1080,1920 L0,1920 Z" fill="#8be08f" />
+          <path d="M0,1520 C320,1470 760,1580 1080,1500 L1080,1920 L0,1920 Z" fill="#5fcf6a" />
+          <g id="window"><rect x="430" y="1080" width="170" height="130" rx="14" fill="#bfe9ff" stroke="#fff" stroke-width="10" /><circle cx="560" cy="1120" r="22" fill="#ffd166" /><line x1="515" y1="1080" x2="515" y2="1210" stroke="#fff" stroke-width="8" /></g>
+<g id="cal" opacity="0"><rect x="660" y="1090" width="150" height="120" rx="12" fill="#fff" stroke="#2b2a6e" stroke-width="5" /><rect x="660" y="1090" width="150" height="34" rx="10" fill="#ff5a5f" />
+  <text x="735" y="1180" text-anchor="middle" font-family="Fredoka" font-weight="700" font-size="34" fill="#2b2a6e">SAT</text></g>
+<g id="bed"><rect x="215" y="1360" width="22" height="120" rx="8" fill="#a0673e" /><rect x="225" y="1420" width="290" height="40" rx="12" fill="#c98a5a" /><rect x="230" y="1460" width="16" height="30" fill="#a0673e" /><rect x="495" y="1460" width="16" height="30" fill="#a0673e" /></g>
+<g id="stand"><rect x="560" y="1400" width="90" height="80" rx="10" fill="#c98a5a" /></g>
+<g id="clock"><circle cx="0" cy="0" r="34" fill="#ff5a5f" /><circle cx="0" cy="0" r="26" fill="#fff" /><circle cx="-26" cy="-30" r="10" fill="#ffd166" /><circle cx="26" cy="-30" r="10" fill="#ffd166" />
+  <text id="time" x="0" y="8" text-anchor="middle" font-family="Fredoka" font-weight="700" font-size="20" fill="#2b2a6e">6:00</text></g>
+<g id="peb"></g>
+<g id="pip"></g>
+<g id="ring" stroke="#2b2a6e" stroke-width="5" fill="none" opacity="0"><path d="M-55,-20 q-10,20 0,40" /><path d="M55,-20 q10,20 0,40" /></g>
+<path id="glint" d="M0,-24 L5,-5 L24,0 L5,5 L0,24 L-5,5 L-24,0 L-5,-5 Z" fill="#fff" opacity="0" />
+<text id="zzz" x="380" y="1260" font-family="Fredoka" font-weight="700" font-size="50" fill="#fff" stroke="#2b2a6e" stroke-width="6" paint-order="stroke">Z z z</text>
+
+        </g>
+        <g transform="translate(0,140)"></g>
+        </g><rect x="40" y="520" width="1000" height="1180" rx="60" fill="none" stroke="#2b2a6e" stroke-width="6" /><text x="540" y="1800" text-anchor="middle" font-family="Fredoka" font-weight="700" font-size="58" fill="#2b2a6e">Pip &amp; Pebble 🐸🐌</text>
+      </svg>
+      <div id="c1" class="clip cap" data-start="0" data-duration="1.4" data-track-index="1">6:00 AM ⏰</div>
+<div id="c2" class="clip cap" data-start="1.4" data-duration="1.2" data-track-index="1">Snooze 😴</div>
+<div id="c3" class="clip cap" data-start="2.7" data-duration="1.8" data-track-index="1">Snooze… 😴😴</div>
+<div id="c4" class="clip cap" data-start="4.6" data-duration="1.4" data-track-index="1">8:59?! 😱</div>
+<div id="c5" class="clip cap" data-start="6.0" data-duration="2.8" data-track-index="1">LATE!! 🏃💨</div>
+<div id="c6" class="clip cap" data-start="8.8" data-duration="2.6" data-track-index="1">Pebble: up since 5 AM ☕😎</div>
+<div id="c7" class="clip cap" data-start="11.8" data-duration="2.2" data-track-index="1">…it's Saturday 💀</div>
+      <audio id="sound" src="assets/audio.wav" data-start="0" data-duration="14" data-volume="1"></audio>
+    </div>
+    <script>
+      const NS = "http://www.w3.org/2000/svg";
+      const $ = (id) => document.getElementById(id);
+      const mk = (tag, attrs, parent) => { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); parent.appendChild(e); return e; };
+      const pipSVG = (s = 0.5) => `<g transform="scale(${s})">${PIP(0, -165, 1)}</g>`;
+      const pebSVG = (s = 0.5, shades = false) => `<g transform="scale(${s})">${PEBBLE(0, -92, 1)}${shades ? `<g><rect x="105" y="-245" width="62" height="44" rx="14" fill="#111"/><rect x="167" y="-240" width="62" height="44" rx="14" fill="#111"/><rect x="150" y="-232" width="30" height="8" fill="#111"/><rect x="115" y="-238" width="18" height="8" rx="4" fill="#fff" opacity=".6"/></g>` : ""}</g>`;
+      // eyelids for Pip (scaled 0.5): eye centres (+/-42.5, -158.5), r 29
+      const lidsSVG = (s = 0.5) => `<g transform="scale(${s / 0.5})"><circle cx="-42.5" cy="-158.5" r="31" fill="#5fcf6a"/><circle cx="42.5" cy="-158.5" r="31" fill="#5fcf6a"/><path d="M-62,-156 C-50,-146 -35,-146 -23,-156 M23,-156 C35,-146 50,-146 62,-156" stroke="#1b1a2e" stroke-width="5" fill="none" stroke-linecap="round"/></g>`;
+      const winkSVG = (s = 0.5) => `<g transform="scale(${s / 0.5})"><circle cx="42.5" cy="-158.5" r="31" fill="#5fcf6a"/><path d="M23,-156 C35,-146 50,-146 62,-156" stroke="#1b1a2e" stroke-width="5" fill="none" stroke-linecap="round"/></g>`;
+      const star = (x, y, s) => `M${x},${y - s} L${x + s * 0.25},${y - s * 0.25} L${x + s},${y} L${x + s * 0.25},${y + s * 0.25} L${x},${y + s} L${x - s * 0.25},${y + s * 0.25} L${x - s},${y} L${x - s * 0.25},${y - s * 0.25} Z`;
+      const tl = gsap.timeline({ paused: true });
+      const pop = (id, t) => tl.fromTo(id, { scale: 0.4, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.22, ease: "back.out(2.5)" }, t);
+      // dust/splash puff helper: creates n circles in group g around (x,y) and animates them at t
+      function puff(g, x, y, t, color = "#e8d6b0", n = 6, spread = 60) {
+        const els = []; for (let i = 0; i < n; i++) els.push(mk("circle", { cx: x, cy: y, r: 22 + (i % 3) * 8, fill: color, opacity: 0 }, $(g)));
+        els.forEach((e, i) => tl.fromTo(e, { opacity: 0.9, x: 0, y: 0, scale: 0.5, transformOrigin: "50% 50%" }, { opacity: 0, x: (i - n / 2) * spread * 0.5, y: -40 - (i % 2) * 40, scale: 1.8, transformOrigin: "50% 50%", duration: 0.7, immediateRender: false }, t));
+        tl.set(els, { opacity: 0 }, 0);
+      }
+      const blanket = `<g id="blanket"><path d="M-120,-80 Q0,-110 120,-80 L130,10 L-130,10 Z" fill="#6a7bff"/><path d="M-120,-80 Q0,-110 120,-80" stroke="#fff" stroke-width="6" fill="none"/></g>`;
+      $("pip").innerHTML = `<g id="pipIn">${pipSVG(0.5)}<g id="lids">${lidsSVG(0.5)}</g>${blanket}</g>`;
+      $("peb").innerHTML = `<g id="pebIn">${pebSVG(0.5, true)}<g id="mug" transform="translate(115,-40)"><rect x="-16" y="-20" width="32" height="38" rx="6" fill="#fff"/><path d="M16,-12 q14,6 0,18" stroke="#fff" stroke-width="6" fill="none"/><path d="M-6,-28 q6,-10 0,-20 M6,-28 q6,-10 0,-20" stroke="#ccc" stroke-width="3" fill="none"/></g></g>`;
+      tl.set("#pip", { x: 370, y: 1440 }, 0); tl.set("#peb", { x: 735, y: 1480 }, 0); tl.set("#clock", { x: 605, y: 1360 }, 0); tl.set("#ring", { x: 605, y: 1360 }, 0); tl.set("#lids", { opacity: 1 }, 0);
+      tl.fromTo("#zzz", { y: 0, opacity: 1 }, { y: -50, opacity: 0, duration: 1.2 }, 0);
+      const ring = (t, d, big = false) => { tl.set("#ring", { opacity: 1 }, t); tl.to("#clock", { rotation: big ? 18 : 10, transformOrigin: "50% 50%", duration: 0.05, yoyo: true, repeat: Math.round(d / 0.05) }, t); tl.set("#ring", { opacity: 0 }, t + d); };
+      const snooze = (t) => { tl.to("#pipIn", { rotation: 35, transformOrigin: "50% 100%", duration: 0.12, yoyo: true, repeat: 1 }, t); };
+      tl.set("#time", { textContent: "6:00" }, 0); ring(0.3, 1.2); snooze(1.4);
+      tl.set("#time", { textContent: "6:10" }, 2.6); ring(2.7, 0.6); snooze(3.2);
+      tl.set("#time", { textContent: "6:20" }, 3.6); ring(3.7, 0.6); snooze(4.2);
+      tl.set("#time", { textContent: "8:59" }, 4.6); ring(4.6, 1.3, true);
+      tl.set("#lids", { opacity: 0 }, 4.8); tl.to("#pipIn", { scale: 1.15, transformOrigin: "50% 100%", duration: 0.12, yoyo: true, repeat: 1 }, 4.8);
+      // panic run
+      tl.to("#pip", { keyframes: [{ y: 1300, duration: 0.25, ease: "power2.out" }, { y: 1450, duration: 0.25, ease: "power2.in" }] }, 6.0);
+      tl.to("#pipIn", { rotation: 360, transformOrigin: "50% 50%", duration: 0.5 }, 6.0);
+      tl.to("#blanket", { y: -110, scale: 0.8, transformOrigin: "50% 50%", duration: 0.3 }, 6.1);
+      tl.to("#pip", { x: 1150, duration: 1.4, ease: "power2.in" }, 6.6);
+      tl.to("#pipIn", { y: -30, duration: 0.1, yoyo: true, repeat: 13 }, 6.6);
+      // Pebble coffee
+      tl.to("#mug", { y: -20, rotation: -20, transformOrigin: "50% 50%", duration: 0.4, yoyo: true, repeat: 3 }, 8.9);
+      tl.set("#glint", { x: 800, y: 1350 }, 9.6);
+      tl.fromTo("#glint", { opacity: 0, scale: 0.2, rotation: 0, transformOrigin: "50% 50%" }, { opacity: 1, scale: 1, rotation: 90, transformOrigin: "50% 50%", duration: 0.25, yoyo: true, repeat: 1 }, 9.6);
+      // it's Saturday
+      tl.set("#pipIn", { rotation: 0 }, 11.4);
+      tl.to("#pip", { x: 470, duration: 0.6, ease: "power2.out" }, 11.5);
+      tl.fromTo("#cal", { opacity: 0, scale: 0.3, transformOrigin: "50% 50%" }, { opacity: 1, scale: 1.2, transformOrigin: "50% 50%", duration: 0.3, ease: "back.out(2.5)" }, 11.9);
+      tl.to("#pipIn", { scaleY: 0.8, transformOrigin: "50% 100%", duration: 0.4 }, 12.4);
+      tl.to("#pip", { keyframes: [{ x: 420, y: 1330, duration: 0.3 }, { x: 370, y: 1440, duration: 0.3 }] }, 12.9);
+      tl.to("#pipIn", { scaleY: 1, duration: 0.2 }, 13.2); tl.to("#blanket", { y: 0, scale: 1, duration: 0.2 }, 13.3);
+      tl.set("#lids", { opacity: 1 }, 13.6); tl.to("#cal", { opacity: 0, duration: 0.3 }, 13.6);
+
+      pop("#c1", 0.02);
+      pop("#c2", 1.42);
+      pop("#c3", 2.72);
+      pop("#c4", 4.619999999999999);
+      pop("#c5", 6.02);
+      pop("#c6", 8.82);
+      pop("#c7", 11.82);
+      window.__timelines = window.__timelines || {};
+      window.__timelines["main"] = tl;
+      tl.seek(0);
+    </script>
+  </body>
+</html>

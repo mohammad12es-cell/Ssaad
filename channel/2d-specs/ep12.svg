@@ -1,0 +1,12 @@
+<g id="tree"><rect x="235" y="1260" width="34" height="190" rx="10" fill="#8a5a35" /><circle cx="252" cy="1210" r="95" fill="#3c8a3f" /><circle cx="200" cy="1250" r="60" fill="#2f7d3a" /></g>
+<g id="rocks"><ellipse class="rock" cx="700" cy="1470" rx="62" ry="40" fill="#9aa0ad" /><ellipse class="rock" cx="860" cy="1475" rx="55" ry="36" fill="#8a909c" /></g>
+<g id="pip"></g>
+<g id="peb"></g>
+<g id="flower"><path d="M520,1480 C518,1420 524,1380 520,1330" stroke="#3fa34d" stroke-width="10" fill="none" />
+  <g><circle cx="520" cy="1310" r="20" fill="#ff8fb1" /><circle cx="545" cy="1328" r="20" fill="#ff8fb1" /><circle cx="495" cy="1328" r="20" fill="#ff8fb1" /><circle cx="520" cy="1325" r="14" fill="#ffd166" /></g></g>
+
+<g id="fakeRock" opacity="0"><ellipse cx="0" cy="0" rx="58" ry="40" fill="#9aa0ad" /><path d="M-30,-10 q20,-12 40,0" stroke="#7d838f" stroke-width="5" fill="none" />
+  <g id="peek" opacity="0"><line x1="20" y1="-30" x2="12" y2="-80" stroke="#ffd166" stroke-width="8" stroke-linecap="round" /><line x1="38" y1="-28" x2="46" y2="-78" stroke="#ffd166" stroke-width="8" stroke-linecap="round" />
+    <rect x="-6" y="-100" width="34" height="24" rx="8" fill="#111" /><rect x="30" y="-98" width="34" height="24" rx="8" fill="#111" /><rect x="26" y="-90" width="8" height="5" fill="#111" /></g></g>
+<text id="count" x="790" y="1290" text-anchor="middle" font-family="Fredoka" font-weight="700" font-size="56" fill="#fff" stroke="#2b2a6e" stroke-width="7" paint-order="stroke" opacity="0">1, 2, 3…</text>
+<text id="bangP" x="0" y="0" font-family="Fredoka" font-weight="700" font-size="70" fill="#ff5a5f" stroke="#2b2a6e" stroke-width="7" paint-order="stroke" opacity="0">!!</text>

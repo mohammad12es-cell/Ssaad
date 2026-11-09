@@ -10,7 +10,7 @@
       $("peb").innerHTML = `<g id="pebIn">${pebSVG(0.5, true)}</g>`;
       for (let i = 0; i < 3; i++) mk("path", { d: star(-40 + i * 40, -20 * (i % 2), 18) }, $("stars"));
       const screen = (n, t) => { for (let i = 0; i < 6; i++) tl.set("#sc" + i, { opacity: i === n ? 1 : 0 }, t); };
-      tl.set("#pip", { x: 440, y: 1450 }, 0); tl.set("#peb", { x: 255, y: 1480, rotation: -8 }, 0); screen(0, 0);
+      tl.set("#pip", { x: 470, y: 1450 }, 0); tl.set("#peb", { x: 285, y: 1480, rotation: -8 }, 0); screen(0, 0);
       tl.to("#pipIn", { y: -10, duration: 0.35, yoyo: true, repeat: 3, ease: "sine.inOut" }, 0);
       // No Wi-Fi
       screen(1, 1.4);
@@ -35,7 +35,7 @@
       tl.to("#stars", { opacity: 0, duration: 0.2 }, 10.9);
       // Pebble touching grass
       tl.to("#cup", { y: -6, duration: 0.3, yoyo: true, repeat: 3 }, 8.7);
-      tl.set("#glint", { x: 340, y: 1360 }, 9.2);
+      tl.set("#glint", { x: 370, y: 1360 }, 9.2);
       tl.fromTo("#glint", { opacity: 0, scale: 0.2, rotation: 0, transformOrigin: "50% 50%" }, { opacity: 1, scale: 1, rotation: 90, transformOrigin: "50% 50%", duration: 0.25, yoyo: true, repeat: 1 }, 9.2);
       // Connected... 1%... dead
       tl.to("#pipIn", { rotation: 0, duration: 0.3, ease: "back.out(2)" }, 10.9);

@@ -6,7 +6,7 @@
       for (let i = 0; i < 9; i++) mk("path", { d: `M${180 + i * 90},${1160 + (i % 2) * 18} l20,0 l-10,30 z`, fill: fcol[i % 5] }, $("flags"));
       const confs = []; for (let i = 0; i < 16; i++) confs.push(mk("rect", { x: 540, y: 1200, width: 12, height: 8, fill: fcol[i % 5], opacity: 0 }, $("conf")));
       const splats = []; for (let i = 0; i < 10; i++) splats.push(mk("circle", { cx: 540, cy: 1360, r: 14 + (i % 3) * 6, fill: i % 2 ? "#ff8fb1" : "#fff", opacity: 0 }, $("splat")));
-      tl.set("#pip", { x: 320, y: 1450 }, 0); tl.set("#peb", { x: 850, y: 1480, scaleX: -1 }, 0);
+      tl.set("#pip", { x: 345, y: 1450 }, 0); tl.set("#peb", { x: 850, y: 1480, scaleX: -1 }, 0);
       // party start
       tl.set(confs, { opacity: 1 }, 0.2);
       tl.fromTo(confs, { x: 0, y: 0, rotation: 0 }, { x: (i) => ((i * 53) % 600) - 300, y: (i) => 150 + ((i * 37) % 200), rotation: (i) => i * 70, duration: 1.4, ease: "power1.in", immediateRender: false }, 0.2);

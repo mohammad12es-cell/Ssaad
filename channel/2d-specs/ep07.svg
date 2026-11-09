@@ -5,7 +5,7 @@
   <path d="M700,1300 C700,1150 980,1150 980,1300 Z" fill="#e63946" />
   <g fill="#fff"><circle cx="760" cy="1250" r="16" /><circle cx="840" cy="1205" r="20" /><circle cx="920" cy="1255" r="14" /></g>
 </g>
-<g id="lounger" transform="translate(40,0)"><ellipse cx="215" cy="1495" rx="95" ry="20" fill="#3fa34d" /><path d="M130,1490 Q120,1440 150,1430" stroke="#3fa34d" stroke-width="16" fill="none" stroke-linecap="round" />
+<g id="lounger" transform="translate(70,0)"><ellipse cx="215" cy="1495" rx="95" ry="20" fill="#3fa34d" /><path d="M130,1490 Q120,1440 150,1430" stroke="#3fa34d" stroke-width="16" fill="none" stroke-linecap="round" />
   <g id="cup"><rect x="300" y="1440" width="26" height="40" rx="6" fill="#ff8fb1" /><line x1="318" y1="1440" x2="330" y2="1410" stroke="#fff" stroke-width="5" /></g></g>
 <g id="peb"></g>
 <g id="pip"></g>

@@ -2,7 +2,7 @@
       const lily = `<g id="lily" opacity="0"><ellipse cx="0" cy="-185" rx="58" ry="14" fill="#3fa34d"/><path d="M0,-185 L50,-196 L50,-176 Z" fill="#8be08f"/></g>`;
       $("pip").innerHTML = `<g id="pipIn">${pipSVG(0.5)}<g id="wink" opacity="0">${winkSVG(0.5)}</g>${lily}${flower}</g>`;
       $("peb").innerHTML = `<g id="pebIn">${pebSVG(0.5, true)}</g>`;
-      tl.set("#pip", { x: 360, y: 1450 }, 0); tl.set("#peb", { x: 215, y: 1490 }, 0); tl.set("#wink", { opacity: 0 }, 0);
+      tl.set("#pip", { x: 400, y: 1450 }, 0); tl.set("#peb", { x: 285, y: 1490 }, 0); tl.set("#wink", { opacity: 0 }, 0);
       tl.set("#wink", { opacity: 1 }, 0.6); tl.set("#wink", { opacity: 0 }, 1.4);
       // dive into the bushes
       tl.to("#pip", { keyframes: [{ x: 470, y: 1250, duration: 0.4, ease: "power2.out" }, { x: 580, y: 1340, duration: 0.4, ease: "power2.in" }] }, 2.0);

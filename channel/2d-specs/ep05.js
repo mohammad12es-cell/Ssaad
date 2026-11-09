@@ -2,7 +2,7 @@
       $("peb").innerHTML = `<g id="pebIn">${pebSVG(0.5, true)}</g>`;
       const fl = []; for (let i = 0; i < 9; i++) fl.push(mk("circle", { cx: 200 + i * 80, cy: 1250 + (i % 3) * 60, r: 6 }, $("flies")));
       fl.forEach((f, i) => tl.fromTo(f, { opacity: 0.2, y: 0 }, { opacity: 1, y: -30, duration: 0.6 + (i % 3) * 0.2, yoyo: true, repeat: 13 - (i % 3) * 3, ease: "sine.inOut" }, i * 0.1));
-      tl.set("#pip", { x: 300, y: 1440 }, 0); tl.set("#peb", { x: 520, y: 1480 }, 0); tl.set("#lids", { opacity: 1 }, 0);
+      tl.set("#pip", { x: 330, y: 1440 }, 0); tl.set("#peb", { x: 520, y: 1480 }, 0); tl.set("#lids", { opacity: 1 }, 0);
       // asleep
       tl.to("#pipIn", { scaleY: 1.04, transformOrigin: "50% 100%", duration: 0.5, yoyo: true, repeat: 2, ease: "sine.inOut" }, 0);
       tl.fromTo("#zzz", { y: 0, opacity: 1 }, { y: -60, opacity: 0, duration: 1.6 }, 0);
@@ -32,6 +32,6 @@
       // lights out, walk back to bed (loops)
       tl.to("#gloom", { opacity: 0.45, duration: 0.4 }, 12.5); tl.to("#snack", { opacity: 0, duration: 0.4 }, 12.5);
       tl.to("#door", { scaleX: 1, duration: 0.3 }, 12.5); tl.to("#glowH", { opacity: 0, duration: 0.3 }, 12.5);
-      tl.to("#pip", { x: 300, duration: 1.1, ease: "power1.inOut" }, 12.6);
+      tl.to("#pip", { x: 330, duration: 1.1, ease: "power1.inOut" }, 12.6);
       tl.to("#pipIn", { scaleY: 1, scaleX: 1, duration: 0.3 }, 13.4);
       tl.set("#lids", { opacity: 1 }, 13.75);

@@ -22,6 +22,6 @@
 <g id="peb"></g>
 <g id="ball"><g id="trail"></g><g id="ballSpin"><circle cx="0" cy="0" r="30" fill="#ff7b6b" /><path d="M0,-23 a23,23 0 1,1 -1,0 M0,-15 a15,15 0 1,0 1,0 M0,-7 a7,7 0 1,1 -1,0" fill="none" stroke="#c94f63" stroke-width="4" /></g></g>
 <g id="dust"></g>
-<text id="bangP" x="340" y="1270" font-family="Fredoka" font-weight="700" font-size="70" fill="#ff5a5f" stroke="#2b2a6e" stroke-width="7" paint-order="stroke" opacity="0">!!</text>
-<text id="bangB" x="230" y="1340" font-family="Fredoka" font-weight="700" font-size="70" fill="#ff5a5f" stroke="#2b2a6e" stroke-width="7" paint-order="stroke" opacity="0">!!</text>
+<text id="bangP" x="380" y="1270" font-family="Fredoka" font-weight="700" font-size="70" fill="#ff5a5f" stroke="#2b2a6e" stroke-width="7" paint-order="stroke" opacity="0">!!</text>
+<text id="bangB" x="275" y="1340" font-family="Fredoka" font-weight="700" font-size="70" fill="#ff5a5f" stroke="#2b2a6e" stroke-width="7" paint-order="stroke" opacity="0">!!</text>
 <text id="burp" x="760" y="1300" text-anchor="middle" font-family="Fredoka" font-weight="700" font-size="66" fill="#ffd166" stroke="#2b2a6e" stroke-width="8" paint-order="stroke" opacity="0">BURP!</text>

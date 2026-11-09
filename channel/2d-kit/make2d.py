@@ -17,6 +17,8 @@ json.dump({"id": spec["id"], "name": spec["id"]}, open(os.path.join(out, "meta.j
 json.dump({"name": spec["id"], "private": True, "type": "module"}, open(os.path.join(out, "package.json"), "w"), indent=2)
 rd = lambda k: open(os.path.join(here, spec[k])).read() if spec.get(k) else ""
 D = spec["duration"]; sky = spec.get("sky", ["#6fd3ff", "#b8ecff", "#e8fbff"])
+cast = spec.get("style") == "cast"; Z = spec.get("zoom", 1.35); CX = spec.get("cx", 540); CY = spec.get("cy", 1300)
+SX, SY = (540, 1110) if cast else (CX, CY)
 caps = "\n".join(f'<div id="{c[0]}" class="clip cap" data-start="{c[1]}" data-duration="{c[2]}" data-track-index="1">{c[3]}</div>' for c in spec["captions"])
 pops = "\n".join(f'      pop("#{c[0]}", {c[1] + 0.02});' for c in spec["captions"])
 html = f"""<!doctype html>
@@ -37,6 +39,7 @@ html = f"""<!doctype html>
       svg.stage {{ width: 1080px; height: 1920px; }}
       .cap {{ position: absolute; left: 50px; right: 50px; top: 250px; bottom: auto; text-align: center; color: var(--ink); font-weight: 700; font-size: 96px; line-height: 1.05;
         -webkit-text-stroke: 16px var(--stroke); paint-order: stroke fill; }}
+      {".cap { top: 300px; color: #2b2a6e; -webkit-text-stroke: 0; font-size: 78px; }" if cast else ""}
     </style>
   </head>
   <body>
@@ -44,16 +47,19 @@ html = f"""<!doctype html>
       <svg id="world" class="clip stage" data-start="0" data-duration="{D}" data-track-index="0" viewBox="0 0 1080 1920">
         <defs>
           <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="{sky[0]}" /><stop offset="0.6" stop-color="{sky[1]}" /><stop offset="1" stop-color="{sky[2]}" /></linearGradient>
+          <clipPath id="cardclip"><rect x="40" y="520" width="1000" height="1180" rx="60" /></clipPath>
           <radialGradient id="glow" cx="0.5" cy="0.5" r="0.5"><stop offset="0" stop-color="#fff6c4" /><stop offset="0.5" stop-color="#ffd27a" stop-opacity="0.7" /><stop offset="1" stop-color="#ffb347" stop-opacity="0" /></radialGradient>
         </defs>
-        <rect width="1080" height="1920" fill="url(#sky)" />
+        <rect width="1080" height="1920" fill="{"#fff7ea" if cast else "none"}" />
+        {"<g clip-path=\"url(#cardclip)\">" if cast else ""}<rect width="1080" height="1920" fill="url(#sky)" />
         {rd("svgBack")}
-        <g id="zoom" transform="translate(540,1300) scale(1.35) translate(-540,-1300)">
+        <g id="zoom" transform="translate({SX},{SY}) scale({Z}) translate({-CX},{-CY})">
           <path d="M0,1250 C300,1180 700,1320 1080,1230 L1080,1920 L0,1920 Z" fill="{spec.get("hill1", "#8be08f")}" />
           <path d="M0,1520 C320,1470 760,1580 1080,1500 L1080,1920 L0,1920 Z" fill="{spec.get("hill2", "#5fcf6a")}" />
           {rd("svg")}
         </g>
-        {rd("svgTop")}
+        {('<g transform="translate(0,140)">' + rd("svgTop") + '</g>') if cast else rd("svgTop")}
+        {"</g><rect x=\"40\" y=\"520\" width=\"1000\" height=\"1180\" rx=\"60\" fill=\"none\" stroke=\"#2b2a6e\" stroke-width=\"6\" /><text x=\"540\" y=\"1800\" text-anchor=\"middle\" font-family=\"Fredoka\" font-weight=\"700\" font-size=\"58\" fill=\"#2b2a6e\">Pip &amp; Pebble 🐸🐌</text>" if cast else ""}
       </svg>
       {caps}
       <audio id="sound" src="assets/audio.wav" data-start="0" data-duration="{D}" data-volume="1"></audio>

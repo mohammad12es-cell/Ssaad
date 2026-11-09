@@ -1,9 +1,9 @@
       $("pip").innerHTML = `<g id="pipIn">${pipSVG(0.5)}</g>`;
       $("peb").innerHTML = `<g id="pebIn">${pebSVG(0.5, true)}</g>`;
       for (let i = 0; i < 5; i++) mk("ellipse", { class: "fire", cx: -40 - i * 24, cy: (i % 2) * 8 - 4, rx: 26 - i * 3, ry: 16 - i * 2, fill: i % 2 ? "#ffb347" : "#ff5a1f" }, $("trail"));
-      tl.set("#pip", { x: 360, y: 1440 }, 0); tl.set("#peb", { x: 215, y: 1480 }, 0);
+      tl.set("#pip", { x: 400, y: 1440 }, 0); tl.set("#peb", { x: 262, y: 1480 }, 0);
       tl.set("#lady", { x: 560, y: 1820 }, 0); tl.set("#cop", { x: 600, y: 1460, scale: 0, transformOrigin: "50% 100%" }, 0);
-      tl.set("#ball", { x: 215, y: 1450, opacity: 0 }, 0); tl.set(".fire", { opacity: 0 }, 0);
+      tl.set("#ball", { x: 262, y: 1450, opacity: 0 }, 0); tl.set(".fire", { opacity: 0 }, 0);
       // card + reaction
       tl.fromTo("#card", { y: -300, opacity: 0 }, { y: 0, opacity: 1, duration: 0.35, ease: "back.out(1.8)" }, 0.1);
       ["#bangP", "#bangB"].forEach((b) => { tl.fromTo(b, { opacity: 0, scale: 0.3, transformOrigin: "50% 50%" }, { opacity: 1, scale: 1, transformOrigin: "50% 50%", duration: 0.2, ease: "back.out(3)" }, 0.8); tl.to(b, { opacity: 0, duration: 0.2 }, 1.5); });

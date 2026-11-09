@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="en" data-resolution="portrait">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <script src="assets/gsap.min.js"></script>
+    <script src="assets/characters.js"></script>
+    <style>
+      @font-face { font-family: "Fredoka"; font-weight: 700; src: url("assets/fredoka-latin-700-normal.woff2") format("woff2"); }
+      @font-face { font-family: "Fredoka"; font-weight: 500; src: url("assets/fredoka-latin-500-normal.woff2") format("woff2"); }
+      :root { --ground: #ffb38a; --ink: #ffffff; --stroke: #2b2a6e; --font-display: "Fredoka", sans-serif; }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { margin: 0; width: 1080px; height: 1920px; overflow: hidden; background: var(--ground); }
+      #root { position: relative; width: 100%; height: 100%; overflow: hidden; font-family: var(--font-display); }
+      .clip { position: absolute; inset: 0; }
+      svg.stage { width: 1080px; height: 1920px; }
+      .cap { position: absolute; left: 50px; right: 50px; top: 250px; bottom: auto; text-align: center; color: var(--ink); font-weight: 700; font-size: 96px; line-height: 1.05;
+        -webkit-text-stroke: 16px var(--stroke); paint-order: stroke fill; }
+      .cap { top: 300px; color: #2b2a6e; -webkit-text-stroke: 0; font-size: 78px; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="14" data-width="1080" data-height="1920">
+      <svg id="world" class="clip stage" data-start="0" data-duration="14" data-track-index="0" viewBox="0 0 1080 1920">
+        <defs>
+          <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffb38a" /><stop offset="0.6" stop-color="#ffd9a8" /><stop offset="1" stop-color="#fff3d6" /></linearGradient>
+          <clipPath id="cardclip"><rect x="40" y="520" width="1000" height="1180" rx="60" /></clipPath>
+          <radialGradient id="glow" cx="0.5" cy="0.5" r="0.5"><stop offset="0" stop-color="#fff6c4" /><stop offset="0.5" stop-color="#ffd27a" stop-opacity="0.7" /><stop offset="1" stop-color="#ffb347" stop-opacity="0" /></radialGradient>
+        </defs>
+        <rect width="1080" height="1920" fill="#fff7ea" />
+        <g clip-path="url(#cardclip)"><rect width="1080" height="1920" fill="url(#sky)" />
+        
+        <g id="zoom" transform="translate(540,1110) scale(1.5) translate(-545,-1330)">
+          <path d="M0,1250 C300,1180 700,1320 1080,1230 L1080,1920 L0,1920 Z" fill="#8be08f" />
+          <path d="M0,1520 C320,1470 760,1580 1080,1500 L1080,1920 L0,1920 Z" fill="#5fcf6a" />
+          <circle cx="860" cy="560" r="90" fill="#ffe27a" />
+<g id="house" transform="translate(-90,0)">
+  <circle id="glowH" cx="840" cy="1370" r="70" fill="url(#glow)" opacity="0" />
+  <rect x="772" y="1280" width="136" height="150" rx="16" fill="#f3e2c8" />
+  <g id="lettuce" opacity="0"><circle cx="830" cy="1405" r="18" fill="#7ed957" /><circle cx="852" cy="1405" r="18" fill="#5fcf6a" /><circle cx="841" cy="1388" r="18" fill="#9be36f" /></g>
+  <rect id="door" x="812" y="1335" width="56" height="95" rx="24" fill="#3fa3a8" />
+  <path d="M700,1300 C700,1150 980,1150 980,1300 Z" fill="#e63946" />
+  <g fill="#fff"><circle cx="760" cy="1250" r="16" /><circle cx="840" cy="1205" r="20" /><circle cx="920" cy="1255" r="14" /></g>
+</g>
+<g id="lady"><ellipse cx="0" cy="0" rx="35" ry="25" fill="#ff3b3b" /><circle cx="-31" cy="-3" r="15" fill="#1b1a2e" /><line x1="0" y1="-25" x2="0" y2="25" stroke="#1b1a2e" stroke-width="4" />
+  <circle cx="-12" cy="-10" r="6" fill="#1b1a2e" /><circle cx="12" cy="-11" r="6" fill="#1b1a2e" /><circle cx="14" cy="9" r="5" fill="#1b1a2e" /><circle cx="-11" cy="10" r="5" fill="#1b1a2e" /><circle cx="-35" cy="-6" r="4" fill="#fff" /></g>
+<g id="cop"><g transform="scale(0.36)">
+  <ellipse cx="0" cy="-260" rx="230" ry="260" fill="#5a3d2b" /><line x1="0" y1="-500" x2="0" y2="-10" stroke="#3a2618" stroke-width="10" />
+  <circle cx="0" cy="-560" r="140" fill="#6b4a33" />
+  <path d="M-150,-630 L150,-630 L120,-720 L-120,-720 Z" fill="#2f4aa0" /><rect x="-170" y="-645" width="340" height="40" rx="18" fill="#22357a" /><circle cx="0" cy="-685" r="22" fill="#ffd166" />
+  <rect x="-110" y="-600" width="90" height="50" rx="16" fill="#111" /><rect x="20" y="-600" width="90" height="50" rx="16" fill="#111" /><rect x="-20" y="-585" width="40" height="10" fill="#111" />
+  <path id="stache" d="M0,-510 C-40,-540 -140,-530 -170,-480 C-120,-500 -60,-490 0,-480 C60,-490 120,-500 170,-480 C140,-530 40,-540 0,-510 Z" fill="#2a1a10" />
+  <rect x="-260" y="-340" width="520" height="70" rx="35" fill="#5a3d2b" />
+  <g transform="translate(-300,-480)"><rect x="-10" y="0" width="20" height="300" fill="#999" /><polygon points="-90,-37 -37,-90 37,-90 90,-37 90,37 37,90 -37,90 -90,37" fill="#e63946" stroke="#fff" stroke-width="8" /><text x="0" y="18" text-anchor="middle" font-family="Fredoka" font-weight="700" font-size="54" fill="#fff">STOP</text></g>
+</g></g>
+<g id="pip"></g>
+<g id="peb"></g>
+<g id="ball"><g id="trail"></g><g id="ballSpin"><circle cx="0" cy="0" r="30" fill="#ff7b6b" /><path d="M0,-23 a23,23 0 1,1 -1,0 M0,-15 a15,15 0 1,0 1,0 M0,-7 a7,7 0 1,1 -1,0" fill="none" stroke="#c94f63" stroke-width="4" /></g></g>
+<g id="dust"></g>
+<text id="bangP" x="380" y="1270" font-family="Fredoka" font-weight="700" font-size="70" fill="#ff5a5f" stroke="#2b2a6e" stroke-width="7" paint-order="stroke" opacity="0">!!</text>
+<text id="bangB" x="275" y="1340" font-family="Fredoka" font-weight="700" font-size="70" fill="#ff5a5f" stroke="#2b2a6e" stroke-width="7" paint-order="stroke" opacity="0">!!</text>
+<text id="burp" x="760" y="1300" text-anchor="middle" font-family="Fredoka" font-weight="700" font-size="66" fill="#ffd166" stroke="#2b2a6e" stroke-width="8" paint-order="stroke" opacity="0">BURP!</text>
+
+        </g>
+        <g transform="translate(0,140)"><g id="card" opacity="0"><rect x="160" y="470" width="760" height="190" rx="40" fill="#fff" stroke="#2b2a6e" stroke-width="6" />
+  <text id="cardT1" x="540" y="550" text-anchor="middle" font-family="Fredoka" font-weight="700" font-size="58" fill="#2b2a6e">🥬 FREE LETTUCE BUFFET</text>
+  <text id="cardT2" x="540" y="615" text-anchor="middle" font-family="Fredoka" font-weight="500" font-size="40" fill="#555">first come, first served!</text></g>
+</g>
+        </g><rect x="40" y="520" width="1000" height="1180" rx="60" fill="none" stroke="#2b2a6e" stroke-width="6" /><text x="540" y="1800" text-anchor="middle" font-family="Fredoka" font-weight="700" font-size="58" fill="#2b2a6e">Pip &amp; Pebble 🐸🐌</text>
+      </svg>
+      <div id="c1" class="clip cap" data-start="0" data-duration="1.6" data-track-index="1">FREE BUFFET?! 🥬</div>
+<div id="c2" class="clip cap" data-start="2.45" data-duration="1.3" data-track-index="1">SCREECH! 🐞</div>
+<div id="c3" class="clip cap" data-start="3.8" data-duration="1.6" data-track-index="1">STOP ✋👮</div>
+<div id="c4" class="clip cap" data-start="5.5" data-duration="1.8" data-track-index="1">SHELL MODE 🌀</div>
+<div id="c5" class="clip cap" data-start="8.3" data-duration="1.8" data-track-index="1">First come… 😎</div>
+<div id="c6" class="clip cap" data-start="11.4" data-duration="1.9" data-track-index="1">…first served 😂</div>
+      <audio id="sound" src="assets/audio.wav" data-start="0" data-duration="14" data-volume="1"></audio>
+    </div>
+    <script>
+      const NS = "http://www.w3.org/2000/svg";
+      const $ = (id) => document.getElementById(id);
+      const mk = (tag, attrs, parent) => { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); parent.appendChild(e); return e; };
+      const pipSVG = (s = 0.5) => `<g transform="scale(${s})">${PIP(0, -165, 1)}</g>`;
+      const pebSVG = (s = 0.5, shades = false) => `<g transform="scale(${s})">${PEBBLE(0, -92, 1)}${shades ? `<g><rect x="105" y="-245" width="62" height="44" rx="14" fill="#111"/><rect x="167" y="-240" width="62" height="44" rx="14" fill="#111"/><rect x="150" y="-232" width="30" height="8" fill="#111"/><rect x="115" y="-238" width="18" height="8" rx="4" fill="#fff" opacity=".6"/></g>` : ""}</g>`;
+      // eyelids for Pip (scaled 0.5): eye centres (+/-42.5, -158.5), r 29
+      const lidsSVG = (s = 0.5) => `<g transform="scale(${s / 0.5})"><circle cx="-42.5" cy="-158.5" r="31" fill="#5fcf6a"/><circle cx="42.5" cy="-158.5" r="31" fill="#5fcf6a"/><path d="M-62,-156 C-50,-146 -35,-146 -23,-156 M23,-156 C35,-146 50,-146 62,-156" stroke="#1b1a2e" stroke-width="5" fill="none" stroke-linecap="round"/></g>`;
+      const winkSVG = (s = 0.5) => `<g transform="scale(${s / 0.5})"><circle cx="42.5" cy="-158.5" r="31" fill="#5fcf6a"/><path d="M23,-156 C35,-146 50,-146 62,-156" stroke="#1b1a2e" stroke-width="5" fill="none" stroke-linecap="round"/></g>`;
+      const star = (x, y, s) => `M${x},${y - s} L${x + s * 0.25},${y - s * 0.25} L${x + s},${y} L${x + s * 0.25},${y + s * 0.25} L${x},${y + s} L${x - s * 0.25},${y + s * 0.25} L${x - s},${y} L${x - s * 0.25},${y - s * 0.25} Z`;
+      const tl = gsap.timeline({ paused: true });
+      const pop = (id, t) => tl.fromTo(id, { scale: 0.4, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.22, ease: "back.out(2.5)" }, t);
+      // dust/splash puff helper: creates n circles in group g around (x,y) and animates them at t
+      function puff(g, x, y, t, color = "#e8d6b0", n = 6, spread = 60) {
+        const els = []; for (let i = 0; i < n; i++) els.push(mk("circle", { cx: x, cy: y, r: 22 + (i % 3) * 8, fill: color, opacity: 0 }, $(g)));
+        els.forEach((e, i) => tl.fromTo(e, { opacity: 0.9, x: 0, y: 0, scale: 0.5, transformOrigin: "50% 50%" }, { opacity: 0, x: (i - n / 2) * spread * 0.5, y: -40 - (i % 2) * 40, scale: 1.8, transformOrigin: "50% 50%", duration: 0.7, immediateRender: false }, t));
+        tl.set(els, { opacity: 0 }, 0);
+      }
+      $("pip").innerHTML = `<g id="pipIn">${pipSVG(0.5)}</g>`;
+      $("peb").innerHTML = `<g id="pebIn">${pebSVG(0.5, true)}</g>`;
+      for (let i = 0; i < 5; i++) mk("ellipse", { class: "fire", cx: -40 - i * 24, cy: (i % 2) * 8 - 4, rx: 26 - i * 3, ry: 16 - i * 2, fill: i % 2 ? "#ffb347" : "#ff5a1f" }, $("trail"));
+      tl.set("#pip", { x: 400, y: 1440 }, 0); tl.set("#peb", { x: 262, y: 1480 }, 0);
+      tl.set("#lady", { x: 560, y: 1820 }, 0); tl.set("#cop", { x: 600, y: 1460, scale: 0, transformOrigin: "50% 100%" }, 0);
+      tl.set("#ball", { x: 262, y: 1450, opacity: 0 }, 0); tl.set(".fire", { opacity: 0 }, 0);
+      // card + reaction
+      tl.fromTo("#card", { y: -300, opacity: 0 }, { y: 0, opacity: 1, duration: 0.35, ease: "back.out(1.8)" }, 0.1);
+      ["#bangP", "#bangB"].forEach((b) => { tl.fromTo(b, { opacity: 0, scale: 0.3, transformOrigin: "50% 50%" }, { opacity: 1, scale: 1, transformOrigin: "50% 50%", duration: 0.2, ease: "back.out(3)" }, 0.8); tl.to(b, { opacity: 0, duration: 0.2 }, 1.5); });
+      tl.to("#card", { y: -300, opacity: 0, duration: 0.3, ease: "power2.in" }, 1.4);
+      // Pip dashes, ladybug, screech
+      tl.to("#pipIn", { y: -60, duration: 0.11, yoyo: true, repeat: 5, ease: "power1.out" }, 1.6);
+      tl.to("#pip", { x: 470, duration: 0.85, ease: "power2.in" }, 1.6);
+      tl.to("#lady", { y: 1480, duration: 2.0, ease: "none" }, 2.3);
+      tl.to("#pipIn", { rotation: -22, transformOrigin: "50% 100%", duration: 0.12 }, 2.45);
+      puff("dust", 420, 1430, 2.45);
+      // cop
+      tl.to("#cop", { scale: 1, duration: 0.3, ease: "back.out(2)" }, 3.8);
+      tl.to("#pipIn", { rotation: 0, duration: 0.2 }, 3.8);
+      tl.fromTo("#stache", { scaleY: 1, transformOrigin: "50% 50%" }, { scaleY: 1.4, transformOrigin: "50% 50%", duration: 0.07, yoyo: true, repeat: 7 }, 3.9);
+      tl.to("#pipIn", { scaleY: 0.82, transformOrigin: "50% 100%", duration: 0.5 }, 4.9);
+      // SHELL MODE
+      tl.to("#peb", { opacity: 0, duration: 0.1 }, 5.5); tl.set("#ball", { opacity: 1 }, 5.5);
+      tl.fromTo("#ballSpin", { rotation: 0, transformOrigin: "50% 50%" }, { rotation: 2880, transformOrigin: "50% 50%", duration: 2.5, ease: "power1.in" }, 5.5);
+      tl.set(".fire", { opacity: 0.9 }, 5.9); tl.fromTo(".fire", { scaleX: 1 }, { scaleX: 1.5, transformOrigin: "100% 50%", duration: 0.08, yoyo: true, repeat: 22 }, 5.9);
+      tl.to("#ball", { x: 420, y: 1440, duration: 0.9, ease: "power1.in" }, 6.0);
+      tl.to("#ball", { keyframes: [{ x: 560, y: 1150, duration: 0.4, ease: "power2.out" }, { x: 680, y: 1440, duration: 0.4, ease: "power2.in" }] }, 6.9);
+      tl.to("#stache", { rotation: 20, transformOrigin: "50% 50%", duration: 0.15 }, 7.1);
+      tl.to("#ball", { x: 710, duration: 0.3, ease: "power3.out" }, 7.7); puff("dust", 700, 1440, 7.7);
+      tl.set(".fire", { opacity: 0 }, 7.9);
+      // Pebble at the door
+      tl.set("#peb", { x: 690, y: 1475 }, 8.0); tl.set("#ball", { opacity: 0 }, 8.0);
+      tl.fromTo("#peb", { opacity: 0, scale: 0.5, transformOrigin: "50% 100%" }, { opacity: 1, scale: 1, transformOrigin: "50% 100%", duration: 0.3, ease: "back.out(3)", immediateRender: false }, 8.0);
+      tl.to("#door", { scaleX: 0, transformOrigin: "0% 50%", duration: 0.5 }, 8.3);
+      tl.to("#glowH", { opacity: 1, scale: 2, transformOrigin: "50% 50%", duration: 0.5 }, 8.3); tl.to("#lettuce", { opacity: 1, duration: 0.3 }, 8.4);
+      tl.to("#peb", { x: 740, opacity: 0, duration: 0.5 }, 9.4); tl.to("#lettuce", { opacity: 0, duration: 0.2 }, 9.9);
+      // Pip arrives, Pebble comes out full, burp
+      tl.to(["#cop", "#lady"], { opacity: 0, duration: 0.3 }, 10.0);
+      tl.to("#pipIn", { scaleY: 1, duration: 0.2 }, 10.1);
+      tl.to("#pip", { x: 560, duration: 0.6, ease: "power2.out" }, 10.2);
+      tl.to("#pipIn", { y: -40, duration: 0.1, yoyo: true, repeat: 5 }, 10.2);
+      tl.to("#pipIn", { scaleY: 0.92, transformOrigin: "50% 100%", duration: 0.12, yoyo: true, repeat: 5 }, 10.8);
+      tl.set("#pebIn", { scaleX: 1.25, transformOrigin: "50% 100%" }, 11.0);
+      tl.to("#peb", { x: 770, opacity: 1, duration: 0.3 }, 11.0);
+      tl.fromTo("#burp", { opacity: 0, scale: 0.3, transformOrigin: "50% 50%" }, { opacity: 1, scale: 1, transformOrigin: "50% 50%", duration: 0.25, ease: "back.out(3)" }, 11.4);
+      tl.to("#pebIn", { scaleY: 1.15, transformOrigin: "50% 100%", duration: 0.15, yoyo: true, repeat: 1 }, 11.4);
+      tl.to("#burp", { opacity: 0, duration: 0.3 }, 12.3);
+      tl.to("#pipIn", { scaleY: 0.78, scaleX: 1.08, transformOrigin: "50% 100%", duration: 0.7 }, 12.2);
+      tl.to("#door", { scaleX: 1, duration: 0.3 }, 12.4); tl.to("#glowH", { opacity: 0, duration: 0.3 }, 12.4);
+      // loop: refill notification
+      tl.call(() => {}, null, 13.3);
+      tl.set("#cardT1", { textContent: "🥬 Buffet REFILLED!" }, 13.35); tl.set("#cardT2", { textContent: "first come, first served…" }, 13.35);
+      tl.fromTo("#card", { y: -300, opacity: 0 }, { y: 0, opacity: 1, duration: 0.3, ease: "back.out(1.8)", immediateRender: false }, 13.4);
+      tl.to("#pipIn", { scaleY: 1, scaleX: 1, duration: 0.2, ease: "back.out(3)" }, 13.5);
+
+      pop("#c1", 0.02);
+      pop("#c2", 2.47);
+      pop("#c3", 3.82);
+      pop("#c4", 5.52);
+      pop("#c5", 8.32);
+      pop("#c6", 11.42);
+      window.__timelines = window.__timelines || {};
+      window.__timelines["main"] = tl;
+      tl.seek(0);
+    </script>
+  </body>
+</html>

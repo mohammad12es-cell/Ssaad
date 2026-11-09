@@ -8,6 +8,6 @@ for i in 0 1 2; do node render.mjs --out "$TMP/p$i.mp4" --from $((i*120)) --to $
 python3 audio.py "$TMP/audio.wav"
 printf "file '%s'\n" "$TMP/p0.mp4" "$TMP/p1.mp4" "$TMP/p2.mp4" > "$TMP/list.txt"
 ffmpeg -y -loglevel error -f concat -safe 0 -i "$TMP/list.txt" -i "$TMP/audio.wav" \
-  -map 0:v -map 1:a -c:v copy -c:a aac -b:a 320k -ar 48000 -t 15 -movflags +faststart \
+  -map 0:v -map 1:a -c:v libx264 -preset slow -tune film -b:v 32M -maxrate 45M -bufsize 64M -pix_fmt yuv420p -c:a aac -b:a 320k -ar 48000 -t 15 -movflags +faststart \
   -metadata title="The Last Two" "$OUT"
 rm -rf "$TMP"; echo "done -> $OUT"

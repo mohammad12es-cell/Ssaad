@@ -1,0 +1,586 @@
+[
+ {
+  "file": "vo1.wav",
+  "text": "We thought Mars was a dead planet. But what if something is still burning beneath its surface?",
+  "duration": 5.466,
+  "words": [
+   {
+    "w": "We",
+    "start": 0.05,
+    "end": 0.253
+   },
+   {
+    "w": "thought",
+    "start": 0.253,
+    "end": 0.538
+   },
+   {
+    "w": "Mars",
+    "start": 0.538,
+    "end": 0.863
+   },
+   {
+    "w": "was",
+    "start": 0.863,
+    "end": 1.067
+   },
+   {
+    "w": "a",
+    "start": 1.067,
+    "end": 1.27
+   },
+   {
+    "w": "dead",
+    "start": 1.27,
+    "end": 1.514
+   },
+   {
+    "w": "planet.",
+    "start": 1.514,
+    "end": 1.88
+   },
+   {
+    "w": "But",
+    "start": 2.4,
+    "end": 2.663
+   },
+   {
+    "w": "what",
+    "start": 2.663,
+    "end": 2.927
+   },
+   {
+    "w": "if",
+    "start": 2.927,
+    "end": 3.103
+   },
+   {
+    "w": "something",
+    "start": 3.103,
+    "end": 3.498
+   },
+   {
+    "w": "is",
+    "start": 3.498,
+    "end": 3.674
+   },
+   {
+    "w": "still",
+    "start": 3.674,
+    "end": 3.981
+   },
+   {
+    "w": "burning",
+    "start": 3.981,
+    "end": 4.376
+   },
+   {
+    "w": "beneath",
+    "start": 4.376,
+    "end": 4.771
+   },
+   {
+    "w": "its",
+    "start": 4.771,
+    "end": 4.991
+   },
+   {
+    "w": "surface?",
+    "start": 4.991,
+    "end": 5.386
+   }
+  ]
+ },
+ {
+  "file": "vo2.wav",
+  "text": "A European spacecraft has detected a mysterious gas linked to volcanoes, above cracks on the Red Planet.",
+  "duration": 6.933,
+  "words": [
+   {
+    "w": "A",
+    "start": 0.05,
+    "end": 0.282
+   },
+   {
+    "w": "European",
+    "start": 0.282,
+    "end": 0.886
+   },
+   {
+    "w": "spacecraft",
+    "start": 0.886,
+    "end": 1.489
+   },
+   {
+    "w": "has",
+    "start": 1.489,
+    "end": 1.768
+   },
+   {
+    "w": "detected",
+    "start": 1.768,
+    "end": 2.279
+   },
+   {
+    "w": "a",
+    "start": 2.279,
+    "end": 2.511
+   },
+   {
+    "w": "mysterious",
+    "start": 2.511,
+    "end": 3.068
+   },
+   {
+    "w": "gas",
+    "start": 3.068,
+    "end": 3.346
+   },
+   {
+    "w": "linked",
+    "start": 3.346,
+    "end": 3.718
+   },
+   {
+    "w": "to",
+    "start": 3.718,
+    "end": 3.95
+   },
+   {
+    "w": "volcanoes,",
+    "start": 3.95,
+    "end": 4.6
+   },
+   {
+    "w": "above",
+    "start": 5.07,
+    "end": 5.39
+   },
+   {
+    "w": "cracks",
+    "start": 5.39,
+    "end": 5.756
+   },
+   {
+    "w": "on",
+    "start": 5.756,
+    "end": 5.984
+   },
+   {
+    "w": "the",
+    "start": 5.984,
+    "end": 6.167
+   },
+   {
+    "w": "Red",
+    "start": 6.167,
+    "end": 6.442
+   },
+   {
+    "w": "Planet.",
+    "start": 6.442,
+    "end": 6.853
+   }
+  ]
+ },
+ {
+  "file": "vo3.wav",
+  "text": "It's called hydrogen chloride. On Earth, this gas can escape from volcanic systems when hot magma moves underground.",
+  "duration": 7.643,
+  "words": [
+   {
+    "w": "It's",
+    "start": 0.05,
+    "end": 0.281
+   },
+   {
+    "w": "called",
+    "start": 0.281,
+    "end": 0.651
+   },
+   {
+    "w": "hydrogen",
+    "start": 0.651,
+    "end": 1.252
+   },
+   {
+    "w": "chloride.",
+    "start": 1.252,
+    "end": 1.76
+   },
+   {
+    "w": "On",
+    "start": 2.31,
+    "end": 2.51
+   },
+   {
+    "w": "Earth,",
+    "start": 2.51,
+    "end": 2.75
+   },
+   {
+    "w": "this",
+    "start": 2.97,
+    "end": 3.251
+   },
+   {
+    "w": "gas",
+    "start": 3.251,
+    "end": 3.532
+   },
+   {
+    "w": "can",
+    "start": 3.532,
+    "end": 3.814
+   },
+   {
+    "w": "escape",
+    "start": 3.814,
+    "end": 4.236
+   },
+   {
+    "w": "from",
+    "start": 4.236,
+    "end": 4.517
+   },
+   {
+    "w": "volcanic",
+    "start": 4.517,
+    "end": 5.079
+   },
+   {
+    "w": "systems",
+    "start": 5.079,
+    "end": 5.548
+   },
+   {
+    "w": "when",
+    "start": 5.548,
+    "end": 5.829
+   },
+   {
+    "w": "hot",
+    "start": 5.829,
+    "end": 6.157
+   },
+   {
+    "w": "magma",
+    "start": 6.157,
+    "end": 6.532
+   },
+   {
+    "w": "moves",
+    "start": 6.532,
+    "end": 6.907
+   },
+   {
+    "w": "underground.",
+    "start": 6.907,
+    "end": 7.563
+   }
+  ]
+ },
+ {
+  "file": "vo4.wav",
+  "text": "The gas was detected above fissures near Alba Mons, one of the enormous volcanic regions of Mars.",
+  "duration": 6.721,
+  "words": [
+   {
+    "w": "The",
+    "start": 0.05,
+    "end": 0.253
+   },
+   {
+    "w": "gas",
+    "start": 0.253,
+    "end": 0.558
+   },
+   {
+    "w": "was",
+    "start": 0.558,
+    "end": 0.812
+   },
+   {
+    "w": "detected",
+    "start": 0.812,
+    "end": 1.371
+   },
+   {
+    "w": "above",
+    "start": 1.371,
+    "end": 1.727
+   },
+   {
+    "w": "fissures",
+    "start": 1.727,
+    "end": 2.133
+   },
+   {
+    "w": "near",
+    "start": 2.133,
+    "end": 2.438
+   },
+   {
+    "w": "Alba",
+    "start": 2.438,
+    "end": 2.794
+   },
+   {
+    "w": "Mons,",
+    "start": 2.794,
+    "end": 3.2
+   },
+   {
+    "w": "one",
+    "start": 3.68,
+    "end": 3.976
+   },
+   {
+    "w": "of",
+    "start": 3.976,
+    "end": 4.174
+   },
+   {
+    "w": "the",
+    "start": 4.174,
+    "end": 4.371
+   },
+   {
+    "w": "enormous",
+    "start": 4.371,
+    "end": 4.914
+   },
+   {
+    "w": "volcanic",
+    "start": 4.914,
+    "end": 5.506
+   },
+   {
+    "w": "regions",
+    "start": 5.506,
+    "end": 6.049
+   },
+   {
+    "w": "of",
+    "start": 6.049,
+    "end": 6.247
+   },
+   {
+    "w": "Mars.",
+    "start": 6.247,
+    "end": 6.641
+   }
+  ]
+ },
+ {
+  "file": "vo5.wav",
+  "text": "Scientists think magma could still be moving deep beneath the Martian surface. But no new eruption has actually been observed.",
+  "duration": 7.685,
+  "words": [
+   {
+    "w": "Scientists",
+    "start": 0.05,
+    "end": 0.648
+   },
+   {
+    "w": "think",
+    "start": 0.648,
+    "end": 0.97
+   },
+   {
+    "w": "magma",
+    "start": 0.97,
+    "end": 1.338
+   },
+   {
+    "w": "could",
+    "start": 1.338,
+    "end": 1.614
+   },
+   {
+    "w": "still",
+    "start": 1.614,
+    "end": 1.936
+   },
+   {
+    "w": "be",
+    "start": 1.936,
+    "end": 2.212
+   },
+   {
+    "w": "moving",
+    "start": 2.212,
+    "end": 2.626
+   },
+   {
+    "w": "deep",
+    "start": 2.626,
+    "end": 2.948
+   },
+   {
+    "w": "beneath",
+    "start": 2.948,
+    "end": 3.362
+   },
+   {
+    "w": "the",
+    "start": 3.362,
+    "end": 3.546
+   },
+   {
+    "w": "Martian",
+    "start": 3.546,
+    "end": 4.006
+   },
+   {
+    "w": "surface.",
+    "start": 4.006,
+    "end": 4.42
+   },
+   {
+    "w": "But",
+    "start": 5.02,
+    "end": 5.27
+   },
+   {
+    "w": "no",
+    "start": 5.27,
+    "end": 5.52
+   },
+   {
+    "w": "new",
+    "start": 5.52,
+    "end": 5.77
+   },
+   {
+    "w": "eruption",
+    "start": 5.77,
+    "end": 6.187
+   },
+   {
+    "w": "has",
+    "start": 6.187,
+    "end": 6.438
+   },
+   {
+    "w": "actually",
+    "start": 6.438,
+    "end": 6.938
+   },
+   {
+    "w": "been",
+    "start": 6.938,
+    "end": 7.188
+   },
+   {
+    "w": "observed.",
+    "start": 7.188,
+    "end": 7.605
+   }
+  ]
+ },
+ {
+  "file": "vo6.wav",
+  "text": "And if underground heat meets water, could Mars still hide places where microbial life might survive?",
+  "duration": 6.344,
+  "words": [
+   {
+    "w": "And",
+    "start": 0.05,
+    "end": 0.261
+   },
+   {
+    "w": "if",
+    "start": 0.261,
+    "end": 0.43
+   },
+   {
+    "w": "underground",
+    "start": 0.43,
+    "end": 1.02
+   },
+   {
+    "w": "heat",
+    "start": 1.02,
+    "end": 1.315
+   },
+   {
+    "w": "meets",
+    "start": 1.315,
+    "end": 1.653
+   },
+   {
+    "w": "water,",
+    "start": 1.653,
+    "end": 1.99
+   },
+   {
+    "w": "could",
+    "start": 2.44,
+    "end": 2.723
+   },
+   {
+    "w": "Mars",
+    "start": 2.723,
+    "end": 3.101
+   },
+   {
+    "w": "still",
+    "start": 3.101,
+    "end": 3.432
+   },
+   {
+    "w": "hide",
+    "start": 3.432,
+    "end": 3.762
+   },
+   {
+    "w": "places",
+    "start": 3.762,
+    "end": 4.234
+   },
+   {
+    "w": "where",
+    "start": 4.234,
+    "end": 4.517
+   },
+   {
+    "w": "microbial",
+    "start": 4.517,
+    "end": 5.178
+   },
+   {
+    "w": "life",
+    "start": 5.178,
+    "end": 5.509
+   },
+   {
+    "w": "might",
+    "start": 5.509,
+    "end": 5.839
+   },
+   {
+    "w": "survive?",
+    "start": 5.839,
+    "end": 6.264
+   }
+  ]
+ },
+ {
+  "file": "vo7.wav",
+  "text": "Oddly Explained.",
+  "duration": 1.444,
+  "words": [
+   {
+    "w": "Oddly",
+    "start": 0.05,
+    "end": 0.576
+   },
+   {
+    "w": "Explained.",
+    "start": 0.576,
+    "end": 1.364
+   }
+  ]
+ }
+]

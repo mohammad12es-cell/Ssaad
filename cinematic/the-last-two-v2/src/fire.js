@@ -35,7 +35,7 @@ function particleMaterial(kind) {
     vec3 wp;
     ${kind === "flame" ? `
       vec3 toC = normalize(cameraPosition - p); vec3 r = normalize(cross(vec3(0.0,1.0,0.0), toC) + 1e-4); vec3 u = normalize(cross(toC, r));
-      wp = p + r * position.x * sz + u * (position.y * 1.35 + 0.55) * sz;` : kind === "smoke" ? `
+      wp = p + r * position.x * sz + u * (position.y * 1.35 + 1.35) * sz;` : kind === "smoke" ? `
       float a = iSeedHue.x * 6.283 + age * (fract(iSeedHue.x * 7.0) - 0.5) * 0.6;
       vec2 c = mat2(cos(a), -sin(a), sin(a), cos(a)) * position.xy;
       wp = p + camR * c.x * sz + camU * c.y * sz;` : `
@@ -66,11 +66,12 @@ function particleMaterial(kind) {
       float heat = (1.0 - vK) * (1.0 - vK * 0.4);
       float T = clamp(d * 1.5, 0.0, 1.0) * heat;
       vec3 col = mix(fireRamp(T), spiritRamp(T), vHue) * (0.1 + 1.7 * T * T * T) * vInt;
-      float a = smoothstep(0.0, 0.35, d) * smoothstep(0.0, 0.08, vK + 0.02);
+      float win = (1.0 - smoothstep(0.6, 1.0, abs(uv.x))) * smoothstep(-1.0, -0.45, uv.y) * (1.0 - smoothstep(0.7, 1.0, uv.y));
+      float a = smoothstep(0.0, 0.35, d) * smoothstep(0.0, 0.08, vK + 0.02) * win;
       gl_FragColor = vec4(col * fog, a);` : kind === "smoke" ? `
       float n = fbm3(vec3(vUv * 1.4, vSeed * 9.0 + vAge * 0.35));
       float d = 1.0 - length(vUv) + (n - 0.5) * 1.0;
-      float a = smoothstep(0.0, 0.7, d) * smoothstep(0.0, 0.15, vK) * (1.0 - smoothstep(0.55, 1.0, vK)) * vInt;
+      float a = smoothstep(0.0, 0.7, d) * (1.0 - smoothstep(0.55, 1.0, length(vUv))) * smoothstep(0.0, 0.15, vK) * (1.0 - smoothstep(0.55, 1.0, vK)) * vInt;
       vec3 col = mix(vec3(0.018, 0.019, 0.022), vec3(0.07, 0.072, 0.078), n) * (1.0 + uFlash * 3.0) + min(vFire, vec3(4.0)) * 0.025 * (0.4 + n);
       col = mix(col, uFogC * (1.0 + uFlash * 1.3), 1.0 - fog);
       gl_FragColor = vec4(col, a * 0.85);` : `
@@ -89,7 +90,7 @@ class Particles {
     const n = this.data.length, g = QUAD.clone(); g.instanceCount = n;
     const mk = (name, sz, off) => { const a = new Float32Array(n * sz); this.data.forEach((d, i) => { for (let k = 0; k < sz; k++) a[i * sz + k] = d[off + k]; }); g.setAttribute(name, new THREE.InstancedBufferAttribute(a, sz)); };
     mk("iP0", 3, 0); mk("iV0", 3, 3); mk("iT", 2, 6); mk("iSize", 2, 8); mk("iPar", 4, 10); mk("iSeedHue", 2, 14);
-    this.mesh = new THREE.Mesh(g, particleMaterial(this.kind)); this.mesh.frustumCulled = false; this.mesh.renderOrder = order; scene.add(this.mesh);
+    this.mesh = new THREE.Mesh(g, particleMaterial(this.kind)); this.mesh.name = 'p_' + this.kind; this.mesh.frustumCulled = false; this.mesh.renderOrder = order; scene.add(this.mesh);
     return this;
   }
 }
@@ -104,7 +105,7 @@ export class FlameSprites {
     const m = new THREE.ShaderMaterial({ uniforms: { ...COMMON_U(), uHue: { value: hue } }, transparent: true, depthWrite: false, blending: THREE.AdditiveBlending, side: THREE.DoubleSide,
       vertexShader: `attribute vec3 iPos, iPar; varying vec2 vUv; varying float vSeed, vInt, vDist;
         void main(){ vec3 toC = normalize(cameraPosition - iPos); vec3 r = normalize(cross(vec3(0.0,1.0,0.0), toC) + 1e-4); vec3 u = normalize(cross(toC, r));
-          vec3 wp = iPos + r * position.x * iPar.x + u * (position.y * 1.5 + 0.6) * iPar.x;
+          vec3 wp = iPos + r * position.x * iPar.x + u * (position.y * 1.5 + 1.5) * iPar.x;
           vUv = position.xy; vSeed = iPar.z; vInt = iPar.y; vDist = length(cameraPosition - wp); gl_Position = projectionMatrix * viewMatrix * vec4(wp, 1.0); }`,
       fragmentShader: NOISE + `uniform float uTime, uFogD, uHue; varying vec2 vUv; varying float vSeed, vInt, vDist;
         void main(){ vec2 uv = vUv; float t = uTime;
@@ -113,8 +114,9 @@ export class FlameSprites {
           float w = 1.0 + (uv.y + 1.0) * 0.9; float r = length(vec2(uv.x * w, (uv.y + 0.45) * 0.68));
           float d = 1.0 - r + (n - 0.5) * 1.0 + (n2 - 0.5) * 0.4; float T = clamp(d * 1.45, 0.0, 1.0);
           vec3 col = mix(fireRamp(T), spiritRamp(T), uHue) * (0.1 + 1.8 * T * T * T) * vInt;
-          gl_FragColor = vec4(col * exp(-uFogD * vDist), smoothstep(0.0, 0.3, d)); }` });
-    this.mesh = new THREE.Mesh(g, m); this.mesh.frustumCulled = false; this.mesh.renderOrder = 6; scene.add(this.mesh); this.g = g;
+          float win = (1.0 - smoothstep(0.6, 1.0, abs(uv.x))) * smoothstep(-1.0, -0.45, uv.y) * (1.0 - smoothstep(0.7, 1.0, uv.y));
+          gl_FragColor = vec4(col * exp(-uFogD * vDist), smoothstep(0.0, 0.3, d) * win); }` });
+    this.mesh = new THREE.Mesh(g, m); this.mesh.name = 'sprite'; this.mesh.frustumCulled = false; this.mesh.renderOrder = 6; scene.add(this.mesh); this.g = g;
   }
   set(list) { const n = Math.min(list.length, this.max);
     for (let i = 0; i < n; i++) { const f = list[i]; this.pos.setXYZ(i, f.p.x, f.p.y, f.p.z); this.par.setXYZ(i, f.s, f.i, f.seed ?? hash2(i, 5.3)); }
@@ -137,19 +139,19 @@ function sheetMaterial(shape, seed) {
           float along = uA.z - uB.y - pow(abs(u * 2.0 - 1.0), 2.0) * uB.x * 0.32;
           vec2 xz = vec2(uA.x + uB.z * along + lat, uA.y - along);
           H = uA.w * (1.0 - 0.55 * pow(abs(u * 2.0 - 1.0), 2.0));
-          wp = vec3(xz.x, gh(xz) + v * H * 1.7 - 0.2, xz.y); vLen = uB.x * 2.0; vEdge = 1.0 - pow(abs(u * 2.0 - 1.0), 6.0);` :
+          wp = vec3(xz.x, gh(xz) + v * H * 1.7 - 0.45, xz.y); vLen = uB.x * 2.0; vEdge = 1.0 - pow(abs(u * 2.0 - 1.0), 6.0);` :
         shape === "ring" ? `
           // uA = (cx, cz, radius, height)
           float a = u * 6.2831853; vec2 xz = uA.xy + vec2(cos(a), sin(a)) * uA.z;
           H = uA.w * (0.85 + 0.15 * sin(a * 7.0 + uTime));
-          wp = vec3(xz.x, gh(xz) + v * H * 1.7 - 0.2, xz.y); vLen = 6.2831853 * uA.z; vEdge = 1.0;` : `
+          wp = vec3(xz.x, gh(xz) + v * H * 1.7 - 0.45, xz.y); vLen = 6.2831853 * uA.z; vEdge = 1.0;` : `
           // uA = (z, t0, spread, time)  uB = (surgeT, layer, x0, x1)
           float x = mix(uB.z, uB.w, u); float t0 = uA.y + abs(x) / uA.z; float age = uA.w - t0;
           float rise = age <= 0.0 ? 0.0 : (1.0 - pow(1.0 - clamp(age / 0.75, 0.0, 1.0), 3.0)) * 30.0;
           float surge = 12.0 * exp(-pow((uA.w - uB.x - 0.12) / 0.35, 2.0)) + 9.0 * smoothstep(uB.x, uB.x + 0.4, uA.w);
           H = age <= 0.0 ? 0.0 : (rise + surge) * (0.75 + 0.25 * sin(x * 0.05 + uB.y * 3.0));
           vec2 xz = vec2(x, uA.x + uB.y);
-          wp = vec3(x, gh(xz) + v * H * 1.7 - 0.5, xz.y); vLen = abs(uB.w - uB.z); vEdge = smoothstep(0.0, 0.03, u) * smoothstep(1.0, 0.97, u);`}
+          wp = vec3(x, gh(xz) + v * H * 1.7 - 0.5, xz.y); vLen = abs(uB.w - uB.z); vEdge = smoothstep(0.0, 0.03, u) * (1.0 - smoothstep(0.97, 1.0, u));`}
         vUv = vec2(u, v); vH = H; vDist = length(cameraPosition - wp);
         gl_Position = projectionMatrix * viewMatrix * vec4(wp, 1.0);
       }`,
@@ -174,7 +176,7 @@ function sheetMaterial(shape, seed) {
 }
 function sheet(scene, shape, segs, seed) {
   const g = new THREE.PlaneGeometry(1, 1, segs, 12); g.translate(0.5, 0.5, 0);
-  const m = new THREE.Mesh(g, sheetMaterial(shape, seed)); m.frustumCulled = false; m.renderOrder = 7; m.visible = false; scene.add(m); return m;
+  const m = new THREE.Mesh(g, sheetMaterial(shape, seed)); m.name = 'sheet_' + shape; m.frustumCulled = false; m.renderOrder = 7; m.visible = false; scene.add(m); return m;
 }
 
 // ------------------------------------------------------------------ sword-swing fire trail (ribbon of past blade positions)
@@ -212,7 +214,7 @@ export function buildFire(scene, horde, heroes) {
   for (const f of FIREBALLS) {
     for (let ts = Math.max(-1, f.tL); ts < f.tI; ts += 1 / 110) { const p = fireballPos(f, ts); const pn = fireballPos(f, ts + 0.01); const v = pn.sub(p).multiplyScalar(100);
       flames.emit(ts, rs(0.35, 0.7), [p.x + rs(-0.4, 0.4), p.y + rs(-0.4, 0.4), p.z + rs(-0.4, 0.4)], [v.x * 0.05 + rs(-1, 1), v.y * 0.05 + rs(0, 1.5), v.z * 0.05 + rs(-1, 1)], rs(1.2, 1.8), rs(2.6, 4.2), 2, 2, 0.8, 1.0, R(), 0);
-      if (R() < 0.35) smoke.emit(ts + 0.08, rs(2.5, 4), [p.x, p.y, p.z], [rs(-1, 1), rs(0.5, 1.5), rs(-1, 1)], rs(1.5, 2.5), rs(7, 11), 1, 0.2, 1.2, 0.85, R());
+      if (R() < 0.8) smoke.emit(ts + 0.05, rs(1.4, 2.4), [p.x + rs(-0.5, 0.5), p.y, p.z + rs(-0.5, 0.5)], [rs(-2, 2), rs(0.5, 2), rs(-2, 2)], rs(1.0, 1.6), rs(5, 8), 1, 0.4, 2.2, 0.45, R());
       if (R() < 0.5) sparks.emit(ts, rs(0.4, 1.0), [p.x, p.y, p.z], [rs(-6, 6), rs(-2, 6), rs(-6, 6)], rs(1.2, 2.2), 1, 1.5, -6, 0.5, 0.8, R(), 0);
     }
     const [x, z] = f.to, y = gy(x, z) + 0.2, tI = f.tI;
@@ -342,14 +344,14 @@ vec3 emberGlow(vec3 p){
   float n = fbm2(vec3(p.xz * 0.45, uTime * 0.5));
   float cr = smoothstep(0.45, 0.62, fbm2(vec3(p.xz * 1.3, 7.0))) ;
   for (int i = 0; i < 12; i++) { vec4 c = uCraters[i]; if (c.w < 0.0) continue; float d = length(p.xz - c.xy);
-    g += vec3(1.0, 0.32, 0.06) * smoothstep(c.z * 1.4, 0.0, d) * (0.03 + 1.2 * cr * n) * 1.2 * smoothstep(0.0, 0.3, c.w); }
+    g += vec3(1.0, 0.32, 0.06) * (1.0 - smoothstep(0.0, c.z * 1.4, d)) * (0.03 + 1.2 * cr * n) * 1.2 * smoothstep(0.0, 0.3, c.w); }
   if (uWave.w > 0.0) { float dd = uWave.y - p.z; float hw = 1.6 + 0.47 * dd; float lat = abs(p.x - uWave.x);
-    float inT = step(0.5, dd) * smoothstep(uWave.z + 1.0, uWave.z - 2.0, dd) * smoothstep(hw, hw * 0.55, lat);
+    float inT = step(0.5, dd) * (1.0 - smoothstep(uWave.z - 2.0, uWave.z + 1.0, dd)) * (1.0 - smoothstep(hw * 0.55, hw, lat));
     float age = max(0.0, (uWave.z - dd) / 44.0);
     g += vec3(1.0, 0.16, 0.05) * inT * (0.03 + 1.3 * cr * n) * (0.3 + 1.2 * exp(-age * 1.5)) * uWave.w; }
   if (uRing.w > 0.0) { float d = length(p.xz - uRing.xy); float r = uRing.z;
-    g += vec3(1.0, 0.15, 0.05) * smoothstep(r + 0.5, r - 2.5, d) * smoothstep(1.6, 4.0, d) * (0.03 + 1.3 * cr * n) * (0.3 + 1.2 * exp(-(r - d) * 0.15)); }
+    g += vec3(1.0, 0.15, 0.05) * (1.0 - smoothstep(r - 2.5, r + 0.5, d)) * smoothstep(1.6, 4.0, d) * (0.03 + 1.3 * cr * n) * (0.3 + 1.2 * exp(-(r - d) * 0.15)); }
   if (uWall.w > 0.0) { float age = uWall.z - abs(p.x) / 420.0; float d = abs(p.z - uWall.x);
-    g += vec3(1.0, 0.22, 0.05) * smoothstep(12.0, 0.0, d) * smoothstep(0.0, 0.4, age) * (0.08 + 1.4 * cr * n) * 1.5; }
+    g += vec3(1.0, 0.22, 0.05) * (1.0 - smoothstep(0.0, 12.0, d)) * smoothstep(0.0, 0.4, age) * (0.08 + 1.4 * cr * n) * 1.5; }
   return g * 0.5;
 }`;

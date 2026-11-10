@@ -32,9 +32,9 @@ export function buildWorld(scene, renderer) {
         float near = pow(max(0.0, dot(d, normalize(uBolt))), 6.0);
         col += vec3(0.62,0.72,1.0) * uFlash * (0.12 + 1.1*near) * (0.3 + 1.1*cloud);
         // fire glow reflected on the cloud base, toward the battlefield (-z)
-        float fz = smoothstep(0.1, -0.9, d.z) * smoothstep(0.55, 0.02, el);
+        float fz = (1.0 - smoothstep(-0.9, 0.1, d.z)) * (1.0 - smoothstep(0.02, 0.55, el));
         col += vec3(1.0, 0.3, 0.08) * uFireSky * fz * (0.2 + 0.8 * cloud) * 0.25;
-        col = mix(col, uFog*(1.0+uFlash*2.0) + vec3(0.5,0.12,0.03)*uFireSky*0.12*fz, smoothstep(0.16, -0.01, el));
+        col = mix(col, uFog*(1.0+uFlash*2.0) + vec3(0.5,0.12,0.03)*uFireSky*0.12*fz, (1.0 - smoothstep(-0.01, 0.16, el)));
         gl_FragColor = vec4(col, 1.0); }`,
   }));
   sky.frustumCulled = false; sky.renderOrder = -10; scene.add(sky); W.sky = sky;
@@ -62,7 +62,7 @@ export function buildWorld(scene, renderer) {
     const prev = mat.onBeforeCompile; mat.onBeforeCompile = (sh, r) => { prev(sh, r);
       sh.fragmentShader = sh.fragmentShader.replace("#include <normal_fragment_maps>", `#include <normal_fragment_maps>
         { vec2 q = vFireW.xz * 3.0; vec2 cell = floor(q); vec2 f = fract(q) - 0.5; float ph = fract(uTime * 1.3 + h13(vec3(cell, 1.0)));
-          float rr = length(f); float ring = sin((rr - ph * 0.5) * 60.0) * exp(-ph * 4.0) * smoothstep(0.5 * ph + 0.06, 0.5 * ph, rr) * (1.0 - roughnessFactor);
+          float rr = length(f); float ring = sin((rr - ph * 0.5) * 60.0) * exp(-ph * 4.0) * (1.0 - smoothstep(0.5 * ph, 0.5 * ph + 0.06, rr)) * (1.0 - roughnessFactor);
           normal = normalize(normal + vec3(f.x, f.y, 0.0) * ring * 0.8); }`); };
     const ground = new THREE.Mesh(geo, mat); ground.receiveShadow = true; scene.add(ground);
   }
@@ -107,7 +107,7 @@ export function buildWorld(scene, renderer) {
           vFire = fireAtW(vec3(xz.x, 0.1, xz.y)); vec4 mv = modelViewMatrix * vec4(xz.x, 0.02, xz.y, 1.0);
           gl_PointSize = (ph < 0.14 ? (2.0 + 40.0*ph) : 0.0) * uH / 1080.0 * 6.0 / max(1.0, -mv.z); gl_Position = projectionMatrix * mv; }`,
       fragmentShader: `uniform float uFlash; varying float vP; varying vec3 vFire; void main(){ vec2 c = gl_PointCoord*2.0-1.0; float r = length(c);
-        float ring = smoothstep(0.65,0.9,r)*smoothstep(1.0,0.9,r); gl_FragColor = vec4(vec3(0.6,0.68,0.8)*(0.6+uFlash*2.5) + min(vFire, vec3(3.0))*0.12, ring*(1.0-vP/0.14)*0.35); }` });
+        float ring = smoothstep(0.65,0.9,r)*(1.0 - smoothstep(0.9, 1.0,r)); gl_FragColor = vec4(vec3(0.6,0.68,0.8)*(0.6+uFlash*2.5) + min(vFire, vec3(3.0))*0.12, ring*(1.0-vP/0.14)*0.35); }` });
     W.splashes = m; const pts = new THREE.Points(gg, m); pts.frustumCulled = false; scene.add(pts);
   }
   { // low mist

@@ -34,6 +34,7 @@ scene.add(male.root, fem.root);
 const heroes = [{ S: male, keys: MALE, phase: 0 }, { S: fem, keys: FEMALE, phase: 0.5 }];
 const fire = buildFire(scene, horde, heroes);
 fire.setBladeMid((Hh) => bladeWorld(Hh.S, 0.55));
+scene.traverse((o) => { const m = o.material; if (m && !Array.isArray(m) && m.transparent && m.blending === THREE.AdditiveBlending) o.layers.set(1); });
 console.log("particles", JSON.stringify(fire.counts), "orcs", horde.orcs.length);
 
 function poseHero(Hh, t) { applyPose(Hh.S, pose(Hh.keys, t, Hh.phase)); Hh.S.root.updateMatrixWorld(true); }
@@ -46,6 +47,7 @@ const trailCtx = {
 const rtScene = new THREE.WebGLRenderTarget(W, H, { type: THREE.HalfFloatType, depthTexture: new THREE.DepthTexture(W, H, THREE.UnsignedIntType) });
 const rtGlow = new THREE.WebGLRenderTarget(W / 4, H / 4, { type: THREE.HalfFloatType });
 const rtDof = new THREE.WebGLRenderTarget(W, H, { type: THREE.HalfFloatType });
+const rtFx = new THREE.WebGLRenderTarget(W, H, { type: THREE.HalfFloatType }); rtFx.depthTexture = rtScene.depthTexture; // FX colour, depth-tested against the scene
 const quadCam = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
 const quad = (frag, uniforms) => { const m = new THREE.ShaderMaterial({ uniforms, vertexShader: `varying vec2 vUv; void main(){ vUv = uv; gl_Position = vec4(position.xy, 0.0, 1.0); }`, fragmentShader: frag, depthTest: false, depthWrite: false });
   const s = new THREE.Scene(); s.add(new THREE.Mesh(new THREE.PlaneGeometry(2, 2), m)); return { s, m }; };
@@ -70,7 +72,7 @@ const glowPass = quad(/* glsl */ `
   uFirePosW: FIRE.posW, uFireCol: FIRE.col, uDensity: { value: 0.002 } });
 const dofPass = quad(/* glsl */ `
   ${DEPTH}
-  uniform sampler2D tColor, tGlow; uniform float uFocus, uAperture, uMaxR; uniform vec2 uRes; varying vec2 vUv;
+  uniform sampler2D tColor, tGlow, tFx; uniform float uFocus, uAperture, uMaxR; uniform vec2 uRes; varying vec2 vUv;
   float coc(float d){ return clamp(uAperture * 40.0 * abs(1.0 / uFocus - 1.0 / d) * uFocus, 0.0, uMaxR) * uRes.y / 2160.0; }
   void main(){
     vec3 c0 = texture2D(tColor, vUv).rgb; float d0 = linDepth(vUv); float r0 = coc(d0);
@@ -84,8 +86,8 @@ const dofPass = quad(/* glsl */ `
         acc += texture2D(tColor, vUv + o).rgb * w; wsum += w;
       }
     }
-    gl_FragColor = vec4(acc / wsum + texture2D(tGlow, vUv).rgb, 1.0);
-  }`, { tColor: { value: rtScene.texture }, tDepth: { value: rtScene.depthTexture }, tGlow: { value: rtGlow.texture }, uNear: { value: 0.05 }, uFar: { value: 2500 },
+    gl_FragColor = vec4(acc / wsum + texture2D(tGlow, vUv).rgb + texture2D(tFx, vUv).rgb, 1.0);
+  }`, { tColor: { value: rtScene.texture }, tDepth: { value: rtScene.depthTexture }, tGlow: { value: rtGlow.texture }, tFx: { value: rtFx.texture }, uNear: { value: 0.05 }, uFar: { value: 2500 },
   uFocus: { value: 10 }, uAperture: { value: 0 }, uMaxR: { value: 26 }, uRes: { value: new THREE.Vector2(W, H) } });
 const bloom = new UnrealBloomPass(new THREE.Vector2(W, H), 0.18, 0.2, 1.3);
 const finalPass = quad(/* glsl */ `
@@ -157,6 +159,7 @@ function setState(t) {
 
 const DBG = (Q.get("dbg") || "").split(",");
 function renderOnce() {
+  for (const d of DBG) if (d.startsWith("-")) scene.traverse((o) => { if (o.name && o.name.startsWith(d.slice(1))) o.visible = false; });
   if (DBG.includes("noglow")) glowPass.m.uniforms.uDensity.value = 0;
   if (DBG.includes("nofx")) scene.traverse((o) => { if (o.material && o.material.blending === THREE.AdditiveBlending) o.visible = false; });
   if (DBG.includes("nolight")) for (let i = 0; i < FIRE_N; i++) FIRE.col.value[i].set(0, 0, 0);
@@ -164,6 +167,11 @@ function renderOnce() {
   const gu = glowPass.m.uniforms; gu.uProjInv.value.copy(camera.projectionMatrixInverse); gu.uCamWorld.value.copy(camera.matrixWorld);
   renderer.setRenderTarget(rtGlow); renderer.render(glowPass.s, quadCam);
   if (DBG.includes("nodof")) dofPass.m.uniforms.uAperture.value = 0;
+  // additive FX layer (fire, sparks, rain, lightning glow): kept out of the DOF gather, depth-tested against the scene
+  const bg = scene.background, ac = renderer.autoClear; scene.background = null; renderer.autoClear = false;
+  renderer.setRenderTarget(rtFx); renderer.setClearColor(0x000000, 0); renderer.clear(true, false, false);
+  camera.layers.set(1); renderer.render(scene, camera); camera.layers.set(0);
+  scene.background = bg; renderer.autoClear = ac;
   renderer.setRenderTarget(rtDof); renderer.render(dofPass.s, quadCam);
   if (!DBG.includes("nobloom")) bloom.render(renderer, null, rtDof, 0, false);
   renderer.setRenderTarget(null); renderer.render(finalPass.s, quadCam);

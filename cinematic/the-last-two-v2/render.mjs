@@ -12,7 +12,7 @@ const { chromium } = require("playwright");
 const dir = path.dirname(new URL(import.meta.url).pathname);
 const args = Object.fromEntries(process.argv.slice(2).reduce((a, v, i, arr) => (v.startsWith("--") ? [...a, [v.slice(2), arr[i + 1]]] : a), []));
 const W = +(args.w || 3840), H = +(args.h || 2160), MB = +(args.mb || (args.preview ? 1 : 3));
-const FPS = 24, SEG = 24;
+const FPS = 24, SEG = +(args.seg || 6);
 
 const types = { ".html": "text/html", ".js": "text/javascript", ".mjs": "text/javascript" };
 const server = http.createServer((req, res) => {

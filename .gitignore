@@ -3,3 +3,5 @@ node_modules/
 output/work-*/
 output/.*hf-transaction*/
 cinematic/the-last-two/preview/
+cinematic/the-last-two-v2/preview/
+cinematic/the-last-two-v2/_stats.mjs

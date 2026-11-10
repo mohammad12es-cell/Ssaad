@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>The Last Two v2</title>
+    <script type="importmap">{ "imports": { "three": "./lib/three.module.js" } }</script>
+    <style>
+      html, body { margin: 0; background: #000; overflow: hidden; }
+      canvas { display: block; }
+      #gl { position: absolute; left: 0; top: 0; visibility: hidden; }
+      #out { position: absolute; left: 0; top: 0; }
+    </style>
+  </head>
+  <body>
+    <canvas id="gl"></canvas>
+    <canvas id="out"></canvas>
+    <script type="module" src="./src/main.js"></script>
+  </body>
+</html>

@@ -13,6 +13,10 @@ Attribution is required by these licenses; paste this into the post caption or d
 
 Short form for the caption: Photos: ninastoessinger (CC BY-SA 2.0), UN Armenia (CC BY-SA 2.0) via Flickr.
 
+## Cover
+
+- Armenian flags: [Flag of Armenia.](https://www.flickr.com/photos/14759783@N04/13903872876) by young shanahan, [CC BY 2.0](https://creativecommons.org/licenses/by/2.0/) (cut out from the sky with BiRefNet, `tools/cutout.py`).
+
 ## Everything else
 
 - Footage and voice: the supplied clip (graded, voice cleaned and normalized).

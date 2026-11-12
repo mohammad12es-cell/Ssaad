@@ -77,7 +77,7 @@ if (V === "a") {
   tree(root, [0, wy(1462), 0], 0.76);
   gift(root, [-0.74, wy(1445), 0.25], 0.34, M.emerald, M.gold, 0.5); gift(root, [0.76, wy(1450), 0.2], 0.3, M.red, M.gold, -0.4);
   gift(root, [-0.36, wy(1462), 0.45], 0.22, M.cream, M.red, -0.2); gift(root, [0.4, wy(1465), 0.5], 0.2, M.emeraldDeep, M.gold, 0.7);
-  flag(root, [0, wy(1642), 0], 1.75, 0.85);
+  // the waving flag is a downloaded PNG (cover/flag.png), placed in cover.html
 } else {
   tree(root, [wx(250), wy(1460), -0.8], 1.25);
   gift(root, [wx(150), wy(1500), 0.5], 0.44, M.emerald, M.gold, 0.5); gift(root, [wx(330), wy(1560), 1.0], 0.34, M.red, M.gold, -0.4);

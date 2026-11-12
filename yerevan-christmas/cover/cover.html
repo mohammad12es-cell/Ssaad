@@ -14,6 +14,8 @@
       #gl { position: absolute; inset: 0; width: 1080px; height: 1920px; }
       #presenter { position: absolute; display: none; }
       #logo { position: absolute; left: 50%; transform: translateX(-50%); }
+      #flagImg { position: absolute; left: 50%; transform: translateX(-50%); display: none; filter: drop-shadow(0 18px 26px rgba(0, 0, 0, 0.45)); }
+      .v-a #flagImg { display: block; }
       .txt { position: absolute; left: 0; right: 0; text-align: center; color: var(--ink); font-weight: 900; filter: drop-shadow(0 8px 18px rgba(0, 0, 0, 0.45)); white-space: nowrap; }
       .kick { font-weight: 700; color: var(--ink); opacity: 0.95; }
       .gold { background: var(--gold); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
@@ -51,6 +53,7 @@
   <body>
     <canvas id="gl" width="1080" height="1920"></canvas>
     <img id="presenter" src="presenter.png" alt="" />
+    <img id="flagImg" src="flag.png" alt="" />
     <img id="logo" src="../assets/iram-logo.png" alt="IRAM CO." />
     <div id="kick" class="txt kick">تاریخ نصبش مشخص شد</div>
     <div id="t1" class="txt">اولین درخت</div>

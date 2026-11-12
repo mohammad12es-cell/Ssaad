@@ -15,17 +15,20 @@
       @font-face { font-family: "Vazirmatn"; font-weight: 800; src: url("assets/fonts/vazirmatn-arabic-800-normal.woff2") format("woff2"); unicode-range: U+0600-06FF, U+0750-077F, U+0870-088E, U+0890-0891, U+0897-08E1, U+08E3-08FF, U+200C-200E, U+2010-2011, U+204F, U+2E41, U+FB50-FDFF, U+FE70-FE74, U+FE76-FEFC; }
       @font-face { font-family: "Vazirmatn"; font-weight: 900; src: url("assets/fonts/vazirmatn-arabic-900-normal.woff2") format("woff2"); unicode-range: U+0600-06FF, U+0750-077F, U+0870-088E, U+0890-0891, U+0897-08E1, U+08E3-08FF, U+200C-200E, U+2010-2011, U+204F, U+2E41, U+FB50-FDFF, U+FE70-FE74, U+FE76-FEFC; }
 
-      /* ===================== PALETTE (placeholder — swap for the brand palette) ===================== */
+      /* ===================== PALETTE (IRAM CO. brand: forest green + metallic gold + cream) ===================== */
       :root {
-        --bg-1: #052a21;   /* background, deepest */
-        --bg-2: #0b4635;   /* background, lighter end of the gradient */
-        --card: #0f5a44;   /* panels, tracks, roads */
-        --pri: #1fbf84;    /* primary (fields, water, plants) */
-        --acc: #f4c24f;    /* accent (gold: highlights, coins, arrows) */
-        --acc-2: #ff8f5e;  /* second accent (apricot: fruit, trout stripe, warnings) */
-        --ink: #fdf7e8;    /* text and light shapes */
-        --muted: #8fc2ae;  /* secondary shapes */
-        --dark: #021610;   /* outlines, shadows, caption backing */
+        --bg-1: #0b2017;   /* background, deepest (edges) */
+        --bg-2: #1d3f2d;   /* background glow, top-left */
+        --card: #1a4430;   /* tiles, tracks, roads */
+        --pri: #2f8a5c;    /* emerald (fields, water, plants) */
+        --acc: #dcad58;    /* gold */
+        --acc-hi: #f4d68c; /* gold highlight */
+        --acc-lo: #a9792f; /* gold shadow */
+        --acc-2: #d38a4c;  /* copper (fruit, trout stripe, limit marker) */
+        --ink: #faf2e0;    /* cream text and light shapes */
+        --muted: #86a58f;  /* sage, secondary shapes */
+        --dark: #06140d;   /* outlines, shadows, caption backing */
+        --gold: linear-gradient(180deg, var(--acc-hi) 0%, var(--acc) 45%, var(--acc-lo) 85%, #d9b264 100%);
         --font: "Vazirmatn", sans-serif;
       }
       /* =============================================================================================== */
@@ -34,13 +37,16 @@
       html, body { margin: 0; width: 1080px; height: 1920px; overflow: hidden; background: var(--bg-1); }
       #root {
         position: relative; width: 100%; height: 100%; overflow: hidden; font-family: var(--font); color: var(--ink);
-        background: radial-gradient(ellipse 120% 80% at 50% 38%, var(--bg-2) 0%, var(--bg-1) 70%);
+        background: radial-gradient(ellipse 85% 55% at 15% 4%, var(--bg-2) 0%, transparent 70%),
+          radial-gradient(ellipse 130% 95% at 50% 45%, #12301f 0%, var(--bg-1) 78%);
       }
+      #tex { position: absolute; inset: 0; width: 1080px; height: 1920px; mix-blend-mode: soft-light; opacity: 0.42; }
+      #logoMark { position: absolute; top: 116px; right: 36px; width: 210px; }
       .clip { position: absolute; inset: 0; }
       svg.full { position: absolute; inset: 0; width: 1080px; height: 1920px; overflow: visible; }
       svg text { font-family: var(--font); font-weight: 800; }
 
-      .f-ink { fill: var(--ink); } .f-pri { fill: var(--pri); } .f-acc { fill: var(--acc); } .f-acc2 { fill: var(--acc-2); }
+      .f-ink { fill: var(--ink); } .f-pri { fill: var(--pri); } .f-acc { fill: url(#goldG); } .f-acc2 { fill: var(--acc-2); }
       .f-card { fill: var(--card); } .f-bg { fill: var(--bg-1); } .f-mut { fill: var(--muted); } .f-dark { fill: var(--dark); }
       .f-none { fill: none; }
       .s-ink { stroke: var(--ink); } .s-pri { stroke: var(--pri); } .s-acc { stroke: var(--acc); } .s-acc2 { stroke: var(--acc-2); }
@@ -51,12 +57,12 @@
       #chip { position: absolute; top: 132px; left: 0; right: 0; display: flex; justify-content: center; }
       #chip .pill {
         display: flex; align-items: center; gap: 16px; padding: 12px 30px 12px 22px; border-radius: 999px;
-        background: color-mix(in srgb, var(--dark) 55%, transparent); border: 2px solid color-mix(in srgb, var(--ink) 18%, transparent);
+        background: color-mix(in srgb, var(--dark) 55%, transparent); border: 2px solid color-mix(in srgb, var(--acc) 55%, transparent);
         font-weight: 700; font-size: 32px; color: var(--ink);
       }
       #chip svg { width: 40px; height: 40px; }
       #prog { position: absolute; top: 96px; left: 120px; right: 120px; height: 8px; border-radius: 8px; background: color-mix(in srgb, var(--ink) 14%, transparent); overflow: hidden; }
-      #progBar { width: 100%; height: 100%; background: linear-gradient(270deg, var(--acc), var(--pri)); transform-origin: 100% 50%; }
+      #progBar { width: 100%; height: 100%; background: linear-gradient(270deg, var(--acc-hi), var(--acc) 50%, var(--acc-lo)); transform-origin: 100% 50%; }
 
       /* scenes */
       .scene-in { position: absolute; inset: 0; }
@@ -64,41 +70,42 @@
         position: absolute; top: 236px; left: 0; right: 0; text-align: center;
         font-weight: 700; font-size: 34px; letter-spacing: 0; color: var(--acc);
       }
-      .kicker span { display: inline-block; padding: 6px 26px; border-radius: 999px; border: 2px solid var(--acc); }
+      .kicker span { display: inline-block; padding: 6px 26px; border-radius: 999px; border: 2px solid var(--acc); background: color-mix(in srgb, var(--dark) 35%, transparent); }
       .hl {
         position: absolute; top: 300px; left: 60px; right: 60px; text-align: center;
         font-weight: 900; font-size: 90px; line-height: 1.28; color: var(--ink);
-        text-shadow: 0 8px 30px color-mix(in srgb, var(--dark) 70%, transparent);
+        filter: drop-shadow(0 8px 22px color-mix(in srgb, var(--dark) 75%, transparent));
       }
-      .hl em { font-style: normal; color: var(--acc); }
+      .hl em { font-style: normal; color: var(--acc); background: var(--gold); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
 
       /* captions */
       .cap { display: flex; align-items: flex-start; justify-content: center; }
       .cap-in {
         margin-top: 1430px; max-width: 960px; padding: 16px 36px 22px; border-radius: 30px; text-align: center;
         font-weight: 800; font-size: 60px; line-height: 1.45; color: var(--ink);
-        background: color-mix(in srgb, var(--dark) 62%, transparent);
+        background: color-mix(in srgb, var(--dark) 66%, transparent); border: 2px solid color-mix(in srgb, var(--acc) 38%, transparent);
       }
-      .cap-in .hi { color: var(--acc); }
+      .cap-in .hi { color: var(--acc-hi); }
 
       /* s10 html bits */
       .check {
         position: absolute; left: 50%; transform: translateX(-50%); display: flex; align-items: center; gap: 20px;
-        padding: 14px 34px 14px 24px; border-radius: 999px; background: var(--card); font-weight: 800; font-size: 46px; white-space: nowrap;
+        padding: 14px 34px 14px 24px; border-radius: 999px; background: var(--card); border: 2px solid color-mix(in srgb, var(--acc) 60%, transparent); font-weight: 800; font-size: 46px; white-space: nowrap;
       }
-      .check i { display: inline-flex; width: 56px; height: 56px; border-radius: 50%; background: var(--acc); align-items: center; justify-content: center; }
+      .check i { display: inline-flex; width: 56px; height: 56px; border-radius: 50%; background: var(--gold); align-items: center; justify-content: center; }
       #cbox {
         position: absolute; top: 960px; left: 100px; right: 100px; height: 176px; border-radius: 88px; background: var(--ink);
         display: flex; align-items: center; padding: 0 26px; gap: 26px; direction: rtl;
-        box-shadow: 0 24px 60px color-mix(in srgb, var(--dark) 60%, transparent);
+        border: 4px solid var(--acc); box-shadow: 0 24px 60px color-mix(in srgb, var(--dark) 60%, transparent);
       }
       #cbox .av { flex: 0 0 124px; height: 124px; border-radius: 50%; background: var(--pri); position: relative; overflow: hidden; }
       #cbox .field { flex: 1; position: relative; height: 100px; display: flex; align-items: center; }
       #ctext { font-weight: 900; font-size: 74px; color: var(--dark); clip-path: inset(0% 0% 0% 100%); white-space: nowrap; }
       #caret { width: 6px; height: 74px; background: var(--pri); margin-right: 8px; }
-      #send { flex: 0 0 124px; height: 124px; border-radius: 50%; background: var(--acc); display: flex; align-items: center; justify-content: center; }
+      #send { flex: 0 0 124px; height: 124px; border-radius: 50%; background: var(--gold); display: flex; align-items: center; justify-content: center; }
       #ctaBig { position: absolute; top: 1190px; left: 0; right: 0; text-align: center; font-weight: 900; font-size: 64px; color: var(--ink); }
-      #ctaBig em { font-style: normal; color: var(--acc); }
+      #ctaBig em { font-style: normal; color: var(--acc); background: var(--gold); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+      #endLogo { position: absolute; top: 1450px; left: 50%; width: 600px; margin-left: -300px; }
     </style>
   </head>
   <body>
@@ -106,6 +113,7 @@
 
       <!-- ============ persistent background ============ -->
       <div id="bg" class="clip" data-start="0" data-duration="76.300" data-track-index="0">
+        <img id="tex" src="assets/texture.jpg" alt="" />
         <svg class="full" viewBox="0 0 1080 1920">
           <defs>
             <pattern id="dots" width="54" height="54" patternUnits="userSpaceOnUse"><circle cx="27" cy="27" r="2.4" class="f-ink" /></pattern>
@@ -113,10 +121,14 @@
               <stop offset="0" stop-color="#ffffff" stop-opacity="0.55" /><stop offset="1" stop-color="#ffffff" stop-opacity="0" />
             </radialGradient>
             <clipPath id="flagClip"><circle cx="0" cy="0" r="100" /></clipPath>
+            <linearGradient id="goldG" x1="0" y1="0" x2="0.35" y2="1">
+              <stop offset="0" stop-color="#f4d68c" /><stop offset="0.45" stop-color="#dcad58" /><stop offset="0.82" stop-color="#a9792f" /><stop offset="1" stop-color="#d9b264" />
+            </linearGradient>
+            <radialGradient id="softG" cx="0.5" cy="0.5" r="0.5"><stop offset="0" stop-color="#ffffff" stop-opacity="1" /><stop offset="1" stop-color="#ffffff" stop-opacity="0" /></radialGradient>
           </defs>
-          <rect width="1080" height="1920" fill="url(#dots)" opacity="0.07" />
-          <g id="blobA" opacity="0.16"><circle cx="160" cy="520" r="460" class="f-pri" /></g>
-          <g id="blobB" opacity="0.10"><circle cx="960" cy="1480" r="520" class="f-acc" /></g>
+          <rect width="1080" height="1920" fill="url(#dots)" opacity="0.035" />
+          <g id="blobA" opacity="0.10"><circle cx="160" cy="520" r="520" style="fill:url(#softG)" /></g>
+          <g id="blobB" opacity="0.07"><circle cx="960" cy="1480" r="560" style="fill:url(#softG)" /></g>
           <g id="particles"></g>
         </svg>
       </div>
@@ -206,7 +218,7 @@
             <g id="s4-arcs"></g>
             <g id="s4-globes"></g>
             <g id="s4-home">
-              <rect x="350" y="1215" width="380" height="150" rx="34" class="f-card" />
+              <rect x="350" y="1215" width="380" height="150" rx="34" class="f-card s-acc" stroke-width="4" />
               <g transform="translate(655,1290)" id="s4-shop"></g>
               <text x="462" y="1305" text-anchor="middle" direction="rtl" font-size="42" class="f-ink">بازار داخلی</text>
             </g>
@@ -358,6 +370,7 @@
             <div id="send"><svg width="64" height="64" viewBox="0 0 64 64"><path d="M54,10 L8,30 L26,36 L32,56 Z" class="f-dark" /></svg></div>
           </div>
           <div id="ctaBig">کلمه‌ی <em>«سرمایه»</em> رو کامنت کن</div>
+          <img id="endLogo" src="assets/iram-logo.png" alt="IRAM CO." />
           <svg class="full" viewBox="0 0 1080 1920"><g id="s10-hearts"></g></svg>
         </div>
       </div>
@@ -365,6 +378,7 @@
       <!-- ============ overlays ============ -->
       <div id="hud" class="clip" data-start="0" data-duration="76.300" data-track-index="4">
         <div id="prog"><div id="progBar"></div></div>
+        <img id="logoMark" src="assets/iram-logo.png" alt="IRAM CO." />
         <div id="chip"><div class="pill">
           <svg viewBox="-100 -100 200 200"><g clip-path="url(#flagClip)"><rect x="-100" y="-100" width="200" height="67" fill="#D90012" /><rect x="-100" y="-33" width="200" height="67" fill="#0033A0" /><rect x="-100" y="34" width="200" height="66" fill="#F2A800" /></g></svg>
           سرمایه‌گذاری در ارمنستان
@@ -494,6 +508,7 @@
         tl.to("#blobB", { x: -160, y: -240, duration: T.total, ease: "sine.inOut" }, 0);
         tl.fromTo("#progBar", { scaleX: 0 }, { scaleX: 1, duration: T.total, ease: "none" }, 0);
         rise("#chip", 0.15, { y: -30 });
+        rise("#logoMark", 0.25, { y: -30 });
         // scene-change wipes: two slanted bands sweep across
         const W = $("wipes");
         T.scenes.slice(1).forEach((s) => {
@@ -527,7 +542,7 @@
         const id = "s1";
         const G = $("s1-gold");
         [[-92, 40], [92, 40], [0, -18]].forEach(([x, y]) => add(G, `<g><polygon points="${x - 88},${y + 30} ${x + 88},${y + 30} ${x + 62},${y - 30} ${x - 62},${y - 30}" class="f-acc"/><polygon points="${x - 62},${y - 30} ${x + 62},${y - 30} ${x + 50},${y - 40} ${x - 50},${y - 40}" class="f-ink" opacity=".55"/><rect x="${x - 40}" y="${y - 10}" width="80" height="12" rx="6" class="f-dark" opacity=".18"/></g>`));
-        add($("s1-bill"), `<g><rect x="-160" y="-92" width="320" height="184" rx="22" class="f-pri"/><rect x="-136" y="-70" width="272" height="140" rx="14" class="f-none s-ink" stroke-width="5" opacity=".55"/>
+        add($("s1-bill"), `<g><rect x="-160" y="-92" width="320" height="184" rx="22" class="f-pri"/><rect x="-136" y="-70" width="272" height="140" rx="14" class="f-none s-acc" stroke-width="5" opacity=".9"/>
           <circle r="54" class="f-bg"/><text y="24" text-anchor="middle" font-size="76" class="f-acc" style="font-weight:900">$</text>
           <circle cx="-108" cy="-44" r="12" class="f-ink" opacity=".6"/><circle cx="108" cy="44" r="12" class="f-ink" opacity=".6"/></g>`);
         const C = $("s1-coins"); const xs = [260, 400, 540, 680, 820], ns = [2, 3, 4, 5, 6];
@@ -555,7 +570,7 @@
         $("s2-flag").innerHTML = FLAG(0.9);
         const B = $("s2-badges");
         const spots = [["cow", 820, 690, "گاو"], ["sheep", 260, 690, "گوسفند"], ["hen", 820, 1190, "مرغ"], ["duck", 260, 1190, "سایر پرندگان"]];
-        spots.forEach(([k, x, y, label]) => add(B, `<g class="badge"><circle cx="${x}" cy="${y}" r="112" class="f-card"/><circle cx="${x}" cy="${y}" r="112" class="f-none s-pri" stroke-width="6"/>
+        spots.forEach(([k, x, y, label]) => add(B, `<g class="badge"><circle cx="${x}" cy="${y}" r="112" class="f-card"/><circle cx="${x}" cy="${y}" r="112" class="f-none s-acc" stroke-width="6"/>
           <g transform="translate(${x - 8},${y + 4}) scale(0.95)">${ICON[k]}</g>
           <rect x="${x - 120}" y="${y + 126}" width="240" height="62" rx="31" class="f-dark" opacity=".55"/><text x="${x}" y="${y + 168}" text-anchor="middle" direction="rtl" font-size="38" class="f-ink">${label}</text></g>`));
         pop("#s2-orbit", t0 + 0.05, { d: 0.6, ease: "power3.out" });
@@ -608,7 +623,7 @@
         targets.forEach(([x, y], k) => {
           const ctl = [(540 + x) / 2 + (x > 540 ? 60 : -60), Math.min(y, 888) - 170];
           add(A, `<path d="M${P0[0]},${P0[1]} Q${ctl[0]},${ctl[1]} ${x},${y}" class="f-none s-acc round arc" stroke-width="7" stroke-dasharray="2 16"/>`);
-          add(Gl, `<g class="globe" transform="translate(${x},${y})"><g><circle r="62" class="f-pri"/><ellipse rx="26" ry="62" class="f-none s-ink" stroke-width="5"/><path d="M-62,0 L62,0 M-52,-32 L52,-32 M-52,32 L52,32" class="s-ink" stroke-width="4"/><circle r="62" class="f-none s-ink" stroke-width="6"/></g></g>`);
+          add(Gl, `<g class="globe" transform="translate(${x},${y})"><g><circle r="62" class="f-pri"/><ellipse rx="26" ry="62" class="f-none s-ink" stroke-width="5"/><path d="M-62,0 L62,0 M-52,-32 L52,-32 M-52,32 L52,32" class="s-ink" stroke-width="4"/><circle r="62" class="f-none s-acc" stroke-width="6"/></g></g>`);
           const pts = bez(P0, ctl, [x, y], 14);
           for (let r = 0; r < 2; r++) {
             const cr = add(Cr, `<g><g transform="scale(.62)">${CRATE}</g></g>`);
@@ -815,6 +830,8 @@
           tl.fromTo(e, { opacity: 0 }, { opacity: 1, duration: 0.3 }, th); tl.to(e, { opacity: 0, duration: 0.6 }, th + 1.2);
         }
         tl.to("#cbox", { scale: 1.04, duration: 0.5, yoyo: true, repeat: 1, ease: "sine.inOut" }, Math.min(endVO + 0.2, T.total - 1.1));
+        tl.fromTo("#endLogo", { opacity: 0, y: 40, scale: 0.92 }, { opacity: 1, y: 0, scale: 1, duration: 0.6, ease: "power3.out" }, Math.min(endVO + 0.15, T.total - 0.8));
+        tl.to("#logoMark", { opacity: 0, duration: 0.3 }, Math.min(endVO + 0.1, T.total - 0.8));
       })();
     </script>
   </body>

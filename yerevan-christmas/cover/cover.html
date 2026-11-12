@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <script type="importmap">{ "imports": { "three": "../assets/three.module.js" } }</script>
+    <style>
+      @font-face { font-family: "Vazirmatn"; font-weight: 700; src: url("../assets/fonts/vazirmatn-arabic-700-normal.woff2") format("woff2"); }
+      @font-face { font-family: "Vazirmatn"; font-weight: 900; src: url("../assets/fonts/vazirmatn-arabic-900-normal.woff2") format("woff2"); }
+      :root { --ink: #faf2e0; --acc: #dcad58; --acc-hi: #f4d68c; --acc-lo: #a9792f; --dark: #06140d;
+        --gold: linear-gradient(180deg, #f8e3a4 0%, var(--acc-hi) 25%, var(--acc) 55%, var(--acc-lo) 88%, #d9b264 100%); }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1080px; height: 1920px; overflow: hidden; background: #0b2017; font-family: "Vazirmatn", sans-serif; }
+      #gl { position: absolute; inset: 0; width: 1080px; height: 1920px; }
+      #presenter { position: absolute; display: none; }
+      #logo { position: absolute; left: 50%; transform: translateX(-50%); }
+      .txt { position: absolute; left: 0; right: 0; text-align: center; color: var(--ink); font-weight: 900; filter: drop-shadow(0 8px 18px rgba(0, 0, 0, 0.45)); white-space: nowrap; }
+      .kick { font-weight: 700; color: var(--ink); opacity: 0.95; }
+      .gold { background: var(--gold); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+      .small { font-size: 0.45em; vertical-align: 0.08em; margin-left: 0.15em; color: var(--ink); }
+      #rule { position: absolute; left: 150px; right: 150px; height: 70px; display: flex; align-items: center; gap: 22px; }
+      #rule i { flex: 1; height: 3px; background: linear-gradient(90deg, rgba(220, 173, 88, 0), var(--acc) 60%, var(--acc-hi)); }
+      #rule i:last-child { background: linear-gradient(270deg, rgba(220, 173, 88, 0), var(--acc) 60%, var(--acc-hi)); }
+      #rule svg { width: 54px; height: 54px; }
+      .pill { position: absolute; left: 50%; transform: translateX(-50%); display: inline-flex; align-items: center; gap: 18px; white-space: nowrap;
+        padding: 14px 40px 18px; border-radius: 999px; background: rgba(6, 20, 13, 0.62); border: 3px solid var(--acc); color: var(--ink); font-weight: 900; font-size: 46px; }
+      .pill b { color: var(--acc-hi); font-weight: 900; }
+      .pill em { width: 12px; height: 12px; border-radius: 50%; background: var(--acc); display: inline-block; }
+      .pill .flag { width: 44px; height: 44px; border-radius: 50%; background: linear-gradient(180deg, #D90012 0 33.4%, #0033A0 33.4% 66.7%, #F2A800 66.7% 100%); border: 2px solid var(--acc); }
+
+      /* variant A: the reference layout (logo, kicker, title, rule, 3D cluster, flag) */
+      .v-a #logo { top: 120px; width: 480px; }
+      .v-a #kick { top: 425px; font-size: 52px; }
+      .v-a #t1 { top: 488px; font-size: 128px; line-height: 1.2; }
+      .v-a #t2 { top: 636px; font-size: 128px; line-height: 1.2; }
+      .v-a #t3 { top: 772px; font-size: 168px; line-height: 1.2; }
+      .v-a #rule { top: 978px; }
+      .v-a #pill { top: 1785px; }
+
+      /* variant B: presenter pointing at the viewer */
+      .v-b #presenter { display: block; left: 150px; top: 835px; width: 1010px; }
+      .v-b #logo { top: 85px; width: 340px; }
+      .v-b #kick { top: 300px; font-size: 48px; }
+      .v-b #t1 { top: 360px; font-size: 112px; line-height: 1.2; }
+      .v-b #t2 { top: 492px; font-size: 112px; line-height: 1.2; }
+      .v-b #t3 { top: 612px; font-size: 140px; line-height: 1.2; }
+      .v-b #rule { display: none; }
+      .v-b #pill { top: 1735px; }
+    </style>
+  </head>
+  <body>
+    <canvas id="gl" width="1080" height="1920"></canvas>
+    <img id="presenter" src="presenter.png" alt="" />
+    <img id="logo" src="../assets/iram-logo.png" alt="IRAM CO." />
+    <div id="kick" class="txt kick">تاریخ نصبش مشخص شد</div>
+    <div id="t1" class="txt">اولین درخت</div>
+    <div id="t2" class="txt">کریسمس</div>
+    <div id="t3" class="txt"><span class="small">در</span><span class="gold">ارمنستان</span></div>
+    <div id="rule"><i></i><svg viewBox="-50 -50 100 100"><defs><linearGradient id="g" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f4d68c" /><stop offset="1" stop-color="#a9792f" /></linearGradient></defs>
+      <g stroke="url(#g)" stroke-width="7" stroke-linecap="round" fill="none"><path d="M0,-42 L0,42 M-36,-21 L36,21 M-36,21 L36,-21" />
+      <path d="M-10,-32 L0,-22 L10,-32 M-10,32 L0,22 L10,32 M-33,-6 L-19,-11 L-23,-25 M33,6 L19,11 L23,25 M-23,25 L-19,11 L-33,6 M23,-25 L19,-11 L33,-6" /></g></svg><i></i></div>
+    <div id="pill" class="pill"><span class="flag"></span><b>۱ دسامبر</b><em></em>ساعت ۱۸<em></em>سیزن پارک</div>
+    <script type="module" src="cover.js"></script>
+  </body>
+</html>

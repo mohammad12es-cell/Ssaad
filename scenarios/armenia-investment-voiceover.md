@@ -1,6 +1,10 @@
 # موشن‌گرافیک «سرمایه‌گذاری در ارمنستان» — سناریو و صدای Google AI Studio
 
-پروژه: `armenia-invest/` (HyperFrames، عمودی ۱۰۸۰×۱۹۲۰، حدود ۷۵ ثانیه، ۱۰ صحنه)
+پروژه: `armenia-invest/` (HyperFrames + Three.js، عمودی ۱۰۸۰×۱۹۲۰، ۷۰٫۶ ثانیه، ۱۰ صحنه‌ی سه‌بعدی)
+
+صدای نهایی: فایل ساخته‌شده در Google AI Studio که کاربر فرستاد (`armenia-invest/assets/vo/voice-ai-studio.wav`).
+ساخت دوباره: `python3 build.py single assets/vo/voice-ai-studio.wav` سپس `npx --yes hyperframes@0.9.13 render`.
+صحنه‌های سه‌بعدی در `armenia-invest/assets/world.js` (Three.js r170، نور محیطی RoomEnvironment، Bloom، تون‌مپینگ Neutral) و تیترها، زیرنویس‌ها و کارت پایانی در `armenia-invest/src/template.html` هستند.
 
 ## متن کامل گوینده (برگرفته از صدای ویدیوی اصلی)
 
@@ -58,5 +62,5 @@ npx --yes hyperframes@0.9.13 render --quality delivery -o ../output/armenia-inve
 کاشی‌ها با حاشیه‌ی طلایی، و لوگوی IRAM CO. (برش‌خورده از همان تصویر: `assets/iram-logo.png`) گوشه‌ی بالا و در کارت پایانی.
 
 ## خروجی‌ها
-- `output/armenia-invest-draft.mp4` — پیش‌نویس با پالت برند؛ صدا فعلاً همان صدای ویدیوی اصلی است (فقط برای زمان‌بندی).
-- نسخه‌ی نهایی بعد از ساخت صدا با Google AI Studio رندر می‌شود.
+- `output/armenia-invest-3d.mp4` — نسخه‌ی نهایی سه‌بعدی (Three.js) با صدای Google AI Studio.
+- `output/armenia-invest-draft.mp4` — پیش‌نویس دوبعدی قبلی با صدای ویدیوی اصلی (فقط برای مقایسه).

@@ -71,10 +71,15 @@ def caption_times(start, end, caps, quiet):
     w = np.array([len(plain(c)) + 3 for c in caps], dtype=float)
     cuts = start + (end - start) * np.cumsum(w)[:-1] / w.sum()
     mids = [(a + b) / 2 for a, b in quiet if start + 0.3 < (a + b) / 2 < end - 0.3]
-    snapped = []
-    for c in cuts:
-        near = [m for m in mids if abs(m - c) < 0.75 and (not snapped or m > snapped[-1] + 0.4)]
-        snapped.append(min(near, key=lambda m: abs(m - c)) if near else c)
+    # each pause goes to the cut it is closest to (one pause per cut), then cuts are kept in order
+    snapped, best = list(cuts), {}
+    for m in mids:
+        j = int(np.argmin([abs(m - x) for x in cuts]))
+        if abs(m - cuts[j]) < 1.0 and (j not in best or abs(m - cuts[j]) < abs(best[j] - cuts[j])): best[j] = m
+    for j, m in best.items(): snapped[j] = m
+    for i in range(len(snapped)):
+        lo = (snapped[i - 1] if i else start) + 0.45
+        snapped[i] = min(max(snapped[i], lo), end - 0.45 * (len(snapped) - i))
     edges = [start] + snapped + [end]
     return [{"text": caps[i], "start": round(edges[i], 3), "end": round(edges[i + 1], 3)} for i in range(len(caps))]
 
@@ -93,21 +98,32 @@ def layout_vo():
 
 
 def layout_single(path):
-    """One continuous AI Studio export: cut it into the 10 segments at the longest pauses near the
-    expected sentence boundaries."""
+    """One continuous voiceover (e.g. a Google AI Studio export). Sentence ends are matched to pauses with a
+    small dynamic program: each of the 9 boundaries takes one pause, in order, close to where the script's
+    letter count expects it and preferring long pauses."""
     sr = 24000; x = trim(read_wav(path, sr), sr)
     x = np.concatenate([np.zeros(int(LEAD * sr)), x]); dur = len(x) / sr
-    q = pauses(x, sr, min_len=0.18)
+    r, win = rms_frames(x, sr); on = np.where(r > r.max() * 10 ** (-38 / 20))[0]
+    s0, s1 = on[0] * win, (on[-1] + 1) * win
+    q = [p for p in pauses(x, sr, min_len=0.12) if s0 + 0.5 < p[0] and p[1] < s1 - 0.5]
     w = np.array([len(plain(s["text"])) for s in SEGS], float)
-    expect = LEAD + (dur - LEAD) * np.cumsum(w)[:-1] / w.sum()
-    bounds, last = [], LEAD
-    for e in expect:
-        cand = [p for p in q if p[0] > last + 1.0 and abs((p[0] + p[1]) / 2 - e) < 2.5]
-        p = max(cand, key=lambda p: (p[1] - p[0]) - 0.15 * abs((p[0] + p[1]) / 2 - e)) if cand else (e, e)
-        bounds.append(p); last = p[1]
-    starts = [LEAD] + [b[1] for b in bounds]; ends = [b[0] for b in bounds] + [dur]
+    E = s0 + (s1 - s0) * np.cumsum(w)[:-1] / w.sum()
+    K, P = len(E), len(q)
+    cost = lambda k, j: (((q[j][0] + q[j][1]) / 2 - E[k]) / 1.6) ** 2 - 1.5 * min(q[j][1] - q[j][0], 0.8)
+    INF = 1e18; best = np.full((K, P), INF); back = np.zeros((K, P), int)
+    for j in range(P): best[0][j] = cost(0, j)
+    for k in range(1, K):
+        for j in range(k, P):
+            i = int(np.argmin(best[k - 1][:j])); best[k][j] = best[k - 1][i] + cost(k, j); back[k][j] = i
+    j = int(np.argmin(best[K - 1])); pick = [j]
+    for k in range(K - 1, 0, -1): j = back[k][j]; pick.append(j)
+    bounds = [q[j] for j in reversed(pick)]
+    starts = [s0] + [b[1] for b in bounds]; ends = [b[0] for b in bounds] + [s1]
     scenes = [{"id": s["id"], "start": round(a, 3), "end": round(b, 3), "caps": caption_times(a, b, s["captions"], q)}
               for s, a, b in zip(SEGS, starts, ends)]
+    scenes[0]["start"] = 0.0
+    for s, a, b, ww in zip(SEGS, starts, ends, w):
+        print(f"  {s['id']:>4}: {a:6.2f}-{b:6.2f}  {ww / (b - a):5.1f} letters/s")
     write_wav(A("assets", "voiceover.wav"), x * 0.89 / max(1e-6, np.abs(x).max()), sr)
     return scenes, dur, "assets/voiceover.wav"
 

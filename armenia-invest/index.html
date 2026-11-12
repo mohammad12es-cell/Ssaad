@@ -1,80 +1,70 @@
 <!doctype html>
-<!-- SOURCE TEMPLATE. Edit this file, then run `python3 build.py <mode>` to regenerate index.html. -->
+<!-- SOURCE TEMPLATE (Three.js version). Edit this file, then run `python3 build.py <mode>` to regenerate index.html. -->
 <html lang="fa" dir="rtl" data-resolution="portrait">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=1080, height=1920" />
     <script src="assets/gsap.min.js"></script>
+    <script type="importmap">{ "imports": { "three": "./assets/three.module.js" } }</script>
     <style>
       @font-face { font-family: "Vazirmatn"; font-weight: 400; src: url("assets/fonts/vazirmatn-latin-400-normal.woff2") format("woff2"); }
       @font-face { font-family: "Vazirmatn"; font-weight: 700; src: url("assets/fonts/vazirmatn-latin-700-normal.woff2") format("woff2"); }
       @font-face { font-family: "Vazirmatn"; font-weight: 900; src: url("assets/fonts/vazirmatn-latin-900-normal.woff2") format("woff2"); }
-      @font-face { font-family: "Vazirmatn"; font-weight: 400; src: url("assets/fonts/vazirmatn-arabic-400-normal.woff2") format("woff2"); unicode-range: U+0600-06FF, U+0750-077F, U+0870-088E, U+0890-0891, U+0897-08E1, U+08E3-08FF, U+200C-200E, U+2010-2011, U+204F, U+2E41, U+FB50-FDFF, U+FE70-FE74, U+FE76-FEFC; }
-      @font-face { font-family: "Vazirmatn"; font-weight: 500; src: url("assets/fonts/vazirmatn-arabic-500-normal.woff2") format("woff2"); unicode-range: U+0600-06FF, U+0750-077F, U+0870-088E, U+0890-0891, U+0897-08E1, U+08E3-08FF, U+200C-200E, U+2010-2011, U+204F, U+2E41, U+FB50-FDFF, U+FE70-FE74, U+FE76-FEFC; }
       @font-face { font-family: "Vazirmatn"; font-weight: 700; src: url("assets/fonts/vazirmatn-arabic-700-normal.woff2") format("woff2"); unicode-range: U+0600-06FF, U+0750-077F, U+0870-088E, U+0890-0891, U+0897-08E1, U+08E3-08FF, U+200C-200E, U+2010-2011, U+204F, U+2E41, U+FB50-FDFF, U+FE70-FE74, U+FE76-FEFC; }
       @font-face { font-family: "Vazirmatn"; font-weight: 800; src: url("assets/fonts/vazirmatn-arabic-800-normal.woff2") format("woff2"); unicode-range: U+0600-06FF, U+0750-077F, U+0870-088E, U+0890-0891, U+0897-08E1, U+08E3-08FF, U+200C-200E, U+2010-2011, U+204F, U+2E41, U+FB50-FDFF, U+FE70-FE74, U+FE76-FEFC; }
       @font-face { font-family: "Vazirmatn"; font-weight: 900; src: url("assets/fonts/vazirmatn-arabic-900-normal.woff2") format("woff2"); unicode-range: U+0600-06FF, U+0750-077F, U+0870-088E, U+0890-0891, U+0897-08E1, U+08E3-08FF, U+200C-200E, U+2010-2011, U+204F, U+2E41, U+FB50-FDFF, U+FE70-FE74, U+FE76-FEFC; }
 
-      /* ===================== PALETTE (IRAM CO. brand: forest green + metallic gold + cream) ===================== */
+      /* ===================== PALETTE (IRAM CO. brand: forest green + metallic gold + cream) =====================
+         The 3D materials in assets/world.js use the same values. */
       :root {
-        --bg-1: #0b2017;   /* background, deepest (edges) */
-        --bg-2: #1d3f2d;   /* background glow, top-left */
-        --card: #1a4430;   /* tiles, tracks, roads */
-        --pri: #2f8a5c;    /* emerald (fields, water, plants) */
-        --acc: #dcad58;    /* gold */
-        --acc-hi: #f4d68c; /* gold highlight */
-        --acc-lo: #a9792f; /* gold shadow */
-        --acc-2: #d38a4c;  /* copper (fruit, trout stripe, limit marker) */
-        --ink: #faf2e0;    /* cream text and light shapes */
-        --muted: #86a58f;  /* sage, secondary shapes */
-        --dark: #06140d;   /* outlines, shadows, caption backing */
+        --bg-1: #0b2017; --bg-2: #1d3f2d; --card: #1a4430; --pri: #2f8a5c;
+        --acc: #dcad58; --acc-hi: #f4d68c; --acc-lo: #a9792f; --acc-2: #d38a4c;
+        --ink: #faf2e0; --muted: #86a58f; --dark: #06140d;
         --gold: linear-gradient(180deg, var(--acc-hi) 0%, var(--acc) 45%, var(--acc-lo) 85%, #d9b264 100%);
         --font: "Vazirmatn", sans-serif;
       }
-      /* =============================================================================================== */
-
       * { margin: 0; padding: 0; box-sizing: border-box; }
       html, body { margin: 0; width: 1080px; height: 1920px; overflow: hidden; background: var(--bg-1); }
-      #root {
-        position: relative; width: 100%; height: 100%; overflow: hidden; font-family: var(--font); color: var(--ink);
-        background: radial-gradient(ellipse 85% 55% at 15% 4%, var(--bg-2) 0%, transparent 70%),
-          radial-gradient(ellipse 130% 95% at 50% 45%, #12301f 0%, var(--bg-1) 78%);
-      }
-      #tex { position: absolute; inset: 0; width: 1080px; height: 1920px; mix-blend-mode: soft-light; opacity: 0.42; }
-      #logoMark { position: absolute; top: 116px; right: 36px; width: 210px; }
+      #root { position: relative; width: 100%; height: 100%; overflow: hidden; font-family: var(--font); color: var(--ink); background: var(--bg-1); }
       .clip { position: absolute; inset: 0; }
-      svg.full { position: absolute; inset: 0; width: 1080px; height: 1920px; overflow: visible; }
-      svg text { font-family: var(--font); font-weight: 800; }
 
-      .f-ink { fill: var(--ink); } .f-pri { fill: var(--pri); } .f-acc { fill: url(#goldG); } .f-acc2 { fill: var(--acc-2); }
-      .f-card { fill: var(--card); } .f-bg { fill: var(--bg-1); } .f-mut { fill: var(--muted); } .f-dark { fill: var(--dark); }
-      .f-none { fill: none; }
-      .s-ink { stroke: var(--ink); } .s-pri { stroke: var(--pri); } .s-acc { stroke: var(--acc); } .s-acc2 { stroke: var(--acc-2); }
-      .s-mut { stroke: var(--muted); } .s-dark { stroke: var(--dark); } .s-card { stroke: var(--card); } .s-bg { stroke: var(--bg-1); }
-      .round { stroke-linecap: round; stroke-linejoin: round; }
+      /* 3D stage */
+      #gl { position: absolute; inset: 0; width: 1080px; height: 1920px; display: block; }
+      #vig { position: absolute; inset: 0; background: radial-gradient(ellipse 95% 70% at 50% 48%, transparent 55%, color-mix(in srgb, var(--dark) 55%, transparent) 100%); }
+      #labels { position: absolute; inset: 0; }
+      .lbl {
+        position: absolute; left: 0; top: 0; opacity: 0; white-space: nowrap; padding: 8px 24px 10px; border-radius: 999px;
+        font-weight: 800; font-size: 36px; color: var(--ink); background: color-mix(in srgb, var(--dark) 72%, transparent);
+        border: 2px solid color-mix(in srgb, var(--acc) 60%, transparent);
+      }
+      .lbl.gold { background: var(--gold); color: var(--dark); border-color: transparent; }
+      .lbl.copper { background: var(--acc-2); color: var(--dark); border-color: transparent; }
+      .lbl.warn { color: #f3b383; border-color: var(--acc-2); }
 
-      /* top chip + progress */
+      /* top chip, progress, logo */
       #chip { position: absolute; top: 132px; left: 0; right: 0; display: flex; justify-content: center; }
       #chip .pill {
         display: flex; align-items: center; gap: 16px; padding: 12px 30px 12px 22px; border-radius: 999px;
         background: color-mix(in srgb, var(--dark) 55%, transparent); border: 2px solid color-mix(in srgb, var(--acc) 55%, transparent);
         font-weight: 700; font-size: 32px; color: var(--ink);
       }
-      #chip svg { width: 40px; height: 40px; }
+      #chip .flag { width: 40px; height: 40px; border-radius: 50%; background: linear-gradient(180deg, #D90012 0 33.4%, #0033A0 33.4% 66.7%, #F2A800 66.7% 100%); }
       #prog { position: absolute; top: 96px; left: 120px; right: 120px; height: 8px; border-radius: 8px; background: color-mix(in srgb, var(--ink) 14%, transparent); overflow: hidden; }
       #progBar { width: 100%; height: 100%; background: linear-gradient(270deg, var(--acc-hi), var(--acc) 50%, var(--acc-lo)); transform-origin: 100% 50%; }
+      #logoMark { position: absolute; top: 116px; right: 36px; width: 210px; }
+      .wipe { position: absolute; top: -260px; left: 0; height: 2440px; width: 0; }
+      .wipe i { position: absolute; top: 0; bottom: 0; transform: rotate(14deg); transform-origin: 50% 50%; }
+      .wipe i.a { left: 0; width: 190px; background: var(--gold); }
+      .wipe i.b { left: -270px; width: 120px; background: var(--pri); }
 
-      /* scenes */
+      /* scene text */
       .scene-in { position: absolute; inset: 0; }
-      .kicker {
-        position: absolute; top: 236px; left: 0; right: 0; text-align: center;
-        font-weight: 700; font-size: 34px; letter-spacing: 0; color: var(--acc);
-      }
-      .kicker span { display: inline-block; padding: 6px 26px; border-radius: 999px; border: 2px solid var(--acc); background: color-mix(in srgb, var(--dark) 35%, transparent); }
+      .kicker { position: absolute; top: 236px; left: 0; right: 0; text-align: center; font-weight: 700; font-size: 34px; color: var(--acc); }
+      .kicker span { display: inline-block; padding: 6px 26px; border-radius: 999px; border: 2px solid var(--acc); background: color-mix(in srgb, var(--dark) 45%, transparent); }
       .hl {
         position: absolute; top: 300px; left: 60px; right: 60px; text-align: center;
         font-weight: 900; font-size: 90px; line-height: 1.28; color: var(--ink);
-        filter: drop-shadow(0 8px 22px color-mix(in srgb, var(--dark) 75%, transparent));
+        filter: drop-shadow(0 8px 22px color-mix(in srgb, var(--dark) 80%, transparent));
       }
       .hl em { font-style: normal; color: var(--acc); background: var(--gold); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
 
@@ -83,14 +73,15 @@
       .cap-in {
         margin-top: 1430px; max-width: 960px; padding: 16px 36px 22px; border-radius: 30px; text-align: center;
         font-weight: 800; font-size: 60px; line-height: 1.45; color: var(--ink);
-        background: color-mix(in srgb, var(--dark) 66%, transparent); border: 2px solid color-mix(in srgb, var(--acc) 38%, transparent);
+        background: color-mix(in srgb, var(--dark) 70%, transparent); border: 2px solid color-mix(in srgb, var(--acc) 38%, transparent);
       }
       .cap-in .hi { color: var(--acc-hi); }
 
-      /* s10 html bits */
+      /* CTA */
       .check {
         position: absolute; left: 50%; transform: translateX(-50%); display: flex; align-items: center; gap: 20px;
-        padding: 14px 34px 14px 24px; border-radius: 999px; background: var(--card); border: 2px solid color-mix(in srgb, var(--acc) 60%, transparent); font-weight: 800; font-size: 46px; white-space: nowrap;
+        padding: 14px 34px 14px 24px; border-radius: 999px; background: color-mix(in srgb, var(--card) 88%, transparent);
+        border: 2px solid color-mix(in srgb, var(--acc) 60%, transparent); font-weight: 800; font-size: 46px; white-space: nowrap;
       }
       .check i { display: inline-flex; width: 56px; height: 56px; border-radius: 50%; background: var(--gold); align-items: center; justify-content: center; }
       #cbox {
@@ -103,426 +94,164 @@
       #ctext { font-weight: 900; font-size: 74px; color: var(--dark); clip-path: inset(0% 0% 0% 100%); white-space: nowrap; }
       #caret { width: 6px; height: 74px; background: var(--pri); margin-right: 8px; }
       #send { flex: 0 0 124px; height: 124px; border-radius: 50%; background: var(--gold); display: flex; align-items: center; justify-content: center; }
-      #ctaBig { position: absolute; top: 1190px; left: 0; right: 0; text-align: center; font-weight: 900; font-size: 64px; color: var(--ink); }
+      #ctaBig { position: absolute; top: 1190px; left: 0; right: 0; text-align: center; font-weight: 900; font-size: 64px; color: var(--ink); filter: drop-shadow(0 6px 16px color-mix(in srgb, var(--dark) 80%, transparent)); }
       #ctaBig em { font-style: normal; color: var(--acc); background: var(--gold); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
       #endLogo { position: absolute; top: 1450px; left: 50%; width: 600px; margin-left: -300px; }
     </style>
   </head>
   <body>
-    <div id="root" data-composition-id="main" data-start="0" data-duration="76.300" data-width="1080" data-height="1920">
+    <div id="root" data-composition-id="main" data-start="0" data-duration="70.600" data-width="1080" data-height="1920">
 
-      <!-- ============ persistent background ============ -->
-      <div id="bg" class="clip" data-start="0" data-duration="76.300" data-track-index="0">
-        <img id="tex" src="assets/texture.jpg" alt="" />
-        <svg class="full" viewBox="0 0 1080 1920">
-          <defs>
-            <pattern id="dots" width="54" height="54" patternUnits="userSpaceOnUse"><circle cx="27" cy="27" r="2.4" class="f-ink" /></pattern>
-            <radialGradient id="glowG" cx="0.5" cy="0.5" r="0.5">
-              <stop offset="0" stop-color="#ffffff" stop-opacity="0.55" /><stop offset="1" stop-color="#ffffff" stop-opacity="0" />
-            </radialGradient>
-            <clipPath id="flagClip"><circle cx="0" cy="0" r="100" /></clipPath>
-            <linearGradient id="goldG" x1="0" y1="0" x2="0.35" y2="1">
-              <stop offset="0" stop-color="#f4d68c" /><stop offset="0.45" stop-color="#dcad58" /><stop offset="0.82" stop-color="#a9792f" /><stop offset="1" stop-color="#d9b264" />
-            </linearGradient>
-            <radialGradient id="softG" cx="0.5" cy="0.5" r="0.5"><stop offset="0" stop-color="#ffffff" stop-opacity="1" /><stop offset="1" stop-color="#ffffff" stop-opacity="0" /></radialGradient>
-          </defs>
-          <rect width="1080" height="1920" fill="url(#dots)" opacity="0.035" />
-          <g id="blobA" opacity="0.10"><circle cx="160" cy="520" r="520" style="fill:url(#softG)" /></g>
-          <g id="blobB" opacity="0.07"><circle cx="960" cy="1480" r="560" style="fill:url(#softG)" /></g>
-          <g id="particles"></g>
-        </svg>
+      <!-- ============ Three.js stage (assets/world.js) ============ -->
+      <div id="stage" class="clip" data-start="0" data-duration="70.600" data-track-index="0">
+        <canvas id="gl" width="1080" height="1920"></canvas>
+        <div id="vig"></div>
+        <div id="labels" data-layout-allow-overlap></div>
       </div>
 
-      <!-- ============ S1 hook: gold & dollar -> steady dollar income ============ -->
-      <div id="s1" class="clip" data-scene="s1" data-start="0.000" data-duration="7.350" data-track-index="1">
-        <div class="scene-in">
-          <div class="kicker"><span>وقتِ یه انتخاب تازه‌ست</span></div>
-          <h1 class="hl" data-at="0">خرید و فروش <em>طلا و دلار</em>؟</h1>
-          <h1 class="hl" data-at="2">فقط <em>سود محدود</em></h1>
-          <h1 class="hl" data-at="3"><em>درآمد دلاری</em> ثابت</h1>
-          <svg class="full" viewBox="0 0 1080 1920">
-            <path id="s1-zig" d="M110,1190 L210,1060 L290,1170 L380,1000 L460,1150 L560,1030 L640,1180 L730,990 L820,1120 L970,1010" class="f-none s-mut round" stroke-width="12" opacity="0.7" />
-            <g transform="translate(320,900)"><g id="s1-goldwrap"><g id="s1-gold"></g></g></g>
-            <g transform="translate(770,890)"><g id="s1-billwrap"><g id="s1-bill"></g></g></g>
-            <g id="s1-limit" opacity="0">
-              <rect x="160" y="1180" width="760" height="46" rx="23" class="f-card" />
-              <rect id="s1-limfill" x="740" y="1180" width="180" height="46" rx="23" class="f-acc" />
-              <rect x="726" y="1156" width="14" height="94" rx="7" class="f-acc2" />
-              <text x="733" y="1130" text-anchor="middle" direction="rtl" font-size="40" class="f-acc2">سقف</text>
-            </g>
-            <g id="s1-glow" opacity="0"><circle cx="560" cy="1060" r="380" fill="url(#glowG)" opacity="0.35" /></g>
-            <g id="s1-coins"></g>
-            <path id="s1-rise" d="M220,1110 C360,1080 420,1010 520,960 S720,840 880,760" class="f-none s-acc round" stroke-width="14" />
-            <g transform="translate(880,760) rotate(-32)"><path id="s1-head" d="M-36,-30 L16,0 L-36,30 Z" class="f-acc" /></g>
-          </svg>
+      <!-- ============ scene titles (headline beats follow the caption phrases via data-at) ============ -->
+      <div id="s1" class="clip" data-scene="s1" data-start="0.000" data-duration="9.110" data-track-index="1"><div class="scene-in">
+        <div class="kicker"><span>وقتِ یه انتخاب تازه‌ست</span></div>
+        <h1 class="hl" data-at="0">خرید و فروش <em>طلا و دلار</em>؟</h1>
+        <h1 class="hl" data-at="2">فقط <em>سود محدود</em></h1>
+        <h1 class="hl" data-at="3"><em>درآمد دلاری</em> ثابت</h1>
+      </div></div>
+      <div id="s2" class="clip" data-scene="s2" data-start="8.660" data-duration="4.910" data-track-index="2"><div class="scene-in">
+        <div class="kicker"><span>۰۱ · دامپروری</span></div>
+        <h1 class="hl" data-at="0">پرورش <em>دام و طیور</em></h1>
+        <h1 class="hl" data-at="1">در <em>ارمنستان</em></h1>
+      </div></div>
+      <div id="s3" class="clip" data-scene="s3" data-start="13.120" data-duration="6.070" data-track-index="1"><div class="scene-in">
+        <div class="kicker"><span>۰۱ · دامپروری</span></div>
+        <h1 class="hl" data-at="0"><em>زمین‌های</em> بزرگ</h1>
+        <h1 class="hl" data-at="1">خوراک دام <em>به‌صرفه</em></h1>
+        <h1 class="hl" data-at="2">فرصت <em>جذاب</em> سرمایه‌گذاری</h1>
+      </div></div>
+      <div id="s4" class="clip" data-scene="s4" data-start="18.740" data-duration="6.470" data-track-index="2"><div class="scene-in">
+        <div class="kicker"><span>۰۲ · بازار فروش</span></div>
+        <h1 class="hl" data-at="0"><em>بازار داخلی</em></h1>
+        <h1 class="hl" data-at="1"><em>صادرات</em> محصولات دامی</h1>
+        <h1 class="hl" data-at="2">به <em>کشورهای اطراف</em></h1>
+      </div></div>
+      <div id="s5" class="clip" data-scene="s5" data-start="24.760" data-duration="8.490" data-track-index="1"><div class="scene-in">
+        <div class="kicker"><span>۰۳ · کشاورزی</span></div>
+        <h1 class="hl" data-at="0"><em>گلخانه‌های</em> مدرن</h1>
+        <h1 class="hl" data-at="1">محصولات <em>باغی و زراعی</em></h1>
+        <h1 class="hl" data-at="2">ظرفیت <em>بالای</em> کشاورزی</h1>
+      </div></div>
+      <div id="s6" class="clip" data-scene="s6" data-start="32.800" data-duration="7.850" data-track-index="2"><div class="scene-in">
+        <div class="kicker"><span>۰۳ · کشاورزی</span></div>
+        <h1 class="hl" data-at="0"><em>آب‌وهوای</em> مناسب</h1>
+        <h1 class="hl" data-at="1"><em>چهار فصل</em> کامل</h1>
+        <h1 class="hl" data-at="3">تولید و صادرات <em>آسان</em></h1>
+      </div></div>
+      <div id="s7" class="clip" data-scene="s7" data-start="40.200" data-duration="6.890" data-track-index="1"><div class="scene-in">
+        <div class="kicker"><span>۰۴ · آبزی‌پروری</span></div>
+        <h1 class="hl" data-at="0"><em>پرورش ماهی</em></h1>
+        <h1 class="hl" data-at="1">ماهی <em>قزل‌آلا</em></h1>
+        <h1 class="hl" data-at="3">حوزه‌ی <em>رو به رشد</em></h1>
+      </div></div>
+      <div id="s8" class="clip" data-scene="s8" data-start="46.640" data-duration="9.090" data-track-index="2"><div class="scene-in">
+        <div class="kicker"><span>۰۴ · آبزی‌پروری</span></div>
+        <h1 class="hl" data-at="0"><em>منابع آبی</em> مناسب</h1>
+        <h1 class="hl" data-at="1"><em>تقاضای</em> بالا</h1>
+        <h1 class="hl" data-at="4">فرصت <em>بسیار جذاب</em></h1>
+      </div></div>
+      <div id="s9" class="clip" data-scene="s9" data-start="55.280" data-duration="7.030" data-track-index="1"><div class="scene-in">
+        <div class="kicker"><span>نکته‌ی مهم</span></div>
+        <h1 class="hl" data-at="0">مهم نیست <em>چقدر</em> سرمایه داری</h1>
+        <h1 class="hl" data-at="2"><em>مسیر درست</em> مهمه</h1>
+      </div></div>
+      <div id="s10" class="clip" data-scene="s10" data-start="61.860" data-duration="8.740" data-track-index="2"><div class="scene-in">
+        <div class="kicker"><span>همین حالا</span></div>
+        <h1 class="hl" data-at="0"><em>مشاوره‌ی رایگان</em></h1>
+        <div class="check" id="chk1" style="top: 580px"><i><svg width="34" height="34" viewBox="0 0 34 34"><path d="M6,18 L14,26 L28,9" fill="none" stroke="#06140d" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" /></svg></i>اطلاعات بیشتر</div>
+        <div class="check" id="chk2" style="top: 720px"><i><svg width="34" height="34" viewBox="0 0 34 34"><path d="M6,18 L14,26 L28,9" fill="none" stroke="#06140d" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" /></svg></i>مشاوره‌ی رایگان</div>
+        <div id="cbox">
+          <div class="av"><svg width="124" height="124" viewBox="0 0 124 124"><circle cx="62" cy="48" r="22" fill="#faf2e0" /><path d="M22,118 C26,86 98,86 102,118 Z" fill="#faf2e0" /></svg></div>
+          <div class="field"><div id="ctext">سرمایه</div><div id="caret"></div></div>
+          <div id="send"><svg width="64" height="64" viewBox="0 0 64 64"><path d="M54,10 L8,30 L26,36 L32,56 Z" fill="#06140d" /></svg></div>
         </div>
-      </div>
+        <div id="ctaBig">کلمه‌ی <em>«سرمایه»</em> رو کامنت کن</div>
+        <img id="endLogo" src="assets/iram-logo.png" alt="IRAM CO." />
+      </div></div>
 
-      <!-- ============ S2 livestock in Armenia ============ -->
-      <div id="s2" class="clip" data-scene="s2" data-start="6.900" data-duration="6.150" data-track-index="2">
-        <div class="scene-in">
-          <div class="kicker"><span>۰۱ · دامپروری</span></div>
-          <h1 class="hl" data-at="0">پرورش <em>دام و طیور</em></h1>
-          <h1 class="hl" data-at="1">در <em>ارمنستان</em></h1>
-          <svg class="full" viewBox="0 0 1080 1920">
-            <circle id="s2-orbit" cx="540" cy="930" r="330" class="f-none s-mut" stroke-width="5" stroke-dasharray="4 22" opacity="0.7" />
-            <g id="s2-pin">
-              <path d="M540,1080 C470,1000 418,946 418,880 A122,122 0 1,1 662,880 C662,946 610,1000 540,1080 Z" class="f-ink" />
-              <g transform="translate(540,880)"><g id="s2-flag"></g></g>
-            </g>
-            <g id="s2-label" opacity="0">
-              <rect x="390" y="1098" width="300" height="78" rx="39" class="f-acc" />
-              <text x="540" y="1152" text-anchor="middle" direction="rtl" font-size="44" class="f-dark">ارمنستان</text>
-            </g>
-            <g id="s2-badges"></g>
-          </svg>
-        </div>
-      </div>
-
-      <!-- ============ S3 big land + affordable feed ============ -->
-      <div id="s3" class="clip" data-scene="s3" data-start="12.600" data-duration="8.150" data-track-index="1">
-        <div class="scene-in">
-          <div class="kicker"><span>۰۱ · دامپروری</span></div>
-          <h1 class="hl" data-at="0"><em>زمین‌های</em> بزرگ</h1>
-          <h1 class="hl" data-at="1">خوراک دام <em>به‌صرفه</em></h1>
-          <h1 class="hl" data-at="2">فرصت <em>جذاب</em> سرمایه‌گذاری</h1>
-          <svg class="full" viewBox="0 0 1080 1920">
-            <g id="s3-fieldwrap">
-              <g id="s3-field"></g>
-              <g id="s3-dim" opacity="0">
-                <path d="M150,700 L930,700" class="s-acc round" stroke-width="8" />
-                <path d="M190,670 L150,700 L190,730 M890,670 L930,700 L890,730" class="f-none s-acc round" stroke-width="8" />
-              </g>
-            </g>
-            <g transform="translate(800,1010)" data-layout-allow-overlap><g id="s3-sack"></g></g>
-            <g id="s3-badge" opacity="0">
-              <g id="s3-burst"></g>
-              <circle cx="540" cy="960" r="160" class="f-bg" />
-              <text x="540" y="940" text-anchor="middle" direction="rtl" font-size="62" class="f-ink">فرصت</text>
-              <text x="540" y="1020" text-anchor="middle" direction="rtl" font-size="62" class="f-acc">جذاب</text>
-            </g>
-            <g id="s3-spark"></g>
-          </svg>
-        </div>
-      </div>
-
-      <!-- ============ S4 domestic market + exports ============ -->
-      <div id="s4" class="clip" data-scene="s4" data-start="20.300" data-duration="7.150" data-track-index="2">
-        <div class="scene-in">
-          <div class="kicker"><span>۰۲ · بازار فروش</span></div>
-          <h1 class="hl" data-at="0"><em>بازار داخلی</em></h1>
-          <h1 class="hl" data-at="1"><em>صادرات</em> محصولات دامی</h1>
-          <h1 class="hl" data-at="2">به <em>کشورهای اطراف</em></h1>
-          <svg class="full" viewBox="0 0 1080 1920">
-            <path id="s4-down" d="M540,1110 L540,1215" class="f-none s-ink round" stroke-width="8" stroke-dasharray="2 18" />
-            <g id="s4-arcs"></g>
-            <g id="s4-globes"></g>
-            <g id="s4-home">
-              <rect x="350" y="1215" width="380" height="150" rx="34" class="f-card s-acc" stroke-width="4" />
-              <g transform="translate(655,1290)" id="s4-shop"></g>
-              <text x="462" y="1305" text-anchor="middle" direction="rtl" font-size="42" class="f-ink">بازار داخلی</text>
-            </g>
-            <g id="s4-crates"></g>
-            <g id="s4-hub">
-              <circle cx="540" cy="1000" r="112" class="f-ink" />
-              <circle cx="540" cy="1000" r="112" class="f-none s-acc" stroke-width="8" />
-              <g transform="translate(540,1000)"><g id="s4-flag"></g></g>
-            </g>
-          </svg>
-        </div>
-      </div>
-
-      <!-- ============ S5 agriculture ============ -->
-      <div id="s5" class="clip" data-scene="s5" data-start="27.000" data-duration="9.450" data-track-index="1">
-        <div class="scene-in">
-          <div class="kicker"><span>۰۳ · کشاورزی</span></div>
-          <h1 class="hl" data-at="0"><em>گلخانه‌های</em> مدرن</h1>
-          <h1 class="hl" data-at="1">محصولات <em>باغی و زراعی</em></h1>
-          <h1 class="hl" data-at="2">ظرفیت <em>بالای</em> کشاورزی</h1>
-          <svg class="full" viewBox="0 0 1080 1920">
-            <defs><clipPath id="ghClip"><path d="M230,1190 L230,1000 C230,800 850,800 850,1000 L850,1190 Z" /></clipPath></defs>
-            <g id="s5-row">
-              <g id="s5-ghwrap">
-                <path id="s5-glass" d="M230,1190 L230,1000 C230,800 850,800 850,1000 L850,1190 Z" class="f-ink" opacity="0" />
-                <g clip-path="url(#ghClip)" id="s5-ribs"></g>
-                <g id="s5-plants"></g>
-                <path id="s5-ghline" d="M230,1190 L230,1000 C230,800 850,800 850,1000 L850,1190" class="f-none s-ink round" stroke-width="10" />
-                <rect id="s5-ghbase" x="200" y="1186" width="680" height="16" rx="8" class="f-ink" opacity="0" />
-              </g>
-              <g id="s5-wheat"></g>
-              <g id="s5-tree"></g>
-            </g>
-            <g id="s5-gauge" opacity="0">
-              <path d="M330,1260 A210,210 0 0,1 750,1260" class="f-none s-card round" stroke-width="46" />
-              <path id="s5-gval" d="M330,1260 A210,210 0 0,1 750,1260" class="f-none s-acc round" stroke-width="46" />
-              <g id="s5-ticks"></g>
-              <line id="s5-needle" x1="540" y1="1260" x2="540" y2="1090" class="s-ink round" stroke-width="12" />
-              <circle cx="540" cy="1260" r="24" class="f-ink" />
-              <text x="540" y="1340" text-anchor="middle" direction="rtl" font-size="44" class="f-acc">ظرفیت بالا</text>
-            </g>
-          </svg>
-        </div>
-      </div>
-
-      <!-- ============ S6 climate, four seasons, easy export ============ -->
-      <div id="s6" class="clip" data-scene="s6" data-start="36.000" data-duration="8.650" data-track-index="2">
-        <div class="scene-in">
-          <div class="kicker"><span>۰۳ · کشاورزی</span></div>
-          <h1 class="hl" data-at="0"><em>آب‌وهوای</em> مناسب</h1>
-          <h1 class="hl" data-at="1"><em>چهار فصل</em> کامل</h1>
-          <h1 class="hl" data-at="3">تولید و صادرات <em>آسان</em></h1>
-          <svg class="full" viewBox="0 0 1080 1920">
-            <g id="s6-wheelwrap">
-              <g id="s6-wheelrot"><g id="s6-wheel"></g></g>
-              <g id="s6-weather">
-                <g id="s6-rays"></g>
-                <circle cx="540" cy="930" r="78" class="f-acc" />
-                <g id="s6-cloud">
-                  <circle cx="600" cy="985" r="46" class="f-ink" /><circle cx="650" cy="960" r="56" class="f-ink" />
-                  <circle cx="705" cy="990" r="40" class="f-ink" /><rect x="580" y="990" width="160" height="40" rx="20" class="f-ink" />
-                </g>
-              </g>
-            </g>
-            <g id="s6-line" opacity="0">
-              <rect x="300" y="1236" width="660" height="34" rx="17" class="f-card" />
-              <g id="s6-rollers"></g>
-              <g id="s6-crates"></g>
-              <g transform="translate(180,1190)"><g id="s6-truck"></g></g>
-            </g>
-          </svg>
-        </div>
-      </div>
-
-      <!-- ============ S7 trout farming ============ -->
-      <div id="s7" class="clip" data-scene="s7" data-start="44.200" data-duration="8.250" data-track-index="1">
-        <div class="scene-in">
-          <div class="kicker"><span>۰۴ · آبزی‌پروری</span></div>
-          <h1 class="hl" data-at="0"><em>پرورش ماهی</em></h1>
-          <h1 class="hl" data-at="1">ماهی <em>قزل‌آلا</em></h1>
-          <h1 class="hl" data-at="3">حوزه‌ی <em>رو به رشد</em></h1>
-          <svg class="full" viewBox="0 0 1080 1920">
-            <g id="s7-water">
-              <path id="s7-w2" class="f-pri" opacity="0.22" />
-              <path id="s7-w1" class="f-pri" opacity="0.30" />
-            </g>
-            <g id="s7-bubbles"></g>
-            <g id="s7-fishA"></g><g id="s7-fishB"></g>
-            <g id="s7-hero"></g>
-            <path id="s7-grow" d="M170,1300 L360,1150 L500,1210 L700,1010 L880,880" class="f-none s-acc round" stroke-width="18" />
-            <g transform="translate(880,880) rotate(-36)"><path id="s7-head" d="M-44,-38 L22,0 L-44,38 Z" class="f-acc" /></g>
-          </svg>
-        </div>
-      </div>
-
-      <!-- ============ S8 water resources + demand ============ -->
-      <div id="s8" class="clip" data-scene="s8" data-start="52.000" data-duration="9.350" data-track-index="2">
-        <div class="scene-in">
-          <div class="kicker"><span>۰۴ · آبزی‌پروری</span></div>
-          <h1 class="hl" data-at="0"><em>منابع آبی</em> مناسب</h1>
-          <h1 class="hl" data-at="1"><em>تقاضای</em> بالا</h1>
-          <h1 class="hl" data-at="4">فرصت <em>بسیار جذاب</em></h1>
-          <svg class="full" viewBox="0 0 1080 1920">
-            <defs><clipPath id="dropClip"><path d="M540,640 C620,770 720,880 720,1010 A180,180 0 1,1 360,1010 C360,880 460,770 540,640 Z" /></clipPath></defs>
-            <g id="s8-dropwrap">
-              <g clip-path="url(#dropClip)"><g id="s8-fill"><path id="s8-wave" class="f-pri" /></g></g>
-              <path id="s8-drop" d="M540,640 C620,770 720,880 720,1010 A180,180 0 1,1 360,1010 C360,880 460,770 540,640 Z" class="f-none s-ink round" stroke-width="12" />
-              <path d="M430,960 C430,920 450,890 470,870" class="f-none s-ink round" stroke-width="14" opacity="0.6" id="s8-shine" />
-            </g>
-            <g id="s8-chart"></g>
-            <g id="s8-tags" data-layout-allow-overlap></g>
-            <g id="s8-gem" opacity="0"></g>
-          </svg>
-        </div>
-      </div>
-
-      <!-- ============ S9 amount doesn't matter, the right path does ============ -->
-      <div id="s9" class="clip" data-scene="s9" data-start="60.900" data-duration="7.650" data-track-index="1">
-        <div class="scene-in">
-          <div class="kicker"><span>نکته‌ی مهم</span></div>
-          <h1 class="hl" data-at="0">مهم نیست <em>چقدر</em> سرمایه داری</h1>
-          <h1 class="hl" data-at="2"><em>مسیر درست</em> مهمه</h1>
-          <svg class="full" viewBox="0 0 1080 1920">
-            <g id="s9-stacks"></g>
-            <g id="s9-road" opacity="0">
-              <path id="s9-trunk" d="M540,1350 L540,1090" class="f-none s-mut round" stroke-width="70" opacity="0.4" />
-              <path id="s9-bL" d="M540,1090 C540,980 260,900 230,720" class="f-none s-mut round" stroke-width="56" opacity="0.4" />
-              <path id="s9-bC" d="M540,1090 C540,960 540,820 540,690" class="f-none s-mut round" stroke-width="56" opacity="0.4" />
-              <path id="s9-bR" d="M540,1090 C540,980 820,900 850,720" class="f-none s-mut round" stroke-width="56" opacity="0.4" />
-              <path id="s9-good" d="M540,1350 L540,1090 C540,980 820,900 850,720" class="f-none s-acc round" stroke-width="20" />
-              <g id="s9-x"></g>
-              <g transform="translate(850,700)"><g id="s9-flag"></g></g>
-              <circle id="s9-dot" cx="0" cy="0" r="22" class="f-ink" opacity="0" />
-            </g>
-          </svg>
-        </div>
-      </div>
-
-      <!-- ============ S10 CTA ============ -->
-      <div id="s10" class="clip" data-scene="s10" data-start="68.100" data-duration="8.200" data-track-index="2">
-        <div class="scene-in">
-          <div class="kicker"><span>همین حالا</span></div>
-          <h1 class="hl" data-at="0"><em>مشاوره‌ی رایگان</em></h1>
-          <div class="check" id="chk1" style="top: 580px"><i><svg width="34" height="34" viewBox="0 0 34 34"><path d="M6,18 L14,26 L28,9" fill="none" stroke-width="6" class="s-dark round" /></svg></i>اطلاعات بیشتر</div>
-          <div class="check" id="chk2" style="top: 720px"><i><svg width="34" height="34" viewBox="0 0 34 34"><path d="M6,18 L14,26 L28,9" fill="none" stroke-width="6" class="s-dark round" /></svg></i>مشاوره‌ی رایگان</div>
-          <div id="cbox">
-            <div class="av"><svg width="124" height="124" viewBox="0 0 124 124"><circle cx="62" cy="48" r="22" class="f-ink" /><path d="M22,118 C26,86 98,86 102,118 Z" class="f-ink" /></svg></div>
-            <div class="field"><div id="ctext">سرمایه</div><div id="caret"></div></div>
-            <div id="send"><svg width="64" height="64" viewBox="0 0 64 64"><path d="M54,10 L8,30 L26,36 L32,56 Z" class="f-dark" /></svg></div>
-          </div>
-          <div id="ctaBig">کلمه‌ی <em>«سرمایه»</em> رو کامنت کن</div>
-          <img id="endLogo" src="assets/iram-logo.png" alt="IRAM CO." />
-          <svg class="full" viewBox="0 0 1080 1920"><g id="s10-hearts"></g></svg>
-        </div>
-      </div>
-
-      <!-- ============ overlays ============ -->
-      <div id="hud" class="clip" data-start="0" data-duration="76.300" data-track-index="4">
+      <!-- ============ HUD ============ -->
+      <div id="hud" class="clip" data-start="0" data-duration="70.600" data-track-index="4">
         <div id="prog"><div id="progBar"></div></div>
         <img id="logoMark" src="assets/iram-logo.png" alt="IRAM CO." />
-        <div id="chip"><div class="pill">
-          <svg viewBox="-100 -100 200 200"><g clip-path="url(#flagClip)"><rect x="-100" y="-100" width="200" height="67" fill="#D90012" /><rect x="-100" y="-33" width="200" height="67" fill="#0033A0" /><rect x="-100" y="34" width="200" height="66" fill="#F2A800" /></g></svg>
-          سرمایه‌گذاری در ارمنستان
-        </div></div>
-        <svg class="full" viewBox="0 0 1080 1920" style="pointer-events:none"><g id="wipes"></g></svg>
+        <div id="chip"><div class="pill"><span class="flag"></span>سرمایه‌گذاری در ارمنستان</div></div>
+        <div id="wipes"></div>
       </div>
 
-      <div id="cap-s1-0" class="clip cap" data-start="0.050" data-duration="1.238" data-track-index="6"><div class="cap-in">شاید وقت رسیده</div></div>
-      <div id="cap-s1-1" class="clip cap" data-start="1.288" data-duration="2.063" data-track-index="6"><div class="cap-in">به‌جای خرید و فروش <span class="hi">طلا و دلار</span></div></div>
-      <div id="cap-s1-2" class="clip cap" data-start="3.351" data-duration="1.403" data-track-index="6"><div class="cap-in">و گرفتن <span class="hi">سود محدود</span>،</div></div>
-      <div id="cap-s1-3" class="clip cap" data-start="4.754" data-duration="2.196" data-track-index="6"><div class="cap-in">به فکر <span class="hi">درآمد دلاری ثابت</span> باشی.</div></div>
-      <div id="cap-s2-0" class="clip cap" data-start="6.950" data-duration="2.457" data-track-index="6"><div class="cap-in">پرورش <span class="hi">گاو، گوسفند، مرغ</span></div></div>
-      <div id="cap-s2-1" class="clip cap" data-start="9.407" data-duration="3.243" data-track-index="6"><div class="cap-in">و سایر پرندگان توی <span class="hi">ارمنستان</span>،</div></div>
-      <div id="cap-s3-0" class="clip cap" data-start="12.650" data-duration="2.280" data-track-index="6"><div class="cap-in">به‌خاطر <span class="hi">زمین‌های بزرگ</span></div></div>
-      <div id="cap-s3-1" class="clip cap" data-start="14.930" data-duration="1.933" data-track-index="6"><div class="cap-in">و <span class="hi">هزینه‌ی مناسب</span> خوراک دام،</div></div>
-      <div id="cap-s3-2" class="clip cap" data-start="16.863" data-duration="3.487" data-track-index="6"><div class="cap-in">یکی از فرصت‌های <span class="hi">جذاب سرمایه‌گذاریه</span>.</div></div>
-      <div id="cap-s4-0" class="clip cap" data-start="20.350" data-duration="2.120" data-track-index="6"><div class="cap-in">هم به <span class="hi">بازار داخلی</span> دسترسی داری،</div></div>
-      <div id="cap-s4-1" class="clip cap" data-start="22.470" data-duration="2.123" data-track-index="6"><div class="cap-in">هم امکان <span class="hi">صادرات</span> محصولات دامی</div></div>
-      <div id="cap-s4-2" class="clip cap" data-start="24.593" data-duration="2.457" data-track-index="6"><div class="cap-in">به <span class="hi">کشورهای اطراف</span> فراهمه.</div></div>
-      <div id="cap-s5-0" class="clip cap" data-start="27.050" data-duration="1.930" data-track-index="6"><div class="cap-in">از <span class="hi">گلخانه‌های مدرن</span> گرفته</div></div>
-      <div id="cap-s5-1" class="clip cap" data-start="28.980" data-duration="2.470" data-track-index="6"><div class="cap-in">تا کشت محصولات <span class="hi">باغی و زراعی</span>،</div></div>
-      <div id="cap-s5-2" class="clip cap" data-start="31.450" data-duration="1.987" data-track-index="6"><div class="cap-in">ارمنستان <span class="hi">ظرفیت بالایی</span></div></div>
-      <div id="cap-s5-3" class="clip cap" data-start="33.437" data-duration="2.613" data-track-index="6"><div class="cap-in">برای فعالیت‌های کشاورزی داره.</div></div>
-      <div id="cap-s6-0" class="clip cap" data-start="36.050" data-duration="1.215" data-track-index="6"><div class="cap-in"><span class="hi">آب‌وهوای مناسب</span></div></div>
-      <div id="cap-s6-1" class="clip cap" data-start="37.265" data-duration="2.145" data-track-index="6"><div class="cap-in">و <span class="hi">چهارفصل</span> بودن توی یه سری از مناطق،</div></div>
-      <div id="cap-s6-2" class="clip cap" data-start="39.410" data-duration="1.904" data-track-index="6"><div class="cap-in">شرایط رو جوری کرده که</div></div>
-      <div id="cap-s6-3" class="clip cap" data-start="41.314" data-duration="2.936" data-track-index="6"><div class="cap-in"><span class="hi">تولید و صادرات</span> خیلی آسون می‌شه.</div></div>
-      <div id="cap-s7-0" class="clip cap" data-start="44.250" data-duration="1.030" data-track-index="6"><div class="cap-in"><span class="hi">پرورش ماهی</span>،</div></div>
-      <div id="cap-s7-1" class="clip cap" data-start="45.280" data-duration="2.059" data-track-index="6"><div class="cap-in">به‌ویژه پرورش <span class="hi">ماهی قزل‌آلا</span></div></div>
-      <div id="cap-s7-2" class="clip cap" data-start="47.339" data-duration="1.271" data-track-index="6"><div class="cap-in">و سایر آبزیان،</div></div>
-      <div id="cap-s7-3" class="clip cap" data-start="48.610" data-duration="2.590" data-track-index="6"><div class="cap-in">یکی از حوزه‌های <span class="hi">رو به رشد</span> ارمنستانه.</div></div>
-      <div id="cap-s8-0" class="clip cap" data-start="52.050" data-duration="1.530" data-track-index="6"><div class="cap-in"><span class="hi">منابع آبی</span> مناسب،</div></div>
-      <div id="cap-s8-1" class="clip cap" data-start="53.580" data-duration="2.215" data-track-index="6"><div class="cap-in"><span class="hi">تقاضای بالا</span> توی بازار داخلی</div></div>
-      <div id="cap-s8-2" class="clip cap" data-start="55.795" data-duration="1.415" data-track-index="6"><div class="cap-in">و حتی صادراتی،</div></div>
-      <div id="cap-s8-3" class="clip cap" data-start="57.210" data-duration="1.261" data-track-index="6"><div class="cap-in">این حوزه رو به یک</div></div>
-      <div id="cap-s8-4" class="clip cap" data-start="58.471" data-duration="2.479" data-track-index="6"><div class="cap-in"><span class="hi">فرصت بسیار جذاب</span> تبدیل کرده.</div></div>
-      <div id="cap-s9-0" class="clip cap" data-start="60.950" data-duration="1.765" data-track-index="6"><div class="cap-in">حالا این وسط مهم نیست</div></div>
-      <div id="cap-s9-1" class="clip cap" data-start="62.715" data-duration="1.678" data-track-index="6"><div class="cap-in">که <span class="hi">چقدر سرمایه</span> داری؛</div></div>
-      <div id="cap-s9-2" class="clip cap" data-start="64.393" data-duration="1.917" data-track-index="6"><div class="cap-in">مهم اینه که <span class="hi">مسیر درست</span> رو</div></div>
-      <div id="cap-s9-3" class="clip cap" data-start="66.310" data-duration="1.840" data-track-index="6"><div class="cap-in">برای ورود انتخاب کنی.</div></div>
-      <div id="cap-s10-0" class="clip cap" data-start="68.150" data-duration="1.901" data-track-index="6"><div class="cap-in">برای دریافت اطلاعات بیشتر</div></div>
-      <div id="cap-s10-1" class="clip cap" data-start="70.051" data-duration="1.900" data-track-index="6"><div class="cap-in">و همچنین یک <span class="hi">مشاوره‌ی رایگان</span>،</div></div>
-      <div id="cap-s10-2" class="clip cap" data-start="71.951" data-duration="1.749" data-track-index="6"><div class="cap-in">کلمه‌ی <span class="hi">«سرمایه»</span> رو کامنت کن.</div></div>
+      <div id="cap-s1-0" class="clip cap" data-start="0.500" data-duration="1.348" data-track-index="6"><div class="cap-in">شاید وقت رسیده</div></div>
+      <div id="cap-s1-1" class="clip cap" data-start="1.848" data-duration="2.247" data-track-index="6"><div class="cap-in">به‌جای خرید و فروش <span class="hi">طلا و دلار</span></div></div>
+      <div id="cap-s1-2" class="clip cap" data-start="4.095" data-duration="1.075" data-track-index="6"><div class="cap-in">و گرفتن <span class="hi">سود محدود</span>،</div></div>
+      <div id="cap-s1-3" class="clip cap" data-start="5.170" data-duration="3.490" data-track-index="6"><div class="cap-in">به فکر <span class="hi">درآمد دلاری ثابت</span> باشی.</div></div>
+      <div id="cap-s2-0" class="clip cap" data-start="8.660" data-duration="1.774" data-track-index="6"><div class="cap-in">پرورش <span class="hi">گاو، گوسفند، مرغ</span></div></div>
+      <div id="cap-s2-1" class="clip cap" data-start="10.434" data-duration="2.686" data-track-index="6"><div class="cap-in">و سایر پرندگان توی <span class="hi">ارمنستان</span>،</div></div>
+      <div id="cap-s3-0" class="clip cap" data-start="13.120" data-duration="1.362" data-track-index="6"><div class="cap-in">به‌خاطر <span class="hi">زمین‌های بزرگ</span></div></div>
+      <div id="cap-s3-1" class="clip cap" data-start="14.482" data-duration="1.567" data-track-index="6"><div class="cap-in">و <span class="hi">هزینه‌ی مناسب</span> خوراک دام،</div></div>
+      <div id="cap-s3-2" class="clip cap" data-start="16.049" data-duration="2.691" data-track-index="6"><div class="cap-in">یکی از فرصت‌های <span class="hi">جذاب سرمایه‌گذاریه</span>.</div></div>
+      <div id="cap-s4-0" class="clip cap" data-start="18.740" data-duration="1.740" data-track-index="6"><div class="cap-in">هم به <span class="hi">بازار داخلی</span> دسترسی داری،</div></div>
+      <div id="cap-s4-1" class="clip cap" data-start="20.480" data-duration="1.907" data-track-index="6"><div class="cap-in">هم امکان <span class="hi">صادرات</span> محصولات دامی</div></div>
+      <div id="cap-s4-2" class="clip cap" data-start="22.387" data-duration="1.553" data-track-index="6"><div class="cap-in">به <span class="hi">کشورهای اطراف</span> فراهمه.</div></div>
+      <div id="cap-s5-0" class="clip cap" data-start="24.760" data-duration="1.778" data-track-index="6"><div class="cap-in">از <span class="hi">گلخانه‌های مدرن</span> گرفته</div></div>
+      <div id="cap-s5-1" class="clip cap" data-start="26.538" data-duration="2.372" data-track-index="6"><div class="cap-in">تا کشت محصولات <span class="hi">باغی و زراعی</span>،</div></div>
+      <div id="cap-s5-2" class="clip cap" data-start="28.910" data-duration="1.262" data-track-index="6"><div class="cap-in">ارمنستان <span class="hi">ظرفیت بالایی</span></div></div>
+      <div id="cap-s5-3" class="clip cap" data-start="30.172" data-duration="2.628" data-track-index="6"><div class="cap-in">برای فعالیت‌های کشاورزی داره.</div></div>
+      <div id="cap-s6-0" class="clip cap" data-start="32.800" data-duration="1.109" data-track-index="6"><div class="cap-in"><span class="hi">آب‌وهوای مناسب</span></div></div>
+      <div id="cap-s6-1" class="clip cap" data-start="33.909" data-duration="2.217" data-track-index="6"><div class="cap-in">و <span class="hi">چهارفصل</span> بودن توی یه سری از مناطق،</div></div>
+      <div id="cap-s6-2" class="clip cap" data-start="36.126" data-duration="1.478" data-track-index="6"><div class="cap-in">شرایط رو جوری کرده که</div></div>
+      <div id="cap-s6-3" class="clip cap" data-start="37.604" data-duration="2.596" data-track-index="6"><div class="cap-in"><span class="hi">تولید و صادرات</span> خیلی آسون می‌شه.</div></div>
+      <div id="cap-s7-0" class="clip cap" data-start="40.200" data-duration="0.865" data-track-index="6"><div class="cap-in"><span class="hi">پرورش ماهی</span>،</div></div>
+      <div id="cap-s7-1" class="clip cap" data-start="41.065" data-duration="1.731" data-track-index="6"><div class="cap-in">به‌ویژه پرورش <span class="hi">ماهی قزل‌آلا</span></div></div>
+      <div id="cap-s7-2" class="clip cap" data-start="42.796" data-duration="0.974" data-track-index="6"><div class="cap-in">و سایر آبزیان،</div></div>
+      <div id="cap-s7-3" class="clip cap" data-start="43.770" data-duration="2.870" data-track-index="6"><div class="cap-in">یکی از حوزه‌های <span class="hi">رو به رشد</span> ارمنستانه.</div></div>
+      <div id="cap-s8-0" class="clip cap" data-start="46.640" data-duration="1.480" data-track-index="6"><div class="cap-in"><span class="hi">منابع آبی</span> مناسب،</div></div>
+      <div id="cap-s8-1" class="clip cap" data-start="48.120" data-duration="1.871" data-track-index="6"><div class="cap-in"><span class="hi">تقاضای بالا</span> توی بازار داخلی</div></div>
+      <div id="cap-s8-2" class="clip cap" data-start="49.991" data-duration="1.219" data-track-index="6"><div class="cap-in">و حتی صادراتی،</div></div>
+      <div id="cap-s8-3" class="clip cap" data-start="51.210" data-duration="1.490" data-track-index="6"><div class="cap-in">این حوزه رو به یک</div></div>
+      <div id="cap-s8-4" class="clip cap" data-start="52.700" data-duration="1.680" data-track-index="6"><div class="cap-in"><span class="hi">فرصت بسیار جذاب</span> تبدیل کرده.</div></div>
+      <div id="cap-s9-0" class="clip cap" data-start="55.280" data-duration="1.467" data-track-index="6"><div class="cap-in">حالا این وسط مهم نیست</div></div>
+      <div id="cap-s9-1" class="clip cap" data-start="56.747" data-duration="1.703" data-track-index="6"><div class="cap-in">که <span class="hi">چقدر سرمایه</span> داری؛</div></div>
+      <div id="cap-s9-2" class="clip cap" data-start="58.450" data-duration="1.303" data-track-index="6"><div class="cap-in">مهم اینه که <span class="hi">مسیر درست</span> رو</div></div>
+      <div id="cap-s9-3" class="clip cap" data-start="59.753" data-duration="2.107" data-track-index="6"><div class="cap-in">برای ورود انتخاب کنی.</div></div>
+      <div id="cap-s10-0" class="clip cap" data-start="61.860" data-duration="2.103" data-track-index="6"><div class="cap-in">برای دریافت اطلاعات بیشتر</div></div>
+      <div id="cap-s10-1" class="clip cap" data-start="63.963" data-duration="1.277" data-track-index="6"><div class="cap-in">و همچنین یک <span class="hi">مشاوره‌ی رایگان</span>،</div></div>
+      <div id="cap-s10-2" class="clip cap" data-start="65.240" data-duration="2.760" data-track-index="6"><div class="cap-in">کلمه‌ی <span class="hi">«سرمایه»</span> رو کامنت کن.</div></div>
 
-      <audio id="vo" src="assets/guide.m4a" data-start="0" data-duration="76.276" data-volume="1"></audio>
-      <audio id="music" src="assets/music.wav" data-start="0" data-duration="76.300" data-volume="1"></audio>
+      <audio id="vo" src="assets/voiceover.wav" data-start="0" data-duration="68.050" data-volume="1"></audio>
+      <audio id="music" src="assets/music.wav" data-start="0" data-duration="70.600" data-volume="1"></audio>
     </div>
 
     <script>
-      const T = {"total": 76.3, "scenes": [{"id": "s1", "start": 0.0, "end": 6.9, "caps": [{"text": "شاید وقت رسیده", "start": 0.05, "end": 1.288}, {"text": "به‌جای خرید و فروش [طلا و دلار]", "start": 1.288, "end": 3.351}, {"text": "و گرفتن [سود محدود]،", "start": 3.351, "end": 4.754}, {"text": "به فکر [درآمد دلاری ثابت] باشی.", "start": 4.754, "end": 6.95}]}, {"id": "s2", "start": 6.9, "end": 12.6, "caps": [{"text": "پرورش [گاو، گوسفند، مرغ]", "start": 6.95, "end": 9.407}, {"text": "و سایر پرندگان توی [ارمنستان]،", "start": 9.407, "end": 12.65}]}, {"id": "s3", "start": 12.6, "end": 19.9, "caps": [{"text": "به‌خاطر [زمین‌های بزرگ]", "start": 12.65, "end": 14.93}, {"text": "و [هزینه‌ی مناسب] خوراک دام،", "start": 14.93, "end": 16.863}, {"text": "یکی از فرصت‌های [جذاب سرمایه‌گذاریه].", "start": 16.863, "end": 20.35}]}, {"id": "s4", "start": 20.3, "end": 26.4, "caps": [{"text": "هم به [بازار داخلی] دسترسی داری،", "start": 20.35, "end": 22.47}, {"text": "هم امکان [صادرات] محصولات دامی", "start": 22.47, "end": 24.593}, {"text": "به [کشورهای اطراف] فراهمه.", "start": 24.593, "end": 27.05}]}, {"id": "s5", "start": 27.0, "end": 35.9, "caps": [{"text": "از [گلخانه‌های مدرن] گرفته", "start": 27.05, "end": 28.98}, {"text": "تا کشت محصولات [باغی و زراعی]،", "start": 28.98, "end": 31.45}, {"text": "ارمنستان [ظرفیت بالایی]", "start": 31.45, "end": 33.437}, {"text": "برای فعالیت‌های کشاورزی داره.", "start": 33.437, "end": 36.05}]}, {"id": "s6", "start": 36.0, "end": 43.5, "caps": [{"text": "[آب‌وهوای مناسب]", "start": 36.05, "end": 37.265}, {"text": "و [چهارفصل] بودن توی یه سری از مناطق،", "start": 37.265, "end": 39.41}, {"text": "شرایط رو جوری کرده که", "start": 39.41, "end": 41.314}, {"text": "[تولید و صادرات] خیلی آسون می‌شه.", "start": 41.314, "end": 44.25}]}, {"id": "s7", "start": 44.2, "end": 51.2, "caps": [{"text": "[پرورش ماهی]،", "start": 44.25, "end": 45.28}, {"text": "به‌ویژه پرورش [ماهی قزل‌آلا]", "start": 45.28, "end": 47.339}, {"text": "و سایر آبزیان،", "start": 47.339, "end": 48.61}, {"text": "یکی از حوزه‌های [رو به رشد] ارمنستانه.", "start": 48.61, "end": 51.2}]}, {"id": "s8", "start": 52.0, "end": 60.7, "caps": [{"text": "[منابع آبی] مناسب،", "start": 52.05, "end": 53.58}, {"text": "[تقاضای بالا] توی بازار داخلی", "start": 53.58, "end": 55.795}, {"text": "و حتی صادراتی،", "start": 55.795, "end": 57.21}, {"text": "این حوزه رو به یک", "start": 57.21, "end": 58.471}, {"text": "[فرصت بسیار جذاب] تبدیل کرده.", "start": 58.471, "end": 60.95}]}, {"id": "s9", "start": 60.9, "end": 68.1, "caps": [{"text": "حالا این وسط مهم نیست", "start": 60.95, "end": 62.715}, {"text": "که [چقدر سرمایه] داری؛", "start": 62.715, "end": 64.393}, {"text": "مهم اینه که [مسیر درست] رو", "start": 64.393, "end": 66.31}, {"text": "برای ورود انتخاب کنی.", "start": 66.31, "end": 68.15}]}, {"id": "s10", "start": 68.1, "end": 73.7, "caps": [{"text": "برای دریافت اطلاعات بیشتر", "start": 68.15, "end": 70.051}, {"text": "و همچنین یک [مشاوره‌ی رایگان]،", "start": 70.051, "end": 71.951}, {"text": "کلمه‌ی [«سرمایه»] رو کامنت کن.", "start": 71.951, "end": 73.7}]}]};
+      window.__T = {"total": 70.6, "scenes": [{"id": "s1", "start": 0.0, "end": 7.96, "caps": [{"text": "شاید وقت رسیده", "start": 0.5, "end": 1.848}, {"text": "به‌جای خرید و فروش [طلا و دلار]", "start": 1.848, "end": 4.095}, {"text": "و گرفتن [سود محدود]،", "start": 4.095, "end": 5.17}, {"text": "به فکر [درآمد دلاری ثابت] باشی.", "start": 5.17, "end": 8.66}]}, {"id": "s2", "start": 8.66, "end": 12.74, "caps": [{"text": "پرورش [گاو، گوسفند، مرغ]", "start": 8.66, "end": 10.434}, {"text": "و سایر پرندگان توی [ارمنستان]،", "start": 10.434, "end": 13.12}]}, {"id": "s3", "start": 13.12, "end": 18.16, "caps": [{"text": "به‌خاطر [زمین‌های بزرگ]", "start": 13.12, "end": 14.482}, {"text": "و [هزینه‌ی مناسب] خوراک دام،", "start": 14.482, "end": 16.049}, {"text": "یکی از فرصت‌های [جذاب سرمایه‌گذاریه].", "start": 16.049, "end": 18.74}]}, {"id": "s4", "start": 18.74, "end": 23.94, "caps": [{"text": "هم به [بازار داخلی] دسترسی داری،", "start": 18.74, "end": 20.48}, {"text": "هم امکان [صادرات] محصولات دامی", "start": 20.48, "end": 22.387}, {"text": "به [کشورهای اطراف] فراهمه.", "start": 22.387, "end": 23.94}]}, {"id": "s5", "start": 24.76, "end": 32.26, "caps": [{"text": "از [گلخانه‌های مدرن] گرفته", "start": 24.76, "end": 26.538}, {"text": "تا کشت محصولات [باغی و زراعی]،", "start": 26.538, "end": 28.91}, {"text": "ارمنستان [ظرفیت بالایی]", "start": 28.91, "end": 30.172}, {"text": "برای فعالیت‌های کشاورزی داره.", "start": 30.172, "end": 32.8}]}, {"id": "s6", "start": 32.8, "end": 39.6, "caps": [{"text": "[آب‌وهوای مناسب]", "start": 32.8, "end": 33.909}, {"text": "و [چهارفصل] بودن توی یه سری از مناطق،", "start": 33.909, "end": 36.126}, {"text": "شرایط رو جوری کرده که", "start": 36.126, "end": 37.604}, {"text": "[تولید و صادرات] خیلی آسون می‌شه.", "start": 37.604, "end": 40.2}]}, {"id": "s7", "start": 40.2, "end": 46.04, "caps": [{"text": "[پرورش ماهی]،", "start": 40.2, "end": 41.065}, {"text": "به‌ویژه پرورش [ماهی قزل‌آلا]", "start": 41.065, "end": 42.796}, {"text": "و سایر آبزیان،", "start": 42.796, "end": 43.77}, {"text": "یکی از حوزه‌های [رو به رشد] ارمنستانه.", "start": 43.77, "end": 46.64}]}, {"id": "s8", "start": 46.64, "end": 54.38, "caps": [{"text": "[منابع آبی] مناسب،", "start": 46.64, "end": 48.12}, {"text": "[تقاضای بالا] توی بازار داخلی", "start": 48.12, "end": 49.991}, {"text": "و حتی صادراتی،", "start": 49.991, "end": 51.21}, {"text": "این حوزه رو به یک", "start": 51.21, "end": 52.7}, {"text": "[فرصت بسیار جذاب] تبدیل کرده.", "start": 52.7, "end": 54.38}]}, {"id": "s9", "start": 55.28, "end": 61.22, "caps": [{"text": "حالا این وسط مهم نیست", "start": 55.28, "end": 56.747}, {"text": "که [چقدر سرمایه] داری؛", "start": 56.747, "end": 58.45}, {"text": "مهم اینه که [مسیر درست] رو", "start": 58.45, "end": 59.753}, {"text": "برای ورود انتخاب کنی.", "start": 59.753, "end": 61.86}]}, {"id": "s10", "start": 61.86, "end": 68.0, "caps": [{"text": "برای دریافت اطلاعات بیشتر", "start": 61.86, "end": 63.963}, {"text": "و همچنین یک [مشاوره‌ی رایگان]،", "start": 63.963, "end": 65.24}, {"text": "کلمه‌ی [«سرمایه»] رو کامنت کن.", "start": 65.24, "end": 68.0}]}]};
+      const T = window.__T;
       const tl = gsap.timeline({ paused: true });
       window.__timelines = window.__timelines || {};
       window.__timelines["main"] = tl;
-
-      const NS = "http://www.w3.org/2000/svg";
       const $ = (id) => document.getElementById(id);
-      const q = (sel) => Array.from(document.querySelectorAll(sel));
       const S = {};
       T.scenes.forEach((s, i) => { S[s.id] = Object.assign({}, s, { i, next: T.scenes[i + 1] ? T.scenes[i + 1].start : T.total }); });
       const c = (sid, j) => S[sid].caps[Math.min(j, S[sid].caps.length - 1)].start;
       const at = (sid, j, f) => { const k = S[sid].caps[Math.min(j, S[sid].caps.length - 1)]; return k.start + f * (k.end - k.start); };
-      let seed = 20261112;
-      const rnd = () => { seed |= 0; seed = (seed + 0x6d2b79f5) | 0; let t = Math.imul(seed ^ (seed >>> 15), 1 | seed); t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t; return ((t ^ (t >>> 14)) >>> 0) / 4294967296; };
-      const add = (parent, html) => { parent.insertAdjacentHTML("beforeend", html); return parent.lastElementChild; };
+      const rise = (sel, t, o = {}) => tl.fromTo(sel, { opacity: 0, y: o.y === undefined ? 40 : o.y }, { opacity: 1, y: 0, duration: o.d || 0.5, ease: o.ease || "power3.out" }, t);
+      const pop = (sel, t, d = 0.4) => tl.fromTo(sel, { scale: 0, opacity: 0 }, { scale: 1, opacity: 1, duration: d, ease: "back.out(1.7)" }, t);
 
-      // ---------- tween helpers ----------
-      const pop = (sel, t, o = {}) => tl.fromTo(sel, { scale: 0, opacity: 0, transformOrigin: o.origin || "50% 50%" },
-        { scale: 1, opacity: 1, duration: o.d || 0.5, ease: o.ease || "back.out(1.7)", stagger: o.st || 0 }, t);
-      const rise = (sel, t, o = {}) => tl.fromTo(sel, { opacity: 0, y: o.y === undefined ? 40 : o.y },
-        { opacity: 1, y: 0, duration: o.d || 0.5, ease: o.ease || "power3.out", stagger: o.st || 0 }, t);
-      const show = (sel, t, d = 0.35) => tl.fromTo(sel, { opacity: 0 }, { opacity: 1, duration: d, ease: "power1.out" }, t);
-      const draw = (sel, t, d = 0.8, o = {}) => q(sel).forEach((p, i) => {
-        const L = p.getTotalLength(); p.style.strokeDasharray = L + " " + L;
-        tl.fromTo(p, { strokeDashoffset: L }, { strokeDashoffset: L * (1 - (o.to === undefined ? 1 : o.to)), duration: d, ease: o.ease || "power2.inOut" }, t + i * (o.st || 0));
+      // HUD: progress (right-to-left), chip, logo, gold/emerald wipes on every scene change
+      tl.fromTo("#progBar", { scaleX: 0 }, { scaleX: 1, duration: T.total, ease: "none" }, 0);
+      rise("#chip", 0.15, { y: -30 }); rise("#logoMark", 0.25, { y: -30 });
+      T.scenes.slice(1).forEach((s) => {
+        $("wipes").insertAdjacentHTML("beforeend", '<div class="wipe"><i class="a"></i><i class="b"></i></div>');
+        tl.fromTo($("wipes").lastElementChild, { x: 1900 }, { x: -1100, duration: 0.7, ease: "power2.inOut" }, s.start - 0.4);
       });
-      const grow = (sel, t, o = {}) => tl.fromTo(sel, { scaleY: 0, transformOrigin: "50% 100%" },
-        { scaleY: 1, duration: o.d || 0.6, ease: o.ease || "back.out(1.6)", stagger: o.st || 0 }, t);
-      const along = (pts) => pts.slice(1).map((p) => ({ x: p[0], y: p[1] }));
-      const bez = (p0, p1, p2, n) => Array.from({ length: n + 1 }, (_, i) => { const t = i / n, u = 1 - t; return [u * u * p0[0] + 2 * u * t * p1[0] + t * t * p2[0], u * u * p0[1] + 2 * u * t * p1[1] + t * t * p2[1]]; });
 
-      // ---------- shared art ----------
-      const FLAG = (s) => `<g transform="scale(${s})" clip-path="url(#flagClip)"><rect x="-100" y="-100" width="200" height="67" fill="#D90012"/><rect x="-100" y="-33" width="200" height="67" fill="#0033A0"/><rect x="-100" y="34" width="200" height="66" fill="#F2A800"/></g>`;
-      const COIN = (x, y) => `<g class="coin"><ellipse cx="${x}" cy="${y + 13}" rx="56" ry="17" class="f-acc"/><ellipse cx="${x}" cy="${y + 13}" rx="56" ry="17" class="f-dark" opacity=".35"/><rect x="${x - 56}" y="${y}" width="112" height="13" class="f-acc"/><rect x="${x - 56}" y="${y}" width="112" height="13" class="f-dark" opacity=".22"/><ellipse cx="${x}" cy="${y}" rx="56" ry="17" class="f-acc"/><ellipse cx="${x}" cy="${y}" rx="38" ry="10" class="f-none s-dark" stroke-width="3" opacity=".3"/></g>`;
-      const CRATE = `<rect x="-34" y="-34" width="68" height="68" rx="8" class="f-acc"/><rect x="-34" y="-34" width="68" height="68" rx="8" class="f-none s-dark" stroke-width="4" opacity=".35"/><rect x="-7" y="-34" width="14" height="68" class="f-dark" opacity=".2"/>`;
-      const CHECK = (r) => `<circle r="${r}" class="f-acc"/><path d="M${-r * 0.45},${r * 0.02} L${-r * 0.1},${r * 0.36} L${r * 0.48},${-r * 0.3}" class="f-none s-dark round" stroke-width="${r * 0.22}"/>`;
-      const XMARK = (r) => `<circle r="${r}" class="f-card"/><path d="M${-r * 0.4},${-r * 0.4} L${r * 0.4},${r * 0.4} M${r * 0.4},${-r * 0.4} L${-r * 0.4},${r * 0.4}" class="f-none s-mut round" stroke-width="${r * 0.2}"/>`;
-      const SPARK = (x, y, s) => `<g class="spark" transform="translate(${x},${y}) scale(${s})"><path d="M0,-30 Q4,-4 30,0 Q4,4 0,30 Q-4,4 -30,0 Q-4,-4 0,-30 Z" class="f-acc"/></g>`;
-      const BURST = (cx, cy, R, r, n) => { let d = ""; for (let i = 0; i < n * 2; i++) { const a = (Math.PI * i) / n - Math.PI / 2, k = i % 2 ? r : R; d += (i ? "L" : "M") + (cx + k * Math.cos(a)).toFixed(1) + "," + (cy + k * Math.sin(a)).toFixed(1); } return d + "Z"; };
-      const WAVE = (y, amp, per, x0, x1, bottom) => { let d = `M${x0},${bottom} L${x0},${y}`; for (let x = x0; x < x1; x += per) d += ` Q${x + per / 4},${y - amp} ${x + per / 2},${y} T${x + per},${y}`; return d + ` L${x1},${bottom} Z`; };
-      const ICON = {
-        cow: `<path d="M-70,-6 Q-94,0 -96,30" class="f-none s-ink round" stroke-width="7"/><rect x="-72" y="-30" width="118" height="66" rx="30" class="f-ink"/>
-          <rect x="-62" y="24" width="15" height="40" rx="6" class="f-ink"/><rect x="-36" y="24" width="15" height="40" rx="6" class="f-ink"/><rect x="6" y="24" width="15" height="40" rx="6" class="f-ink"/><rect x="28" y="24" width="15" height="40" rx="6" class="f-ink"/>
-          <circle cx="-30" cy="-4" r="15" class="f-dark"/><circle cx="8" cy="16" r="10" class="f-dark"/><circle cx="-50" cy="18" r="8" class="f-dark"/>
-          <path d="M38,-58 Q30,-80 44,-86" class="f-none s-acc round" stroke-width="7"/><path d="M76,-58 Q84,-80 70,-86" class="f-none s-acc round" stroke-width="7"/>
-          <ellipse cx="28" cy="-50" rx="13" ry="7" class="f-ink"/><ellipse cx="86" cy="-50" rx="13" ry="7" class="f-ink"/>
-          <rect x="32" y="-64" width="50" height="60" rx="20" class="f-ink"/><rect x="34" y="-24" width="46" height="28" rx="13" class="f-acc2"/>
-          <circle cx="47" cy="-11" r="3.5" class="f-dark"/><circle cx="67" cy="-11" r="3.5" class="f-dark"/><circle cx="46" cy="-42" r="5" class="f-dark"/><circle cx="68" cy="-42" r="5" class="f-dark"/>`,
-        sheep: `<rect x="-46" y="18" width="12" height="44" rx="5" class="f-dark"/><rect x="-22" y="18" width="12" height="44" rx="5" class="f-dark"/><rect x="12" y="18" width="12" height="44" rx="5" class="f-dark"/><rect x="34" y="18" width="12" height="44" rx="5" class="f-dark"/>
-          <circle cx="-44" cy="-4" r="30" class="f-ink"/><circle cx="-14" cy="-22" r="32" class="f-ink"/><circle cx="20" cy="-18" r="30" class="f-ink"/><circle cx="-30" cy="22" r="28" class="f-ink"/><circle cx="6" cy="20" r="30" class="f-ink"/><circle cx="34" cy="8" r="26" class="f-ink"/><circle cx="-58" cy="18" r="22" class="f-ink"/>
-          <ellipse cx="36" cy="-30" rx="15" ry="7" class="f-dark" transform="rotate(-25 36 -30)"/><ellipse cx="80" cy="-30" rx="15" ry="7" class="f-dark" transform="rotate(25 80 -30)"/>
-          <ellipse cx="58" cy="-12" rx="25" ry="31" class="f-dark"/><circle cx="58" cy="-42" r="16" class="f-ink"/><circle cx="50" cy="-12" r="4.5" class="f-ink"/><circle cx="66" cy="-12" r="4.5" class="f-ink"/>`,
-        hen: `<path d="M-40,-6 L-80,-50 L-70,-6 L-90,-20 L-58,26 Z" class="f-mut"/><path d="M-10,50 L-10,72 M12,50 L12,72 M-22,74 L0,74 M2,74 L24,74" class="f-none s-acc round" stroke-width="7"/>
-          <ellipse cx="0" cy="10" rx="54" ry="45" class="f-ink"/><circle cx="34" cy="-38" r="27" class="f-ink"/>
-          <path d="M16,-60 Q20,-82 32,-66 Q38,-88 47,-66 Q58,-80 56,-58 Z" class="f-acc2"/><path d="M58,-44 L82,-35 L58,-27 Z" class="f-acc"/><ellipse cx="60" cy="-18" rx="7" ry="10" class="f-acc2"/>
-          <circle cx="41" cy="-42" r="5" class="f-dark"/><path d="M-24,2 Q8,-12 28,6 Q6,36 -26,22 Z" class="f-mut"/>`,
-        duck: `<path d="M-92,62 Q-60,52 -30,62 T30,62 T92,62" class="f-none s-mut round" stroke-width="6"/>
-          <path d="M-74,6 Q-64,46 0,48 Q62,48 68,6 Q42,16 22,8 Q-20,-14 -74,6 Z" class="f-ink"/><rect x="24" y="-34" width="34" height="46" rx="16" class="f-ink"/><circle cx="44" cy="-34" r="26" class="f-ink"/>
-          <path d="M64,-40 Q96,-36 94,-26 Q76,-20 62,-26 Z" class="f-acc"/><circle cx="50" cy="-40" r="5" class="f-dark"/><path d="M-40,6 Q-4,-14 28,12 Q-2,30 -40,18 Z" class="f-mut"/>`,
-        fish: `<path class="tail" d="M116,0 L166,-46 Q154,0 166,46 Z" fill="currentColor"/>
-          <path d="M-142,0 C-112,-54 20,-64 124,-12 L124,12 C20,64 -112,54 -142,0 Z" class="f-ink"/>
-          <path d="M-112,4 C-40,-10 40,-10 120,0 C40,13 -40,21 -112,4 Z" class="f-acc2" opacity=".9"/>
-          <path d="M-12,-50 Q20,-80 48,-44 Z" class="f-mut"/><path d="M-70,20 Q-56,48 -34,28 Z" class="f-mut"/>
-          <g class="f-dark" opacity=".5"><circle cx="-40" cy="-26" r="4.5"/><circle cx="-12" cy="-34" r="4.5"/><circle cx="18" cy="-30" r="4.5"/><circle cx="48" cy="-24" r="4.5"/><circle cx="78" cy="-16" r="4.5"/><circle cx="-24" cy="-16" r="4"/><circle cx="34" cy="-16" r="4"/><circle cx="4" cy="24" r="4"/><circle cx="40" cy="22" r="4"/></g>
-          <circle cx="-110" cy="-8" r="9" class="f-dark"/><circle cx="-113" cy="-11" r="3" class="f-ink"/><path d="M-88,-26 Q-74,0 -88,26" class="f-none s-dark" stroke-width="4" opacity=".35"/>`,
-      };
-
-      // ---------- background ----------
-      (function () {
-        const P = $("particles");
-        for (let i = 0; i < 26; i++) {
-          const x = 40 + rnd() * 1000, y = rnd() * 1920, r = 2 + rnd() * 5, sp = 18 + rnd() * 40;
-          const e = add(P, `<circle cx="${x.toFixed(1)}" cy="0" r="${r.toFixed(1)}" class="${i % 3 ? "f-ink" : "f-acc"}" opacity="${(0.12 + rnd() * 0.3).toFixed(2)}"/>`);
-          const wrap = gsap.utils.wrap(-40, 1960);
-          tl.fromTo(e, { y: y }, { y: y - sp * T.total, duration: T.total, ease: "none", modifiers: { y: gsap.utils.unitize(wrap) } }, 0);
-        }
-        tl.to("#blobA", { x: 140, y: 180, duration: T.total, ease: "sine.inOut" }, 0);
-        tl.to("#blobB", { x: -160, y: -240, duration: T.total, ease: "sine.inOut" }, 0);
-        tl.fromTo("#progBar", { scaleX: 0 }, { scaleX: 1, duration: T.total, ease: "none" }, 0);
-        rise("#chip", 0.15, { y: -30 });
-        rise("#logoMark", 0.25, { y: -30 });
-        // scene-change wipes: two slanted bands sweep across
-        const W = $("wipes");
-        T.scenes.slice(1).forEach((s) => {
-          const g = add(W, `<g><rect x="-200" y="-200" width="190" height="2400" class="f-acc" transform="rotate(14 540 960)"/><rect x="-460" y="-200" width="120" height="2400" class="f-pri" transform="rotate(14 540 960)"/></g>`);
-          tl.fromTo(g, { x: 2150 }, { x: -950, duration: 0.7, ease: "power2.inOut" }, s.start - 0.4);
-        });
-      })();
-
-      // ---------- generic scene in/out + headline beats ----------
+      // scene titles: fade in/out, headline beats
       T.scenes.forEach((s, i) => {
-        const root = $(s.id), inner = root.querySelector(".scene-in");
-        const t0 = i ? s.start : 0;
-        tl.fromTo(inner, { opacity: 0, scale: 1.04 }, { opacity: 1, scale: 1, duration: 0.42, ease: "power2.out" }, t0);
-        if (i < T.scenes.length - 1) tl.to(inner, { opacity: 0, scale: 0.96, duration: 0.38, ease: "power2.in" }, S[s.id].next - 0.06);
+        const root = $(s.id), inner = root.querySelector(".scene-in"), t0 = i ? s.start : 0;
+        tl.fromTo(inner, { opacity: 0 }, { opacity: 1, duration: 0.35, ease: "power2.out" }, t0);
+        if (i < T.scenes.length - 1) tl.to(inner, { opacity: 0, duration: 0.3, ease: "power2.in" }, S[s.id].next - 0.05);
         rise(root.querySelector(".kicker"), t0 + 0.05, { y: -24, d: 0.45 });
         const hls = Array.from(root.querySelectorAll(".hl"));
         hls.forEach((h, k) => {
@@ -532,307 +261,33 @@
         });
       });
 
-      // ---------- captions ----------
-      q(".cap").forEach((el) => {
+      // captions
+      document.querySelectorAll(".cap").forEach((el) => {
         tl.fromTo(el.firstElementChild, { opacity: 0, y: 22, scale: 0.96 }, { opacity: 1, y: 0, scale: 1, duration: 0.24, ease: "power2.out" }, +el.dataset.start);
       });
 
-      // ================= S1 =================
+      // CTA
       (function () {
-        const id = "s1";
-        const G = $("s1-gold");
-        [[-92, 40], [92, 40], [0, -18]].forEach(([x, y]) => add(G, `<g><polygon points="${x - 88},${y + 30} ${x + 88},${y + 30} ${x + 62},${y - 30} ${x - 62},${y - 30}" class="f-acc"/><polygon points="${x - 62},${y - 30} ${x + 62},${y - 30} ${x + 50},${y - 40} ${x - 50},${y - 40}" class="f-ink" opacity=".55"/><rect x="${x - 40}" y="${y - 10}" width="80" height="12" rx="6" class="f-dark" opacity=".18"/></g>`));
-        add($("s1-bill"), `<g><rect x="-160" y="-92" width="320" height="184" rx="22" class="f-pri"/><rect x="-136" y="-70" width="272" height="140" rx="14" class="f-none s-acc" stroke-width="5" opacity=".9"/>
-          <circle r="54" class="f-bg"/><text y="24" text-anchor="middle" font-size="76" class="f-acc" style="font-weight:900">$</text>
-          <circle cx="-108" cy="-44" r="12" class="f-ink" opacity=".6"/><circle cx="108" cy="44" r="12" class="f-ink" opacity=".6"/></g>`);
-        const C = $("s1-coins"); const xs = [260, 400, 540, 680, 820], ns = [2, 3, 4, 5, 6];
-        xs.forEach((x, k) => { const col = add(C, `<g class="col"></g>`); for (let j = 0; j < ns[k]; j++) add(col, COIN(x, 1250 - j * 24)); });
-        draw("#s1-zig", c(id, 0) + 0.05, 1.5, { ease: "power1.inOut" });
-        pop("#s1-gold > g", c(id, 1) - 0.1, { st: 0.12 });
-        pop("#s1-bill > g", c(id, 1) + 0.3);
-        tl.to("#s1-goldwrap", { y: -30, duration: 0.32, yoyo: true, repeat: 3, ease: "sine.inOut" }, c(id, 1) + 0.8);
-        tl.to("#s1-billwrap", { y: 30, rotation: -4, duration: 0.32, yoyo: true, repeat: 3, ease: "sine.inOut" }, c(id, 1) + 0.8);
-        // limited profit
-        show("#s1-limit", c(id, 2), 0.3);
-        tl.fromTo("#s1-limfill", { scaleX: 0, transformOrigin: "100% 50%" }, { scaleX: 1, duration: 0.7, ease: "power2.out" }, c(id, 2) + 0.1);
-        tl.to(["#s1-goldwrap", "#s1-billwrap", "#s1-zig"], { opacity: 0.25, duration: 0.4 }, c(id, 2) + 0.2);
-        // steady income
-        tl.to(["#s1-goldwrap", "#s1-billwrap", "#s1-zig", "#s1-limit"], { opacity: 0, duration: 0.3 }, c(id, 3) - 0.15);
-        show("#s1-glow", c(id, 3), 0.6);
-        q("#s1-coins .col").forEach((col, k) => tl.fromTo(col.children, { opacity: 0, y: -90 }, { opacity: 1, y: 0, duration: 0.34, ease: "bounce.out", stagger: 0.05 }, c(id, 3) + 0.05 + k * 0.16));
-        draw("#s1-rise", c(id, 3) + 0.45, 1.0);
-        pop("#s1-head", c(id, 3) + 1.35, { d: 0.35 });
-      })();
-
-      // ================= S2 =================
-      (function () {
-        const id = "s2", t0 = S[id].start;
-        $("s2-flag").innerHTML = FLAG(0.9);
-        const B = $("s2-badges");
-        const spots = [["cow", 820, 690, "گاو"], ["sheep", 260, 690, "گوسفند"], ["hen", 820, 1190, "مرغ"], ["duck", 260, 1190, "سایر پرندگان"]];
-        spots.forEach(([k, x, y, label]) => add(B, `<g class="badge"><circle cx="${x}" cy="${y}" r="112" class="f-card"/><circle cx="${x}" cy="${y}" r="112" class="f-none s-acc" stroke-width="6"/>
-          <g transform="translate(${x - 8},${y + 4}) scale(0.95)">${ICON[k]}</g>
-          <rect x="${x - 120}" y="${y + 126}" width="240" height="62" rx="31" class="f-dark" opacity=".55"/><text x="${x}" y="${y + 168}" text-anchor="middle" direction="rtl" font-size="38" class="f-ink">${label}</text></g>`));
-        pop("#s2-orbit", t0 + 0.05, { d: 0.6, ease: "power3.out" });
-        tl.to("#s2-orbit", { rotation: 50, svgOrigin: "540 930", duration: S[id].next - t0, ease: "none" }, t0);
-        tl.fromTo("#s2-pin", { opacity: 0, y: -260 }, { opacity: 1, y: 0, duration: 0.7, ease: "bounce.out" }, t0 + 0.1);
-        const b = q("#s2-badges .badge");
-        pop(b[0], at(id, 0, 0.32)); pop(b[1], at(id, 0, 0.55)); pop(b[2], at(id, 0, 0.78)); pop(b[3], at(id, 1, 0.12));
-        b.forEach((e, k) => tl.to(e, { y: k % 2 ? 10 : -10, duration: 0.9, yoyo: true, repeat: 3, ease: "sine.inOut" }, at(id, 1, 0.2)));
-        pop("#s2-label", at(id, 1, 0.55));
-      })();
-
-      // ================= S3 =================
-      (function () {
-        const id = "s3";
-        const F = $("s3-field");
-        add(F, `<path d="M300,860 L780,860 L960,1250 L120,1250 Z" class="f-pri"/>`);
-        for (let k = 0; k < 8; k++) { if (k % 2) continue; const a = k / 8, b = (k + 1) / 8;
-          add(F, `<path d="M${300 + 480 * a},860 L${300 + 480 * b},860 L${120 + 840 * b},1250 L${120 + 840 * a},1250 Z" class="f-dark" opacity=".16"/>`); }
-        add(F, `<path d="M240,860 L840,860" class="s-ink round" stroke-width="5" opacity=".5"/>`);
-        [[330, 840, 34], [420, 830, 46], [700, 832, 40], [770, 842, 30]].forEach(([x, y, r]) => add(F, `<g><rect x="${x - 5}" y="${y}" width="10" height="26" class="f-dark" opacity=".5"/><circle cx="${x}" cy="${y - r * 0.6}" r="${r}" class="f-pri"/><circle cx="${x}" cy="${y - r * 0.6}" r="${r}" class="f-dark" opacity=".25"/></g>`));
-        add($("s3-sack"), `<g><path d="M-96,-104 Q0,-136 96,-104 L118,108 Q0,140 -118,108 Z" class="f-ink"/><path d="M-60,-118 Q0,-150 60,-118 L44,-96 Q0,-108 -44,-96 Z" class="f-mut"/>
-          <rect x="-34" y="-128" width="68" height="22" rx="10" class="f-acc"/><rect x="-102" y="-20" width="204" height="82" rx="14" class="f-pri"/>
-          <text y="36" text-anchor="middle" direction="rtl" font-size="44" class="f-ink">خوراک دام</text>
-          <g class="grain f-acc"><ellipse cx="-70" cy="140" rx="12" ry="7"/><ellipse cx="-40" cy="150" rx="12" ry="7"/><ellipse cx="60" cy="146" rx="12" ry="7"/><ellipse cx="88" cy="138" rx="12" ry="7"/><ellipse cx="10" cy="152" rx="12" ry="7"/></g>
-          <g id="s3-tag"><path d="M-118,-108 L-190,-60" class="s-ink" stroke-width="4"/><g transform="translate(-218,-20) rotate(-12)"><path d="M-62,-46 L40,-46 L70,0 L40,46 L-62,46 Z" class="f-acc"/><circle cx="40" cy="0" r="9" class="f-dark"/>
-          <path d="M-30,-22 L-30,18 M-46,4 L-30,22 L-14,4" class="f-none s-dark round" stroke-width="8"/><text x="14" y="16" text-anchor="middle" font-size="42" class="f-dark">٪</text></g></g></g>`);
-        $("s3-burst").innerHTML = `<path d="${BURST(540, 960, 250, 205, 18)}" class="f-acc"/>`;
-        const SP = $("s3-spark"); [[250, 720, 1], [850, 760, 0.8], [240, 1200, 0.7], [860, 1180, 1.1], [540, 640, 0.6]].forEach(([x, y, s]) => add(SP, SPARK(x, y, s)));
-        tl.fromTo("#s3-field", { scaleX: 0.25, opacity: 0, transformOrigin: "50% 100%" }, { scaleX: 1, opacity: 1, duration: 0.8, ease: "power3.out" }, c(id, 0) + 0.1);
-        show("#s3-dim", c(id, 0) + 0.55, 0.3);
-        tl.fromTo("#s3-dim", { scaleX: 0.3, transformOrigin: "50% 50%" }, { scaleX: 1, duration: 0.7, ease: "back.out(1.4)" }, c(id, 0) + 0.55);
-        tl.to("#s3-fieldwrap", { x: -200, y: 60, scale: 0.6, transformOrigin: "50% 50%", duration: 0.6, ease: "power3.inOut" }, c(id, 1) - 0.1);
-        tl.fromTo("#s3-sack > g", { y: -700, opacity: 0 }, { y: 0, opacity: 1, duration: 0.8, ease: "bounce.out" }, c(id, 1));
-        tl.fromTo("#s3-tag", { rotation: -40, svgOrigin: "-118 -108" }, { rotation: 0, svgOrigin: "-118 -108", duration: 1.2, ease: "elastic.out(1, 0.35)" }, c(id, 1) + 0.6);
-        tl.to(["#s3-fieldwrap", "#s3-sack"], { opacity: 0.2, duration: 0.4 }, c(id, 2) - 0.1);
-        pop("#s3-badge", c(id, 2) + 0.05, { d: 0.6 });
-        tl.to("#s3-burst", { rotation: 40, svgOrigin: "540 960", duration: S[id].next - c(id, 2), ease: "none" }, c(id, 2));
-        pop("#s3-spark .spark path", c(id, 2) + 0.3, { st: 0.08, d: 0.4 });
-      })();
-
-      // ================= S4 =================
-      (function () {
-        const id = "s4", t0 = S[id].start;
-        $("s4-flag").innerHTML = FLAG(0.88);
-        add($("s4-shop"), `<rect x="-58" y="-18" width="116" height="74" class="f-ink"/><rect x="-16" y="12" width="32" height="44" class="f-card"/>
-          <path d="M-70,-20 L-70,-48 L70,-48 L70,-20 Z" class="f-acc"/><path d="M-70,-20 a17.5,14 0 0,0 35,0 a17.5,14 0 0,0 35,0 a17.5,14 0 0,0 35,0 a17.5,14 0 0,0 35,0" class="f-acc"/>
-          <path d="M-35,-48 L-35,-20 M0,-48 L0,-20 M35,-48 L35,-20" class="s-dark" stroke-width="4" opacity=".25"/>`);
-        const targets = [[930, 700], [720, 600], [360, 600], [150, 700]], A = $("s4-arcs"), Gl = $("s4-globes"), Cr = $("s4-crates");
-        const P0 = [540, 888];
-        targets.forEach(([x, y], k) => {
-          const ctl = [(540 + x) / 2 + (x > 540 ? 60 : -60), Math.min(y, 888) - 170];
-          add(A, `<path d="M${P0[0]},${P0[1]} Q${ctl[0]},${ctl[1]} ${x},${y}" class="f-none s-acc round arc" stroke-width="7" stroke-dasharray="2 16"/>`);
-          add(Gl, `<g class="globe" transform="translate(${x},${y})"><g><circle r="62" class="f-pri"/><ellipse rx="26" ry="62" class="f-none s-ink" stroke-width="5"/><path d="M-62,0 L62,0 M-52,-32 L52,-32 M-52,32 L52,32" class="s-ink" stroke-width="4"/><circle r="62" class="f-none s-acc" stroke-width="6"/></g></g>`);
-          const pts = bez(P0, ctl, [x, y], 14);
-          for (let r = 0; r < 2; r++) {
-            const cr = add(Cr, `<g><g transform="scale(.62)">${CRATE}</g></g>`);
-            gsap.set(cr, { x: P0[0], y: P0[1], opacity: 0 });
-            const tt = c(id, 1) + 0.55 + k * 0.18 + r * 1.3;
-            tl.set(cr, { opacity: 1 }, tt);
-            tl.to(cr, { keyframes: along(pts).map((p) => Object.assign(p, { duration: 1.1 / 14, ease: "none" })) }, tt);
-            tl.to(cr, { opacity: 0, scale: 0.4, duration: 0.2 }, tt + 1.1);
-          }
-        });
-        pop("#s4-hub", t0 + 0.05, { d: 0.6 });
-        tl.to("#s4-hub", { scale: 1.06, transformOrigin: "50% 50%", duration: 0.5, yoyo: true, repeat: 5, ease: "sine.inOut" }, t0 + 0.7);
-        draw("#s4-down", c(id, 0) + 0.15, 0.5);
-        pop("#s4-home", c(id, 0) + 0.35, { d: 0.55 });
-        const dc = add(Cr, `<g><g transform="scale(.62)">${CRATE}</g></g>`);
-        gsap.set(dc, { x: 540, y: 1110, opacity: 0 });
-        tl.set(dc, { opacity: 1 }, c(id, 0) + 0.7); tl.to(dc, { y: 1215, duration: 0.6, ease: "power1.in" }, c(id, 0) + 0.7); tl.to(dc, { opacity: 0, duration: 0.15 }, c(id, 0) + 1.3);
-        draw("#s4-arcs .arc", c(id, 1) + 0.05, 0.6, { st: 0.1 });
-        pop("#s4-globes .globe > g", c(id, 1) + 0.35, { st: 0.1 });
-        tl.to("#s4-globes .globe > g", { rotation: 360, transformOrigin: "50% 50%", duration: 6, ease: "none" }, c(id, 1) + 0.9);
-      })();
-
-      // ================= S5 =================
-      (function () {
-        const id = "s5";
-        const R = $("s5-ribs"); for (let x = 320; x <= 760; x += 88) add(R, `<path d="M${x},1190 L${x},780" class="f-none s-ink rib" stroke-width="6" opacity=".7"/>`);
-        add(R, `<path d="M230,1050 L850,1050" class="f-none s-ink rib" stroke-width="5" opacity=".5"/>`);
-        const Pl = $("s5-plants"); for (let x = 270; x <= 810; x += 60) add(Pl, `<g class="sprout"><path d="M${x},1186 L${x},1140" class="s-pri" stroke-width="6"/><ellipse cx="${x - 14}" cy="1140" rx="16" ry="8" class="f-pri" transform="rotate(-30 ${x - 14} 1140)"/><ellipse cx="${x + 14}" cy="1132" rx="16" ry="8" class="f-pri" transform="rotate(30 ${x + 14} 1132)"/></g>`);
-        const Wh = $("s5-wheat"); for (let k = 0; k < 5; k++) { const x = 480 + k * 34, h = 210 + (k % 2) * 40;
-          let g = `<g class="stalk"><path d="M${x},1190 Q${x + 6},${1190 - h / 2} ${x},${1190 - h}" class="f-none s-acc" stroke-width="5"/>`;
-          for (let j = 0; j < 5; j++) { const y = 1190 - h + 14 + j * 20; g += `<ellipse cx="${x - 9}" cy="${y}" rx="7" ry="13" class="f-acc" transform="rotate(-25 ${x - 9} ${y})"/><ellipse cx="${x + 9}" cy="${y}" rx="7" ry="13" class="f-acc" transform="rotate(25 ${x + 9} ${y})"/>`; }
-          add(Wh, g + `</g>`); }
-        add($("s5-tree"), `<g><rect x="790" y="1010" width="34" height="180" rx="10" class="f-mut"/><path d="M807,1080 L860,1030" class="s-mut round" stroke-width="16"/>
-          <circle cx="760" cy="960" r="90" class="f-pri"/><circle cx="870" cy="950" r="96" class="f-pri"/><circle cx="815" cy="880" r="100" class="f-pri"/><circle cx="815" cy="880" r="100" class="f-ink" opacity=".06"/></g>
-          <g class="fruits">${[[748, 940], [800, 860], [868, 900], [900, 990], [830, 980], [760, 1010], [850, 830], [720, 900]].map(([x, y]) => `<circle cx="${x}" cy="${y}" r="20" class="f-acc2"/>`).join("")}</g>`);
-        const Tk = $("s5-ticks"); for (let k = 0; k <= 10; k++) { const a = Math.PI + (Math.PI * k) / 10; add(Tk, `<line x1="${540 + 160 * Math.cos(a)}" y1="${1260 + 160 * Math.sin(a)}" x2="${540 + 140 * Math.cos(a)}" y2="${1260 + 140 * Math.sin(a)}" class="s-ink" stroke-width="5" opacity=".6"/>`); }
-        draw("#s5-ghline", c(id, 0) + 0.05, 0.9);
-        tl.fromTo("#s5-glass", { opacity: 0 }, { opacity: 0.13, duration: 0.5 }, c(id, 0) + 0.5);
-        show("#s5-ghbase", c(id, 0) + 0.3, 0.3);
-        draw("#s5-ribs .rib", c(id, 0) + 0.45, 0.5, { st: 0.06 });
-        grow("#s5-plants .sprout", c(id, 0) + 0.8, { st: 0.05, d: 0.45 });
-        tl.to("#s5-ghwrap", { x: -240, y: 40, scale: 0.56, transformOrigin: "50% 100%", duration: 0.6, ease: "power3.inOut" }, c(id, 1) - 0.15);
-        grow("#s5-wheat .stalk", c(id, 1) + 0.2, { st: 0.08 });
-        tl.fromTo("#s5-tree > g", { scale: 0, transformOrigin: "50% 100%" }, { scale: 1, duration: 0.7, ease: "back.out(1.5)" }, c(id, 1) + 0.35);
-        pop("#s5-tree .fruits circle", c(id, 1) + 0.9, { st: 0.07, d: 0.35 });
-        tl.to("#s5-row", { y: -330, scale: 0.8, transformOrigin: "50% 0%", duration: 0.6, ease: "power3.inOut" }, c(id, 2) - 0.15);
-        show("#s5-gauge", c(id, 2) + 0.15, 0.3);
-        draw("#s5-gval", c(id, 2) + 0.3, 1.2, { to: 0.86, ease: "power2.out" });
-        tl.fromTo("#s5-needle", { rotation: -90, svgOrigin: "540 1260" }, { rotation: 65, svgOrigin: "540 1260", duration: 1.2, ease: "power2.out" }, c(id, 2) + 0.3);
-      })();
-
-      // ================= S6 =================
-      (function () {
-        const id = "s6", t0 = S[id].start;
-        const Ry = $("s6-rays"); for (let k = 0; k < 12; k++) add(Ry, `<rect x="534" y="790" width="12" height="44" rx="6" class="f-acc" transform="rotate(${k * 30} 540 930)"/>`);
-        const Wl = $("s6-wheel"), cls = ["f-pri", "f-acc", "f-acc2", "f-mut"];
-        const icons = [
-          `<g>${[0, 60, 120, 180, 240, 300].map((a) => `<ellipse cx="0" cy="-26" rx="16" ry="26" class="f-ink" transform="rotate(${a})"/>`).join("")}<circle r="16" class="f-acc"/></g>`,
-          `<g>${[0, 45, 90, 135, 180, 225, 270, 315].map((a) => `<rect x="-5" y="-58" width="10" height="20" rx="5" class="f-ink" transform="rotate(${a})"/>`).join("")}<circle r="32" class="f-ink"/></g>`,
-          `<g transform="rotate(-30)"><path d="M0,-54 C38,-30 38,30 0,54 C-38,30 -38,-30 0,-54 Z" class="f-ink"/><path d="M0,-44 L0,50" class="s-acc2" stroke-width="5"/></g>`,
-          `<g class="f-none s-ink round" stroke-width="8">${[0, 60, 120].map((a) => `<g transform="rotate(${a})"><path d="M0,-52 L0,52"/><path d="M-14,-38 L0,-26 L14,-38 M-14,38 L0,26 L14,38"/></g>`).join("")}</g>`,
-        ];
-        const labels = ["بهار", "تابستان", "پاییز", "زمستان"];
-        for (let k = 0; k < 4; k++) {
-          const a0 = -Math.PI / 2 + (k * Math.PI) / 2 + 0.04, a1 = a0 + Math.PI / 2 - 0.08, R = 300, r = 120, cx = 540, cy = 930;
-          const p = (rr, a) => `${(cx + rr * Math.cos(a)).toFixed(1)},${(cy + rr * Math.sin(a)).toFixed(1)}`;
-          const am = (a0 + a1) / 2, ix = cx + 205 * Math.cos(am), iy = cy + 205 * Math.sin(am);
-          add(Wl, `<g class="q"><path d="M${p(r, a0)} L${p(R, a0)} A${R},${R} 0 0,1 ${p(R, a1)} L${p(r, a1)} A${r},${r} 0 0,0 ${p(r, a0)} Z" class="${cls[k]}" opacity=".9"/>
-            <g class="qi" transform="translate(${ix.toFixed(1)},${iy.toFixed(1)})"><g class="up">${icons[k]}<text y="96" text-anchor="middle" direction="rtl" font-size="42" class="f-dark">${labels[k]}</text></g></g></g>`);
-        }
-        const Ro = $("s6-rollers"); for (let x = 330; x <= 930; x += 60) add(Ro, `<circle cx="${x}" cy="1253" r="10" class="f-mut"/>`);
-        add($("s6-truck"), `<g><rect x="-50" y="-92" width="190" height="116" rx="12" class="f-pri"/><rect x="-50" y="-92" width="190" height="116" rx="12" class="f-none s-ink" stroke-width="5" opacity=".4"/>
-          <path d="M-56,-60 L-112,-60 L-142,-20 L-142,24 L-56,24 Z" class="f-ink"/><path d="M-66,-50 L-106,-50 L-128,-20 L-66,-20 Z" class="f-card"/>
-          <circle cx="-100" cy="30" r="26" class="f-dark"/><circle cx="-100" cy="30" r="10" class="f-mut"/><circle cx="20" cy="30" r="26" class="f-dark"/><circle cx="20" cy="30" r="10" class="f-mut"/><circle cx="100" cy="30" r="26" class="f-dark"/><circle cx="100" cy="30" r="10" class="f-mut"/></g>`);
-        const Cr = $("s6-crates");
-        pop("#s6-weather", c(id, 0) + 0.05, { d: 0.6 });
-        tl.to("#s6-rays", { rotation: 90, svgOrigin: "540 930", duration: S[id].next - t0, ease: "none" }, t0);
-        tl.fromTo("#s6-cloud", { x: 120, opacity: 0 }, { x: 0, opacity: 1, duration: 0.8, ease: "power2.out" }, c(id, 0) + 0.3);
-        tl.to("#s6-cloud", { opacity: 0, x: 80, duration: 0.3 }, c(id, 1) - 0.1);
-        tl.to("#s6-weather", { scale: 0.62, svgOrigin: "540 930", duration: 0.5, ease: "power2.inOut" }, c(id, 1) - 0.1);
-        q("#s6-wheel .q").forEach((g, k) => tl.fromTo(g, { scale: 0, opacity: 0, svgOrigin: "540 930" }, { scale: 1, opacity: 1, svgOrigin: "540 930", duration: 0.5, ease: "back.out(1.6)" }, at(id, 1, 0.1) + k * 0.14));
-        const spin = S[id].next - c(id, 1);
-        tl.to("#s6-wheelrot", { rotation: 90, svgOrigin: "540 930", duration: spin, ease: "none" }, c(id, 1));
-        tl.to("#s6-wheel .up", { rotation: -90, transformOrigin: "50% 50%", duration: spin, ease: "none" }, c(id, 1));
-        tl.to("#s6-wheel text", { opacity: 0, duration: 0.25 }, c(id, 2) - 0.05);
-        tl.to("#s6-wheelwrap", { y: -175, scale: 0.62, svgOrigin: "540 930", duration: 0.6, ease: "power3.inOut" }, c(id, 2));
-        show("#s6-line", c(id, 2) + 0.35, 0.3);
-        tl.fromTo("#s6-truck > g", { x: -400 }, { x: 0, duration: 0.8, ease: "power3.out" }, c(id, 2) + 0.4);
-        for (let k = 0; k < 5; k++) {
-          const e = add(Cr, `<g><g transform="scale(.9)">${CRATE}</g></g>`); gsap.set(e, { x: 990, y: 1205, opacity: 0 });
-          const tt = c(id, 2) + 0.6 + k * 0.42; tl.set(e, { opacity: 1 }, tt);
-          tl.to(e, { x: 330, duration: 1.3, ease: "none" }, tt); tl.to(e, { opacity: 0, duration: 0.12 }, tt + 1.3);
-        }
-        tl.to("#s6-truck > g", { x: -560, duration: 0.9, ease: "power2.in" }, Math.max(c(id, 3) + 1.2, S[id].next - 1.0));
-      })();
-
-      // ================= S7 =================
-      (function () {
-        const id = "s7", t0 = S[id].start, dur = S[id].next - t0;
-        $("s7-w1").setAttribute("d", WAVE(760, 26, 240, -240, 1560, 1940));
-        $("s7-w2").setAttribute("d", WAVE(730, 18, 300, -300, 1620, 1940));
-        tl.fromTo("#s7-water", { y: 640 }, { y: 0, duration: 0.8, ease: "power3.out" }, t0 + 0.05);
-        const n1 = Math.max(1, Math.floor(dur / 1.6)), n2 = Math.max(1, Math.floor(dur / 2.4));
-        tl.fromTo("#s7-w1", { x: 0 }, { x: -240, duration: 1.6, ease: "none", repeat: n1 - 1 }, t0);
-        tl.fromTo("#s7-w2", { x: -300 }, { x: 0, duration: 2.4, ease: "none", repeat: n2 - 1 }, t0);
-        const Bu = $("s7-bubbles");
-        for (let k = 0; k < 12; k++) {
-          const x = 90 + rnd() * 900, r = 6 + rnd() * 12, d = 1.6 + rnd() * 1.6;
-          const e = add(Bu, `<circle cx="${x.toFixed(0)}" cy="1330" r="${r.toFixed(1)}" class="f-none s-ink" stroke-width="3" opacity=".5"/>`);
-          tl.fromTo(e, { y: 0, opacity: 0 }, { y: -520, opacity: 0.6, duration: d, ease: "sine.in", repeat: Math.max(0, Math.floor((dur - 0.6) / d) - 1) }, t0 + 0.4 + rnd() * 0.8);
-        }
-        const fishA = add($("s7-fishA"), `<g style="color:var(--ink)">${ICON.fish}</g>`), fishB = add($("s7-fishB"), `<g style="color:var(--ink)">${ICON.fish}</g>`);
-        gsap.set(fishA, { x: 1320, y: 1210, scale: 0.55, opacity: 0.55 }); gsap.set(fishB, { x: 1320, y: 960, scale: 0.7, opacity: 0.7 });
-        tl.to(fishA, { x: -260, duration: 5.2, ease: "none" }, t0 + 0.4);
-        tl.to(fishB, { x: -260, duration: 4.4, ease: "none" }, at(id, 0, 0.3));
-        const hero = add($("s7-hero"), `<g style="color:var(--ink)">${ICON.fish}</g>`);
-        gsap.set(hero, { x: 1380, y: 1050, scale: 1.25 });
-        tl.to(hero, { x: 560, duration: 1.1, ease: "power3.out" }, c(id, 1) - 0.1);
-        tl.to(hero, { y: 1020, rotation: -3, duration: 0.55, yoyo: true, repeat: 3, ease: "sine.inOut" }, c(id, 1) + 1.0);
-        tl.to(hero.querySelector(".tail"), { scaleY: 0.7, svgOrigin: "116 0", duration: 0.18, yoyo: true, repeat: Math.max(1, Math.floor((dur) / 0.18)), ease: "sine.inOut" }, t0);
-        tl.to(hero, { x: -320, duration: 1.0, ease: "power2.in" }, c(id, 3) - 0.1);
-        draw("#s7-grow", c(id, 3) + 0.2, 0.9);
-        pop("#s7-head", c(id, 3) + 1.05, { d: 0.35 });
-      })();
-
-      // ================= S8 =================
-      (function () {
-        const id = "s8", t0 = S[id].start;
-        $("s8-wave").setAttribute("d", WAVE(880, 20, 180, 180, 1080, 1250));
-        tl.fromTo("#s8-fill", { y: 360 }, { y: 0, duration: 1.4, ease: "power2.out" }, c(id, 0) + 0.25);
-        tl.fromTo("#s8-wave", { x: 0 }, { x: -180, duration: 1.2, ease: "none", repeat: 5 }, t0);
-        draw("#s8-drop", c(id, 0) + 0.02, 0.8);
-        show("#s8-shine", c(id, 0) + 0.8, 0.3);
-        tl.to("#s8-dropwrap", { x: -250, y: 60, scale: 0.6, transformOrigin: "50% 50%", duration: 0.6, ease: "power3.inOut" }, c(id, 1) - 0.15);
-        const Ch = $("s8-chart"), hs = [120, 190, 270, 360, 470];
-        add(Ch, `<path d="M520,1230 L960,1230" class="s-ink round" stroke-width="6" opacity=".6"/>`);
-        hs.forEach((h, k) => add(Ch, `<rect x="${540 + k * 84}" y="${1226 - h}" width="60" height="${h}" rx="12" class="${k === 4 ? "f-acc2" : "f-acc"} bar"/>`));
-        const bars = q("#s8-chart .bar");
-        grow(bars.slice(0, 4), c(id, 1) + 0.15, { st: 0.12 });
-        grow(bars[4], c(id, 2) + 0.1, { d: 0.7 });
-        const Tg = $("s8-tags");
-        add(Tg, `<g><rect x="560" y="1266" width="190" height="64" rx="32" class="f-card"/><text x="655" y="1310" text-anchor="middle" direction="rtl" font-size="34" class="f-ink">داخلی</text></g>`);
-        add(Tg, `<g><rect x="770" y="1266" width="210" height="64" rx="32" class="f-acc2"/><text x="875" y="1310" text-anchor="middle" direction="rtl" font-size="34" class="f-dark">صادراتی</text></g>`);
-        pop(Tg.children[0], c(id, 1) + 0.55); pop(Tg.children[1], c(id, 2) + 0.25);
-        const Gm = $("s8-gem");
-        add(Gm, `<path d="${BURST(540, 960, 280, 236, 20)}" class="f-acc" opacity=".25" id="s8-burst"/>`);
-        add(Gm, `<g id="s8-gemi"><polygon points="400,900 470,820 610,820 680,900 540,1110" class="f-acc"/><polygon points="470,820 540,900 610,820" class="f-ink" opacity=".45"/>
-          <polygon points="400,900 540,900 540,1110" class="f-ink" opacity=".22"/><path d="M400,900 L680,900 M470,820 L505,900 L540,1110 L575,900 L610,820 M505,900 L540,820 L575,900" class="f-none s-dark round" stroke-width="5" opacity=".35"/></g>`);
-        [[380, 760, 0.9], [720, 780, 0.7], [700, 1120, 1], [360, 1080, 0.6]].forEach(([x, y, s]) => add(Gm, SPARK(x, y, s)));
-        const tg = at(id, 3, 0.4);
-        tl.to(["#s8-dropwrap", "#s8-chart", "#s8-tags"], { opacity: 0.15, duration: 0.4 }, tg - 0.1);
-        show("#s8-gem", tg, 0.2);
-        pop("#s8-gemi", tg + 0.05, { d: 0.6 });
-        tl.to("#s8-burst", { rotation: 36, svgOrigin: "540 960", duration: S[id].next - tg, ease: "none" }, tg);
-        pop("#s8-gem .spark path", tg + 0.35, { st: 0.1, d: 0.4 });
-      })();
-
-      // ================= S9 =================
-      (function () {
-        const id = "s9";
-        const St = $("s9-stacks"), xs = [800, 540, 280], ns = [2, 4, 7], lab = ["کم", "متوسط", "زیاد"];
-        xs.forEach((x, k) => {
-          let g = `<g class="stack"><g class="coins">`; for (let j = 0; j < ns[k]; j++) g += COIN(x, 1150 - j * 26); g += `</g>`;
-          g += `<rect x="${x - 90}" y="1196" width="180" height="62" rx="31" class="f-card"/><text x="${x}" y="1238" text-anchor="middle" direction="rtl" font-size="36" class="f-ink">${lab[k]}</text>`;
-          g += `<g class="ok" transform="translate(${x + 64},${1150 - ns[k] * 26 - 40})">${CHECK(30)}</g></g>`; add(St, g);
-        });
-        q("#s9-stacks .coins").forEach((g, k) => tl.fromTo(g.children, { opacity: 0, y: -80 }, { opacity: 1, y: 0, duration: 0.3, ease: "bounce.out", stagger: 0.05 }, c(id, 0) + 0.15 + k * 0.25));
-        rise("#s9-stacks .stack > rect, #s9-stacks .stack > text", c(id, 0) + 0.3, { y: 20, st: 0.08 });
-        pop("#s9-stacks .ok", at(id, 1, 0.3), { st: 0.15 });
-        tl.to("#s9-stacks", { opacity: 0, y: -120, duration: 0.4, ease: "power2.in" }, c(id, 2) - 0.2);
-        show("#s9-road", c(id, 2), 0.2);
-        draw("#s9-trunk", c(id, 2) + 0.05, 0.45);
-        draw("#s9-bL, #s9-bC, #s9-bR", c(id, 2) + 0.4, 0.55, { st: 0.08 });
-        $("s9-x").innerHTML = `<g transform="translate(230,700)">${XMARK(36)}</g><g transform="translate(540,670)">${XMARK(36)}</g>`;
-        pop("#s9-x > g", c(id, 2) + 0.95, { st: 0.1, d: 0.4 });
-        draw("#s9-good", at(id, 2, 0.7), 1.0, { ease: "power1.inOut" });
-        $("s9-flag").innerHTML = `<g><path d="M0,40 L0,-110" class="s-ink round" stroke-width="9"/><path d="M0,-110 L84,-84 L0,-58 Z" class="f-acc"/><g transform="translate(0,58)">${CHECK(34)}</g></g>`;
-        pop("#s9-flag > g", at(id, 2, 0.7) + 0.9, { origin: "50% 100%", d: 0.55 });
-        const dot = $("s9-dot"), path = $("s9-good"), L = path.getTotalLength();
-        const pts = Array.from({ length: 21 }, (_, i) => { const p = path.getPointAtLength((L * i) / 20); return { x: p.x, y: p.y, duration: 1.0 / 20, ease: "none" }; });
-        gsap.set(dot, { x: 540, y: 1350 });
-        tl.set(dot, { opacity: 1 }, at(id, 2, 0.7)); tl.to(dot, { keyframes: pts }, at(id, 2, 0.7));
-        tl.to("#s9-bL, #s9-bC", { opacity: 0.14, duration: 0.4 }, at(id, 2, 0.7));
-      })();
-
-      // ================= S10 =================
-      (function () {
-        const id = "s10", t0 = S[id].start, endVO = S[id].end;
-        rise("#chk1", at(id, 0, 0.35), { y: 30 }); pop("#chk1 i", at(id, 0, 0.35) + 0.2, { d: 0.4 });
-        rise("#chk2", c(id, 1) + 0.2, { y: 30 }); pop("#chk2 i", c(id, 1) + 0.4, { d: 0.4 });
+        const id = "s10", endVO = S[id].end;
+        rise("#chk1", at(id, 0, 0.35), { y: 30 }); pop("#chk1 i", at(id, 0, 0.35) + 0.2);
+        rise("#chk2", c(id, 1) + 0.2, { y: 30 }); pop("#chk2 i", c(id, 1) + 0.4);
         tl.fromTo("#cbox", { opacity: 0, y: 160 }, { opacity: 1, y: 0, duration: 0.6, ease: "back.out(1.4)" }, c(id, 2) - 0.25);
         const ty = at(id, 2, 0.25);
         tl.fromTo("#ctext", { clipPath: "inset(0% 0% 0% 100%)" }, { clipPath: "inset(0% 0% 0% 0%)", duration: 0.9, ease: "steps(6)" }, ty);
         tl.fromTo("#caret", { opacity: 1 }, { opacity: 0, duration: 0.28, yoyo: true, repeat: 7, ease: "steps(1)" }, c(id, 2));
         rise("#ctaBig", ty + 0.5, { y: 30 });
         tl.to("#send", { scale: 1.16, duration: 0.3, yoyo: true, repeat: 5, ease: "sine.inOut" }, ty + 1.0);
-        const H = $("s10-hearts");
-        for (let k = 0; k < 9; k++) {
-          const x = 140 + rnd() * 800, s = 0.6 + rnd() * 0.7;
-          const e = add(H, `<g transform="translate(${x.toFixed(0)},1100) scale(${s.toFixed(2)})"><path d="M0,12 C-30,-12 -18,-40 0,-24 C18,-40 30,-12 0,12 Z" class="${k % 3 ? "f-acc2" : "f-acc"}"/></g>`).firstElementChild;
-          const tt = endVO - 0.6 + k * 0.22;
-          const th = Math.min(tt, T.total - 1.85);
-          tl.fromTo(e, { y: 0 }, { y: (-520 - rnd() * 200) / s, duration: 1.8, ease: "power1.out" }, th);
-          tl.fromTo(e, { opacity: 0 }, { opacity: 1, duration: 0.3 }, th); tl.to(e, { opacity: 0, duration: 0.6 }, th + 1.2);
-        }
         tl.to("#cbox", { scale: 1.04, duration: 0.5, yoyo: true, repeat: 1, ease: "sine.inOut" }, Math.min(endVO + 0.2, T.total - 1.1));
         tl.fromTo("#endLogo", { opacity: 0, y: 40, scale: 0.92 }, { opacity: 1, y: 0, scale: 1, duration: 0.6, ease: "power3.out" }, Math.min(endVO + 0.15, T.total - 0.8));
         tl.to("#logoMark", { opacity: 0, duration: 0.3 }, Math.min(endVO + 0.1, T.total - 0.8));
       })();
+    </script>
+    <script type="module">
+      import { frame } from "./assets/world.js";
+      const state = { t: 0 };
+      frame(0);
+      window.__timelines["main"].fromTo(state, { t: 0 }, { t: window.__T.total, duration: window.__T.total, ease: "none", onUpdate: () => frame(state.t) }, 0);
+      window.__timelines["main"].seek(0);
     </script>
   </body>
 </html>

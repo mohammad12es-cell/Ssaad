@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="fa" dir="rtl" data-resolution="portrait">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <script src="assets/gsap.min.js"></script>
+    <script type="importmap">{ "imports": { "three": "./assets/three.module.js" } }</script>
+    <style>
+      @font-face { font-family: "Vazirmatn"; font-weight: 700; src: url("assets/fonts/vazirmatn-latin-700-normal.woff2") format("woff2"); }
+      @font-face { font-family: "Vazirmatn"; font-weight: 900; src: url("assets/fonts/vazirmatn-latin-900-normal.woff2") format("woff2"); }
+      @font-face { font-family: "Vazirmatn"; font-weight: 700; src: url("assets/fonts/vazirmatn-arabic-700-normal.woff2") format("woff2"); unicode-range: U+0600-06FF, U+0750-077F, U+200C-200E, U+FB50-FDFF, U+FE70-FEFC; }
+      @font-face { font-family: "Vazirmatn"; font-weight: 800; src: url("assets/fonts/vazirmatn-arabic-800-normal.woff2") format("woff2"); unicode-range: U+0600-06FF, U+0750-077F, U+200C-200E, U+FB50-FDFF, U+FE70-FEFC; }
+      @font-face { font-family: "Vazirmatn"; font-weight: 900; src: url("assets/fonts/vazirmatn-arabic-900-normal.woff2") format("woff2"); unicode-range: U+0600-06FF, U+0750-077F, U+200C-200E, U+FB50-FDFF, U+FE70-FEFC; }
+      /* IRAM CO. palette (same as the Armenia investment film) */
+      :root {
+        --bg-1: #0b2017; --card: #1a4430; --pri: #2f8a5c; --acc: #dcad58; --acc-hi: #f4d68c; --acc-lo: #a9792f; --acc-2: #d38a4c;
+        --ink: #faf2e0; --dark: #06140d;
+        --gold: linear-gradient(180deg, var(--acc-hi) 0%, var(--acc) 45%, var(--acc-lo) 85%, #d9b264 100%);
+      }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1080px; height: 1920px; overflow: hidden; background: var(--bg-1); }
+      #root { position: relative; width: 1080px; height: 1920px; overflow: hidden; font-family: "Vazirmatn", sans-serif; color: var(--ink); background: var(--bg-1); }
+      .clip { position: absolute; inset: 0; }
+      #cam { position: absolute; inset: 0; transform-origin: 50% 38%; }
+      .vid { position: absolute; inset: 0; width: 1080px; height: 1920px; object-fit: cover; }
+      .bg { position: absolute; inset: 0; width: 1080px; height: 1920px; object-fit: cover; }
+      .card { position: absolute; left: 50%; top: 210px; width: 760px; margin-left: -380px; border-radius: 26px; border: 8px solid var(--acc);
+        box-shadow: 0 30px 70px rgba(0, 0, 0, 0.55); overflow: hidden; background: var(--dark); }
+      .card img { display: block; width: 100%; height: auto; }
+      .behind { position: absolute; left: 0; right: 0; top: 285px; text-align: center; font-weight: 900; line-height: 1.1; white-space: nowrap;
+        background: var(--gold); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+        filter: drop-shadow(0 10px 26px rgba(0, 0, 0, 0.5)); }
+      #gl { position: absolute; inset: 0; width: 1080px; height: 1920px; }
+      #calText { position: absolute; left: 0; top: 0; opacity: 0; text-align: center; color: var(--dark); font-weight: 900; line-height: 1; }
+      #calText b { display: block; font-size: 128px; color: var(--pri); }
+      #calText span { display: block; font-size: 40px; margin-top: 4px; }
+
+      /* foreground */
+      #topShade { position: absolute; left: 0; right: 0; top: 0; height: 340px; background: linear-gradient(180deg, rgba(6, 20, 13, 0.7), rgba(6, 20, 13, 0)); }
+      #botShade { position: absolute; left: 0; right: 0; bottom: 0; height: 620px; background: linear-gradient(0deg, rgba(6, 20, 13, 0.55), rgba(6, 20, 13, 0)); }
+      #prog { position: absolute; top: 96px; left: 120px; right: 120px; height: 8px; border-radius: 8px; background: rgba(250, 242, 224, 0.16); overflow: hidden; }
+      #progBar { width: 100%; height: 100%; background: linear-gradient(270deg, var(--acc-hi), var(--acc) 50%, var(--acc-lo)); transform-origin: 100% 50%; }
+      #logoMark { position: absolute; top: 116px; right: 36px; width: 210px; }
+      #hudChip { position: absolute; top: 132px; left: 0; right: 0; display: flex; justify-content: center; }
+      .pill { display: inline-flex; align-items: center; gap: 14px; padding: 12px 30px 12px 22px; border-radius: 999px; white-space: nowrap;
+        background: rgba(6, 20, 13, 0.62); border: 2px solid rgba(220, 173, 88, 0.6); font-weight: 800; font-size: 34px; color: var(--ink); }
+      .flag { width: 40px; height: 40px; border-radius: 50%; flex: 0 0 40px; background: linear-gradient(180deg, #D90012 0 33.4%, #0033A0 33.4% 66.7%, #F2A800 66.7% 100%); }
+      .dot { width: 18px; height: 18px; border-radius: 50%; background: var(--gold); flex: 0 0 18px; }
+      .chipAt { position: absolute; }
+      .cap { display: flex; justify-content: center; align-items: flex-start; }
+      .cap-in { margin-top: 1460px; max-width: 960px; padding: 14px 36px 20px; border-radius: 30px; text-align: center; font-weight: 800; font-size: 62px; line-height: 1.45;
+        color: var(--ink); background: rgba(6, 20, 13, 0.72); border: 2px solid rgba(220, 173, 88, 0.4); }
+      .cap-in .hi { color: var(--acc-hi); }
+      .wipe { position: absolute; top: -260px; left: 0; height: 2440px; width: 0; }
+      .wipe i { position: absolute; top: 0; bottom: 0; transform: rotate(14deg); }
+      .wipe i.a { left: 0; width: 190px; background: var(--gold); }
+      .wipe i.b { left: -270px; width: 120px; background: var(--pri); }
+      #endLogo { position: absolute; top: 1470px; left: 50%; width: 640px; margin-left: -320px; }
+      .flake { position: absolute; width: 10px; height: 10px; border-radius: 50%; background: #fbf3df; opacity: 0.8; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="16.95" data-width="1080" data-height="1920">
+
+      <!-- ===== everything in #cam moves together (punch-in zooms keep the cutout aligned with the plate) ===== -->
+      <div id="cam" data-layout-allow-overlap>
+        <video id="base" class="vid" src="assets/base.mp4" muted playsinline data-start="0" data-duration="16.95"></video>
+
+        <img id="bgCrowd" class="bg" src="assets/broll/bg_crowd.jpg" alt="" data-start="6.10" data-duration="1.60" />
+        <img id="bgDancers" class="bg" src="assets/broll/bg_dancers.jpg" alt="" data-start="7.55" data-duration="1.95" />
+        <img id="bgGov" class="bg" src="assets/broll/bg_govhouse.jpg" alt="" data-start="9.95" data-duration="3.00" />
+        <div id="cardCrowd" class="card" data-start="6.18" data-duration="1.47"><img src="assets/broll/card_crowd.jpg" alt="" /></div>
+        <div id="cardDancers" class="card" data-start="7.62" data-duration="1.82"><img src="assets/broll/card_dancers.jpg" alt="" /></div>
+
+        <div id="bt1" class="behind" data-start="0.30" data-duration="4.45" style="font-size: 250px">کریسمس</div>
+        <div id="bt2" class="behind" data-start="5.12" data-duration="1.10" style="font-size: 220px">بابانوئل</div>
+        <div id="bt3" class="behind" data-start="9.98" data-duration="2.90" style="font-size: 250px; top: 270px; left: 30px; right: 330px">۱۸:۰۰</div>
+        <div id="bt4" class="behind" data-start="15.02" data-duration="1.93" style="font-size: 175px; top: 300px">منتظرتونه!</div>
+
+        <canvas id="gl" width="1080" height="1920"></canvas>
+        <div id="calText"><b>۱</b><span>دسامبر</span></div>
+
+        <video id="subj" class="vid" src="assets/subject.webm" muted playsinline data-start="0" data-duration="16.95"></video>
+      </div>
+
+      <!-- ===== foreground ===== -->
+      <div id="fg" class="clip" data-start="0" data-duration="16.95" data-track-index="3" data-layout-allow-overlap>
+        <div id="topShade"></div><div id="botShade"></div>
+        <div id="flakes"></div>
+        <div id="prog"><div id="progBar"></div></div>
+        <img id="logoMark" src="assets/iram-logo.png" alt="IRAM CO." />
+        <div id="hudChip"><div class="pill"><span class="flag"></span>ایروان · کریسمس</div></div>
+        <div id="chipArm" class="chipAt" style="top: 590px; right: 44px"><div class="pill"><span class="flag"></span>ارمنستان</div></div>
+        <div id="chipTime" class="chipAt" style="top: 700px; left: 625px"><div class="pill"><span class="dot"></span>۶ بعدازظهر</div></div>
+        <div id="chipPin" class="chipAt" style="top: 700px; left: 640px"><div class="pill"><span class="dot"></span>سیزن پارک</div></div>
+        <div id="wipes"></div>
+        <img id="endLogo" src="assets/iram-logo.png" alt="IRAM CO." />
+      </div>
+
+      <div id="c1" class="clip cap" data-start="1.05" data-duration="2.03" data-track-index="5"><div class="cap-in">تاریخ نصب <span class="hi">اولین درخت کریسمس</span></div></div>
+      <div id="c2" class="clip cap" data-start="3.08" data-duration="1.62" data-track-index="5"><div class="cap-in">در <span class="hi">ارمنستان</span> مشخص شد</div></div>
+      <div id="c3" class="clip cap" data-start="5.15" data-duration="1.03" data-track-index="5"><div class="cap-in">و همراه <span class="hi">بابانوئل</span></div></div>
+      <div id="c4" class="clip cap" data-start="6.18" data-duration="1.44" data-track-index="5"><div class="cap-in"><span class="hi">کنسرت‌های شاد</span></div></div>
+      <div id="c5" class="clip cap" data-start="7.62" data-duration="1.78" data-track-index="5"><div class="cap-in">و برنامه‌های <span class="hi">هیجان‌انگیز</span></div></div>
+      <div id="c6" class="clip cap" data-start="10.00" data-duration="1.55" data-track-index="5"><div class="cap-in">رأس <span class="hi">ساعت ۱۸</span></div></div>
+      <div id="c7" class="clip cap" data-start="11.55" data-duration="1.30" data-track-index="5"><div class="cap-in">یا <span class="hi">شیش بعدازظهر</span></div></div>
+      <div id="c8" class="clip cap" data-start="12.95" data-duration="1.10" data-track-index="5"><div class="cap-in"><span class="hi">یک دسامبر</span></div></div>
+      <div id="c9" class="clip cap" data-start="14.05" data-duration="1.00" data-track-index="5"><div class="cap-in"><span class="hi">سیزن پارک</span></div></div>
+      <div id="c10" class="clip cap" data-start="15.05" data-duration="0.90" data-track-index="5"><div class="cap-in"><span class="hi">منتظرتونه!</span></div></div>
+
+      <audio id="voice" src="assets/voice.wav" data-start="0" data-duration="16.95" data-volume="1"></audio>
+      <audio id="music" src="assets/music.wav" data-start="0" data-duration="16.95" data-volume="1"></audio>
+    </div>
+
+    <script>
+      // beat windows for the 3D props (seconds) and where they sit (px), chosen from the presenter's tracked head position
+      window.__BEATS = { tree: [2.2, 4.75], treeSide: 235, gifts: [5.15, 6.3], notes: [6.2, 7.7], confetti: [7.62, 9.45],
+        clock: [10.0, 12.9], clockX: 845, calendar: [13.0, 14.1], calX: 800, pin: [14.05, 15.1], pinX: 845, end: [15.1, 16.95] };
+      const TOTAL = 16.95, tl = gsap.timeline({ paused: true });
+      window.__timelines = window.__timelines || {}; window.__timelines["main"] = tl;
+      const $ = (id) => document.getElementById(id);
+      const popIn = (el, t, d = 0.45, from = {}) => tl.fromTo(el, Object.assign({ opacity: 0, scale: 0.7, y: 30 }, from), { opacity: 1, scale: 1, y: 0, rotation: from.toRot || 0, duration: d, ease: "back.out(1.7)" }, t);
+      const out = (el, t, d = 0.25) => tl.to(el, { opacity: 0, scale: 0.9, duration: d, ease: "power2.in" }, t);
+
+      // camera: slow push, punch-ins on each new beat (whole plate + cutout together)
+      tl.fromTo("#cam", { scale: 1.0 }, { scale: 1.045, duration: 4.8, ease: "none" }, 0);
+      [[4.95, 1.08], [9.75, 1.07], [12.95, 1.05]].forEach(([t, s]) => tl.fromTo("#cam", { scale: s }, { scale: 1.0, duration: 0.7, ease: "power3.out" }, t));
+      tl.to("#cam", { scale: 1.04, duration: 1.8, ease: "sine.inOut" }, 15.1);
+
+      // behind-the-presenter words: reveal right-to-left (RTL), settle, leave
+      [["#bt1", 0.3, 4.6], ["#bt2", 5.12, 6.1], ["#bt3", 9.98, 12.75], ["#bt4", 15.02, 99]].forEach(([el, a, b]) => {
+        tl.fromTo(el, { clipPath: "inset(0% 0% 0% 100%)", y: 60, scale: 1.12 }, { clipPath: "inset(0% 0% 0% 0%)", y: 0, scale: 1, duration: 0.6, ease: "power3.out" }, a);
+        if (b < TOTAL) out(el, b);
+      });
+
+      // B-roll: blurred background plates (Ken Burns) + sharp gold-framed cards
+      [["#bgCrowd", 6.1, 7.62], ["#bgDancers", 7.55, 9.42], ["#bgGov", 9.95, 12.88]].forEach(([el, a, b]) => {
+        tl.fromTo(el, { opacity: 0 }, { opacity: 1, duration: 0.2 }, a); tl.fromTo(el, { scale: 1.12 }, { scale: 1.0, duration: b - a, ease: "none" }, a);
+      });
+      popIn("#cardCrowd", 6.18, 0.5, { rotation: -10, toRot: -3.5 }); out("#cardCrowd", 7.45);
+      popIn("#cardDancers", 7.62, 0.5, { rotation: 10, toRot: 3.5 }); out("#cardDancers", 9.25);
+      tl.fromTo("#cardCrowd img", { scale: 1.12 }, { scale: 1, duration: 1.4, ease: "none" }, 6.18);
+      tl.fromTo("#cardDancers img", { scale: 1.12 }, { scale: 1, duration: 1.8, ease: "none" }, 7.62);
+
+      // chips
+      tl.set(["#chipArm", "#chipTime", "#chipPin", "#endLogo"], { opacity: 0 }, 0);
+      popIn("#chipArm", 3.32, 0.45, { x: 60 }); out("#chipArm", 4.5);
+      popIn("#chipTime", 11.6, 0.45); out("#chipTime", 12.7);
+      popIn("#chipPin", 14.3, 0.45); out("#chipPin", 14.95);
+
+      // HUD, wipes, captions, end card
+      tl.fromTo("#progBar", { scaleX: 0 }, { scaleX: 1, duration: TOTAL, ease: "none" }, 0);
+      tl.fromTo("#hudChip", { opacity: 0, y: -30 }, { opacity: 1, y: 0, duration: 0.5, ease: "power3.out" }, 0.1);
+      tl.fromTo("#logoMark", { opacity: 0, y: -30 }, { opacity: 1, y: 0, duration: 0.5, ease: "power3.out" }, 0.2);
+      [4.92, 9.7].forEach((t) => { $("wipes").insertAdjacentHTML("beforeend", '<div class="wipe"><i class="a"></i><i class="b"></i></div>'); tl.fromTo($("wipes").lastElementChild, { x: 1900 }, { x: -1100, duration: 0.7, ease: "power2.inOut" }, t - 0.35); });
+      document.querySelectorAll(".cap").forEach((el) => tl.fromTo(el.firstElementChild, { opacity: 0, y: 22, scale: 0.96 }, { opacity: 1, y: 0, scale: 1, duration: 0.22, ease: "power2.out" }, +el.dataset.start));
+      tl.fromTo("#endLogo", { opacity: 0, y: 40, scale: 0.92 }, { opacity: 1, y: 0, scale: 1, duration: 0.6, ease: "power3.out" }, 15.95);
+      tl.to("#logoMark", { opacity: 0, duration: 0.3 }, 15.9);
+
+      // foreground snow (a few soft flakes in front of the presenter)
+      for (let i = 0; i < 22; i++) {
+        const h = (k) => { const x = Math.sin((i + k) * 127.1 + 311.7) * 43758.5453; return x - Math.floor(x); };
+        $("flakes").insertAdjacentHTML("beforeend", `<div class="flake" style="left:${(h(1) * 1060).toFixed(0)}px; transform: scale(${(0.6 + h(2) * 1.1).toFixed(2)})"></div>`);
+        const f = $("flakes").lastElementChild, y0 = -40 - h(3) * 1900, sp = 70 + h(4) * 90;
+        tl.fromTo(f, { y: y0 }, { y: y0 + sp * TOTAL, duration: TOTAL, ease: "none", modifiers: { y: gsap.utils.unitize(gsap.utils.wrap(-40, 1960)) } }, 0);
+      }
+    </script>
+    <script type="module">
+      import { frame } from "./assets/world3d.js";
+      const state = { t: 0 };
+      frame(0);
+      window.__timelines["main"].fromTo(state, { t: 0 }, { t: 16.95, duration: 16.95, ease: "none", onUpdate: () => frame(state.t) }, 0);
+      window.__timelines["main"].seek(0);
+    </script>
+  </body>
+</html>

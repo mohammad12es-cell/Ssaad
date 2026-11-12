@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Festive bed for the Yerevan Christmas edit: FM bells, soft pad, sleigh shaker, transition whooshes.
-Everything is synthesized here. usage: python3 tools/music.py assets/music.wav"""
+Everything is synthesized here and ducked under the presenter's voice.
+usage: python3 tools/music.py assets/music.wav [assets/voice.wav]"""
 import sys, wave, numpy as np
 sr, T = 44100, 16.95; n = int(sr * T); out = np.zeros(n); rng = np.random.default_rng(5)
 def add(sig, t, g=1.0):
@@ -23,12 +24,21 @@ t, k = 0.0, 0
 while t < T:
     ch = prog[k % 4]; add(pad([f for f in ch], 4 * b + 0.8), t, 0.12)
     for i in range(8):
-        if (k + i) % 3 != 2: add(bell(mel[(i + k * 2) % 8] * (0.5 if i % 2 else 1), 1.4), t + i * b / 2, 0.05)
+        if (k + i) % 3 != 2: add(bell(mel[(i + k * 2) % 8] * (0.5 if i % 2 else 1), 1.4), t + i * b / 2, 0.03)
         add(shaker(), t + i * b / 2 + b / 4, 0.05)
     t += 4 * b; k += 1
 for tw in (4.85, 9.62): add(whoosh(0.7), tw - 0.35, 0.09)
-for tp in (0.35, 2.25, 5.2, 6.2, 7.65, 10.05, 13.05, 14.1, 15.1): add(bell(1568, 0.9), tp, 0.035)
+for tp in (0.35, 2.25, 5.2, 6.2, 7.65, 10.05, 13.05, 14.1, 15.1): add(bell(1568, 0.9), tp, 0.02)
 fi = int(0.6 * sr); out[:fi] *= np.linspace(0, 1, fi); fo = int(1.4 * sr); out[-fo:] *= np.linspace(1, 0, fo)
-out *= 0.26 / np.abs(out).max()
+out *= 0.15 / np.abs(out).max()
+# duck under the voice: -7 dB while he talks, smooth attack/release
+if len(sys.argv) > 2:
+    with wave.open(sys.argv[2]) as v:
+        ch, vsr = v.getnchannels(), v.getframerate(); x = np.frombuffer(v.readframes(v.getnframes()), dtype=np.int16).astype(float) / 32768
+    x = x.reshape(-1, ch).mean(axis=1); hop = vsr // 100; r = np.sqrt(np.convolve(x ** 2, np.ones(hop) / hop, "same")[::hop])
+    talk = (r > r.max() * 10 ** (-30 / 20)).astype(float); env = np.zeros_like(talk); g = 0.0
+    for i, a in enumerate(talk): g = g + (a - g) * (0.35 if a > g else 0.06); env[i] = g
+    duck = 1 - (1 - 10 ** (-7 / 20)) * np.interp(np.arange(n) / sr, np.arange(len(env)) / 100, env)
+    out *= duck
 with wave.open(sys.argv[1], "wb") as w:
     w.setnchannels(1); w.setsampwidth(2); w.setframerate(sr); w.writeframes((np.clip(out, -1, 1) * 32767).astype(np.int16).tobytes())

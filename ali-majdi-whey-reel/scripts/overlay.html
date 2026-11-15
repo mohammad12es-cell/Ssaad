@@ -1,0 +1,255 @@
+<!doctype html>
+<html lang="fa" dir="rtl"><head><meta charset="utf-8">
+<style>
+@font-face{font-family:V;src:url(fonts/Vazirmatn-Black.ttf);font-weight:900}
+@font-face{font-family:V;src:url(fonts/Vazirmatn-ExtraBold.ttf);font-weight:800}
+@font-face{font-family:V;src:url(fonts/Vazirmatn-Bold.ttf);font-weight:700}
+@font-face{font-family:V;src:url(fonts/Vazirmatn-Medium.ttf);font-weight:500}
+:root{--gold:#FFC83D;--gold2:#FF9F1C;--red:#FF3B3B;--ink:#0B0B0D}
+html,body{margin:0;width:1080px;height:1920px;background:transparent;overflow:hidden;font-family:V,sans-serif;color:#fff}
+.abs{position:absolute}
+.hide{opacity:0}
+/* captions */
+#capWrap{position:absolute;left:0;width:1080px;height:0;display:flex;justify-content:center}
+#capGlow{position:absolute;left:40px;width:1000px;height:300px;margin-top:-150px;border-radius:50%;
+  background:radial-gradient(closest-side,rgba(0,0,0,.62),rgba(0,0,0,.38) 55%,rgba(0,0,0,0));filter:blur(6px)}
+#cap{position:absolute;transform:translateY(-50%);max-width:960px;text-align:center;font-weight:900;font-size:86px;line-height:1.25;
+  white-space:nowrap;letter-spacing:0}
+#cap span{display:inline-block;margin:0 9px;text-shadow:0 4px 0 rgba(0,0,0,.55),0 0 28px rgba(0,0,0,.55);
+  -webkit-text-stroke:2px rgba(0,0,0,.35);paint-order:stroke fill}
+#cap span.hl{color:var(--gold)}
+#cap span.neg{color:var(--red)}
+/* hook */
+#hook{position:absolute;left:0;top:0;width:1080px;height:1920px}
+.hk{position:absolute;width:1080px;text-align:center;font-weight:900;white-space:nowrap}
+#h1{top:1130px;font-size:104px;color:#fff}
+#h2{top:1250px;font-size:196px;color:var(--gold);line-height:1;letter-spacing:-2px;text-shadow:0 10px 40px rgba(255,170,0,.35)}
+#h3wrap{top:1505px;display:flex;justify-content:center}
+#h3{display:inline-block;background:var(--red);color:#fff;font-size:104px;padding:6px 40px 18px;border-radius:18px;transform-origin:50% 50%;
+  box-shadow:0 18px 50px rgba(255,40,40,.35)}
+#hpill{top:110px;display:flex;justify-content:center}
+.pill{display:inline-flex;align-items:center;gap:16px;padding:14px 34px;border-radius:999px;background:rgba(10,10,12,.62);
+  border:2px solid rgba(255,200,61,.75);font-weight:700;font-size:40px;backdrop-filter:blur(8px)}
+.dot{width:16px;height:16px;border-radius:50%;background:var(--gold);box-shadow:0 0 18px var(--gold)}
+/* generic cards */
+.stamp{position:absolute;white-space:nowrap;font-weight:900;color:var(--red);border:10px solid var(--red);border-radius:26px;padding:0 44px 14px;
+  background:rgba(0,0,0,.35);text-shadow:0 0 30px rgba(255,59,59,.5);box-shadow:0 0 50px rgba(255,59,59,.35),inset 0 0 40px rgba(255,59,59,.25)}
+#campCard{left:50%;top:860px;width:1000px;height:648px;margin-left:-500px;margin-top:-324px;border-radius:34px;overflow:hidden;
+  box-shadow:0 40px 90px rgba(0,0,0,.7);border:4px solid rgba(255,255,255,.9)}
+#campCard img{width:100%;height:100%;object-fit:cover}
+#campTag{top:1110px;left:0;width:1080px;display:flex;justify-content:center}
+#zeroCard{top:70px;left:0;width:1080px;display:flex;justify-content:center}
+.glass{background:rgba(12,12,14,.66);border:2px solid rgba(255,255,255,.18);border-radius:34px;backdrop-filter:blur(12px);
+  box-shadow:0 30px 80px rgba(0,0,0,.45)}
+#zeroIn{padding:22px 54px 30px;text-align:center}
+#zeroIn .k{font-size:42px;font-weight:700;color:#ddd}
+#zeroIn .v{font-size:120px;font-weight:900;color:var(--gold);line-height:1.05}
+#dim{left:0;top:0;width:1080px;height:1920px;background:#000}
+#pct{top:420px;left:0;width:1080px;text-align:center}
+#pctNum{font-size:330px;font-weight:900;line-height:1;color:#fff;text-shadow:0 20px 70px rgba(0,0,0,.6)}
+#pctSub{font-size:56px;font-weight:800;color:#fff;margin-top:6px}
+#fake{left:50%;top:880px;font-size:150px}
+#wheyChip{top:1170px;left:0;width:1080px;display:flex;justify-content:center}
+#wheyIn{position:relative;font-size:84px;font-weight:900;padding:10px 54px 26px}
+#strike{position:absolute;right:30px;top:52%;height:12px;background:var(--red);border-radius:6px;box-shadow:0 0 20px rgba(255,59,59,.7)}
+#foods{top:250px;right:60px;display:flex;flex-direction:column;gap:26px;align-items:flex-end}
+.food{display:flex;align-items:center;gap:22px;font-size:66px;font-weight:900;padding:14px 26px 24px 40px}
+.chk{width:74px;height:74px;border-radius:50%;background:var(--gold);display:flex;align-items:center;justify-content:center;flex:none}
+#chart{top:1600px;left:190px;width:700px;height:290px}
+#chartLbl{position:absolute;top:10px;right:24px;font-size:44px;font-weight:900}
+#credit{right:46px;bottom:300px;font-family:Arial,Helvetica,sans-serif;letter-spacing:9px;font-size:26px;color:rgba(255,255,255,.9);font-weight:400;direction:ltr}
+#tip{top:1180px;left:0;width:1080px;display:flex;justify-content:center}
+#tipIn{display:flex;align-items:center;gap:22px;font-size:58px;font-weight:900;padding:18px 46px 28px}
+.bulb{width:70px;height:70px;border-radius:50%;background:var(--gold);display:flex;align-items:center;justify-content:center;flex:none;box-shadow:0 0 30px rgba(255,200,61,.6)}
+#duo{top:1000px;left:0;width:1080px;display:flex;justify-content:center;gap:40px}
+.duoC{width:360px;height:250px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;font-size:70px;font-weight:900}
+#name{left:0;width:1080px;top:1300px;text-align:center}
+#nameMain{font-size:150px;font-weight:900;line-height:1.05;text-shadow:0 12px 50px rgba(0,0,0,.6)}
+#nameLine{height:8px;background:linear-gradient(90deg,transparent,var(--gold),transparent);margin:16px auto}
+#nameSub{font-size:58px;font-weight:800;color:var(--gold);text-shadow:0 6px 30px rgba(0,0,0,.7)}
+#cta{top:1640px;left:0;width:1080px;display:flex;justify-content:center}
+#ctaBtn{display:flex;align-items:center;gap:20px;background:var(--gold);color:#111;font-size:66px;font-weight:900;padding:14px 64px 26px;border-radius:999px;
+  box-shadow:0 20px 60px rgba(255,200,61,.45)}
+#tapRing{position:absolute;width:120px;height:120px;border-radius:50%;border:6px solid #fff}
+#flash{left:0;top:0;width:1080px;height:1920px;background:#fff}
+#bar{left:0;top:0;height:9px;background:linear-gradient(270deg,var(--gold),var(--gold2));box-shadow:0 0 16px rgba(255,200,61,.7)}
+#barBg{left:0;top:0;width:1080px;height:9px;background:rgba(255,255,255,.15)}
+</style></head>
+<body>
+<div id="dim" class="abs"></div>
+<div id="hook"><div class="abs" style="left:0;top:1000px;width:1080px;height:920px;background:radial-gradient(ellipse 70% 55% at 50% 45%,rgba(255,170,30,.22),rgba(0,0,0,0) 70%)"></div>
+  <div id="hpill" class="hk"><div class="pill"><span class="dot"></span><span>قهرمان فیزیک ایران و جهان</span></div></div>
+  <div id="h1" class="hk">چرا خریدن</div>
+  <div id="h2" class="hk">پروتئین وی</div>
+  <div id="h3wrap" class="hk"><div id="h3">پول هدر دادنه؟!</div></div>
+</div>
+<div id="campCard" class="abs"><img src="team_camp.jpg"></div>
+<div id="campTag" class="abs"><div class="pill"><span class="dot"></span><span>اردوی تیم ملی پرورش اندام</span></div></div>
+<div id="noWhey" class="stamp" style="left:50%;top:420px;font-size:130px">بدون وی</div>
+<div id="zeroCard" class="abs"><div id="zeroIn" class="glass"><div class="k">خرج پروتئین وی</div><div class="v">۰ تومان</div></div></div>
+<div id="pct" class="abs"><div id="pctNum">۰٪</div><div id="pctSub">پروتئین‌های وی بازار</div></div>
+<div id="fake" class="stamp">فیک!</div>
+<div id="wheyChip" class="abs"><div id="wheyIn" class="glass">پروتئین وی<div id="strike"></div></div></div>
+<div id="foods" class="abs">
+  <div class="food glass"><span>گوشت</span><span class="chk"><svg width="44" height="44" viewBox="0 0 24 24"><path d="M4 12.5l5 5L20 6.5" fill="none" stroke="#111" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
+  <div class="food glass"><span>مرغ</span><span class="chk"><svg width="44" height="44" viewBox="0 0 24 24"><path d="M4 12.5l5 5L20 6.5" fill="none" stroke="#111" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
+  <div class="food glass"><span>ماهی</span><span class="chk"><svg width="44" height="44" viewBox="0 0 24 24"><path d="M4 12.5l5 5L20 6.5" fill="none" stroke="#111" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
+</div>
+<div id="chart" class="abs glass">
+  <svg width="700" height="290" viewBox="0 0 900 480" preserveAspectRatio="none">
+    <defs><linearGradient id="gf" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFC83D" stop-opacity=".45"/><stop offset="1" stop-color="#FFC83D" stop-opacity="0"/></linearGradient></defs>
+    <g stroke="rgba(255,255,255,.12)" stroke-width="2"><line x1="60" y1="400" x2="860" y2="400"/><line x1="60" y1="300" x2="860" y2="300"/><line x1="60" y1="200" x2="860" y2="200"/></g>
+    <path id="area" d="M60 400 L60 380 C200 370 300 350 420 300 S650 170 840 90 L840 400 Z" fill="url(#gf)"/>
+    <path id="line" d="M60 380 C200 370 300 350 420 300 S650 170 840 90" fill="none" stroke="#FFC83D" stroke-width="12" stroke-linecap="round"/>
+    <circle id="tip2" cx="840" cy="90" r="20" fill="#fff" stroke="#FFC83D" stroke-width="8"/>
+  </svg>
+  <div id="chartLbl">نتیجه <span style="color:var(--gold)">بهتر</span></div>
+</div>
+<div id="credit" class="abs">MILADPHOTOO</div>
+<div id="tip" class="abs"><div id="tipIn" class="glass"><span class="bulb"><svg width="40" height="40" viewBox="0 0 24 24"><path d="M12 3v11M12 19.5v.5" stroke="#111" stroke-width="3.6" stroke-linecap="round"/></svg></span><span>یادت باشه</span></div></div>
+<div id="duo" class="abs">
+  <div class="duoC glass" id="dA"><svg width="110" height="110" viewBox="0 0 48 48"><circle cx="24" cy="24" r="15" fill="none" stroke="#FFC83D" stroke-width="4"/><circle cx="24" cy="24" r="8" fill="none" stroke="#FFC83D" stroke-width="3"/><path d="M4 8v12M2 8v7c0 3 4 3 4 0V8M4 20v20M44 8c-4 2-4 10 0 12v20" stroke="#fff" stroke-width="3" fill="none" stroke-linecap="round"/></svg><span>خوراک</span></div>
+  <div class="duoC glass" id="dB"><svg width="110" height="110" viewBox="0 0 48 48"><path d="M30 6a18 18 0 1 0 12 30A15 15 0 0 1 30 6z" fill="#FFC83D"/><text x="34" y="18" fill="#fff" font-size="10" font-family="Arial" font-weight="700">z</text><text x="40" y="10" fill="#fff" font-size="7" font-family="Arial" font-weight="700">z</text></svg><span>خواب</span></div>
+</div>
+<div id="name" class="abs"><div id="nameMain">علی مجدی</div><div id="nameLine"></div><div id="nameSub">قهرمان فیزیک ایران و جهان</div></div>
+<div id="cta" class="abs"><div id="ctaBtn"><svg width="56" height="56" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" stroke="#111" stroke-width="3.4" stroke-linecap="round"/></svg><span>فالو کن</span></div><div id="tapRing"></div></div>
+<div id="capWrap"><div id="capGlow"></div><div id="cap"></div></div>
+<div id="barBg" class="abs"></div><div id="bar" class="abs"></div>
+<div id="flash" class="abs"></div>
+<script>
+const CAP=__CAPTIONS__;
+const DUR=39.433;
+const CUTS=[2.80,5.43,6.77,7.93,10.57,20.33,24.77,25.60,26.45,32.87];
+const $=id=>document.getElementById(id);
+const cl=(x,a=0,b=1)=>Math.min(b,Math.max(a,x));
+const P=(t,t0,d)=>cl((t-t0)/d);
+const oCubic=x=>1-Math.pow(1-x,3);
+const oExpo=x=>x>=1?1:1-Math.pow(2,-10*x);
+const oBack=x=>{const c1=1.9,c3=c1+1;return 1+c3*Math.pow(x-1,3)+c1*Math.pow(x-1,2)};
+const iCubic=x=>x*x*x;
+// in/out envelope: returns [progressIn, progressOut]
+function env(t,a,b,din=.35,dout=.25){return [P(t,a,din), P(t,b-dout,dout)]}
+function vis(el,on){el.style.display=on?'':'none'}
+function set(el,o,tr){el.style.opacity=o;el.style.transform=tr||''}
+const fa=n=>String(n).replace(/\d/g,d=>'۰۱۲۳۴۵۶۷۸۹'[d]);
+
+function capY(t){
+  if((t>=2.8&&t<5.43)||(t>=6.77&&t<7.93)) return 1548;
+  if(t>=20.33&&t<24.77) return 1620;
+  return 1450;
+}
+let lastChunk=-1;
+function captions(t){
+  const cap=$('cap'), wrap=$('capWrap');
+  let idx=-1;
+  for(let i=0;i<CAP.length;i++){const c=CAP[i];const nextS=i+1<CAP.length?CAP[i+1].s:99;
+    if(t>=c.s && t<Math.min(nextS, c.e+0.6)) idx=i;}
+  // hide: hook (chunk 0) and the name-card chunks
+  const hidden = idx<=0 || (t>=33.0&&t<35.8);
+  wrap.style.top=capY(t)+'px';
+  if(hidden){wrap.style.opacity=0;return}
+  wrap.style.opacity=1;
+  const c=CAP[idx];
+  if(idx!==lastChunk){
+    cap.innerHTML=c.words.map(w=>`<span class="${w.s}">${w.w}</span>`).join(' ');
+    lastChunk=idx;
+  }
+  const spans=cap.children;
+  c.words.forEach((w,k)=>{
+    const p=P(t,w.t-0.04,0.2);
+    const s=spans[k];
+    const sc=1.45-0.45*oBack(p);
+    s.style.opacity=p>0?Math.min(1,p*3):0;
+    s.style.transform=`translateY(${(1-oCubic(p))*26}px) scale(${sc})`;
+    s.style.filter=`blur(${(1-p)*6}px)`;
+  });
+  // fit width
+  const w=cap.scrollWidth; const k=Math.min(1,960/w);
+  cap.style.transform=`translateY(-50%) scale(${k})`;
+  // chunk exit
+  const ex=P(t,c.e+0.4,0.2); wrap.style.opacity=1-ex;
+}
+
+function render(t){
+  // --- hook ---
+  vis($('hook'),t<3.0);
+  if(t<3.0){
+    const out=P(t,2.68,0.14);
+    const pp=P(t,0.15,0.4); set($('hpill'),oCubic(pp)*(1-out),`translateY(${(1-oCubic(pp))*-40}px)`);
+    const a=P(t,0.02,0.22); set($('h1'),a*(1-out),`translateY(${(1-oCubic(a))*60}px) scale(${1.3-0.3*oBack(a)})`);
+    const b=P(t,0.70,0.22); set($('h2'),b*(1-out),`scale(${(1.8-0.8*oBack(b))*(1+0.02*Math.sin(t*9)*(b>=1?1:0))})`);
+    $('h2').style.filter=`blur(${(1-b)*10}px)`;
+    const c=P(t,1.46,0.24); set($('h3'),c*(1-out),`rotate(${-3*oBack(c)}deg) scale(${2.0-1.0*oBack(c)})`);
+  }
+  // --- team camp card 5.43-6.77 ---
+  {const on=t>=5.43&&t<6.77; vis($('campCard'),on); vis($('campTag'),on);
+   if(on){const a=P(t,5.43,0.35),z=1.04+0.05*P(t,5.43,1.34);
+    set($('campCard'),oCubic(a),`translateY(${(1-oExpo(a))*140}px) scale(${(0.9+0.1*oExpo(a))})`);
+    $('campCard').firstChild.style.transform=`scale(${z})`;
+    const b=P(t,5.65,0.3); set($('campTag'),oCubic(b),`translateY(${(1-oCubic(b))*30}px)`);}}
+  // --- "no whey" stamp 7.22-7.93 ---
+  {const on=t>=7.20&&t<7.93; vis($('noWhey'),on);
+   if(on){const a=P(t,7.20,0.16); $('noWhey').style.opacity=a; $('noWhey').style.transform=`translateX(-50%) rotate(-8deg) scale(${2.4-1.4*oCubic(a)})`;}}
+  // --- zero toman 8.6-10.57 ---
+  {const on=t>=8.6&&t<10.57; vis($('zeroCard'),on);
+   if(on){const a=P(t,8.6,0.4),o=P(t,10.35,0.2); set($('zeroCard'),oCubic(a)*(1-o),`translateY(${(1-oExpo(a))*-60}px) scale(${0.85+0.15*oBack(a)})`);}}
+  // --- dim for 90% ---
+  {let d=0; if(t>=12.63&&t<16.9){d=0.42*oCubic(P(t,12.63,0.2))*(1-P(t,16.6,0.3));} $('dim').style.opacity=d;}
+  // --- 90% ---
+  {const on=t>=12.63&&t<16.9; vis($('pct'),on);
+   if(on){const a=P(t,12.63,0.55),o=P(t,16.55,0.3); const n=Math.round(90*oCubic(a));
+    $('pctNum').textContent=fa(n)+'٪';
+    $('pctNum').style.color=a>=1?'#FFC83D':'#fff';
+    set($('pct'),Math.min(1,a*4)*(1-o),`scale(${(0.7+0.3*oBack(Math.min(1,a*1.6)))*(1+0.04*Math.max(0,1-P(t,13.18,0.25)) )})`);
+    const s=P(t,14.63,0.3); $('pctSub').style.opacity=s; $('pctSub').style.transform=`translateY(${(1-oCubic(s))*30}px)`;}}
+  {const on=t>=15.62&&t<16.9; vis($('fake'),on);
+   if(on){const a=P(t,15.62,0.15),o=P(t,16.55,0.3); $('fake').style.opacity=a*(1-o); $('fake').style.transform=`translateX(-50%) rotate(-10deg) scale(${2.5-1.5*oCubic(a)})`;}}
+  // --- whey chip struck 18.9-20.33 ---
+  {const on=t>=18.95&&t<20.45; vis($('wheyChip'),on);
+   if(on){const a=P(t,18.95,0.35),o=P(t,20.25,0.2); set($('wheyChip'),oCubic(a)*(1-o),`scale(${0.8+0.2*oBack(a)})`);
+    const s=P(t,19.7,0.25); $('strike').style.width=(oCubic(s)*($('wheyIn').offsetWidth-60))+'px'; $('wheyIn').style.color=s>0.5?'rgba(255,255,255,.55)':'#fff';}}
+  // --- foods 22.13-24.77 ---
+  {const on=t>=22.13&&t<24.77; vis($('foods'),on);
+   if(on){const ts=[22.13,22.55,22.95]; const o=P(t,24.5,0.25);
+    [...$('foods').children].forEach((el,i)=>{const a=P(t,ts[i],0.3); el.style.opacity=oCubic(a)*(1-o); el.style.transform=`translateX(${(1-oExpo(a))*-300}px) scale(${0.85+0.15*oBack(a)})`;});}}
+  // --- chart 24.77-26.45 ---
+  {const on=t>=24.85&&t<26.45; vis($('chart'),on);
+   if(on){const a=P(t,24.85,0.3),o=P(t,26.25,0.2),d=oCubic(P(t,25.0,0.9)); set($('chart'),oCubic(a)*(1-o),`translateY(${(1-oExpo(a))*80}px)`);
+    const L=$('line'),len=L.getTotalLength(); L.style.strokeDasharray=len; L.style.strokeDashoffset=len*(1-d);
+    const pt=L.getPointAtLength(len*d); $('tip2').setAttribute('cx',pt.x); $('tip2').setAttribute('cy',pt.y);
+    $('area').style.opacity=d;}}
+  vis($('credit'),false); $('credit').style.opacity=P(t,25.62,0.15);
+  // --- tip 26.55-32.87 ---
+  {const on=t>=26.55&&t<31.0; vis($('tip'),on);
+   if(on){const a=P(t,26.55,0.35),o=P(t,30.8,0.2); set($('tip'),oCubic(a)*(1-o),`translateY(${(1-oExpo(a))*-80}px) scale(${0.85+0.15*oBack(a)})`);}}
+  {const on=t>=31.0&&t<32.87; vis($('duo'),on);
+   if(on){const o=P(t,32.6,0.25);
+    [['dA',31.0,-1],['dB',31.45,1]].forEach(([id,t0,dir])=>{const a=P(t,t0,0.32); set($(id),oCubic(a)*(1-o),`translateY(${(1-oExpo(a))*120}px) scale(${0.7+0.3*oBack(a)}) rotate(${(1-a)*dir*8}deg)`);});}}
+  // --- name card 33.0-36.1 ---
+  {const on=t>=33.05&&t<36.2; vis($('name'),on);
+   if(on){const a=P(t,33.15,0.4),o=P(t,35.85,0.3),l=P(t,33.4,0.5),s=P(t,34.43,0.35);
+    $('name').style.opacity=1-o;
+    $('nameMain').style.opacity=oCubic(a); $('nameMain').style.transform=`scale(${1.4-0.4*oBack(a)})`; $('nameMain').style.letterSpacing=`${(1-oExpo(a))*30}px`;
+    $('nameLine').style.width=(oCubic(l)*760)+'px';
+    $('nameSub').style.opacity=s; $('nameSub').style.transform=`translateY(${(1-oCubic(s))*30}px)`;}}
+  // --- CTA 37.9-end ---
+  {const on=t>=37.9; vis($('cta'),on);
+   if(on){const a=P(t,37.9,0.4); const tap=P(t,38.75,0.12), rel=P(t,38.87,0.2);
+    const press=tap*(1-rel);
+    $('ctaBtn').style.transform=`translateY(${(1-oExpo(a))*200}px) scale(${(0.8+0.2*oBack(a))*(1-0.08*press)})`; $('ctaBtn').style.opacity=oCubic(a);
+    const r=P(t,38.8,0.5); const ring=$('tapRing'); ring.style.opacity=(t>=38.8)?(1-r):0; ring.style.transform=`scale(${0.4+2.2*oCubic(r)})`;
+    ring.style.left='480px'; ring.style.top='-6px';
+    if(t>=38.8){$('ctaBtn').lastChild.textContent='فالو شد'; $('ctaBtn').style.background='#fff';}
+    else {$('ctaBtn').lastChild.textContent='فالو کن'; $('ctaBtn').style.background='#FFC83D';}}}
+  // --- captions ---
+  captions(t);
+  // --- progress bar & flash ---
+  $('bar').style.width=(1080*cl(t/DUR))+'px';
+  const barOn=t>=2.8; $('bar').style.opacity=barOn?1:0; $('barBg').style.opacity=barOn?1:0;
+  let f=0; for(const c of CUTS){const d=t-c; if(d>=0&&d<0.16) f=Math.max(f,0.55*(1-d/0.16));}
+  if(t<0.12) f=Math.max(f,1-t/0.12);
+  $('flash').style.opacity=f;
+}
+window.render=render;
+</script>
+</body></html>

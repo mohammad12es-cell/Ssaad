@@ -40,6 +40,12 @@ def clean(fi):
     out=im.copy(); out[ry0:ry1,rx0:rx1]=reg
     return out
 
+_ref=frames[int(27.8*FPS)][60:1200].reshape(-1,3).astype(np.float32)
+_rm,_rs=_ref.mean(0),_ref.std(0)
+def leakfix(im):
+    r=im[60:1200].reshape(-1,3).astype(np.float32); m,s=r.mean(0),r.std(0)
+    out=(im.astype(np.float32)-m)*(_rs/(s+1e-3))+_rm
+    return np.clip(out,0,255).astype(np.uint8)
 def ease_out(x): x=min(max(x,0),1); return 1-(1-x)**3
 def warp(img, cx, cy, cw, z, ax=None, ay=None):
     """map source rect centered (cx,cy) of width cw (9:16) to output, zoomed by z around anchor (ax,ay) in src"""
@@ -121,7 +127,8 @@ def frame(t):
         out[y0:y0+h,x0:x0+fit.shape[1]]=fit
         return out
     if t<32.87:  # rooftop talking head
-        im=src_frame(t,26.50)
+        im=src_frame(t,26.62)
+        if t<27.75: im=leakfix(im)
         z=1.0+0.03*((t-26.45)/6.4)
         if t>=31.0: z*=1.0+0.12*ease_out((t-31.0)/0.2)
         if 29.27<=t<31.0: z*=1.06

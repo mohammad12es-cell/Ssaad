@@ -58,6 +58,13 @@ python3 build.py vo
 npx --yes hyperframes@0.9.13 render -o ../output/armenia-company.mp4
 ```
 
+## صدای ساخته‌شده (نسخه‌ی نهایی)
+- مدل `gemini-3.8-flash-tts`، صدای **Charon**، هر جمله جدا: `armenia-company/assets/vo/s1.wav` تا `s10.wav`. چیده‌شده روی هم: `assets/voiceover.wav`.
+- آخر هر کلیپ یک ضربه‌ی نویز حدوداً ۰٫۱۵ ثانیه‌ای داشت که حذف شد. جمله‌ی ۹ در خروجی مدل بعد از متن صدای اضافه داشت و از انتهای جمله بریده شد.
+- زیرنویس‌ها با زمان کلمه‌های Whisper روی همین صدا چیده شده‌اند: `python3 build.py vo vo_words.json`.
+- موسیقی ۱۵ dB زیر صدای گوینده است و وقتی گوینده حرف می‌زند حدوداً ۶ dB پایین می‌رود.
+- سهمیه‌ی رایگان هر مدل TTS، ۱۰ درخواست در روز است. برای ساخت دوباره‌ی یک جمله: `python3 gen_vo.py --only s3` (کلید با متغیر `GEMINI_API_KEY`).
+
 ## پالت (برند IRAM CO.)
 سبز جنگلی `#0b2017` / `#1d3f2d`، کاشی سبز `#1a4430`، زمردی `#2f8a5c`، طلایی متالیک `#f4d68c → #dcad58 → #a9792f`، مسی `#d38a4c` (برای هشدار و جریمه)، کرم `#faf2e0`. مقادیر در `armenia-company/src/template.html` و `armenia-company/assets/world.js` تعریف شده‌اند.
 

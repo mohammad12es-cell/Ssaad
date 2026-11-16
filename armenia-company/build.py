@@ -2,7 +2,8 @@
 """Build timing.json + index.html (+ assets/music.wav) for the Armenia company-registration motion graphic.
 
 usage:
-  python3 build.py vo                 # per-segment Gemini clips in assets/vo/s1.wav ... (from gen_vo.py)
+  python3 build.py vo [WORDS.json]    # per-segment Gemini clips in assets/vo/s1.wav ... (from gen_vo.py);
+                                      # WORDS.json = whisper words of the built assets/voiceover.wav
   python3 build.py single FILE.wav [WORDS.json]   # one voiceover file exported from Google AI Studio
                                                   # (WORDS.json: whisper word timings of assets/voiceover.wav, optional)
   python3 build.py guide              # draft: original video's narration as a timing guide
@@ -18,6 +19,8 @@ SCRIPT = json.load(open(A("script.json"), encoding="utf-8"))
 SEGS = SCRIPT["segments"]
 LEAD = 0.45  # silence before the first word
 MODE = sys.argv[1] if len(sys.argv) > 1 else "vo"
+# optional whisper word timings of the built assets/voiceover.wav (vo mode: argv[2]) for word-accurate captions
+WORDS = [w for seg in json.load(open(sys.argv[2], encoding="utf-8")) for w in seg["words"]] if MODE == "vo" and len(sys.argv) > 2 else []
 
 
 # ---------------------------------------------------------------- audio helpers
@@ -91,7 +94,8 @@ def layout_vo():
     for s in SEGS:
         x = trim(read_wav(A("assets", "vo", f"{s['id']}.wav"), sr), sr)
         d = len(x) / sr; q = [(a + t, b + t) for a, b in pauses(x, sr)]
-        scenes.append({"id": s["id"], "start": round(t, 3), "end": round(t + d, 3), "caps": caption_times(t, t + d, s["captions"], q)})
+        caps = (word_caps(t, t + d, s["captions"], WORDS) if WORDS else None) or caption_times(t, t + d, s["captions"], q)
+        scenes.append({"id": s["id"], "start": round(t, 3), "end": round(t + d, 3), "caps": caps})
         parts += [x, np.zeros(int(gap * sr))]; t += d + gap
     vo = np.concatenate(parts); vo *= 0.89 / max(1e-6, np.abs(vo).max())
     write_wav(A("assets", "voiceover.wav"), vo, sr)
@@ -236,8 +240,15 @@ def make_music(total, scenes, path, sr=44100):
         if i: add(whoosh(0.6), s["start"] - 0.35, 0.10)
         for j, c in enumerate(s["caps"]):
             add(blip(740 + 110 * (j % 3)), c["start"] + 0.08, 0.05)
-    level = 0.30 if MODE == "guide" else 0.45  # the guide track already carries its own music
+    level = 0.30  # keep the bed well under the narration
     out *= level / max(1e-6, np.abs(out).max())
+    if MODE != "guide" and os.path.exists(A("assets", "voiceover.wav")):  # duck ~6 dB while the voice speaks
+        v = read_wav(A("assets", "voiceover.wav"), sr)[:n]; v = np.pad(v, (0, n - len(v)))
+        hop = int(0.01 * sr); k = n // hop; e = np.sqrt((v[: k * hop].reshape(k, hop) ** 2).mean(1))
+        on = (e > e.max() * 10 ** (-30 / 20)).astype(float)
+        on = np.convolve(on, np.ones(35) / 35, "same")                  # ~0.35 s attack/release
+        g = 1 - 0.5 * np.clip(on * 1.5, 0, 1)
+        out[: k * hop] *= np.repeat(g, hop)
     write_wav(path, out, sr)
 
 

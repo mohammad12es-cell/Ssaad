@@ -1,0 +1,285 @@
+<!doctype html>
+<!-- SOURCE TEMPLATE (company registration in Armenia, Three.js). Edit this file, then run `python3 build.py <mode>` to regenerate index.html. -->
+<html lang="fa" dir="rtl" data-resolution="portrait">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <script src="assets/gsap.min.js"></script>
+    <script type="importmap">{ "imports": { "three": "./assets/three.module.js" } }</script>
+    <style>
+      @font-face { font-family: "Vazirmatn"; font-weight: 400; src: url("assets/fonts/vazirmatn-latin-400-normal.woff2") format("woff2"); }
+      @font-face { font-family: "Vazirmatn"; font-weight: 700; src: url("assets/fonts/vazirmatn-latin-700-normal.woff2") format("woff2"); }
+      @font-face { font-family: "Vazirmatn"; font-weight: 900; src: url("assets/fonts/vazirmatn-latin-900-normal.woff2") format("woff2"); }
+      @font-face { font-family: "Vazirmatn"; font-weight: 700; src: url("assets/fonts/vazirmatn-arabic-700-normal.woff2") format("woff2"); unicode-range: U+0600-06FF, U+0750-077F, U+0870-088E, U+0890-0891, U+0897-08E1, U+08E3-08FF, U+200C-200E, U+2010-2011, U+204F, U+2E41, U+FB50-FDFF, U+FE70-FE74, U+FE76-FEFC; }
+      @font-face { font-family: "Vazirmatn"; font-weight: 800; src: url("assets/fonts/vazirmatn-arabic-800-normal.woff2") format("woff2"); unicode-range: U+0600-06FF, U+0750-077F, U+0870-088E, U+0890-0891, U+0897-08E1, U+08E3-08FF, U+200C-200E, U+2010-2011, U+204F, U+2E41, U+FB50-FDFF, U+FE70-FE74, U+FE76-FEFC; }
+      @font-face { font-family: "Vazirmatn"; font-weight: 900; src: url("assets/fonts/vazirmatn-arabic-900-normal.woff2") format("woff2"); unicode-range: U+0600-06FF, U+0750-077F, U+0870-088E, U+0890-0891, U+0897-08E1, U+08E3-08FF, U+200C-200E, U+2010-2011, U+204F, U+2E41, U+FB50-FDFF, U+FE70-FE74, U+FE76-FEFC; }
+
+      /* ===================== PALETTE (IRAM CO. brand: forest green + metallic gold + cream) =====================
+         The 3D materials in assets/world.js use the same values. */
+      :root {
+        --bg-1: #0b2017; --bg-2: #1d3f2d; --card: #1a4430; --pri: #2f8a5c;
+        --acc: #dcad58; --acc-hi: #f4d68c; --acc-lo: #a9792f; --acc-2: #d38a4c;
+        --ink: #faf2e0; --muted: #86a58f; --dark: #06140d;
+        --gold: linear-gradient(180deg, var(--acc-hi) 0%, var(--acc) 45%, var(--acc-lo) 85%, #d9b264 100%);
+        --font: "Vazirmatn", sans-serif;
+      }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { margin: 0; width: 1080px; height: 1920px; overflow: hidden; background: var(--bg-1); }
+      #root { position: relative; width: 100%; height: 100%; overflow: hidden; font-family: var(--font); color: var(--ink); background: var(--bg-1); }
+      .clip { position: absolute; inset: 0; }
+
+      /* 3D stage */
+      #gl { position: absolute; inset: 0; width: 1080px; height: 1920px; display: block; }
+      #vig { position: absolute; inset: 0; background: radial-gradient(ellipse 95% 70% at 50% 48%, transparent 55%, color-mix(in srgb, var(--dark) 55%, transparent) 100%); }
+      #labels { position: absolute; inset: 0; }
+      .lbl {
+        position: absolute; left: 0; top: 0; opacity: 0; white-space: nowrap; padding: 8px 24px 10px; border-radius: 999px;
+        font-weight: 800; font-size: 36px; color: var(--ink); background: color-mix(in srgb, var(--dark) 72%, transparent);
+        border: 2px solid color-mix(in srgb, var(--acc) 60%, transparent);
+      }
+      .lbl.gold { background: var(--gold); color: var(--dark); border-color: transparent; }
+      .lbl.copper { background: var(--acc-2); color: var(--dark); border-color: transparent; }
+      .lbl.warn { color: #f3b383; border-color: var(--acc-2); }
+
+      /* top chip, progress, logo */
+      #chip { position: absolute; top: 132px; left: 0; right: 0; display: flex; justify-content: center; }
+      #chip .pill {
+        display: flex; align-items: center; gap: 16px; padding: 12px 30px 12px 22px; border-radius: 999px;
+        background: color-mix(in srgb, var(--dark) 55%, transparent); border: 2px solid color-mix(in srgb, var(--acc) 55%, transparent);
+        font-weight: 700; font-size: 32px; color: var(--ink);
+      }
+      #chip .flag { width: 40px; height: 40px; border-radius: 50%; background: linear-gradient(180deg, #D90012 0 33.4%, #0033A0 33.4% 66.7%, #F2A800 66.7% 100%); }
+      #prog { position: absolute; top: 96px; left: 120px; right: 120px; height: 8px; border-radius: 8px; background: color-mix(in srgb, var(--ink) 14%, transparent); overflow: hidden; }
+      #progBar { width: 100%; height: 100%; background: linear-gradient(270deg, var(--acc-hi), var(--acc) 50%, var(--acc-lo)); transform-origin: 100% 50%; }
+      #logoMark { position: absolute; top: 116px; right: 36px; width: 210px; }
+      .wipe { position: absolute; top: -260px; left: 0; height: 2440px; width: 0; }
+      .wipe i { position: absolute; top: 0; bottom: 0; transform: rotate(14deg); transform-origin: 50% 50%; }
+      .wipe i.a { left: 0; width: 190px; background: var(--gold); }
+      .wipe i.b { left: -270px; width: 120px; background: var(--pri); }
+
+      /* scene text */
+      .scene-in { position: absolute; inset: 0; }
+      .kicker { position: absolute; top: 236px; left: 0; right: 0; text-align: center; font-weight: 700; font-size: 34px; color: var(--acc); }
+      .kicker span { display: inline-block; padding: 6px 26px; border-radius: 999px; border: 2px solid var(--acc); background: color-mix(in srgb, var(--dark) 45%, transparent); }
+      .hl {
+        position: absolute; top: 300px; left: 60px; right: 60px; text-align: center;
+        font-weight: 900; font-size: 88px; line-height: 1.3; color: var(--ink);
+        filter: drop-shadow(0 8px 22px color-mix(in srgb, var(--dark) 80%, transparent));
+      }
+      .hl em { font-style: normal; color: var(--acc); background: var(--gold); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+
+      /* captions */
+      .cap { display: flex; align-items: flex-start; justify-content: center; }
+      .cap-in {
+        margin-top: 1430px; max-width: 960px; padding: 16px 36px 22px; border-radius: 30px; text-align: center;
+        font-weight: 800; font-size: 60px; line-height: 1.45; color: var(--ink);
+        background: color-mix(in srgb, var(--dark) 70%, transparent); border: 2px solid color-mix(in srgb, var(--acc) 38%, transparent);
+      }
+      .cap-in .hi { color: var(--acc-hi); }
+
+      /* CTA */
+      .check {
+        position: absolute; left: 50%; transform: translateX(-50%); display: flex; align-items: center; gap: 20px;
+        padding: 14px 34px 14px 24px; border-radius: 999px; background: color-mix(in srgb, var(--card) 88%, transparent);
+        border: 2px solid color-mix(in srgb, var(--acc) 60%, transparent); font-weight: 800; font-size: 46px; white-space: nowrap;
+      }
+      .check i { display: inline-flex; width: 56px; height: 56px; border-radius: 50%; background: var(--gold); align-items: center; justify-content: center; }
+      #cbox {
+        position: absolute; top: 960px; left: 100px; right: 100px; height: 176px; border-radius: 88px; background: var(--ink);
+        display: flex; align-items: center; padding: 0 26px; gap: 26px; direction: rtl;
+        border: 4px solid var(--acc); box-shadow: 0 24px 60px color-mix(in srgb, var(--dark) 60%, transparent);
+      }
+      #cbox .av { flex: 0 0 124px; height: 124px; border-radius: 50%; background: var(--pri); position: relative; overflow: hidden; }
+      #cbox .field { flex: 1; position: relative; height: 100px; display: flex; align-items: center; }
+      #ctext { font-weight: 900; font-size: 74px; color: var(--dark); clip-path: inset(0% 0% 0% 100%); white-space: nowrap; }
+      #caret { width: 6px; height: 74px; background: var(--pri); margin-right: 8px; }
+      #send { flex: 0 0 124px; height: 124px; border-radius: 50%; background: var(--gold); display: flex; align-items: center; justify-content: center; }
+      #ctaBig { position: absolute; top: 1190px; left: 0; right: 0; text-align: center; font-weight: 900; font-size: 64px; color: var(--ink); filter: drop-shadow(0 6px 16px color-mix(in srgb, var(--dark) 80%, transparent)); }
+      #ctaBig em { font-style: normal; color: var(--acc); background: var(--gold); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+      #endLogo { position: absolute; top: 1450px; left: 50%; width: 600px; margin-left: -300px; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="53.600" data-width="1080" data-height="1920">
+
+      <!-- ============ Three.js stage (assets/world.js) ============ -->
+      <div id="stage" class="clip" data-start="0" data-duration="53.600" data-track-index="0">
+        <canvas id="gl" width="1080" height="1920"></canvas>
+        <div id="vig"></div>
+        <div id="labels" data-layout-allow-overlap></div>
+      </div>
+
+      <!-- ============ scene titles (headline beats follow the caption phrases via data-at) ============ -->
+      <div id="s1" class="clip" data-scene="s1" data-start="0.000" data-duration="3.850" data-track-index="1"><div class="scene-in">
+        <div class="kicker"><span>هشدار!</span></div>
+        <h1 class="hl" data-at="0">ثبت شرکت <em>اشتباه</em></h1>
+        <h1 class="hl" data-at="2">یعنی <em>جریمه</em>!</h1>
+      </div></div>
+      <div id="s2" class="clip" data-scene="s2" data-start="3.400" data-duration="4.150" data-track-index="2"><div class="scene-in">
+        <div class="kicker"><span>ثبت شرکت در ارمنستان</span></div>
+        <h1 class="hl" data-at="0">فقط <em>یه اسم</em> و <em>یه برگه</em>؟</h1>
+        <h1 class="hl" data-at="2"><em>خیلی بیشتر</em> از اینه</h1>
+      </div></div>
+      <div id="s3" class="clip" data-scene="s3" data-start="7.100" data-duration="3.990" data-track-index="1"><div class="scene-in">
+        <div class="kicker"><span>قدم اول</span></div>
+        <h1 class="hl" data-at="0">کدوم <em>نوع شرکت</em>؟</h1>
+        <h1 class="hl" data-at="2">مناسب <em>فعالیت تو</em></h1>
+      </div></div>
+      <div id="s4" class="clip" data-scene="s4" data-start="10.640" data-duration="5.030" data-track-index="2"><div class="scene-in">
+        <div class="kicker"><span>سؤال‌های مهم</span></div>
+        <h1 class="hl" data-at="0"><em>موضوع فعالیت</em>؟</h1>
+        <h1 class="hl" data-at="2"><em>اطلاعات</em> مدارک؟</h1>
+      </div></div>
+      <div id="s5" class="clip" data-scene="s5" data-start="15.220" data-duration="5.180" data-track-index="1"><div class="scene-in">
+        <div class="kicker"><span>سؤال‌های مهم</span></div>
+        <h1 class="hl" data-at="0"><em>تعهدات</em> مالیاتی و قانونی؟</h1>
+        <h1 class="hl" data-at="2">و <em>هزار</em> سؤال دیگه!</h1>
+      </div></div>
+      <div id="s6" class="clip" data-scene="s6" data-start="19.950" data-duration="5.700" data-track-index="2"><div class="scene-in">
+        <div class="kicker"><span>مراقب باش</span></div>
+        <h1 class="hl" data-at="0"><em>یه</em> انتخاب اشتباه</h1>
+        <h1 class="hl" data-at="2"><em>دردسرهای</em> بزرگ</h1>
+      </div></div>
+      <div id="s7" class="clip" data-scene="s7" data-start="25.200" data-duration="3.990" data-track-index="1"><div class="scene-in">
+        <div class="kicker"><span>مراقب باش</span></div>
+        <h1 class="hl" data-at="0"><em>جریمه‌های</em> قانونی</h1>
+      </div></div>
+      <div id="s8" class="clip" data-scene="s8" data-start="28.740" data-duration="9.430" data-track-index="2"><div class="scene-in">
+        <div class="kicker"><span>خبر خوب</span></div>
+        <h1 class="hl" data-at="0">مسیر ثبت <em>مشخصه</em></h1>
+        <h1 class="hl" data-at="2">ثبت <em>رسمی</em> شرکت</h1>
+        <h1 class="hl" data-at="4"><em>وزارت دادگستری</em></h1>
+      </div></div>
+      <div id="s9" class="clip" data-scene="s9" data-start="37.720" data-duration="9.630" data-track-index="1"><div class="scene-in">
+        <div class="kicker"><span>نکته‌ی مهم</span></div>
+        <h1 class="hl" data-at="0">فقط <em>ثبت سریع</em>؟</h1>
+        <h1 class="hl" data-at="2">اول <em>مشخص</em> کن</h1>
+        <h1 class="hl" data-at="5"><em>مناسب‌ترین</em> برای تو</h1>
+      </div></div>
+      <div id="s10" class="clip" data-scene="s10" data-start="46.900" data-duration="6.700" data-track-index="2"><div class="scene-in">
+        <div class="kicker"><span>همین حالا</span></div>
+        <h1 class="hl" data-at="0"><em>مشاوره‌ی رایگان</em></h1>
+        <div class="check" id="chk1" style="top: 580px"><i><svg width="34" height="34" viewBox="0 0 34 34"><path d="M6,18 L14,26 L28,9" fill="none" stroke="#06140d" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" /></svg></i>ثبت شرکت در ارمنستان</div>
+        <div class="check" id="chk2" style="top: 720px"><i><svg width="34" height="34" viewBox="0 0 34 34"><path d="M6,18 L14,26 L28,9" fill="none" stroke="#06140d" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" /></svg></i>مشاوره‌ی رایگان</div>
+        <div id="cbox">
+          <div class="av"><svg width="124" height="124" viewBox="0 0 124 124"><circle cx="62" cy="48" r="22" fill="#faf2e0" /><path d="M22,118 C26,86 98,86 102,118 Z" fill="#faf2e0" /></svg></div>
+          <div class="field"><div id="ctext">شرکت</div><div id="caret"></div></div>
+          <div id="send"><svg width="64" height="64" viewBox="0 0 64 64"><path d="M54,10 L8,30 L26,36 L32,56 Z" fill="#06140d" /></svg></div>
+        </div>
+        <div id="ctaBig">کلمه‌ی <em>«شرکت»</em> رو کامنت کن</div>
+        <img id="endLogo" src="assets/iram-logo.png" alt="IRAM CO." />
+      </div></div>
+
+      <!-- ============ HUD ============ -->
+      <div id="hud" class="clip" data-start="0" data-duration="53.600" data-track-index="4">
+        <div id="prog"><div id="progBar"></div></div>
+        <img id="logoMark" src="assets/iram-logo.png" alt="IRAM CO." />
+        <div id="chip"><div class="pill"><span class="flag"></span>ثبت شرکت در ارمنستان</div></div>
+        <div id="wipes"></div>
+      </div>
+
+      <div id="cap-s1-0" class="clip cap" data-start="0.000" data-duration="1.160" data-track-index="6"><div class="cap-in">اگه توی <span class="hi">ارمنستان</span></div></div>
+      <div id="cap-s1-1" class="clip cap" data-start="1.160" data-duration="1.420" data-track-index="6"><div class="cap-in"><span class="hi">اشتباه</span> شرکت ثبت کنی،</div></div>
+      <div id="cap-s1-2" class="clip cap" data-start="2.580" data-duration="0.820" data-track-index="6"><div class="cap-in"><span class="hi">جریمه</span> می‌شی!</div></div>
+      <div id="cap-s2-0" class="clip cap" data-start="3.400" data-duration="0.900" data-track-index="6"><div class="cap-in">ثبت شرکت فقط</div></div>
+      <div id="cap-s2-1" class="clip cap" data-start="4.300" data-duration="1.140" data-track-index="6"><div class="cap-in">انتخاب <span class="hi">یه اسم</span> و</div></div>
+      <div id="cap-s2-2" class="clip cap" data-start="5.440" data-duration="1.660" data-track-index="6"><div class="cap-in">گرفتن <span class="hi">برگه‌ی ثبت</span> نیست.</div></div>
+      <div id="cap-s3-0" class="clip cap" data-start="7.100" data-duration="1.280" data-track-index="6"><div class="cap-in">باید <span class="hi">اول از همه</span> بدونی</div></div>
+      <div id="cap-s3-1" class="clip cap" data-start="8.380" data-duration="0.800" data-track-index="6"><div class="cap-in">چه <span class="hi">نوع شرکتی</span></div></div>
+      <div id="cap-s3-2" class="clip cap" data-start="9.180" data-duration="1.460" data-track-index="6"><div class="cap-in">مناسب <span class="hi">فعالیت توئه</span>.</div></div>
+      <div id="cap-s4-0" class="clip cap" data-start="10.640" data-duration="1.620" data-track-index="6"><div class="cap-in"><span class="hi">موضوع فعالیت</span> شرکت رو</div></div>
+      <div id="cap-s4-1" class="clip cap" data-start="12.260" data-duration="0.940" data-track-index="6"><div class="cap-in">چجوری ثبت کنی؟</div></div>
+      <div id="cap-s4-2" class="clip cap" data-start="13.200" data-duration="0.700" data-track-index="6"><div class="cap-in">چه <span class="hi">اطلاعاتی</span> رو</div></div>
+      <div id="cap-s4-3" class="clip cap" data-start="13.900" data-duration="1.320" data-track-index="6"><div class="cap-in">باید توی <span class="hi">مدارکت</span> بذاری؟</div></div>
+      <div id="cap-s5-0" class="clip cap" data-start="15.220" data-duration="1.640" data-track-index="6"><div class="cap-in">چه <span class="hi">تعهدات مالیاتی و قانونی</span></div></div>
+      <div id="cap-s5-1" class="clip cap" data-start="16.860" data-duration="1.420" data-track-index="6"><div class="cap-in">بعد از ثبت شرکت داری؟</div></div>
+      <div id="cap-s5-2" class="clip cap" data-start="18.280" data-duration="1.670" data-track-index="6"><div class="cap-in">و <span class="hi">هزارتا سؤال</span> دیگه!</div></div>
+      <div id="cap-s6-0" class="clip cap" data-start="19.950" data-duration="1.510" data-track-index="6"><div class="cap-in">چون <span class="hi">یه دونه انتخاب</span></div></div>
+      <div id="cap-s6-1" class="clip cap" data-start="21.460" data-duration="1.280" data-track-index="6"><div class="cap-in">یا یه دونه <span class="hi">اطلاعات اشتباه</span></div></div>
+      <div id="cap-s6-2" class="clip cap" data-start="22.740" data-duration="2.460" data-track-index="6"><div class="cap-in">برات <span class="hi">دردسرهای بزرگی</span> درست می‌کنه.</div></div>
+      <div id="cap-s7-0" class="clip cap" data-start="25.200" data-duration="1.300" data-track-index="6"><div class="cap-in">حتی توی بعضی از موارد هم</div></div>
+      <div id="cap-s7-1" class="clip cap" data-start="26.500" data-duration="2.240" data-track-index="6"><div class="cap-in"><span class="hi">جریمه‌های قانونی</span> به همراه داره.</div></div>
+      <div id="cap-s8-0" class="clip cap" data-start="28.740" data-duration="1.100" data-track-index="6"><div class="cap-in">از طرفی هم</div></div>
+      <div id="cap-s8-1" class="clip cap" data-start="29.840" data-duration="2.440" data-track-index="6"><div class="cap-in"><span class="hi">مسیر ثبت شرکت</span> توی ارمنستان <span class="hi">مشخصه</span>،</div></div>
+      <div id="cap-s8-2" class="clip cap" data-start="32.280" data-duration="1.880" data-track-index="6"><div class="cap-in">و ثبت رسمی شرکت توسط</div></div>
+      <div id="cap-s8-3" class="clip cap" data-start="34.160" data-duration="1.780" data-track-index="6"><div class="cap-in"><span class="hi">سازمان ثبت اشخاص حقوقی</span></div></div>
+      <div id="cap-s8-4" class="clip cap" data-start="35.940" data-duration="1.780" data-track-index="6"><div class="cap-in"><span class="hi">وزارت دادگستری</span> انجام می‌شه.</div></div>
+      <div id="cap-s9-0" class="clip cap" data-start="37.720" data-duration="1.680" data-track-index="6"><div class="cap-in">پس قبل از این‌که فقط</div></div>
+      <div id="cap-s9-1" class="clip cap" data-start="39.400" data-duration="2.200" data-track-index="6"><div class="cap-in">دنبال <span class="hi">ثبت سریع</span> شرکت باشی،</div></div>
+      <div id="cap-s9-2" class="clip cap" data-start="41.600" data-duration="1.880" data-track-index="6"><div class="cap-in">اول باید مشخص بشه</div></div>
+      <div id="cap-s9-3" class="clip cap" data-start="43.480" data-duration="1.660" data-track-index="6"><div class="cap-in"><span class="hi">چه شرکتی</span>، با <span class="hi">چه فعالیتی</span></div></div>
+      <div id="cap-s9-4" class="clip cap" data-start="45.140" data-duration="0.520" data-track-index="6"><div class="cap-in">و <span class="hi">چه ساختاری</span></div></div>
+      <div id="cap-s9-5" class="clip cap" data-start="45.660" data-duration="1.240" data-track-index="6"><div class="cap-in">برای تو <span class="hi">مناسب‌تره</span>.</div></div>
+      <div id="cap-s10-0" class="clip cap" data-start="46.900" data-duration="2.380" data-track-index="6"><div class="cap-in">برای <span class="hi">مشاوره‌ی رایگان</span> ثبت شرکت،</div></div>
+      <div id="cap-s10-1" class="clip cap" data-start="49.280" data-duration="1.720" data-track-index="6"><div class="cap-in">کلمه‌ی <span class="hi">«شرکت»</span> رو کامنت کن.</div></div>
+
+      <audio id="vo" src="assets/guide.m4a" data-start="0" data-duration="51.409" data-volume="1"></audio>
+      <audio id="music" src="assets/music.wav" data-start="0" data-duration="53.600" data-volume="1"></audio>
+    </div>
+
+    <script>
+      window.__T = {"total": 53.6, "scenes": [{"id": "s1", "start": 0.0, "end": 3.36, "caps": [{"text": "اگه توی [ارمنستان]", "start": 0.0, "end": 1.16}, {"text": "[اشتباه] شرکت ثبت کنی،", "start": 1.16, "end": 2.58}, {"text": "[جریمه] می‌شی!", "start": 2.58, "end": 3.4}]}, {"id": "s2", "start": 3.4, "end": 7.02, "caps": [{"text": "ثبت شرکت فقط", "start": 3.4, "end": 4.3}, {"text": "انتخاب [یه اسم] و", "start": 4.3, "end": 5.44}, {"text": "گرفتن [برگه‌ی ثبت] نیست.", "start": 5.44, "end": 7.1}]}, {"id": "s3", "start": 7.1, "end": 10.5, "caps": [{"text": "باید [اول از همه] بدونی", "start": 7.1, "end": 8.38}, {"text": "چه [نوع شرکتی]", "start": 8.38, "end": 9.18}, {"text": "مناسب [فعالیت توئه].", "start": 9.18, "end": 10.64}]}, {"id": "s4", "start": 10.64, "end": 15.22, "caps": [{"text": "[موضوع فعالیت] شرکت رو", "start": 10.64, "end": 12.26}, {"text": "چجوری ثبت کنی؟", "start": 12.26, "end": 13.2}, {"text": "چه [اطلاعاتی] رو", "start": 13.2, "end": 13.9}, {"text": "باید توی [مدارکت] بذاری؟", "start": 13.9, "end": 15.22}]}, {"id": "s5", "start": 15.22, "end": 19.92, "caps": [{"text": "چه [تعهدات مالیاتی و قانونی]", "start": 15.22, "end": 16.86}, {"text": "بعد از ثبت شرکت داری؟", "start": 16.86, "end": 18.28}, {"text": "و [هزارتا سؤال] دیگه!", "start": 18.28, "end": 19.95}]}, {"id": "s6", "start": 19.95, "end": 25.16, "caps": [{"text": "چون [یه دونه انتخاب]", "start": 19.95, "end": 21.46}, {"text": "یا یه دونه [اطلاعات اشتباه]", "start": 21.46, "end": 22.74}, {"text": "برات [دردسرهای بزرگی] درست می‌کنه.", "start": 22.74, "end": 25.2}]}, {"id": "s7", "start": 25.2, "end": 28.68, "caps": [{"text": "حتی توی بعضی از موارد هم", "start": 25.2, "end": 26.5}, {"text": "[جریمه‌های قانونی] به همراه داره.", "start": 26.5, "end": 28.74}]}, {"id": "s8", "start": 28.74, "end": 37.62, "caps": [{"text": "از طرفی هم", "start": 28.74, "end": 29.84}, {"text": "[مسیر ثبت شرکت] توی ارمنستان [مشخصه]،", "start": 29.84, "end": 32.28}, {"text": "و ثبت رسمی شرکت توسط", "start": 32.28, "end": 34.16}, {"text": "[سازمان ثبت اشخاص حقوقی]", "start": 34.16, "end": 35.94}, {"text": "[وزارت دادگستری] انجام می‌شه.", "start": 35.94, "end": 37.72}]}, {"id": "s9", "start": 37.72, "end": 46.76, "caps": [{"text": "پس قبل از این‌که فقط", "start": 37.72, "end": 39.4}, {"text": "دنبال [ثبت سریع] شرکت باشی،", "start": 39.4, "end": 41.6}, {"text": "اول باید مشخص بشه", "start": 41.6, "end": 43.48}, {"text": "[چه شرکتی]، با [چه فعالیتی]", "start": 43.48, "end": 45.14}, {"text": "و [چه ساختاری]", "start": 45.14, "end": 45.66}, {"text": "برای تو [مناسب‌تره].", "start": 45.66, "end": 46.9}]}, {"id": "s10", "start": 46.9, "end": 51.0, "caps": [{"text": "برای [مشاوره‌ی رایگان] ثبت شرکت،", "start": 46.9, "end": 49.28}, {"text": "کلمه‌ی [«شرکت»] رو کامنت کن.", "start": 49.28, "end": 51.0}]}]};
+      const T = window.__T;
+      const tl = gsap.timeline({ paused: true });
+      window.__timelines = window.__timelines || {};
+      window.__timelines["main"] = tl;
+      const $ = (id) => document.getElementById(id);
+      const S = {};
+      T.scenes.forEach((s, i) => { S[s.id] = Object.assign({}, s, { i, next: T.scenes[i + 1] ? T.scenes[i + 1].start : T.total }); });
+      const c = (sid, j) => S[sid].caps[Math.min(j, S[sid].caps.length - 1)].start;
+      const at = (sid, j, f) => { const k = S[sid].caps[Math.min(j, S[sid].caps.length - 1)]; return k.start + f * (k.end - k.start); };
+      const rise = (sel, t, o = {}) => tl.fromTo(sel, { opacity: 0, y: o.y === undefined ? 40 : o.y }, { opacity: 1, y: 0, duration: o.d || 0.5, ease: o.ease || "power3.out" }, t);
+      const pop = (sel, t, d = 0.4) => tl.fromTo(sel, { scale: 0, opacity: 0 }, { scale: 1, opacity: 1, duration: d, ease: "back.out(1.7)" }, t);
+
+      // HUD: progress (right-to-left), chip, logo, gold/emerald wipes on every scene change
+      tl.fromTo("#progBar", { scaleX: 0 }, { scaleX: 1, duration: T.total, ease: "none" }, 0);
+      rise("#chip", 0.15, { y: -30 }); rise("#logoMark", 0.25, { y: -30 });
+      T.scenes.slice(1).forEach((s) => {
+        $("wipes").insertAdjacentHTML("beforeend", '<div class="wipe"><i class="a"></i><i class="b"></i></div>');
+        tl.fromTo($("wipes").lastElementChild, { x: 1900 }, { x: -1100, duration: 0.7, ease: "power2.inOut" }, s.start - 0.4);
+      });
+
+      // scene titles: fade in/out, headline beats
+      T.scenes.forEach((s, i) => {
+        const root = $(s.id), inner = root.querySelector(".scene-in"), t0 = i ? s.start : 0;
+        tl.fromTo(inner, { opacity: 0 }, { opacity: 1, duration: 0.35, ease: "power2.out" }, t0);
+        if (i < T.scenes.length - 1) tl.to(inner, { opacity: 0, duration: 0.3, ease: "power2.in" }, S[s.id].next - 0.05);
+        rise(root.querySelector(".kicker"), t0 + 0.05, { y: -24, d: 0.45 });
+        const hls = Array.from(root.querySelectorAll(".hl"));
+        hls.forEach((h, k) => {
+          const tin = k === 0 ? t0 + 0.1 : c(s.id, +h.dataset.at) - 0.05;
+          tl.fromTo(h, { opacity: 0, y: 50, scale: 0.94 }, { opacity: 1, y: 0, scale: 1, duration: 0.5, ease: "back.out(1.6)" }, tin);
+          if (k < hls.length - 1) tl.to(h, { opacity: 0, y: -40, duration: 0.28, ease: "power2.in" }, c(s.id, +hls[k + 1].dataset.at) - 0.3);
+        });
+      });
+
+      // captions
+      document.querySelectorAll(".cap").forEach((el) => {
+        tl.fromTo(el.firstElementChild, { opacity: 0, y: 22, scale: 0.96 }, { opacity: 1, y: 0, scale: 1, duration: 0.24, ease: "power2.out" }, +el.dataset.start);
+      });
+
+      // CTA
+      (function () {
+        const id = "s10", endVO = S[id].end;
+        rise("#chk1", at(id, 0, 0.35), { y: 30 }); pop("#chk1 i", at(id, 0, 0.35) + 0.2);
+        rise("#chk2", c(id, 1) + 0.2, { y: 30 }); pop("#chk2 i", c(id, 1) + 0.4);
+        tl.fromTo("#cbox", { opacity: 0, y: 160 }, { opacity: 1, y: 0, duration: 0.6, ease: "back.out(1.4)" }, c(id, 2) - 0.25);
+        const ty = at(id, 2, 0.25);
+        tl.fromTo("#ctext", { clipPath: "inset(0% 0% 0% 100%)" }, { clipPath: "inset(0% 0% 0% 0%)", duration: 0.7, ease: "steps(4)" }, ty);
+        tl.fromTo("#caret", { opacity: 1 }, { opacity: 0, duration: 0.28, yoyo: true, repeat: 7, ease: "steps(1)" }, c(id, 2));
+        rise("#ctaBig", ty + 0.5, { y: 30 });
+        tl.to("#send", { scale: 1.16, duration: 0.3, yoyo: true, repeat: 5, ease: "sine.inOut" }, ty + 1.0);
+        tl.to("#cbox", { scale: 1.04, duration: 0.5, yoyo: true, repeat: 1, ease: "sine.inOut" }, Math.min(endVO + 0.2, T.total - 1.1));
+        tl.fromTo("#endLogo", { opacity: 0, y: 40, scale: 0.92 }, { opacity: 1, y: 0, scale: 1, duration: 0.6, ease: "power3.out" }, Math.min(endVO + 0.15, T.total - 0.8));
+        tl.to("#logoMark", { opacity: 0, duration: 0.3 }, Math.min(endVO + 0.1, T.total - 0.8));
+      })();
+    </script>
+    <script type="module">
+      import { frame } from "./assets/world.js";
+      const state = { t: 0 };
+      frame(0);
+      window.__timelines["main"].fromTo(state, { t: 0 }, { t: window.__T.total, duration: window.__T.total, ease: "none", onUpdate: () => frame(state.t) }, 0);
+      window.__timelines["main"].seek(0);
+    </script>
+  </body>
+</html>

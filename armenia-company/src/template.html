@@ -1,0 +1,252 @@
+<!doctype html>
+<!-- SOURCE TEMPLATE (company registration in Armenia, Three.js). Edit this file, then run `python3 build.py <mode>` to regenerate index.html. -->
+<html lang="fa" dir="rtl" data-resolution="portrait">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <script src="assets/gsap.min.js"></script>
+    <script type="importmap">{ "imports": { "three": "./assets/three.module.js" } }</script>
+    <style>
+      @font-face { font-family: "Vazirmatn"; font-weight: 400; src: url("assets/fonts/vazirmatn-latin-400-normal.woff2") format("woff2"); }
+      @font-face { font-family: "Vazirmatn"; font-weight: 700; src: url("assets/fonts/vazirmatn-latin-700-normal.woff2") format("woff2"); }
+      @font-face { font-family: "Vazirmatn"; font-weight: 900; src: url("assets/fonts/vazirmatn-latin-900-normal.woff2") format("woff2"); }
+      @font-face { font-family: "Vazirmatn"; font-weight: 700; src: url("assets/fonts/vazirmatn-arabic-700-normal.woff2") format("woff2"); unicode-range: U+0600-06FF, U+0750-077F, U+0870-088E, U+0890-0891, U+0897-08E1, U+08E3-08FF, U+200C-200E, U+2010-2011, U+204F, U+2E41, U+FB50-FDFF, U+FE70-FE74, U+FE76-FEFC; }
+      @font-face { font-family: "Vazirmatn"; font-weight: 800; src: url("assets/fonts/vazirmatn-arabic-800-normal.woff2") format("woff2"); unicode-range: U+0600-06FF, U+0750-077F, U+0870-088E, U+0890-0891, U+0897-08E1, U+08E3-08FF, U+200C-200E, U+2010-2011, U+204F, U+2E41, U+FB50-FDFF, U+FE70-FE74, U+FE76-FEFC; }
+      @font-face { font-family: "Vazirmatn"; font-weight: 900; src: url("assets/fonts/vazirmatn-arabic-900-normal.woff2") format("woff2"); unicode-range: U+0600-06FF, U+0750-077F, U+0870-088E, U+0890-0891, U+0897-08E1, U+08E3-08FF, U+200C-200E, U+2010-2011, U+204F, U+2E41, U+FB50-FDFF, U+FE70-FE74, U+FE76-FEFC; }
+
+      /* ===================== PALETTE (IRAM CO. brand: forest green + metallic gold + cream) =====================
+         The 3D materials in assets/world.js use the same values. */
+      :root {
+        --bg-1: #0b2017; --bg-2: #1d3f2d; --card: #1a4430; --pri: #2f8a5c;
+        --acc: #dcad58; --acc-hi: #f4d68c; --acc-lo: #a9792f; --acc-2: #d38a4c;
+        --ink: #faf2e0; --muted: #86a58f; --dark: #06140d;
+        --gold: linear-gradient(180deg, var(--acc-hi) 0%, var(--acc) 45%, var(--acc-lo) 85%, #d9b264 100%);
+        --font: "Vazirmatn", sans-serif;
+      }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { margin: 0; width: 1080px; height: 1920px; overflow: hidden; background: var(--bg-1); }
+      #root { position: relative; width: 100%; height: 100%; overflow: hidden; font-family: var(--font); color: var(--ink); background: var(--bg-1); }
+      .clip { position: absolute; inset: 0; }
+
+      /* 3D stage */
+      #gl { position: absolute; inset: 0; width: 1080px; height: 1920px; display: block; }
+      #vig { position: absolute; inset: 0; background: radial-gradient(ellipse 95% 70% at 50% 48%, transparent 55%, color-mix(in srgb, var(--dark) 55%, transparent) 100%); }
+      #labels { position: absolute; inset: 0; }
+      .lbl {
+        position: absolute; left: 0; top: 0; opacity: 0; white-space: nowrap; padding: 8px 24px 10px; border-radius: 999px;
+        font-weight: 800; font-size: 36px; color: var(--ink); background: color-mix(in srgb, var(--dark) 72%, transparent);
+        border: 2px solid color-mix(in srgb, var(--acc) 60%, transparent);
+      }
+      .lbl.gold { background: var(--gold); color: var(--dark); border-color: transparent; }
+      .lbl.copper { background: var(--acc-2); color: var(--dark); border-color: transparent; }
+      .lbl.warn { color: #f3b383; border-color: var(--acc-2); }
+
+      /* top chip, progress, logo */
+      #chip { position: absolute; top: 132px; left: 0; right: 0; display: flex; justify-content: center; }
+      #chip .pill {
+        display: flex; align-items: center; gap: 16px; padding: 12px 30px 12px 22px; border-radius: 999px;
+        background: color-mix(in srgb, var(--dark) 55%, transparent); border: 2px solid color-mix(in srgb, var(--acc) 55%, transparent);
+        font-weight: 700; font-size: 32px; color: var(--ink);
+      }
+      #chip .flag { width: 40px; height: 40px; border-radius: 50%; background: linear-gradient(180deg, #D90012 0 33.4%, #0033A0 33.4% 66.7%, #F2A800 66.7% 100%); }
+      #prog { position: absolute; top: 96px; left: 120px; right: 120px; height: 8px; border-radius: 8px; background: color-mix(in srgb, var(--ink) 14%, transparent); overflow: hidden; }
+      #progBar { width: 100%; height: 100%; background: linear-gradient(270deg, var(--acc-hi), var(--acc) 50%, var(--acc-lo)); transform-origin: 100% 50%; }
+      #logoMark { position: absolute; top: 116px; right: 36px; width: 210px; }
+      .wipe { position: absolute; top: -260px; left: 0; height: 2440px; width: 0; }
+      .wipe i { position: absolute; top: 0; bottom: 0; transform: rotate(14deg); transform-origin: 50% 50%; }
+      .wipe i.a { left: 0; width: 190px; background: var(--gold); }
+      .wipe i.b { left: -270px; width: 120px; background: var(--pri); }
+
+      /* scene text */
+      .scene-in { position: absolute; inset: 0; }
+      .kicker { position: absolute; top: 236px; left: 0; right: 0; text-align: center; font-weight: 700; font-size: 34px; color: var(--acc); }
+      .kicker span { display: inline-block; padding: 6px 26px; border-radius: 999px; border: 2px solid var(--acc); background: color-mix(in srgb, var(--dark) 45%, transparent); }
+      .hl {
+        position: absolute; top: 300px; left: 60px; right: 60px; text-align: center;
+        font-weight: 900; font-size: 88px; line-height: 1.3; color: var(--ink);
+        filter: drop-shadow(0 8px 22px color-mix(in srgb, var(--dark) 80%, transparent));
+      }
+      .hl em { font-style: normal; color: var(--acc); background: var(--gold); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+
+      /* captions */
+      .cap { display: flex; align-items: flex-start; justify-content: center; }
+      .cap-in {
+        margin-top: 1430px; max-width: 960px; padding: 16px 36px 22px; border-radius: 30px; text-align: center;
+        font-weight: 800; font-size: 60px; line-height: 1.45; color: var(--ink);
+        background: color-mix(in srgb, var(--dark) 70%, transparent); border: 2px solid color-mix(in srgb, var(--acc) 38%, transparent);
+      }
+      .cap-in .hi { color: var(--acc-hi); }
+
+      /* CTA */
+      .check {
+        position: absolute; left: 50%; transform: translateX(-50%); display: flex; align-items: center; gap: 20px;
+        padding: 14px 34px 14px 24px; border-radius: 999px; background: color-mix(in srgb, var(--card) 88%, transparent);
+        border: 2px solid color-mix(in srgb, var(--acc) 60%, transparent); font-weight: 800; font-size: 46px; white-space: nowrap;
+      }
+      .check i { display: inline-flex; width: 56px; height: 56px; border-radius: 50%; background: var(--gold); align-items: center; justify-content: center; }
+      #cbox {
+        position: absolute; top: 960px; left: 100px; right: 100px; height: 176px; border-radius: 88px; background: var(--ink);
+        display: flex; align-items: center; padding: 0 26px; gap: 26px; direction: rtl;
+        border: 4px solid var(--acc); box-shadow: 0 24px 60px color-mix(in srgb, var(--dark) 60%, transparent);
+      }
+      #cbox .av { flex: 0 0 124px; height: 124px; border-radius: 50%; background: var(--pri); position: relative; overflow: hidden; }
+      #cbox .field { flex: 1; position: relative; height: 100px; display: flex; align-items: center; }
+      #ctext { font-weight: 900; font-size: 74px; color: var(--dark); clip-path: inset(0% 0% 0% 100%); white-space: nowrap; }
+      #caret { width: 6px; height: 74px; background: var(--pri); margin-right: 8px; }
+      #send { flex: 0 0 124px; height: 124px; border-radius: 50%; background: var(--gold); display: flex; align-items: center; justify-content: center; }
+      #ctaBig { position: absolute; top: 1190px; left: 0; right: 0; text-align: center; font-weight: 900; font-size: 64px; color: var(--ink); filter: drop-shadow(0 6px 16px color-mix(in srgb, var(--dark) 80%, transparent)); }
+      #ctaBig em { font-style: normal; color: var(--acc); background: var(--gold); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+      #endLogo { position: absolute; top: 1450px; left: 50%; width: 600px; margin-left: -300px; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="__TOTAL__" data-width="1080" data-height="1920">
+
+      <!-- ============ Three.js stage (assets/world.js) ============ -->
+      <div id="stage" class="clip" data-start="0" data-duration="__TOTAL__" data-track-index="0">
+        <canvas id="gl" width="1080" height="1920"></canvas>
+        <div id="vig"></div>
+        <div id="labels" data-layout-allow-overlap></div>
+      </div>
+
+      <!-- ============ scene titles (headline beats follow the caption phrases via data-at) ============ -->
+      <div id="s1" class="clip" data-scene="s1" data-track-index="1"><div class="scene-in">
+        <div class="kicker"><span>هشدار!</span></div>
+        <h1 class="hl" data-at="0">ثبت شرکت <em>اشتباه</em></h1>
+        <h1 class="hl" data-at="2">یعنی <em>جریمه</em>!</h1>
+      </div></div>
+      <div id="s2" class="clip" data-scene="s2" data-track-index="2"><div class="scene-in">
+        <div class="kicker"><span>ثبت شرکت در ارمنستان</span></div>
+        <h1 class="hl" data-at="0">فقط <em>یه اسم</em> و <em>یه برگه</em>؟</h1>
+        <h1 class="hl" data-at="2"><em>خیلی بیشتر</em> از اینه</h1>
+      </div></div>
+      <div id="s3" class="clip" data-scene="s3" data-track-index="1"><div class="scene-in">
+        <div class="kicker"><span>قدم اول</span></div>
+        <h1 class="hl" data-at="0">کدوم <em>نوع شرکت</em>؟</h1>
+        <h1 class="hl" data-at="2">مناسب <em>فعالیت تو</em></h1>
+      </div></div>
+      <div id="s4" class="clip" data-scene="s4" data-track-index="2"><div class="scene-in">
+        <div class="kicker"><span>سؤال‌های مهم</span></div>
+        <h1 class="hl" data-at="0"><em>موضوع فعالیت</em>؟</h1>
+        <h1 class="hl" data-at="2"><em>اطلاعات</em> مدارک؟</h1>
+      </div></div>
+      <div id="s5" class="clip" data-scene="s5" data-track-index="1"><div class="scene-in">
+        <div class="kicker"><span>سؤال‌های مهم</span></div>
+        <h1 class="hl" data-at="0"><em>تعهدات</em> مالیاتی و قانونی؟</h1>
+        <h1 class="hl" data-at="2">و <em>هزار</em> سؤال دیگه!</h1>
+      </div></div>
+      <div id="s6" class="clip" data-scene="s6" data-track-index="2"><div class="scene-in">
+        <div class="kicker"><span>مراقب باش</span></div>
+        <h1 class="hl" data-at="0"><em>یه</em> انتخاب اشتباه</h1>
+        <h1 class="hl" data-at="2"><em>دردسرهای</em> بزرگ</h1>
+      </div></div>
+      <div id="s7" class="clip" data-scene="s7" data-track-index="1"><div class="scene-in">
+        <div class="kicker"><span>مراقب باش</span></div>
+        <h1 class="hl" data-at="0"><em>جریمه‌های</em> قانونی</h1>
+      </div></div>
+      <div id="s8" class="clip" data-scene="s8" data-track-index="2"><div class="scene-in">
+        <div class="kicker"><span>خبر خوب</span></div>
+        <h1 class="hl" data-at="0">مسیر ثبت <em>مشخصه</em></h1>
+        <h1 class="hl" data-at="2">ثبت <em>رسمی</em> شرکت</h1>
+        <h1 class="hl" data-at="4"><em>وزارت دادگستری</em></h1>
+      </div></div>
+      <div id="s9" class="clip" data-scene="s9" data-track-index="1"><div class="scene-in">
+        <div class="kicker"><span>نکته‌ی مهم</span></div>
+        <h1 class="hl" data-at="0">فقط <em>ثبت سریع</em>؟</h1>
+        <h1 class="hl" data-at="2">اول <em>مشخص</em> کن</h1>
+        <h1 class="hl" data-at="5"><em>مناسب‌ترین</em> برای تو</h1>
+      </div></div>
+      <div id="s10" class="clip" data-scene="s10" data-track-index="2"><div class="scene-in">
+        <div class="kicker"><span>همین حالا</span></div>
+        <h1 class="hl" data-at="0"><em>مشاوره‌ی رایگان</em></h1>
+        <div class="check" id="chk1" style="top: 580px"><i><svg width="34" height="34" viewBox="0 0 34 34"><path d="M6,18 L14,26 L28,9" fill="none" stroke="#06140d" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" /></svg></i>ثبت شرکت در ارمنستان</div>
+        <div class="check" id="chk2" style="top: 720px"><i><svg width="34" height="34" viewBox="0 0 34 34"><path d="M6,18 L14,26 L28,9" fill="none" stroke="#06140d" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" /></svg></i>مشاوره‌ی رایگان</div>
+        <div id="cbox">
+          <div class="av"><svg width="124" height="124" viewBox="0 0 124 124"><circle cx="62" cy="48" r="22" fill="#faf2e0" /><path d="M22,118 C26,86 98,86 102,118 Z" fill="#faf2e0" /></svg></div>
+          <div class="field"><div id="ctext">شرکت</div><div id="caret"></div></div>
+          <div id="send"><svg width="64" height="64" viewBox="0 0 64 64"><path d="M54,10 L8,30 L26,36 L32,56 Z" fill="#06140d" /></svg></div>
+        </div>
+        <div id="ctaBig">کلمه‌ی <em>«شرکت»</em> رو کامنت کن</div>
+        <img id="endLogo" src="assets/iram-logo.png" alt="IRAM CO." />
+      </div></div>
+
+      <!-- ============ HUD ============ -->
+      <div id="hud" class="clip" data-start="0" data-duration="__TOTAL__" data-track-index="4">
+        <div id="prog"><div id="progBar"></div></div>
+        <img id="logoMark" src="assets/iram-logo.png" alt="IRAM CO." />
+        <div id="chip"><div class="pill"><span class="flag"></span>ثبت شرکت در ارمنستان</div></div>
+        <div id="wipes"></div>
+      </div>
+
+      <!--__CAPTIONS__-->
+
+      <audio id="vo" src="__VO_SRC__" data-start="0" data-duration="__VO_DUR__" data-volume="1"></audio>
+      <audio id="music" src="assets/music.wav" data-start="0" data-duration="__TOTAL__" data-volume="1"></audio>
+    </div>
+
+    <script>
+      window.__T = /*__TIMING__*/null;
+      const T = window.__T;
+      const tl = gsap.timeline({ paused: true });
+      window.__timelines = window.__timelines || {};
+      window.__timelines["main"] = tl;
+      const $ = (id) => document.getElementById(id);
+      const S = {};
+      T.scenes.forEach((s, i) => { S[s.id] = Object.assign({}, s, { i, next: T.scenes[i + 1] ? T.scenes[i + 1].start : T.total }); });
+      const c = (sid, j) => S[sid].caps[Math.min(j, S[sid].caps.length - 1)].start;
+      const at = (sid, j, f) => { const k = S[sid].caps[Math.min(j, S[sid].caps.length - 1)]; return k.start + f * (k.end - k.start); };
+      const rise = (sel, t, o = {}) => tl.fromTo(sel, { opacity: 0, y: o.y === undefined ? 40 : o.y }, { opacity: 1, y: 0, duration: o.d || 0.5, ease: o.ease || "power3.out" }, t);
+      const pop = (sel, t, d = 0.4) => tl.fromTo(sel, { scale: 0, opacity: 0 }, { scale: 1, opacity: 1, duration: d, ease: "back.out(1.7)" }, t);
+
+      // HUD: progress (right-to-left), chip, logo, gold/emerald wipes on every scene change
+      tl.fromTo("#progBar", { scaleX: 0 }, { scaleX: 1, duration: T.total, ease: "none" }, 0);
+      rise("#chip", 0.15, { y: -30 }); rise("#logoMark", 0.25, { y: -30 });
+      T.scenes.slice(1).forEach((s) => {
+        $("wipes").insertAdjacentHTML("beforeend", '<div class="wipe"><i class="a"></i><i class="b"></i></div>');
+        tl.fromTo($("wipes").lastElementChild, { x: 1900 }, { x: -1100, duration: 0.7, ease: "power2.inOut" }, s.start - 0.4);
+      });
+
+      // scene titles: fade in/out, headline beats
+      T.scenes.forEach((s, i) => {
+        const root = $(s.id), inner = root.querySelector(".scene-in"), t0 = i ? s.start : 0;
+        tl.fromTo(inner, { opacity: 0 }, { opacity: 1, duration: 0.35, ease: "power2.out" }, t0);
+        if (i < T.scenes.length - 1) tl.to(inner, { opacity: 0, duration: 0.3, ease: "power2.in" }, S[s.id].next - 0.05);
+        rise(root.querySelector(".kicker"), t0 + 0.05, { y: -24, d: 0.45 });
+        const hls = Array.from(root.querySelectorAll(".hl"));
+        hls.forEach((h, k) => {
+          const tin = k === 0 ? t0 + 0.1 : c(s.id, +h.dataset.at) - 0.05;
+          tl.fromTo(h, { opacity: 0, y: 50, scale: 0.94 }, { opacity: 1, y: 0, scale: 1, duration: 0.5, ease: "back.out(1.6)" }, tin);
+          if (k < hls.length - 1) tl.to(h, { opacity: 0, y: -40, duration: 0.28, ease: "power2.in" }, c(s.id, +hls[k + 1].dataset.at) - 0.3);
+        });
+      });
+
+      // captions
+      document.querySelectorAll(".cap").forEach((el) => {
+        tl.fromTo(el.firstElementChild, { opacity: 0, y: 22, scale: 0.96 }, { opacity: 1, y: 0, scale: 1, duration: 0.24, ease: "power2.out" }, +el.dataset.start);
+      });
+
+      // CTA
+      (function () {
+        const id = "s10", endVO = S[id].end;
+        rise("#chk1", at(id, 0, 0.35), { y: 30 }); pop("#chk1 i", at(id, 0, 0.35) + 0.2);
+        rise("#chk2", c(id, 1) + 0.2, { y: 30 }); pop("#chk2 i", c(id, 1) + 0.4);
+        tl.fromTo("#cbox", { opacity: 0, y: 160 }, { opacity: 1, y: 0, duration: 0.6, ease: "back.out(1.4)" }, c(id, 2) - 0.25);
+        const ty = at(id, 2, 0.25);
+        tl.fromTo("#ctext", { clipPath: "inset(0% 0% 0% 100%)" }, { clipPath: "inset(0% 0% 0% 0%)", duration: 0.7, ease: "steps(4)" }, ty);
+        tl.fromTo("#caret", { opacity: 1 }, { opacity: 0, duration: 0.28, yoyo: true, repeat: 7, ease: "steps(1)" }, c(id, 2));
+        rise("#ctaBig", ty + 0.5, { y: 30 });
+        tl.to("#send", { scale: 1.16, duration: 0.3, yoyo: true, repeat: 5, ease: "sine.inOut" }, ty + 1.0);
+        tl.to("#cbox", { scale: 1.04, duration: 0.5, yoyo: true, repeat: 1, ease: "sine.inOut" }, Math.min(endVO + 0.2, T.total - 1.1));
+        tl.fromTo("#endLogo", { opacity: 0, y: 40, scale: 0.92 }, { opacity: 1, y: 0, scale: 1, duration: 0.6, ease: "power3.out" }, Math.min(endVO + 0.15, T.total - 0.8));
+        tl.to("#logoMark", { opacity: 0, duration: 0.3 }, Math.min(endVO + 0.1, T.total - 0.8));
+      })();
+    </script>
+    <script type="module">
+      import { frame } from "./assets/world.js";
+      const state = { t: 0 };
+      frame(0);
+      window.__timelines["main"].fromTo(state, { t: 0 }, { t: window.__T.total, duration: window.__T.total, ease: "none", onUpdate: () => frame(state.t) }, 0);
+      window.__timelines["main"].seek(0);
+    </script>
+  </body>
+</html>

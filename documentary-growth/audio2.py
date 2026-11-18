@@ -86,11 +86,83 @@ def sub(vel=0.5, f=42, length=1.2):
     return vel * np.sin(2 * np.pi * f * t) * np.exp(-t / 0.45) * np.minimum(1, t / 0.003)
 
 
+def saw_stack(freqs, dur, voices=3, det=0.004, kmax=40):
+    n = int(dur * SR); t = np.arange(n) / SR; out = np.zeros(n)
+    for f in freqs:
+        for v in range(voices):
+            ph = 2 * np.pi * f * (1 + (v - (voices - 1) / 2) * det) * t + v
+            for k in range(1, int(min(kmax, 9000 / f)) + 1):
+                out += np.sin(k * ph) / k
+    return out / (len(freqs) * voices)
+
+
+def braam(freqs, dur=2.2, vel=0.5):
+    """low brass-like cinematic hit: detuned saws, filter opens then closes, saturated"""
+    x = saw_stack(freqs, dur, 3, 0.006)
+    n = len(x); t = np.arange(n) / SR
+    lo = signal.sosfilt(signal.butter(2, 350, "low", fs=SR, output="sos"), x)
+    hi = signal.sosfilt(signal.butter(2, 2200, "low", fs=SR, output="sos"), x)
+    open_ = np.exp(-t / 0.35)
+    y = lo * (1 - open_) + hi * open_
+    env = np.minimum(1, t / 0.03) * np.exp(-t / (dur * 0.55))
+    return vel * np.tanh(2.2 * y * env) * 0.8
+
+
+def choir(freqs, dur, vel=0.3, attack=1.0, release=1.5):
+    """'aah' choir pad: saw stack through vowel formants with gentle vibrato"""
+    n = int((dur + release) * SR); t = np.arange(n) / SR; x = np.zeros(n)
+    for f in freqs:
+        for v in range(5):
+            vib = 1 + 0.004 * np.sin(2 * np.pi * (5.0 + 0.3 * v) * t + v)
+            ph = 2 * np.pi * np.cumsum(f * (1 + (v - 2) * 0.003) * vib) / SR
+            for k in range(1, int(min(30, 5000 / f)) + 1):
+                x += np.sin(k * ph + v) / k
+    y = np.zeros(n)
+    for fc, bw, g in ((800, 160, 1.0), (1150, 200, 0.6), (2900, 400, 0.25)):
+        y += g * signal.sosfilt(signal.butter(2, [fc - bw / 2, fc + bw / 2], "band", fs=SR, output="sos"), x)
+    env = np.minimum(1, t / attack) * np.where(t < dur, 1.0, np.exp(-(t - dur) / (release / 3)))
+    return vel * y * env / (len(freqs) * 2.5)
+
+
+def epic_drum(vel=0.6, low=62):
+    """layered ensemble taiko: deep body + slap + a second drum slightly late"""
+    a = drum(vel, low * 1.6, low)
+    b = drum(vel * 0.6, low * 2.2, low * 1.3)
+    out = np.zeros(len(a) + int(0.02 * SR)); out[: len(a)] += a
+    out[int(0.012 * SR): int(0.012 * SR) + len(b)] += b
+    n = int(0.03 * SR)
+    slap = rng.standard_normal(n) * np.exp(-np.arange(n) / (0.006 * SR))
+    out[:n] += vel * 0.5 * signal.sosfilt(signal.butter(2, [800, 5000], "band", fs=SR, output="sos"), slap)
+    return out
+
+
+def snare(vel=0.4):
+    n = int(0.35 * SR); t = np.arange(n) / SR
+    nz = signal.sosfilt(signal.butter(2, [1500, 8000], "band", fs=SR, output="sos"), rng.standard_normal(n))
+    return vel * (0.9 * nz * np.exp(-t / 0.07) + 0.6 * np.sin(2 * np.pi * 190 * t) * np.exp(-t / 0.05))
+
+
+def spiccato(f, vel=0.2):
+    return strings([f], 0.07, vel, attack=0.008, release=0.16, bright=0.85)
+
+
+def timp_roll(length, vel=0.5, f=55):
+    out = np.zeros(int((length + 1.0) * SR))
+    k = 0; tt = 0.0
+    while tt < length:
+        v = vel * (0.25 + 0.75 * (tt / length) ** 1.5)
+        d = drum(v, f * 1.5, f)
+        i = int(tt * SR); out[i:i + len(d)] += d[: len(out) - i]
+        tt += 0.055; k += 1
+    return out
+
+
 # ---------------------------------------------------------------- hook (0 – 4.25)
 for h in HITS:
     k, tm, s = h["kind"], h["t"], h["s"]
     if k == "boom":
         add(fx, impact(0.9 * s, 46, 3.0), tm); add(fx, sub(0.5 * s), tm)
+        add(fx, epic_drum(0.7 * s, 55), tm); add(pads, braam([hz("A1"), hz("E2")], 2.4, 0.55 * s), tm)
     elif k == "boom_short":
         add(fx, impact(0.6 * s, 58, 1.4), tm)
     elif k == "suck":
@@ -99,17 +171,18 @@ for h in HITS:
         add(fx, impact(0.7 * s, 60, 1.8), tm); add(fx, metal(0.18 * s, 610), tm)
         add(fx, whoosh(0.3, 0.2 * s, 6000, 1500), tm)
     elif k == "stab":
-        add(fx, stab(0.9 * s), tm)
+        add(fx, stab(0.9 * s), tm); add(pads, braam([hz("A1"), hz("A2")], 1.2, 0.5), tm)
+        add(fx, epic_drum(0.8, 55), tm)
     elif k == "punch":
         add(fx, drum(0.55 * s, 140, 55), tm); add(fx, tick(0.3), tm)
     elif k == "soft":
         add(fx, whoosh(0.6, 0.1, 300, 2000), tm - 0.3)
     elif k == "s1":   # sport: taiko
-        add(fx, drum(0.8, 105, 48), tm); add(fx, sub(0.35, 48, 0.8), tm)
+        add(fx, epic_drum(0.8, 60), tm); add(fx, sub(0.35, 48, 0.8), tm)
     elif k == "s2":   # education: clean tick + paper air
         add(fx, tick(0.5), tm); add(fx, tick(0.3), tm + 0.06); add(fx, whoosh(0.25, 0.12, 2500, 7000), tm - 0.1)
     elif k == "s3":   # work: metal
-        add(fx, metal(0.3, 330), tm); add(fx, drum(0.4, 160, 80), tm)
+        add(fx, metal(0.22, 330), tm); add(fx, epic_drum(0.6, 70), tm); add(fx, snare(0.3), tm)
     elif k == "s4":   # money: sub + bright ping
         add(fx, sub(0.6, 40, 1.0), tm); add(fx, metal(0.15, 1250), tm + 0.02)
     elif k == "tapestop":
@@ -117,9 +190,10 @@ for h in HITS:
     elif k == "riser_hit":
         add(fx, impact(0.45, 50, 2.5), tm)
     elif k == "hit":
-        add(fx, drum(0.55 * s + 0.2, 100, 48), tm); add(fx, impact(0.35 * s, 55, 1.2), tm)
+        add(fx, epic_drum(0.5 * s + 0.25, 58), tm); add(fx, impact(0.35 * s, 55, 1.2), tm)
     elif k == "peak":
-        add(fx, impact(1.0, 40, 3.0), tm); add(fx, drum(0.9, 90, 42), tm)
+        add(fx, impact(1.0, 40, 3.0), tm); add(fx, epic_drum(1.0, 48), tm)
+        add(pads, braam([hz("A1"), hz("E2"), hz("A2")], 2.0, 0.8), tm)
 
 # mysterious bed under the hook text, heartbeat, then silence before the first question
 add(pads, drone([hz("A1"), hz("E2")], 2.9, 0.20) * np.linspace(0.2, 1, int(2.9 * SR)), M["hook_text"] - 0.1)
@@ -139,13 +213,31 @@ add(mus, piano(hz("E5"), 1.2, 0.26), L["q2"] + 0.05)           # q2: a single hi
 add(pads, tremolo_strings([hz("A3"), hz("C4"), hz("E4")], L["q4"] - L["q3"], 0.28), L["q3"])  # q3: rising tremolo
 if not INSTR:
     add(fx, breath(0.05, 0.5), L["q4"] - 0.55)                    # q4: silence, a breath
+# low heartbeat pulse under the questions (energy without losing the mystery)
+tp = L["q1"] + 0.55
+while tp < L["q4"] - 0.3:
+    add(fx, drum(0.20 + 0.12 * (tp - L["q1"]) / (L["q4"] - L["q1"]), 70, 40), tp)
+    tp += 0.6
+add(pads, choir([hz("A3"), hz("C4"), hz("E4")], L["q4"] - L["q3"] - 0.2, 0.30, attack=1.2, release=0.4), L["q3"])
+# rapid fire: driving 16th spiccato + pulse from the first word to the freeze
+r0, r1 = L["s1"] - 0.04, L["q5"] - 0.05
+sixteenth = 60 / 112 / 4
+tq = r0; k = 0
+while tq < r1 - 0.02:
+    add(pads, spiccato(hz(["A3", "E4", "C4", "E4"][k % 4]), 0.32), tq)
+    if k % 4 == 2:
+        add(fx, epic_drum(0.35, 75), tq)
+    tq += sixteenth; k += 1
+add(pads, braam([hz("A1"), hz("E2")], 1.6, 0.45), r0)
+# «رشد» on black: choir + braam
+add(pads, choir([hz("A2"), hz("E3"), hz("A3"), hz("C4")], 1.4, 0.38, attack=0.15, release=1.0), L["q6"] + 0.35)
 
 # ---------------------------------------------------------------- ambition: riser -> percussion engine
 add(pads, strings([hz("A2"), hz("E3"), hz("A3")], L["a2"] - L["a1"], 0.35, attack=0.2, release=0.8, bright=0.4),
     L["a1"] - 0.1)
 add(fx, heartbeat(0.4), L["a1"] + 0.2)
 add(fx, riser(L["a2"] - 0.06 - (L["a1"] + 0.3), 0.22), L["a1"] + 0.3)
-bpm = 100.0; beat = 60 / bpm
+bpm = 112.0; beat = 60 / bpm
 g_start = L["a2"] - 0.06
 stop = M["stop"]
 chords = [("A2", ["A3", "C4", "E4"]), ("F2", ["F3", "A3", "C4"]), ("D2", ["D3", "F3", "A3"]), ("E2", ["E3", "G#3", "B3"])]
@@ -167,16 +259,24 @@ for b in range(nb):
         nt = tri[(b * div + h) % 3]
         nt = nt[:-1] + str(int(nt[-1]) + 1) if prog > 0.4 else nt
         add(mus, piano(hz(nt), beat / div, 0.12 + 0.2 * prog), tb + h * beat / div)
-    # percussion
+    # epic percussion: ensemble taiko on 1 & 3, toms + snare on 2 & 4, 16th spiccato strings
     if b % 2 == 0:
-        add(fx, drum(0.35 + 0.4 * prog, 95, 45), tb)
+        add(fx, epic_drum(0.45 + 0.45 * prog, 58), tb)
     else:
-        add(fx, drum(0.18 + 0.25 * prog, 150, 75), tb)
-    if prog > 0.3:
-        add(fx, tick(0.10 + 0.12 * prog), tb + beat / 2)
-    if prog > 0.65:
-        add(fx, drum(0.15 + 0.2 * prog, 180, 90), tb + 0.75 * beat)
+        add(fx, epic_drum(0.25 + 0.3 * prog, 85), tb)
+        if prog > 0.25:
+            add(fx, snare(0.22 + 0.25 * prog), tb)
+    add(fx, epic_drum(0.18 + 0.2 * prog, 95), tb + 0.75 * beat)
+    if prog > 0.5:
+        add(fx, epic_drum(0.15 + 0.2 * prog, 110), tb + 0.5 * beat)
+    for h in range(4):
+        add(pads, spiccato(hz(tri[(b * 4 + h) % 3]), 0.22 + 0.25 * prog), tb + h * beat / 4)
+    if b % 4 == 0:
+        add(pads, braam([hz(bass), hz(bass[:-1] + str(int(bass[-1]) + 1))], beat * 3, 0.35 + 0.35 * prog), tb)
+        if prog > 0.35:
+            add(pads, choir([hz(n) for n in tri], beat * 4, 0.20 + 0.25 * prog, attack=0.4, release=0.8), tb)
 add(fx, riser(stop - (L["g4"] - 0.6), 0.25, 120, 1800), L["g4"] - 0.6)
+add(fx, timp_roll(stop - (L["g4"] - 0.9) - 0.1, 0.45, 50), L["g4"] - 0.9)   # roll into the peak
 
 # ---------------------------------------------------------------- instrumental melody
 # Without narration, each subtitle reveal gets a melodic phrase: a note on the line, a second
@@ -246,6 +346,7 @@ t_w = L["t2"] - 0.6
 bpm2 = 66.0; b2 = 60 / bpm2
 warm = [("F2", ["C4", "F4", "A4", "E5"]), ("C2", ["C4", "E4", "G4", "D5"]),
         ("A1", ["C4", "E4", "A4", "B4"]), ("G1", ["B3", "D4", "G4", "A4"])]
+fx_pre_post = np.zeros(N)
 bar = 0; tb = t_w
 t_res = L["e5"] - 0.02
 while tb < t_res - b2:
@@ -258,6 +359,20 @@ while tb < t_res - b2:
     if tb > L["w1"] - 1.2:
         add(warm_pads, strings([hz(n) for n in notes[:3]], b2 * 4, 0.22 + 0.12 * math.sin(prog * math.pi),
                                attack=1.8, release=2.4, bright=0.35), tb)
+    # anthem build: soft toms from «حال خوب», half-time epic drums from «خانواده», choir; pull back at e3
+    if L["w1"] - 0.3 <= tb < L["e3"] - 0.5:
+        build = min(1, max(0, (tb - L["w1"]) / (L["e2"] - L["w1"])))
+        for q in range(4):
+            tq_ = tb + q * b2
+            if q % 2 == 0:
+                add(fx_pre_post, epic_drum(0.20 + 0.45 * build, 60 if q == 0 else 72), tq_)
+            if build > 0.35 and q in (1, 3):
+                add(fx_pre_post, snare(0.10 + 0.2 * build), tq_)
+            if build > 0.2:
+                for hh in range(2):
+                    add(warm_pads, spiccato(hz(notes[(q * 2 + hh) % 3]), 0.10 + 0.16 * build), tq_ + hh * b2 / 2)
+        if build > 0.3:
+            add(warm_pads, choir([hz(n) for n in notes[:3]], b2 * 4, 0.16 + 0.2 * build, attack=1.0, release=1.5), tb)
     if L["w3"] - 1 < tb < L["e3"]:      # cello line
         add(warm_pads, strings([hz(bass[:-1] + str(int(bass[-1]) + 1))], b2 * 4, 0.20, attack=1.2,
                                release=2.0, bright=0.3), tb)
@@ -268,9 +383,14 @@ for nt, v in (("C2", 0.42), ("G2", 0.30), ("E3", 0.28), ("G3", 0.25), ("D4", 0.2
     add(warm_mus, piano(hz(nt), END - t_res, v), t_res + 0.02)
 add(warm_pads, strings([hz("C3"), hz("G3"), hz("E4"), hz("G4")], END - t_res, 0.30, attack=1.6, release=1.2,
                        bright=0.3), t_res)
-add(fx_pre_post := np.zeros(N), whoosh(1.5, 0.05, 2500, 300, rev=True), L["e3"] - 1.4)
+add(fx_pre_post, whoosh(1.5, 0.05, 2500, 300, rev=True), L["e3"] - 1.4)
+# «خودت»: the full resolution — timpani roll into it, big drum, braam, choir
+add(fx_pre_post, timp_roll(1.2, 0.35, 49), t_res - 1.25)
+add(fx_pre_post, epic_drum(0.9, 50), t_res); add(fx_pre_post, impact(0.6, 44, 3.0), t_res)
+add(warm_pads, braam([hz("C2"), hz("G2"), hz("C3")], 2.6, 0.45), t_res)
+add(warm_pads, choir([hz("C4"), hz("E4"), hz("G4"), hz("C5")], END - t_res - 0.6, 0.42, attack=0.5, release=1.2), t_res)
 music_post = stereo_reverb(warm_mus, 4.0, 1.7, 0.42, seed=13) + stereo_reverb(warm_pads, 4.0, 1.8, 0.35, seed=15)
-music_post += stereo_reverb(fx_pre_post, 2.0, 1.0, 0.3, seed=17)
+fx_post = stereo_reverb(fx_pre_post, 3.0, 1.3, 0.28, seed=17)
 
 # ---------------------------------------------------------------- narration (as v1)
 vo = np.zeros(N)
@@ -290,12 +410,12 @@ vo = vo * np.minimum(1, (0.11 / env) ** 0.35)
 vo_st = stereo_reverb(vo, 1.2, 0.35, 0.10, seed=11)
 # warm section: a touch closer / more intimate (less room)
 venv = signal.sosfilt(signal.butter(1, 3, "low", fs=SR, output="sos"), np.abs(vo))
-duck = 1 - 0.70 * np.clip(venv / 0.03, 0, 1)
+duck = 1 - 0.76 * np.clip(venv / 0.03, 0, 1)
 
 if INSTR:
     duck = np.ones(N); vo_st = vo_st * 0
 music = (music_pre + music_post) * duck[:, None]
-fxs = fx_pre * (0.22 + 0.78 * duck)[:, None]
+fxs = (fx_pre + fx_post) * ((0.22 + 0.78 * duck) if INSTR else (0.10 + 0.90 * duck ** 1.5))[:, None]
 if INSTR:
     master = 0.62 * music + 0.34 * fxs + np.stack([room, room], 1)
 else:

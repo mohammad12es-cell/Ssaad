@@ -128,13 +128,14 @@ def build(vo_dir):
          anim="rise")
 
     # rapid fire — one photo and one word per spoken word
-    rapid = [("s1", "padel_side", (0.66, 0.57, 0.36), (0.66, 0.565, 0.32), "ورزش؟", 0.68, 0.30, 140),
-             ("s2", "office", (0.25, 0.50, 0.34), (0.25, 0.50, 0.30), "تحصیل؟", 0.36, 0.64, 112),
-             ("s3", "office", (0.29, 0.80, 0.30), (0.28, 0.81, 0.26), "کار؟", 0.50, 0.42, 190)]
+    # people, not objects: the athlete's stance / him at his workspace (no zoom) / the forward lunge
+    rapid = [("s1", "padel_front", (0.55, 0.52, 0.95), (0.55, 0.50, 0.82), "ورزش؟", 0.70, 0.13, 140, "out"),
+             ("s2", "office", (0.45, 0.50, 1.00), (0.48, 0.50, 1.00), "تحصیل؟", 0.40, 0.20, 112, "lin"),
+             ("s3", "padel_side", (0.42, 0.58, 1.00), (0.42, 0.55, 0.72), "کار؟", 0.72, 0.17, 190, "out")]
     nxt = {"s1": "s2", "s2": "s3", "s3": "s4"}
-    for lid, src, c0, c1, word, x, y, size in rapid:
+    for lid, src, c0, c1, word, x, y, size, ez in rapid:
         a, b = L[lid] - 0.04, L[nxt[lid]] - 0.04
-        shot(src, a, b, [(a, c0, "lin"), (b, c1, "lin")], (0.1, -0.15, 0.0))
+        shot(src, a, b, [(a, c0, "lin"), (b, c1, ez)], (0.1, -0.15, 0.0), par=0.014 if src in MATTE else 0.0)
         text(word, L[lid], b, style="kinetic", x=x, y=y, size=size, weight="Black", anim="pop", out="cut")
         hit(a, 0.6, lid)
     a = L["s4"] - 0.04

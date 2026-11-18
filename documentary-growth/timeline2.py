@@ -9,7 +9,10 @@ cx, cy = crop centre (normalised source coords), hf = crop height / source heigh
 """
 import json, os
 from lines import LINES
-from timeline import SRC, MATTE  # sources and matte list unchanged
+from timeline import SRC as _SRC, MATTE as _MATTE
+_UP = "/root/.claude/uploads/0512d30d-e650-59c9-870b-6a8294264adf"
+SRC = dict(_SRC, car=f"{_UP}/662aaaf1-image.webp", concert=f"{_UP}/37d6b461-image.webp")
+MATTE = set(_MATTE) | {"car", "concert"}
 
 FPS = 24
 HOOK_Q1 = 4.6         # first narrated word
@@ -235,13 +238,17 @@ def build(vo_dir):
     text("شاید رشد", L["t2"], W("t2", 2), weight="Medium", anim="rise", warm=True)
     text("فقط بالاتر رفتن نیست.", W("t2", 2), w1, size=76, weight="Bold", anim="rise", warm=True)
     # match cut on the figure: arms open -> arms raised, the golden corridor
-    x0, x1 = w1, L["w1"] - 0.05
+    x0, x1 = w1, L["t4"] - 0.04
     shot("tunnel", x0, x1, [(x0, (0.517, 0.50, 0.80), "lin"), (x1, (0.517, 0.45, 0.56), "inout")],
          WARM, par=0.016)
     text("شاید رشد یعنی", L["t3"], W("t3", 3), weight="Medium", anim="rise", warm=True)
     text("در کنار تمام هدف‌هات،", W("t3", 3), L["t4"], weight="Medium", anim="rise", warm=True)
+    # «لذت ببری»: the concert night — he is laughing, the lights behind him
+    y0, y1 = L["t4"] - 0.04, L["w1"] - 0.05
+    shot("concert", y0, y1, [(y0, (0.55, 0.42, 0.88), "lin"), (y1, (0.57, 0.38, 0.68), "inout")],
+         (0.95, 0.25, 0.05), par=0.016)
     text("بتونی از زندگی", L["t4"], W("t4", 3), weight="Medium", anim="rise", warm=True)
-    text("هم لذت ببری.", W("t4", 3), x1, weight="Medium", anim="rise", warm=True)
+    text("هم لذت ببری.", W("t4", 3), y1, weight="Medium", anim="rise", warm=True)
 
     # ============================================================ WHAT MATTERS
     f0, f1 = L["w1"] - 0.05, L["w2"] - 0.05
@@ -272,9 +279,10 @@ def build(vo_dir):
     text("خوشبختی", W("e1", 1), L["e2"] - 0.05, style="huge", y=0.22, fit=0.82, weight="Bold", anim="rise",
          out="cut", behind="bucks", warm=True)
     text("مقصد نباشه...", W("e1", 2), L["e2"] - 0.05, weight="Medium", anim="rise", out="cut", warm=True)
-    shot("lake", L["e2"] - 0.05, L["e3"] + 0.1,
-         [(L["e2"] - 0.05, (0.42, 0.62, 0.44), "lin"), (L["e3"] + 0.1, (0.42, 0.62, 0.40), "lin")],
-         (1.0, 0.6, 0.05))
+    # «بخشی از مسیر»: on the road — golden light through the sunroof, the trees streaming past
+    shot("car", L["e2"] - 0.05, L["e3"] + 0.1,
+         [(L["e2"] - 0.05, (0.46, 0.50, 0.95), "lin"), (L["e3"] + 0.1, (0.45, 0.47, 0.78), "inout")],
+         (1.0, 0.45, 0.05), par=0.016)
     text("شاید بخشی از مسیر باشه.", L["e2"], L["e3"] - 0.1, weight="Medium", anim="rise", warm=True)
     # the strongest portrait: a real laugh. Extremely slow push-in, hold, hard cut to black.
     o0 = L["e3"] - 0.8

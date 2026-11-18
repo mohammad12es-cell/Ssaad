@@ -21,6 +21,7 @@ from trimdur import trimmed
 from synth import SR, add, air, breath, drone, drum, hz, impact, piano, stereo_reverb, strings, whoosh, rng
 
 VO, OUT = sys.argv[1], sys.argv[2]
+INSTR = len(sys.argv) > 3 and sys.argv[3] == "instrumental"   # no narration: music speaks the lines
 SHOTS, TEXTS, HITS, FLASHES, M = TL.build(VO)
 L, E, END = M["L"], M["E"], M["end"]
 N = int((END + 0.2) * SR)
@@ -136,7 +137,8 @@ add(fx, air(L["q4"] - q1, 0.03), q1)
 add(mus, piano(hz("A4"), 1.2, 0.22), L["q1"] + 0.6)            # q1: deep boom + one low note (from hits)
 add(mus, piano(hz("E5"), 1.2, 0.26), L["q2"] + 0.05)           # q2: a single high note
 add(pads, tremolo_strings([hz("A3"), hz("C4"), hz("E4")], L["q4"] - L["q3"], 0.28), L["q3"])  # q3: rising tremolo
-add(fx, breath(0.05, 0.5), L["q4"] - 0.55)                    # q4: silence, a breath
+if not INSTR:
+    add(fx, breath(0.05, 0.5), L["q4"] - 0.55)                    # q4: silence, a breath
 
 # ---------------------------------------------------------------- ambition: riser -> percussion engine
 add(pads, strings([hz("A2"), hz("E3"), hz("A3")], L["a2"] - L["a1"], 0.35, attack=0.2, release=0.8, bright=0.4),
@@ -175,6 +177,56 @@ for b in range(nb):
     if prog > 0.65:
         add(fx, drum(0.15 + 0.2 * prog, 180, 90), tb + 0.75 * beat)
 add(fx, riser(stop - (L["g4"] - 0.6), 0.25, 120, 1800), L["g4"] - 0.6)
+
+# ---------------------------------------------------------------- instrumental melody
+# Without narration, each subtitle reveal gets a melodic phrase: a note on the line, a second
+# on its phrase break — the music "speaks" the line. Chord tones follow the section harmony.
+bpm2 = 66.0; b2 = 60 / bpm2   # warm-theme tempo/harmony (same values as below)
+warm = [("F2", ["C4", "F4", "A4", "E5"]), ("C2", ["C4", "E4", "G4", "D5"]),
+        ("A1", ["C4", "E4", "A4", "B4"]), ("G1", ["B3", "D4", "G4", "A4"])]
+NAMES = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"]
+def chord_pcs(t):
+    if t < g_start:
+        return ["A", "C", "E"]
+    if t < stop:
+        b = int((t - g_start) / beat)
+        return [n[:-1] for n in chords[(b // 4) % 4][1]]
+    if t < L["t2"] - 0.6:
+        return ["E", "G", "B"]
+    bar_i = int((t - (L["t2"] - 0.6)) / (b2 * 4))
+    return [n[:-1] for n in warm[bar_i % 4][1]]
+def midi(n, o):
+    return 12 * (o + 1) + NAMES.index(n)
+def nearest(pcs, ref, lo=69, hi=88, direction=0):
+    cands = [midi(p, o) for p in pcs for o in (4, 5, 6) if lo <= midi(p, o) <= hi]
+    if direction:
+        dc = [c for c in cands if (c - ref) * direction > 0] or cands
+        return min(dc, key=lambda c: abs(c - ref))
+    return min(cands, key=lambda c: (abs(c - ref) if c != ref else 99))
+def mhz(m):
+    return 440.0 * 2 ** ((m - 69) / 12)
+if INSTR:
+    prev = 76
+    for k, (lid, text, _) in enumerate(LINES):
+        t0 = L[lid]
+        warm_part = t0 >= stop
+        pcs = chord_pcs(t0 + 0.01)
+        direction = 1 if k % 3 != 2 else -1
+        n1 = nearest(pcs, prev, direction=direction)
+        dur = E[lid] - t0
+        bus = warm_mus if warm_part else mus
+        v = 0.30 if warm_part else 0.24
+        add(bus, piano(mhz(n1), max(0.4, dur * 0.6), v), t0)
+        if not warm_part and g_start <= t0 < stop:       # ambition: octave doubling for weight
+            add(bus, piano(mhz(n1 - 12), max(0.3, dur * 0.5), v * 0.7), t0)
+        if dur > 1.3:                                   # second note on the phrase break
+            n2 = nearest(chord_pcs(t0 + dur * 0.55), n1, direction=-direction)
+            add(bus, piano(mhz(n2), max(0.4, dur * 0.45), v * 0.85), t0 + dur * 0.55)
+            prev = n2
+        else:
+            prev = n1
+        if warm_part and lid in ("w1", "w4", "e2", "e4"):  # strings carry the long warm lines
+            add(warm_pads, strings([mhz(prev)], dur + 0.6, 0.16, attack=0.8, release=1.6, bright=0.4), t0)
 
 # ---------------------------------------------------------------- THE CUT
 # everything pre-cut is rendered with its reverb, then cut dead at `stop`
@@ -240,9 +292,14 @@ vo_st = stereo_reverb(vo, 1.2, 0.35, 0.10, seed=11)
 venv = signal.sosfilt(signal.butter(1, 3, "low", fs=SR, output="sos"), np.abs(vo))
 duck = 1 - 0.70 * np.clip(venv / 0.03, 0, 1)
 
+if INSTR:
+    duck = np.ones(N); vo_st = vo_st * 0
 music = (music_pre + music_post) * duck[:, None]
 fxs = fx_pre * (0.22 + 0.78 * duck)[:, None]
-master = 0.95 * vo_st + 0.44 * music + 0.30 * fxs + np.stack([room, room], 1)
+if INSTR:
+    master = 0.62 * music + 0.34 * fxs + np.stack([room, room], 1)
+else:
+    master = 0.95 * vo_st + 0.44 * music + 0.30 * fxs + np.stack([room, room], 1)
 # tail: after the cut to black the last chord rings out and fades
 tail = np.clip((END - t_ax) / TL.TAIL_BLACK, 0, 1) ** 1.3
 master *= tail[:, None]
@@ -253,6 +310,7 @@ for nm, (a_, b_) in dict(hook=(0, L["q1"]), questions=(L["q1"], L["a1"]), ambiti
                          warm=(stop, END)).items():
     i0, i1 = int(a_ * SR), int(b_ * SR)
     act = np.abs(vo[i0:i1]) > 0.01
+    if INSTR: act[:] = False
     if act.any():
         print(f"{nm:9s} voice {_db(0.95*vo_st[i0:i1][act]):6.1f}  music {_db(0.44*music[i0:i1][act]):6.1f}  "
               f"fx {_db(0.30*fxs[i0:i1][act]):6.1f}  (between lines: music {_db(0.44*music[i0:i1][~act]):6.1f})")

@@ -1,0 +1,279 @@
+<!doctype html>
+<!-- SOURCE TEMPLATE (bring your business to Armenia, Three.js). Edit this file, then run `python3 build.py` to regenerate index.html. -->
+<html lang="fa" dir="rtl" data-resolution="portrait">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <script src="assets/gsap.min.js"></script>
+    <script type="importmap">{ "imports": { "three": "./assets/three.module.js" } }</script>
+    <style>
+      @font-face { font-family: "Vazirmatn"; font-weight: 400; src: url("assets/fonts/vazirmatn-latin-400-normal.woff2") format("woff2"); }
+      @font-face { font-family: "Vazirmatn"; font-weight: 700; src: url("assets/fonts/vazirmatn-latin-700-normal.woff2") format("woff2"); }
+      @font-face { font-family: "Vazirmatn"; font-weight: 900; src: url("assets/fonts/vazirmatn-latin-900-normal.woff2") format("woff2"); }
+      @font-face { font-family: "Vazirmatn"; font-weight: 500; src: url("assets/fonts/vazirmatn-arabic-500-normal.woff2") format("woff2"); unicode-range: U+0600-06FF, U+0750-077F, U+0870-088E, U+0890-0891, U+0897-08E1, U+08E3-08FF, U+200C-200E, U+2010-2011, U+204F, U+2E41, U+FB50-FDFF, U+FE70-FE74, U+FE76-FEFC; }
+      @font-face { font-family: "Vazirmatn"; font-weight: 700; src: url("assets/fonts/vazirmatn-arabic-700-normal.woff2") format("woff2"); unicode-range: U+0600-06FF, U+0750-077F, U+0870-088E, U+0890-0891, U+0897-08E1, U+08E3-08FF, U+200C-200E, U+2010-2011, U+204F, U+2E41, U+FB50-FDFF, U+FE70-FE74, U+FE76-FEFC; }
+      @font-face { font-family: "Vazirmatn"; font-weight: 800; src: url("assets/fonts/vazirmatn-arabic-800-normal.woff2") format("woff2"); unicode-range: U+0600-06FF, U+0750-077F, U+0870-088E, U+0890-0891, U+0897-08E1, U+08E3-08FF, U+200C-200E, U+2010-2011, U+204F, U+2E41, U+FB50-FDFF, U+FE70-FE74, U+FE76-FEFC; }
+      @font-face { font-family: "Vazirmatn"; font-weight: 900; src: url("assets/fonts/vazirmatn-arabic-900-normal.woff2") format("woff2"); unicode-range: U+0600-06FF, U+0750-077F, U+0870-088E, U+0890-0891, U+0897-08E1, U+08E3-08FF, U+200C-200E, U+2010-2011, U+204F, U+2E41, U+FB50-FDFF, U+FE70-FE74, U+FE76-FEFC; }
+
+      /* ===================== PALETTE (IRAM CO. brand: forest green + metallic gold + cream) =====================
+         The 3D materials in assets/world.js use the same values. */
+      :root {
+        --bg-1: #0b2017; --bg-2: #1d3f2d; --card: #1a4430; --pri: #2f8a5c;
+        --acc: #dcad58; --acc-hi: #f4d68c; --acc-lo: #a9792f; --acc-2: #d38a4c;
+        --ink: #faf2e0; --muted: #86a58f; --dark: #06140d;
+        --gold: linear-gradient(180deg, #fff0c2 0%, #f4d68c 30%, #dcad58 70%, #c8954a 100%);
+        --font: "Vazirmatn", sans-serif;
+      }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { margin: 0; width: 1080px; height: 1920px; overflow: hidden; background: var(--bg-1); }
+      #root { position: relative; width: 100%; height: 100%; overflow: hidden; font-family: var(--font); color: var(--ink); background: var(--bg-1); }
+      .clip { position: absolute; inset: 0; }
+
+      /* 3D stage */
+      #gl { position: absolute; inset: 0; width: 1080px; height: 1920px; display: block; transform-origin: 50% 47%; }
+      #vig { position: absolute; inset: 0; background:
+        linear-gradient(180deg, color-mix(in srgb, var(--dark) 62%, transparent) 0%, transparent 22%, transparent 64%, color-mix(in srgb, var(--dark) 55%, transparent) 76%, color-mix(in srgb, var(--dark) 78%, transparent) 100%),
+        radial-gradient(ellipse 110% 70% at 50% 48%, transparent 58%, color-mix(in srgb, var(--dark) 50%, transparent) 100%); }
+      #labels { position: absolute; inset: 0; }
+      .lbl {
+        position: absolute; left: 0; top: 0; opacity: 0; white-space: nowrap; padding: 10px 28px 12px; border-radius: 999px;
+        font-weight: 800; font-size: 40px; color: var(--ink); background: color-mix(in srgb, var(--dark) 78%, transparent);
+        border: 2px solid color-mix(in srgb, var(--acc) 70%, transparent);
+      }
+      .lbl.gold { background: var(--gold); color: var(--dark); border-color: transparent; }
+      .lbl b { color: var(--acc-hi); font-weight: 900; margin-left: 12px; }
+
+      /* HUD: progress + logo, one quiet row */
+      #prog { position: absolute; top: 113px; left: 56px; right: 300px; height: 6px; border-radius: 6px; background: color-mix(in srgb, var(--ink) 14%, transparent); overflow: hidden; }
+      #progBar { width: 100%; height: 100%; background: linear-gradient(270deg, var(--acc-hi), var(--acc) 60%, var(--acc-lo)); transform-origin: 100% 50%; }
+      #logoMark { position: absolute; top: 72px; right: 52px; width: 220px; }
+
+      /* headlines */
+      .scene-in { position: absolute; inset: 0; }
+      .hl {
+        position: absolute; top: 268px; left: 50px; right: 50px; text-align: center;
+        font-weight: 900; font-size: 96px; line-height: 1.32; color: var(--ink);
+        text-shadow: 0 6px 30px color-mix(in srgb, var(--dark) 85%, transparent);
+      }
+      .hl .hw { display: inline-block; white-space: nowrap; }
+      .hl em { font-style: normal; color: var(--acc-hi); background: var(--gold); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; text-shadow: none; filter: drop-shadow(0 6px 22px color-mix(in srgb, var(--dark) 80%, transparent)); }
+      .hl.sm { font-size: 82px; top: 280px; }
+      .sub { position: absolute; top: 218px; left: 0; right: 0; text-align: center; font-weight: 700; font-size: 44px; color: color-mix(in srgb, var(--ink) 78%, transparent); }
+
+      /* city: business-name ticker */
+      .tick { position: absolute; top: 286px; left: 0; right: 0; height: 140px; }
+      .tick .it {
+        position: absolute; inset: 0; text-align: center; font-weight: 900; font-size: 112px; line-height: 1.2; opacity: 0;
+        color: var(--acc-hi); background: var(--gold); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+        filter: drop-shadow(0 8px 26px color-mix(in srgb, var(--dark) 85%, transparent));
+      }
+      .count { position: absolute; top: 446px; left: 0; right: 0; text-align: center; }
+      .count .dots { display: inline-flex; gap: 10px; direction: rtl; }
+      .count .dots i { width: 14px; height: 14px; border-radius: 50%; background: color-mix(in srgb, var(--ink) 20%, transparent); display: inline-block; }
+      .count.big .dots { gap: 16px; } .count.big .dots i { width: 18px; height: 18px; }
+
+      /* find: rent / buy segmented toggle */
+      #seg {
+        position: absolute; top: 470px; left: 50%; width: 520px; margin-left: -260px; height: 96px; border-radius: 48px; display: flex; direction: rtl;
+        background: color-mix(in srgb, var(--dark) 70%, transparent); border: 2px solid color-mix(in srgb, var(--acc) 55%, transparent);
+      }
+      #seg .opt { position: relative; flex: 1; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 44px; color: var(--ink); z-index: 1; }
+      #segKnob { position: absolute; top: 8px; right: 8px; width: 248px; height: 76px; border-radius: 38px; background: var(--gold); }
+      #seg .opt.a, #seg .opt.b { transition: none; }
+
+      /* captions: karaoke, word by word */
+      .cap { display: flex; align-items: flex-start; justify-content: center; }
+      .cap-in { margin-top: 1428px; max-width: 1000px; text-align: center; font-weight: 900; font-size: 62px; line-height: 1.5; }
+      .cap .w { position: relative; isolation: isolate; display: inline-block; padding: 0 12px 4px; color: color-mix(in srgb, var(--ink) 38%, transparent); text-shadow: 0 4px 18px color-mix(in srgb, var(--dark) 90%, transparent); }
+      .cap .w i { position: absolute; inset: 4px 0 2px; border-radius: 18px; background: var(--gold); opacity: 0; z-index: -1; box-shadow: 0 8px 26px color-mix(in srgb, var(--acc) 35%, transparent); }
+      .cap .w span { position: relative; }
+
+      /* CTA */
+      #cbox {
+        position: absolute; top: 1030px; left: 90px; right: 90px; height: 172px; border-radius: 86px; background: var(--ink);
+        display: flex; align-items: center; padding: 0 24px; gap: 24px; direction: rtl;
+        border: 4px solid var(--acc); box-shadow: 0 24px 60px color-mix(in srgb, var(--dark) 60%, transparent);
+      }
+      #cbox .av { flex: 0 0 122px; height: 122px; border-radius: 50%; background: var(--pri); position: relative; overflow: hidden; }
+      #cbox .field { flex: 1; position: relative; height: 100px; display: flex; align-items: center; }
+      #ctext { font-weight: 900; font-size: 76px; color: var(--dark); clip-path: inset(0% 0% 0% 100%); white-space: nowrap; }
+      #caret { width: 6px; height: 76px; background: var(--pri); margin-right: 8px; }
+      #send { flex: 0 0 122px; height: 122px; border-radius: 50%; background: var(--gold); display: flex; align-items: center; justify-content: center; }
+      #ctaBig { position: absolute; top: 1238px; left: 0; right: 0; text-align: center; font-weight: 900; font-size: 64px; color: var(--ink); text-shadow: 0 6px 22px color-mix(in srgb, var(--dark) 85%, transparent); }
+      #ctaBig em { font-style: normal; color: var(--acc-hi); }
+      #endLogo { position: absolute; top: 1440px; left: 50%; width: 560px; margin-left: -280px; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="__TOTAL__" data-width="1080" data-height="1920">
+
+      <!-- ============ Three.js stage (assets/world.js) ============ -->
+      <div id="stage" class="clip" data-start="0" data-duration="__TOTAL__" data-track-index="0">
+        <canvas id="gl" width="1080" height="1920"></canvas>
+        <div id="vig"></div>
+        <div id="labels" data-layout-allow-overlap></div>
+      </div>
+
+      <!-- ============ scene titles (data-at = anchor name in timing.anchors) ============ -->
+      <div id="hook" class="clip" data-scene="hook" data-track-index="1"><div class="scene-in">
+        <h1 class="hl" data-at="start">توی ایران <em>چی‌کاره‌ای؟</em></h1>
+        <h1 class="hl" data-at="here">اینجا <em>دلاریشو</em> دربیار!</h1>
+      </div></div>
+      <div id="city" class="clip" data-scene="city" data-track-index="2"><div class="scene-in">
+        <div class="sub" id="citySub">فرقی نمی‌کنه…</div>
+        <div id="tick" class="tick">
+          <div class="it">مغازه</div><div class="it">دفتر کار</div><div class="it">کلینیک</div><div class="it">کارخونه</div><div class="it">کارگاه</div>
+          <div class="it">زمین</div><div class="it">سالن زیبایی</div><div class="it">سالن ماساژ</div><div class="it">انبار</div><div class="it">گلخونه</div>
+          <div class="it">کشاورزی</div><div class="it">دامداری</div><div class="it">شیلات</div>
+        </div>
+        <div id="count" class="count"><span class="dots"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span></div>
+        <h1 class="hl" data-at="nodiff">هیچ <em>فرقی</em> نمی‌کنه!</h1>
+        <h1 class="hl" data-at="arm">توی <em>ارمنستان</em></h1>
+        <h1 class="hl" data-at="income">درآمد <em>دلاری</em> داشته باش</h1>
+      </div></div>
+      <div id="find" class="clip" data-scene="find" data-track-index="1"><div class="scene-in">
+        <h1 class="hl sm" data-at="start">متناسب با <em>بودجه</em> و <em>هدفت</em></h1>
+        <h1 class="hl" data-at="prop"><em>ملک مناسب</em> برای تو</h1>
+        <div id="seg"><div id="segKnob"></div><div class="opt a">اجاره</div><div class="opt b">خرید</div></div>
+      </div></div>
+      <div id="steps" class="clip" data-scene="steps" data-track-index="2"><div class="scene-in">
+        <div class="sub" id="stepSub">از بازدید تا راه‌اندازی</div>
+        <div id="stick" class="tick"><div class="it">بازدید ملک</div><div class="it">بررسی شرایط</div><div class="it">مذاکره و تخفیف</div><div class="it">قرارداد</div><div class="it">راه‌اندازی</div></div>
+        <div id="scount" class="count big"><span class="dots"><i></i><i></i><i></i><i></i><i></i></span></div>
+        <h1 class="hl" data-at="withyou">ما <em>کنارتیم</em></h1>
+      </div></div>
+      <div id="goal" class="clip" data-scene="goal" data-track-index="1"><div class="scene-in">
+        <h1 class="hl" data-at="start">فقط بگو <em>هدفت</em> چیه</h1>
+        <h1 class="hl" data-at="rest">بقیه‌ش <em>با ما!</em></h1>
+      </div></div>
+      <div id="cta" class="clip" data-scene="cta" data-track-index="2"><div class="scene-in">
+        <h1 class="hl" data-at="start"><em>مشاوره‌ی رایگان</em></h1>
+        <div id="cbox">
+          <div class="av"><svg width="122" height="122" viewBox="0 0 124 124"><circle cx="62" cy="48" r="22" fill="#faf2e0" /><path d="M22,118 C26,86 98,86 102,118 Z" fill="#faf2e0" /></svg></div>
+          <div class="field"><div id="ctext">ملک</div><div id="caret"></div></div>
+          <div id="send"><svg width="62" height="62" viewBox="0 0 64 64"><path d="M54,10 L8,30 L26,36 L32,56 Z" fill="#06140d" /></svg></div>
+        </div>
+        <div id="ctaBig">کلمه‌ی <em>«ملک»</em> رو کامنت کن</div>
+        <img id="endLogo" src="assets/iram-logo.png" alt="IRAM CO." />
+      </div></div>
+
+      <!-- ============ HUD ============ -->
+      <div id="hud" class="clip" data-start="0" data-duration="__TOTAL__" data-track-index="4">
+        <div id="prog"><div id="progBar"></div></div>
+        <img id="logoMark" src="assets/iram-logo.png" alt="IRAM CO." />
+      </div>
+
+      <!--__CAPTIONS__-->
+
+      <audio id="vo" src="assets/voiceover.wav" data-start="0" data-duration="__VO_DUR__" data-volume="1"></audio>
+      <audio id="music" src="assets/music.wav" data-start="0" data-duration="__TOTAL__" data-volume="1"></audio>
+      <audio id="sfx" src="assets/sfx.wav" data-start="0" data-duration="__TOTAL__" data-volume="1"></audio>
+    </div>
+
+    <script>
+      window.__T = /*__TIMING__*/null;
+      const T = window.__T, AN = T.anchors;
+      const tl = gsap.timeline({ paused: true });
+      window.__timelines = window.__timelines || {};
+      window.__timelines["main"] = tl;
+      const $ = (id) => document.getElementById(id);
+      const SC = {};
+      T.scenes.forEach((s, i) => { SC[s.id] = Object.assign({}, s, { i, next: T.scenes[i + 1] ? T.scenes[i + 1].start : T.total }); });
+      const atOf = (sid, key) => (key === "start" ? SC[sid].start + (SC[sid].i ? 0.12 : 0.15) : AN[key] - 0.08);
+
+      // split headline text into word units (an <em> stays one unit) so the words can rise in one after another
+      document.querySelectorAll(".hl").forEach((h) => {
+        const parts = [];
+        Array.from(h.childNodes).forEach((n) => {
+          if (n.nodeType === 3) n.textContent.split(/\s+/).filter(Boolean).forEach((w) => parts.push(document.createTextNode(w)));
+          else parts.push(n);
+        });
+        h.textContent = "";
+        parts.forEach((p, i) => { const s = document.createElement("span"); s.className = "hw"; s.appendChild(p); h.appendChild(s); if (i < parts.length - 1) h.appendChild(document.createTextNode(" ")); });
+      });
+
+      // HUD
+      tl.fromTo("#progBar", { scaleX: 0 }, { scaleX: 1, duration: T.total, ease: "none" }, 0);
+      tl.fromTo("#logoMark", { opacity: 0, y: -24 }, { opacity: 1, y: 0, duration: 0.6, ease: "power3.out" }, 0.1);
+      tl.fromTo("#prog", { opacity: 0 }, { opacity: 1, duration: 0.6, ease: "power2.out" }, 0.1);
+
+      // scenes: fade, headline beats
+      T.scenes.forEach((s, i) => {
+        const root = $(s.id), inner = root.querySelector(".scene-in");
+        tl.fromTo(inner, { opacity: 0 }, { opacity: 1, duration: 0.3, ease: "power2.out" }, SC[s.id].start);
+        if (i < T.scenes.length - 1) tl.to(inner, { opacity: 0, duration: 0.22, ease: "power2.in" }, SC[s.id].next - 0.22);
+        const hls = Array.from(root.querySelectorAll(".hl"));
+        hls.forEach((h, k) => {
+          const tin = atOf(s.id, h.dataset.at);
+          tl.fromTo(h.querySelectorAll(".hw"), { opacity: 0, y: 54, scale: 0.9 }, { opacity: 1, y: 0, scale: 1, duration: 0.55, ease: "power3.out", stagger: 0.075 }, tin);
+          if (k < hls.length - 1) tl.to(h, { opacity: 0, y: -36, duration: 0.24, ease: "power2.in" }, atOf(s.id, hls[k + 1].dataset.at) - 0.26);
+        });
+      });
+
+      // tickers: one big gold name per anchor (business types in the city, the five steps), + progress dots
+      function ticker(sub, tick, count, keys, subAt, endAt) {
+        const its = document.querySelectorAll(tick + " .it"), dots = document.querySelectorAll(count + " .dots i");
+        tl.fromTo(sub, { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.4, ease: "power3.out" }, subAt);
+        tl.fromTo(count, { opacity: 0 }, { opacity: 1, duration: 0.4 }, AN[keys[0]] - 0.2);
+        keys.forEach((k, i) => {
+          const t0 = AN[k] - 0.06;
+          tl.fromTo(its[i], { opacity: 0, y: 70, scale: 0.86 }, { opacity: 1, y: 0, scale: 1, duration: 0.34, ease: "back.out(1.6)" }, t0);
+          const t1 = i < keys.length - 1 ? AN[keys[i + 1]] - 0.1 : endAt;
+          tl.to(its[i], { opacity: 0, y: -60, scale: 0.92, duration: 0.18, ease: "power2.in" }, t1);
+          tl.fromTo(dots[i], { scale: 1 }, { scale: 1.6, duration: 0.16, yoyo: true, repeat: 1, ease: "power2.out" }, t0);
+          tl.to(dots[i], { backgroundColor: "#dcad58", duration: 0.12 }, t0);
+        });
+        tl.to([sub, count], { opacity: 0, y: -30, duration: 0.25, ease: "power2.in" }, endAt);
+      }
+      ticker("#citySub", "#tick", "#count", ["shop", "office", "clinic", "factory", "workshop", "land", "beauty", "spa", "warehouse", "greenhouse", "farm", "livestock", "fish"], AN.diff - 0.1, AN.nodiff - 0.3);
+      ticker("#stepSub", "#stick", "#scount", ["visit", "check", "nego", "contract", "launch"], SC.steps.start + 0.12, AN.withyou - 0.3);
+
+      // find: rent / buy toggle
+      (function () {
+        tl.fromTo("#seg", { opacity: 0, y: 30, scale: 0.92 }, { opacity: 1, y: 0, scale: 1, duration: 0.4, ease: "back.out(1.5)" }, AN.rent - 0.45);
+        tl.fromTo("#seg .opt.a", { color: "#faf2e0" }, { color: "#06140d", duration: 0.15 }, AN.rent - 0.05);
+        tl.to("#segKnob", { x: -256, duration: 0.32, ease: "power3.inOut" }, AN.buy - 0.12);
+        tl.to("#seg .opt.a", { color: "#faf2e0", duration: 0.15 }, AN.buy - 0.05);
+        tl.fromTo("#seg .opt.b", { color: "#faf2e0" }, { color: "#06140d", duration: 0.15 }, AN.buy + 0.05);
+        tl.fromTo("#segKnob", { opacity: 0 }, { opacity: 1, duration: 0.2 }, AN.rent - 0.12);
+      })();
+
+      // captions: line fades in, each word lights up (gold pill) as it is spoken, then stays bright
+      T.lines.forEach((L, i) => {
+        const cap = $("cap" + i), inner = cap.firstElementChild, ws = inner.querySelectorAll(".w");
+        ws.forEach((w) => { w.innerHTML = `<i></i><span>${w.innerHTML}</span>`; });
+        tl.fromTo(inner, { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: 0.2, ease: "power2.out" }, L.start - 0.06);
+        tl.to(inner, { opacity: 0, duration: 0.12, ease: "power1.in" }, L.hold - 0.12);
+        ws.forEach((w, j) => {
+          const [s] = L.w[j], nxt = j < ws.length - 1 ? L.w[j + 1][0] : Math.min(L.hold - 0.12, L.w[j][1] + 0.25);
+          const bx = w.firstElementChild, done = w.classList.contains("hi") ? "#f4d68c" : "#faf2e0";
+          tl.fromTo(bx, { opacity: 0, scale: 0.82 }, { opacity: 1, scale: 1, duration: 0.12, ease: "back.out(2)" }, s - 0.03);
+          tl.fromTo(w, { color: "rgba(250,242,224,0.38)" }, { color: "#06140d", duration: 0.08 }, s - 0.03);
+          tl.to(bx, { opacity: 0, duration: 0.12, ease: "power1.in" }, nxt - 0.04);
+          tl.to(w, { color: done, duration: 0.1 }, nxt - 0.04);
+        });
+      });
+
+      // CTA
+      (function () {
+        const s = SC.cta;
+        tl.fromTo("#cbox", { opacity: 0, y: 150 }, { opacity: 1, y: 0, duration: 0.6, ease: "back.out(1.4)" }, AN.word - 0.45);
+        tl.fromTo("#ctext", { clipPath: "inset(0% 0% 0% 100%)" }, { clipPath: "inset(0% 0% 0% 0%)", duration: 0.48, ease: "steps(3)" }, AN.word + 0.02);
+        tl.fromTo("#caret", { opacity: 1 }, { opacity: 0, duration: 0.26, yoyo: true, repeat: 9, ease: "steps(1)" }, AN.word - 0.3);
+        tl.fromTo("#ctaBig", { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.45, ease: "power3.out" }, AN.guide - 0.45);
+        tl.to("#send", { scale: 1.16, duration: 0.3, yoyo: true, repeat: 5, ease: "sine.inOut" }, AN.comment + 0.1);
+        const tend = Math.min(s.last + 0.3, T.total - 1.2);
+        tl.fromTo("#endLogo", { opacity: 0, y: 40, scale: 0.92 }, { opacity: 1, y: 0, scale: 1, duration: 0.6, ease: "power3.out" }, tend + 0.35);
+        tl.to("#logoMark", { opacity: 0, duration: 0.3 }, tend + 0.3);
+        tl.to("#cbox", { scale: 1.04, duration: 0.5, yoyo: true, repeat: 1, ease: "sine.inOut" }, tend + 0.2);
+      })();
+    </script>
+    <script type="module">
+      import { frame } from "./assets/world.js";
+      const state = { t: 0 };
+      frame(0);
+      window.__timelines["main"].fromTo(state, { t: 0 }, { t: window.__T.total, duration: window.__T.total, ease: "none", onUpdate: () => frame(state.t) }, 0);
+      window.__timelines["main"].seek(0);
+    </script>
+  </body>
+</html>

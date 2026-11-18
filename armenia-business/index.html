@@ -1,0 +1,310 @@
+<!doctype html>
+<!-- SOURCE TEMPLATE (bring your business to Armenia, Three.js). Edit this file, then run `python3 build.py` to regenerate index.html. -->
+<html lang="fa" dir="rtl" data-resolution="portrait">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <script src="assets/gsap.min.js"></script>
+    <script type="importmap">{ "imports": { "three": "./assets/three.module.js" } }</script>
+    <style>
+      @font-face { font-family: "Vazirmatn"; font-weight: 400; src: url("assets/fonts/vazirmatn-latin-400-normal.woff2") format("woff2"); }
+      @font-face { font-family: "Vazirmatn"; font-weight: 700; src: url("assets/fonts/vazirmatn-latin-700-normal.woff2") format("woff2"); }
+      @font-face { font-family: "Vazirmatn"; font-weight: 900; src: url("assets/fonts/vazirmatn-latin-900-normal.woff2") format("woff2"); }
+      @font-face { font-family: "Vazirmatn"; font-weight: 500; src: url("assets/fonts/vazirmatn-arabic-500-normal.woff2") format("woff2"); unicode-range: U+0600-06FF, U+0750-077F, U+0870-088E, U+0890-0891, U+0897-08E1, U+08E3-08FF, U+200C-200E, U+2010-2011, U+204F, U+2E41, U+FB50-FDFF, U+FE70-FE74, U+FE76-FEFC; }
+      @font-face { font-family: "Vazirmatn"; font-weight: 700; src: url("assets/fonts/vazirmatn-arabic-700-normal.woff2") format("woff2"); unicode-range: U+0600-06FF, U+0750-077F, U+0870-088E, U+0890-0891, U+0897-08E1, U+08E3-08FF, U+200C-200E, U+2010-2011, U+204F, U+2E41, U+FB50-FDFF, U+FE70-FE74, U+FE76-FEFC; }
+      @font-face { font-family: "Vazirmatn"; font-weight: 800; src: url("assets/fonts/vazirmatn-arabic-800-normal.woff2") format("woff2"); unicode-range: U+0600-06FF, U+0750-077F, U+0870-088E, U+0890-0891, U+0897-08E1, U+08E3-08FF, U+200C-200E, U+2010-2011, U+204F, U+2E41, U+FB50-FDFF, U+FE70-FE74, U+FE76-FEFC; }
+      @font-face { font-family: "Vazirmatn"; font-weight: 900; src: url("assets/fonts/vazirmatn-arabic-900-normal.woff2") format("woff2"); unicode-range: U+0600-06FF, U+0750-077F, U+0870-088E, U+0890-0891, U+0897-08E1, U+08E3-08FF, U+200C-200E, U+2010-2011, U+204F, U+2E41, U+FB50-FDFF, U+FE70-FE74, U+FE76-FEFC; }
+
+      /* ===================== PALETTE (IRAM CO. brand: forest green + metallic gold + cream) =====================
+         The 3D materials in assets/world.js use the same values. */
+      :root {
+        --bg-1: #0b2017; --bg-2: #1d3f2d; --card: #1a4430; --pri: #2f8a5c;
+        --acc: #dcad58; --acc-hi: #f4d68c; --acc-lo: #a9792f; --acc-2: #d38a4c;
+        --ink: #faf2e0; --muted: #86a58f; --dark: #06140d;
+        --gold: linear-gradient(180deg, #fff0c2 0%, #f4d68c 30%, #dcad58 70%, #c8954a 100%);
+        --font: "Vazirmatn", sans-serif;
+      }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { margin: 0; width: 1080px; height: 1920px; overflow: hidden; background: var(--bg-1); }
+      #root { position: relative; width: 100%; height: 100%; overflow: hidden; font-family: var(--font); color: var(--ink); background: var(--bg-1); }
+      .clip { position: absolute; inset: 0; }
+
+      /* 3D stage */
+      #gl { position: absolute; inset: 0; width: 1080px; height: 1920px; display: block; transform-origin: 50% 47%; }
+      #vig { position: absolute; inset: 0; background:
+        linear-gradient(180deg, color-mix(in srgb, var(--dark) 62%, transparent) 0%, transparent 22%, transparent 64%, color-mix(in srgb, var(--dark) 55%, transparent) 76%, color-mix(in srgb, var(--dark) 78%, transparent) 100%),
+        radial-gradient(ellipse 110% 70% at 50% 48%, transparent 58%, color-mix(in srgb, var(--dark) 50%, transparent) 100%); }
+      #labels { position: absolute; inset: 0; }
+      .lbl {
+        position: absolute; left: 0; top: 0; opacity: 0; white-space: nowrap; padding: 10px 28px 12px; border-radius: 999px;
+        font-weight: 800; font-size: 40px; color: var(--ink); background: color-mix(in srgb, var(--dark) 78%, transparent);
+        border: 2px solid color-mix(in srgb, var(--acc) 70%, transparent);
+      }
+      .lbl.gold { background: var(--gold); color: var(--dark); border-color: transparent; }
+      .lbl b { color: var(--acc-hi); font-weight: 900; margin-left: 12px; }
+
+      /* HUD: progress + logo, one quiet row */
+      #prog { position: absolute; top: 113px; left: 56px; right: 300px; height: 6px; border-radius: 6px; background: color-mix(in srgb, var(--ink) 14%, transparent); overflow: hidden; }
+      #progBar { width: 100%; height: 100%; background: linear-gradient(270deg, var(--acc-hi), var(--acc) 60%, var(--acc-lo)); transform-origin: 100% 50%; }
+      #logoMark { position: absolute; top: 72px; right: 52px; width: 220px; }
+
+      /* headlines */
+      .scene-in { position: absolute; inset: 0; }
+      .hl {
+        position: absolute; top: 268px; left: 50px; right: 50px; text-align: center;
+        font-weight: 900; font-size: 96px; line-height: 1.32; color: var(--ink);
+        text-shadow: 0 6px 30px color-mix(in srgb, var(--dark) 85%, transparent);
+      }
+      .hl .hw { display: inline-block; white-space: nowrap; }
+      .hl em { font-style: normal; color: var(--acc-hi); background: var(--gold); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; text-shadow: none; filter: drop-shadow(0 6px 22px color-mix(in srgb, var(--dark) 80%, transparent)); }
+      .hl.sm { font-size: 82px; top: 280px; }
+      .sub { position: absolute; top: 218px; left: 0; right: 0; text-align: center; font-weight: 700; font-size: 44px; color: color-mix(in srgb, var(--ink) 78%, transparent); }
+
+      /* city: business-name ticker */
+      .tick { position: absolute; top: 286px; left: 0; right: 0; height: 140px; }
+      .tick .it {
+        position: absolute; inset: 0; text-align: center; font-weight: 900; font-size: 112px; line-height: 1.2; opacity: 0;
+        color: var(--acc-hi); background: var(--gold); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+        filter: drop-shadow(0 8px 26px color-mix(in srgb, var(--dark) 85%, transparent));
+      }
+      .count { position: absolute; top: 446px; left: 0; right: 0; text-align: center; }
+      .count .dots { display: inline-flex; gap: 10px; direction: rtl; }
+      .count .dots i { width: 14px; height: 14px; border-radius: 50%; background: color-mix(in srgb, var(--ink) 20%, transparent); display: inline-block; }
+      .count.big .dots { gap: 16px; } .count.big .dots i { width: 18px; height: 18px; }
+
+      /* find: rent / buy segmented toggle */
+      #seg {
+        position: absolute; top: 470px; left: 50%; width: 520px; margin-left: -260px; height: 96px; border-radius: 48px; display: flex; direction: rtl;
+        background: color-mix(in srgb, var(--dark) 70%, transparent); border: 2px solid color-mix(in srgb, var(--acc) 55%, transparent);
+      }
+      #seg .opt { position: relative; flex: 1; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 44px; color: var(--ink); z-index: 1; }
+      #segKnob { position: absolute; top: 8px; right: 8px; width: 248px; height: 76px; border-radius: 38px; background: var(--gold); }
+      #seg .opt.a, #seg .opt.b { transition: none; }
+
+      /* captions: karaoke, word by word */
+      .cap { display: flex; align-items: flex-start; justify-content: center; }
+      .cap-in { margin-top: 1428px; max-width: 1000px; text-align: center; font-weight: 900; font-size: 62px; line-height: 1.5; }
+      .cap .w { position: relative; isolation: isolate; display: inline-block; padding: 0 12px 4px; color: color-mix(in srgb, var(--ink) 38%, transparent); text-shadow: 0 4px 18px color-mix(in srgb, var(--dark) 90%, transparent); }
+      .cap .w i { position: absolute; inset: 4px 0 2px; border-radius: 18px; background: var(--gold); opacity: 0; z-index: -1; box-shadow: 0 8px 26px color-mix(in srgb, var(--acc) 35%, transparent); }
+      .cap .w span { position: relative; }
+
+      /* CTA */
+      #cbox {
+        position: absolute; top: 1030px; left: 90px; right: 90px; height: 172px; border-radius: 86px; background: var(--ink);
+        display: flex; align-items: center; padding: 0 24px; gap: 24px; direction: rtl;
+        border: 4px solid var(--acc); box-shadow: 0 24px 60px color-mix(in srgb, var(--dark) 60%, transparent);
+      }
+      #cbox .av { flex: 0 0 122px; height: 122px; border-radius: 50%; background: var(--pri); position: relative; overflow: hidden; }
+      #cbox .field { flex: 1; position: relative; height: 100px; display: flex; align-items: center; }
+      #ctext { font-weight: 900; font-size: 76px; color: var(--dark); clip-path: inset(0% 0% 0% 100%); white-space: nowrap; }
+      #caret { width: 6px; height: 76px; background: var(--pri); margin-right: 8px; }
+      #send { flex: 0 0 122px; height: 122px; border-radius: 50%; background: var(--gold); display: flex; align-items: center; justify-content: center; }
+      #ctaBig { position: absolute; top: 1238px; left: 0; right: 0; text-align: center; font-weight: 900; font-size: 64px; color: var(--ink); text-shadow: 0 6px 22px color-mix(in srgb, var(--dark) 85%, transparent); }
+      #ctaBig em { font-style: normal; color: var(--acc-hi); }
+      #endLogo { position: absolute; top: 1440px; left: 50%; width: 560px; margin-left: -280px; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="49.090" data-width="1080" data-height="1920">
+
+      <!-- ============ Three.js stage (assets/world.js) ============ -->
+      <div id="stage" class="clip" data-start="0" data-duration="49.090" data-track-index="0">
+        <canvas id="gl" width="1080" height="1920"></canvas>
+        <div id="vig"></div>
+        <div id="labels" data-layout-allow-overlap></div>
+      </div>
+
+      <!-- ============ scene titles (data-at = anchor name in timing.anchors) ============ -->
+      <div id="hook" class="clip" data-scene="hook" data-start="0.000" data-duration="5.485" data-track-index="1"><div class="scene-in">
+        <h1 class="hl" data-at="start">توی ایران <em>چی‌کاره‌ای؟</em></h1>
+        <h1 class="hl" data-at="here">اینجا <em>دلاریشو</em> دربیار!</h1>
+      </div></div>
+      <div id="city" class="clip" data-scene="city" data-start="5.485" data-duration="20.055" data-track-index="2"><div class="scene-in">
+        <div class="sub" id="citySub">فرقی نمی‌کنه…</div>
+        <div id="tick" class="tick">
+          <div class="it">مغازه</div><div class="it">دفتر کار</div><div class="it">کلینیک</div><div class="it">کارخونه</div><div class="it">کارگاه</div>
+          <div class="it">زمین</div><div class="it">سالن زیبایی</div><div class="it">سالن ماساژ</div><div class="it">انبار</div><div class="it">گلخونه</div>
+          <div class="it">کشاورزی</div><div class="it">دامداری</div><div class="it">شیلات</div>
+        </div>
+        <div id="count" class="count"><span class="dots"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span></div>
+        <h1 class="hl" data-at="nodiff">هیچ <em>فرقی</em> نمی‌کنه!</h1>
+        <h1 class="hl" data-at="arm">توی <em>ارمنستان</em></h1>
+        <h1 class="hl" data-at="income">درآمد <em>دلاری</em> داشته باش</h1>
+      </div></div>
+      <div id="find" class="clip" data-scene="find" data-start="25.540" data-duration="5.390" data-track-index="1"><div class="scene-in">
+        <h1 class="hl sm" data-at="start">متناسب با <em>بودجه</em> و <em>هدفت</em></h1>
+        <h1 class="hl" data-at="prop"><em>ملک مناسب</em> برای تو</h1>
+        <div id="seg"><div id="segKnob"></div><div class="opt a">اجاره</div><div class="opt b">خرید</div></div>
+      </div></div>
+      <div id="steps" class="clip" data-scene="steps" data-start="30.930" data-duration="7.860" data-track-index="2"><div class="scene-in">
+        <div class="sub" id="stepSub">از بازدید تا راه‌اندازی</div>
+        <div id="stick" class="tick"><div class="it">بازدید ملک</div><div class="it">بررسی شرایط</div><div class="it">مذاکره و تخفیف</div><div class="it">قرارداد</div><div class="it">راه‌اندازی</div></div>
+        <div id="scount" class="count big"><span class="dots"><i></i><i></i><i></i><i></i><i></i></span></div>
+        <h1 class="hl" data-at="withyou">ما <em>کنارتیم</em></h1>
+      </div></div>
+      <div id="goal" class="clip" data-scene="goal" data-start="38.790" data-duration="3.030" data-track-index="1"><div class="scene-in">
+        <h1 class="hl" data-at="start">فقط بگو <em>هدفت</em> چیه</h1>
+        <h1 class="hl" data-at="rest">بقیه‌ش <em>با ما!</em></h1>
+      </div></div>
+      <div id="cta" class="clip" data-scene="cta" data-start="41.820" data-duration="7.270" data-track-index="2"><div class="scene-in">
+        <h1 class="hl" data-at="start"><em>مشاوره‌ی رایگان</em></h1>
+        <div id="cbox">
+          <div class="av"><svg width="122" height="122" viewBox="0 0 124 124"><circle cx="62" cy="48" r="22" fill="#faf2e0" /><path d="M22,118 C26,86 98,86 102,118 Z" fill="#faf2e0" /></svg></div>
+          <div class="field"><div id="ctext">ملک</div><div id="caret"></div></div>
+          <div id="send"><svg width="62" height="62" viewBox="0 0 64 64"><path d="M54,10 L8,30 L26,36 L32,56 Z" fill="#06140d" /></svg></div>
+        </div>
+        <div id="ctaBig">کلمه‌ی <em>«ملک»</em> رو کامنت کن</div>
+        <img id="endLogo" src="assets/iram-logo.png" alt="IRAM CO." />
+      </div></div>
+
+      <!-- ============ HUD ============ -->
+      <div id="hud" class="clip" data-start="0" data-duration="49.090" data-track-index="4">
+        <div id="prog"><div id="progBar"></div></div>
+        <img id="logoMark" src="assets/iram-logo.png" alt="IRAM CO." />
+      </div>
+
+      <div id="cap0" class="clip cap" data-start="0.490" data-duration="1.530" data-track-index="6"><div class="cap-in"><span class="w">توی</span><span class="w">ایران</span><span class="w hi">چی‌کاره‌ای؟</span></div></div>
+      <div id="cap1" class="clip cap" data-start="1.960" data-duration="1.530" data-track-index="6"><div class="cap-in"><span class="w">هر</span><span class="w">کاری</span><span class="w">توی</span><span class="w">ایران</span><span class="w">می‌کنی،</span></div></div>
+      <div id="cap2" class="clip cap" data-start="3.430" data-duration="2.410" data-track-index="6"><div class="cap-in"><span class="w">اینجا</span><span class="w hi">دلاریشو</span><span class="w">دربیار!</span></div></div>
+      <div id="cap3" class="clip cap" data-start="5.780" data-duration="0.730" data-track-index="6"><div class="cap-in"><span class="w">فرقی</span><span class="w">نمی‌کنه</span></div></div>
+      <div id="cap4" class="clip cap" data-start="6.450" data-duration="2.130" data-track-index="6"><div class="cap-in"><span class="w hi">مغازه</span><span class="w">داری،</span><span class="w hi">دفتر</span><span class="w hi">کار</span><span class="w">داری،</span></div></div>
+      <div id="cap5" class="clip cap" data-start="8.520" data-duration="1.230" data-track-index="6"><div class="cap-in"><span class="w hi">کلینیک</span><span class="w">داری،</span></div></div>
+      <div id="cap6" class="clip cap" data-start="9.690" data-duration="1.950" data-track-index="6"><div class="cap-in"><span class="w hi">کارخونه</span><span class="w">یا</span><span class="w hi">کارگاه</span><span class="w">داری،</span></div></div>
+      <div id="cap7" class="clip cap" data-start="11.580" data-duration="0.750" data-track-index="6"><div class="cap-in"><span class="w hi">زمین</span><span class="w">داری،</span></div></div>
+      <div id="cap8" class="clip cap" data-start="12.270" data-duration="0.980" data-track-index="6"><div class="cap-in"><span class="w hi">سالن</span><span class="w hi">زیبایی</span><span class="w">یا</span></div></div>
+      <div id="cap9" class="clip cap" data-start="13.190" data-duration="1.540" data-track-index="6"><div class="cap-in"><span class="w hi">سالن</span><span class="w hi">ماساژ</span><span class="w">داری،</span></div></div>
+      <div id="cap10" class="clip cap" data-start="14.670" data-duration="2.060" data-track-index="6"><div class="cap-in"><span class="w hi">انبار</span><span class="w">داری،</span><span class="w hi">گلخونه</span><span class="w">داری،</span></div></div>
+      <div id="cap11" class="clip cap" data-start="16.670" data-duration="1.260" data-track-index="6"><div class="cap-in"><span class="w">یا</span><span class="w">اصلاً</span><span class="w">توی</span><span class="w">کار</span><span class="w hi">کشاورزی</span></div></div>
+      <div id="cap12" class="clip cap" data-start="17.870" data-duration="1.550" data-track-index="6"><div class="cap-in"><span class="w">و</span><span class="w hi">دامداری</span><span class="w">و</span><span class="w hi">شیلاتی؛</span></div></div>
+      <div id="cap13" class="clip cap" data-start="19.360" data-duration="1.720" data-track-index="6"><div class="cap-in"><span class="w">هیچ</span><span class="w hi">فرقی</span><span class="w hi">نمی‌کنه!</span></div></div>
+      <div id="cap14" class="clip cap" data-start="21.020" data-duration="0.950" data-track-index="6"><div class="cap-in"><span class="w">توی</span><span class="w hi">ارمنستان</span></div></div>
+      <div id="cap15" class="clip cap" data-start="21.910" data-duration="1.540" data-track-index="6"><div class="cap-in"><span class="w">همین</span><span class="w">کار</span><span class="w">رو</span><span class="w">ادامه</span><span class="w">بده</span></div></div>
+      <div id="cap16" class="clip cap" data-start="23.390" data-duration="2.460" data-track-index="6"><div class="cap-in"><span class="w">و</span><span class="w hi">درآمد</span><span class="w hi">دلاری</span><span class="w">داشته</span><span class="w">باش.</span></div></div>
+      <div id="cap17" class="clip cap" data-start="25.790" data-duration="1.900" data-track-index="6"><div class="cap-in"><span class="w">ما</span><span class="w">متناسب</span><span class="w">با</span><span class="w hi">بودجه</span><span class="w">و</span><span class="w hi">هدفت،</span></div></div>
+      <div id="cap18" class="clip cap" data-start="27.630" data-duration="1.160" data-track-index="6"><div class="cap-in"><span class="w hi">ملک</span><span class="w hi">مناسب</span><span class="w">رو</span><span class="w">برای</span></div></div>
+      <div id="cap19" class="clip cap" data-start="28.730" data-duration="1.060" data-track-index="6"><div class="cap-in"><span class="w hi">اجاره</span><span class="w">یا</span><span class="w hi">خرید</span></div></div>
+      <div id="cap20" class="clip cap" data-start="29.730" data-duration="1.520" data-track-index="6"><div class="cap-in"><span class="w">برات</span><span class="w hi">پیدا</span><span class="w hi">می‌کنیم.</span></div></div>
+      <div id="cap21" class="clip cap" data-start="31.190" data-duration="0.920" data-track-index="6"><div class="cap-in"><span class="w">از</span><span class="w hi">بازدید</span><span class="w hi">ملک</span></div></div>
+      <div id="cap22" class="clip cap" data-start="32.050" data-duration="1.440" data-track-index="6"><div class="cap-in"><span class="w">و</span><span class="w hi">بررسی</span><span class="w hi">شرایط</span><span class="w">گرفته،</span></div></div>
+      <div id="cap23" class="clip cap" data-start="33.430" data-duration="1.620" data-track-index="6"><div class="cap-in"><span class="w">تا</span><span class="w hi">مذاکره</span><span class="w">برای</span><span class="w hi">تخفیف</span></div></div>
+      <div id="cap24" class="clip cap" data-start="34.990" data-duration="0.620" data-track-index="6"><div class="cap-in"><span class="w">و</span><span class="w hi">قرارداد،</span></div></div>
+      <div id="cap25" class="clip cap" data-start="35.550" data-duration="2.220" data-track-index="6"><div class="cap-in"><span class="w">و</span><span class="w">حتی</span><span class="w hi">راه‌اندازی</span><span class="w hi">کسب‌وکارت،</span></div></div>
+      <div id="cap26" class="clip cap" data-start="37.710" data-duration="1.260" data-track-index="6"><div class="cap-in"><span class="w hi">ما</span><span class="w hi">کنارتیم.</span></div></div>
+      <div id="cap27" class="clip cap" data-start="38.910" data-duration="1.840" data-track-index="6"><div class="cap-in"><span class="w">تو</span><span class="w">فقط</span><span class="w">بگو</span><span class="w hi">هدفت</span><span class="w">چیه،</span></div></div>
+      <div id="cap28" class="clip cap" data-start="40.690" data-duration="1.520" data-track-index="6"><div class="cap-in"><span class="w hi">بقیه‌ش</span><span class="w hi">با</span><span class="w hi">ما!</span></div></div>
+      <div id="cap29" class="clip cap" data-start="42.150" data-duration="1.400" data-track-index="6"><div class="cap-in"><span class="w">برای</span><span class="w hi">مشاوره‌ی</span><span class="w hi">رایگان،</span></div></div>
+      <div id="cap30" class="clip cap" data-start="43.490" data-duration="1.770" data-track-index="6"><div class="cap-in"><span class="w">کلمه‌ی</span><span class="w hi">«ملک»</span><span class="w">رو</span><span class="w">کامنت</span><span class="w">کن،</span></div></div>
+      <div id="cap31" class="clip cap" data-start="45.200" data-duration="1.790" data-track-index="6"><div class="cap-in"><span class="w">تا</span><span class="w">کامل</span><span class="w hi">راهنماییت</span><span class="w">کنیم.</span></div></div>
+
+      <audio id="vo" src="assets/voiceover.wav" data-start="0" data-duration="46.550" data-volume="1"></audio>
+      <audio id="music" src="assets/music.wav" data-start="0" data-duration="49.090" data-volume="1"></audio>
+      <audio id="sfx" src="assets/sfx.wav" data-start="0" data-duration="49.090" data-volume="1"></audio>
+    </div>
+
+    <script>
+      window.__T = {"total": 49.09, "anchors": {"q": 0.77, "any": 2.02, "here": 3.49, "dollar": 4.01, "out": 4.69, "diff": 5.84, "shop": 6.51, "office": 7.31, "clinic": 8.58, "factory": 9.75, "workshop": 10.39, "land": 11.64, "beauty": 12.33, "spa": 13.25, "warehouse": 14.73, "greenhouse": 15.65, "farm": 17.39, "livestock": 18.03, "fish": 18.55, "nodiff": 19.42, "arm": 21.08, "armenia": 21.13, "same": 21.97, "income": 23.67, "usd": 24.13, "fit": 25.99, "budget": 26.69, "goal": 27.07, "prop": 27.69, "rent": 28.79, "buy": 29.41, "found": 30.05, "visit": 31.39, "check": 32.17, "nego": 33.81, "disc": 34.69, "contract": 35.07, "launch": 36.11, "withyou": 37.77, "tell": 39.41, "target": 39.65, "rest": 40.75, "withus": 41.35, "free": 42.37, "word": 43.91, "comment": 44.51, "guide": 45.75}, "scenes": [{"id": "hook", "start": 0.0, "first": 0.55, "last": 5.13}, {"id": "city", "start": 5.485, "first": 5.84, "last": 25.23}, {"id": "find", "start": 25.54, "first": 25.85, "last": 30.61}, {"id": "steps", "start": 30.93, "first": 31.25, "last": 38.63}, {"id": "goal", "start": 38.79, "first": 38.97, "last": 41.43}, {"id": "cta", "start": 41.82, "first": 42.21, "last": 46.49}], "lines": [{"start": 0.55, "hold": 2.02, "w": [[0.55, 0.63], [0.63, 0.77], [0.77, 1.47]]}, {"start": 2.02, "hold": 3.49, "w": [[2.02, 2.29], [2.37, 2.59], [2.72, 2.83], [2.83, 2.99], [2.99, 3.49]]}, {"start": 3.49, "hold": 5.84, "w": [[3.49, 4.01], [4.01, 4.69], [4.69, 5.13]]}, {"start": 5.84, "hold": 6.51, "w": [[5.84, 6.03], [6.03, 6.51]]}, {"start": 6.51, "hold": 8.58, "w": [[6.51, 6.95], [6.95, 7.31], [7.31, 7.65], [7.8, 7.99], [7.99, 8.35]]}, {"start": 8.58, "hold": 9.75, "w": [[8.58, 8.93], [9.06, 9.39]]}, {"start": 9.75, "hold": 11.64, "w": [[9.75, 10.23], [10.23, 10.39], [10.39, 10.87], [10.87, 11.25]]}, {"start": 11.64, "hold": 12.33, "w": [[11.64, 11.97], [11.97, 12.33]]}, {"start": 12.33, "hold": 13.25, "w": [[12.33, 12.63], [12.63, 13.11], [13.11, 13.25]]}, {"start": 13.25, "hold": 14.73, "w": [[13.25, 13.51], [13.51, 13.862], [13.95, 14.39]]}, {"start": 14.73, "hold": 16.73, "w": [[14.73, 15.15], [15.15, 15.51], [15.65, 16.07], [16.07, 16.41]]}, {"start": 16.73, "hold": 17.93, "w": [[16.73, 16.81], [16.79, 16.99], [16.99, 17.17], [17.17, 17.39], [17.39, 17.93]]}, {"start": 17.93, "hold": 19.42, "w": [[17.93, 18.03], [18.03, 18.41], [18.41, 18.55], [18.55, 19.11]]}, {"start": 19.42, "hold": 21.08, "w": [[19.42, 19.5], [19.47, 19.93], [19.93, 20.41]]}, {"start": 21.08, "hold": 21.97, "w": [[21.08, 21.16], [21.13, 21.97]]}, {"start": 21.97, "hold": 23.45, "w": [[21.97, 22.39], [22.39, 22.69], [22.69, 22.81], [22.81, 23.19], [23.19, 23.45]]}, {"start": 23.45, "hold": 25.85, "w": [[23.45, 23.67], [23.67, 24.13], [24.13, 24.67], [24.67, 24.99], [24.99, 25.23]]}, {"start": 25.85, "hold": 27.69, "w": [[25.85, 25.99], [25.99, 26.49], [26.49, 26.69], [26.69, 26.915], [26.99, 27.07], [27.07, 27.59]]}, {"start": 27.69, "hold": 28.79, "w": [[27.69, 27.85], [27.92, 28.41], [28.41, 28.59], [28.59, 28.79]]}, {"start": 28.79, "hold": 29.79, "w": [[28.79, 29.25], [29.25, 29.41], [29.41, 29.69]]}, {"start": 29.79, "hold": 31.25, "w": [[29.79, 29.95], [30.05, 30.17], [30.17, 30.61]]}, {"start": 31.25, "hold": 32.11, "w": [[31.25, 31.39], [31.39, 31.73], [31.73, 32.11]]}, {"start": 32.11, "hold": 33.49, "w": [[32.11, 32.19], [32.17, 32.57], [32.57, 33.07], [33.17, 33.49]]}, {"start": 33.49, "hold": 35.05, "w": [[33.49, 33.81], [33.81, 34.29], [34.29, 34.53], [34.69, 35.05]]}, {"start": 35.05, "hold": 35.61, "w": [[35.05, 35.13], [35.07, 35.61]]}, {"start": 35.61, "hold": 37.77, "w": [[35.61, 35.73], [35.73, 36.11], [36.11, 36.79], [36.79, 37.61]]}, {"start": 37.77, "hold": 38.97, "w": [[37.77, 37.91], [37.91, 38.63]]}, {"start": 38.97, "hold": 40.75, "w": [[38.97, 39.11], [39.11, 39.41], [39.41, 39.65], [39.65, 40.11], [40.2, 40.49]]}, {"start": 40.75, "hold": 42.21, "w": [[40.75, 41.13], [41.25, 41.35], [41.35, 41.43]]}, {"start": 42.21, "hold": 43.55, "w": [[42.21, 42.37], [42.37, 42.93], [42.93, 43.55]]}, {"start": 43.55, "hold": 45.26, "w": [[43.55, 43.91], [43.91, 44.25], [44.35, 44.43], [44.51, 44.73], [44.84, 44.99]]}, {"start": 45.26, "hold": 46.99, "w": [[45.26, 45.34], [45.4, 45.75], [45.75, 46.163], [46.3, 46.49]]}]};
+      const T = window.__T, AN = T.anchors;
+      const tl = gsap.timeline({ paused: true });
+      window.__timelines = window.__timelines || {};
+      window.__timelines["main"] = tl;
+      const $ = (id) => document.getElementById(id);
+      const SC = {};
+      T.scenes.forEach((s, i) => { SC[s.id] = Object.assign({}, s, { i, next: T.scenes[i + 1] ? T.scenes[i + 1].start : T.total }); });
+      const atOf = (sid, key) => (key === "start" ? SC[sid].start + (SC[sid].i ? 0.12 : 0.15) : AN[key] - 0.08);
+
+      // split headline text into word units (an <em> stays one unit) so the words can rise in one after another
+      document.querySelectorAll(".hl").forEach((h) => {
+        const parts = [];
+        Array.from(h.childNodes).forEach((n) => {
+          if (n.nodeType === 3) n.textContent.split(/\s+/).filter(Boolean).forEach((w) => parts.push(document.createTextNode(w)));
+          else parts.push(n);
+        });
+        h.textContent = "";
+        parts.forEach((p, i) => { const s = document.createElement("span"); s.className = "hw"; s.appendChild(p); h.appendChild(s); if (i < parts.length - 1) h.appendChild(document.createTextNode(" ")); });
+      });
+
+      // HUD
+      tl.fromTo("#progBar", { scaleX: 0 }, { scaleX: 1, duration: T.total, ease: "none" }, 0);
+      tl.fromTo("#logoMark", { opacity: 0, y: -24 }, { opacity: 1, y: 0, duration: 0.6, ease: "power3.out" }, 0.1);
+      tl.fromTo("#prog", { opacity: 0 }, { opacity: 1, duration: 0.6, ease: "power2.out" }, 0.1);
+
+      // scenes: fade, headline beats
+      T.scenes.forEach((s, i) => {
+        const root = $(s.id), inner = root.querySelector(".scene-in");
+        tl.fromTo(inner, { opacity: 0 }, { opacity: 1, duration: 0.3, ease: "power2.out" }, SC[s.id].start);
+        if (i < T.scenes.length - 1) tl.to(inner, { opacity: 0, duration: 0.22, ease: "power2.in" }, SC[s.id].next - 0.22);
+        const hls = Array.from(root.querySelectorAll(".hl"));
+        hls.forEach((h, k) => {
+          const tin = atOf(s.id, h.dataset.at);
+          tl.fromTo(h.querySelectorAll(".hw"), { opacity: 0, y: 54, scale: 0.9 }, { opacity: 1, y: 0, scale: 1, duration: 0.55, ease: "power3.out", stagger: 0.075 }, tin);
+          if (k < hls.length - 1) tl.to(h, { opacity: 0, y: -36, duration: 0.24, ease: "power2.in" }, atOf(s.id, hls[k + 1].dataset.at) - 0.26);
+        });
+      });
+
+      // tickers: one big gold name per anchor (business types in the city, the five steps), + progress dots
+      function ticker(sub, tick, count, keys, subAt, endAt) {
+        const its = document.querySelectorAll(tick + " .it"), dots = document.querySelectorAll(count + " .dots i");
+        tl.fromTo(sub, { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.4, ease: "power3.out" }, subAt);
+        tl.fromTo(count, { opacity: 0 }, { opacity: 1, duration: 0.4 }, AN[keys[0]] - 0.2);
+        keys.forEach((k, i) => {
+          const t0 = AN[k] - 0.06;
+          tl.fromTo(its[i], { opacity: 0, y: 70, scale: 0.86 }, { opacity: 1, y: 0, scale: 1, duration: 0.34, ease: "back.out(1.6)" }, t0);
+          const t1 = i < keys.length - 1 ? AN[keys[i + 1]] - 0.1 : endAt;
+          tl.to(its[i], { opacity: 0, y: -60, scale: 0.92, duration: 0.18, ease: "power2.in" }, t1);
+          tl.fromTo(dots[i], { scale: 1 }, { scale: 1.6, duration: 0.16, yoyo: true, repeat: 1, ease: "power2.out" }, t0);
+          tl.to(dots[i], { backgroundColor: "#dcad58", duration: 0.12 }, t0);
+        });
+        tl.to([sub, count], { opacity: 0, y: -30, duration: 0.25, ease: "power2.in" }, endAt);
+      }
+      ticker("#citySub", "#tick", "#count", ["shop", "office", "clinic", "factory", "workshop", "land", "beauty", "spa", "warehouse", "greenhouse", "farm", "livestock", "fish"], AN.diff - 0.1, AN.nodiff - 0.3);
+      ticker("#stepSub", "#stick", "#scount", ["visit", "check", "nego", "contract", "launch"], SC.steps.start + 0.12, AN.withyou - 0.3);
+
+      // find: rent / buy toggle
+      (function () {
+        tl.fromTo("#seg", { opacity: 0, y: 30, scale: 0.92 }, { opacity: 1, y: 0, scale: 1, duration: 0.4, ease: "back.out(1.5)" }, AN.rent - 0.45);
+        tl.fromTo("#seg .opt.a", { color: "#faf2e0" }, { color: "#06140d", duration: 0.15 }, AN.rent - 0.05);
+        tl.to("#segKnob", { x: -256, duration: 0.32, ease: "power3.inOut" }, AN.buy - 0.12);
+        tl.to("#seg .opt.a", { color: "#faf2e0", duration: 0.15 }, AN.buy - 0.05);
+        tl.fromTo("#seg .opt.b", { color: "#faf2e0" }, { color: "#06140d", duration: 0.15 }, AN.buy + 0.05);
+        tl.fromTo("#segKnob", { opacity: 0 }, { opacity: 1, duration: 0.2 }, AN.rent - 0.12);
+      })();
+
+      // captions: line fades in, each word lights up (gold pill) as it is spoken, then stays bright
+      T.lines.forEach((L, i) => {
+        const cap = $("cap" + i), inner = cap.firstElementChild, ws = inner.querySelectorAll(".w");
+        ws.forEach((w) => { w.innerHTML = `<i></i><span>${w.innerHTML}</span>`; });
+        tl.fromTo(inner, { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: 0.2, ease: "power2.out" }, L.start - 0.06);
+        tl.to(inner, { opacity: 0, duration: 0.12, ease: "power1.in" }, L.hold - 0.12);
+        ws.forEach((w, j) => {
+          const [s] = L.w[j], nxt = j < ws.length - 1 ? L.w[j + 1][0] : Math.min(L.hold - 0.12, L.w[j][1] + 0.25);
+          const bx = w.firstElementChild, done = w.classList.contains("hi") ? "#f4d68c" : "#faf2e0";
+          tl.fromTo(bx, { opacity: 0, scale: 0.82 }, { opacity: 1, scale: 1, duration: 0.12, ease: "back.out(2)" }, s - 0.03);
+          tl.fromTo(w, { color: "rgba(250,242,224,0.38)" }, { color: "#06140d", duration: 0.08 }, s - 0.03);
+          tl.to(bx, { opacity: 0, duration: 0.12, ease: "power1.in" }, nxt - 0.04);
+          tl.to(w, { color: done, duration: 0.1 }, nxt - 0.04);
+        });
+      });
+
+      // CTA
+      (function () {
+        const s = SC.cta;
+        tl.fromTo("#cbox", { opacity: 0, y: 150 }, { opacity: 1, y: 0, duration: 0.6, ease: "back.out(1.4)" }, AN.word - 0.45);
+        tl.fromTo("#ctext", { clipPath: "inset(0% 0% 0% 100%)" }, { clipPath: "inset(0% 0% 0% 0%)", duration: 0.48, ease: "steps(3)" }, AN.word + 0.02);
+        tl.fromTo("#caret", { opacity: 1 }, { opacity: 0, duration: 0.26, yoyo: true, repeat: 9, ease: "steps(1)" }, AN.word - 0.3);
+        tl.fromTo("#ctaBig", { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.45, ease: "power3.out" }, AN.guide - 0.45);
+        tl.to("#send", { scale: 1.16, duration: 0.3, yoyo: true, repeat: 5, ease: "sine.inOut" }, AN.comment + 0.1);
+        const tend = Math.min(s.last + 0.3, T.total - 1.2);
+        tl.fromTo("#endLogo", { opacity: 0, y: 40, scale: 0.92 }, { opacity: 1, y: 0, scale: 1, duration: 0.6, ease: "power3.out" }, tend + 0.35);
+        tl.to("#logoMark", { opacity: 0, duration: 0.3 }, tend + 0.3);
+        tl.to("#cbox", { scale: 1.04, duration: 0.5, yoyo: true, repeat: 1, ease: "sine.inOut" }, tend + 0.2);
+      })();
+    </script>
+    <script type="module">
+      import { frame } from "./assets/world.js";
+      const state = { t: 0 };
+      frame(0);
+      window.__timelines["main"].fromTo(state, { t: 0 }, { t: window.__T.total, duration: window.__T.total, ease: "none", onUpdate: () => frame(state.t) }, 0);
+      window.__timelines["main"].seek(0);
+    </script>
+  </body>
+</html>

@@ -37,17 +37,19 @@ SHOTS = [
     (b(17), b(19), 'fur',   4.55, 1.00, dict(zoom=(1.00, 1.04))),
     (b(19), b(20), 'p2_floral_knit_front.jpg', 0, 1, dict(cx=0.50, cy=0.48, zoom=(1.00, 1.05))),
     (b(20), b(21), 'p6_orange_studded_knit.jpg', 0, 1, dict(cx=0.45, cy=0.50, zoom=(1.05, 1.00))),
-    (b(21), b(22), 'p3_red_peanut_knit.jpg', 0, 1, dict(cx=0.58, cy=0.50, zoom=(1.00, 1.05))),
-    (b(22), b(23), 'p5_taupe_knit_front.jpg', 0, 1, dict(cx=0.50, cy=0.50, zoom=(1.05, 1.00))),
+    (b(21), b(22), 'p9_red_tweed_suit.jpg', 0, 1, dict(cx=0.50, cy=0.40, zoom=(1.00, 1.05))),
+    (b(22), b(23), 'p3_red_peanut_knit.jpg', 0, 1, dict(cx=0.58, cy=0.50, zoom=(1.05, 1.00))),
     (b(23), b(24), 'fur',   7.00, 1.00, dict(zoom=(1.02, 1.05))),
     # SCENE 04 — discount reveal over the velvet garland, then product montage
     (b(24), b(32), 'store', 1.30, 0.55, dict(zoom=(1.12, 1.18), dim=0.55)),
-    (b(32), b(33), 'p4_fur_coat_mirror.jpg', 0, 1, dict(cx=0.52, cy=0.50, zoom=(1.00, 1.04), dim=0.25)),
-    (b(33), b(34), 'p7_floral_knit_side.jpg', 0, 1, dict(cx=0.45, cy=0.50, zoom=(1.04, 1.00), dim=0.25)),
+    (b(32), b(33), 'p10_taupe_sweetheart_knit.jpg', 0, 1, dict(cx=0.50, cy=0.50, zoom=(1.00, 1.04), dim=0.25)),
+    (b(33), b(34), 'p4_fur_coat_mirror.jpg', 0, 1, dict(cx=0.52, cy=0.50, zoom=(1.04, 1.00), dim=0.25)),
     (b(34), b(35), 'p1_black_jumpsuit.jpg', 0, 1, dict(cx=0.42, cy=0.47, zoom=(1.00, 1.04), dim=0.25)),
-    (b(35), b(36), 'p8_taupe_knit_side.jpg', 0, 1, dict(cx=0.55, cy=0.50, zoom=(1.04, 1.00), dim=0.25)),
-    # SCENE 05 — CTA on the brand sign (bookend), slow and steady
-    (b(36), DURATION, 'store', 9.45, 0.24, dict(zoom=(1.02, 1.07), roll=1.6, dim=0.12)),
+    (b(35), b(36), 'p5_taupe_knit_front.jpg', 0, 1, dict(cx=0.50, cy=0.50, zoom=(1.04, 1.00), dim=0.25)),
+    # SCENE 05a — the ADAM BARFI Black Friday board walk (re-branded ad photo)
+    (b(36), b(40), 'p11_sign_walk_adambarfi_9x16.jpg', 0, 1, dict(cx=0.5, cy=0.5, zoom=(1.00, 1.07))),
+    # SCENE 05b — CTA on the brand sign (bookend), slow and steady
+    (b(40), DURATION, 'store', 9.45, 0.24, dict(zoom=(1.02, 1.07), roll=1.6, dim=0.12)),
 ]
 
 # ---------------------------------------------------------------- voiceover

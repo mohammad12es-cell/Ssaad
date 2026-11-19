@@ -466,17 +466,17 @@ def build_graphics():
                   anim='wipe', max_w=860))
     # SCENE 05 — CTA end card
     T = 1e9
-    G.append(Text('ADAM BARFI', SERIF_SB, 122, W / 2, 905, b(36.4), T, fill='gold', tracking=22, anim='track',
+    G.append(Text('ADAM BARFI', SERIF_SB, 122, W / 2, 905, b(40.3), T, fill='gold', tracking=22, anim='track',
                   track_from=64, max_w=900, shimmer=(b(47.8), b(49.6))))
-    G.append(Text('آدم برفی؛ استایل تو، انتخاب تو', FA_BOLD, 64, W / 2, 1025, b(37.2), T, rtl=True, anim='wipe',
+    G.append(Text('آدم برفی؛ استایل تو، انتخاب تو', FA_BOLD, 64, W / 2, 1025, b(40.8), T, rtl=True, anim='wipe',
                   max_w=860))
-    G.append(Rule(W / 2, 1100, 560, b(37.7), T))
-    G.append(Text('BLACK FRIDAY  ·  UP TO 30% OFF', SANS_SB, 40, W / 2, 1160, b(38.1), T, tracking=7, anim='rise', max_w=860))
-    G.append(Text('YOUR NEXT FAVORITE LOOK IS WAITING.', CORM_I, 58, W / 2, 1238, b(38.8), T, fill='gold', anim='rise', max_w=880))
-    G.append(Text('برای سفارش، همین حالا دایرکت بده', FA_BOLD, 64, W / 2, 1345, b(39.5), T, rtl=True, anim='wipe', max_w=860))
-    G.append(Pill(W / 2, 1470, b(40.4), T))
+    G.append(Rule(W / 2, 1100, 560, b(41.1), T))
+    G.append(Text('BLACK FRIDAY  ·  UP TO 30% OFF', SANS_SB, 40, W / 2, 1160, b(41.4), T, tracking=7, anim='rise', max_w=860))
+    G.append(Text('YOUR NEXT FAVORITE LOOK IS WAITING.', CORM_I, 58, W / 2, 1238, b(41.8), T, fill='gold', anim='rise', max_w=880))
+    G.append(Text('برای سفارش، همین حالا دایرکت بده', FA_BOLD, 64, W / 2, 1345, b(42.2), T, rtl=True, anim='wipe', max_w=860))
+    G.append(Pill(W / 2, 1470, b(42.7), T))
     if HANDLE:
-        G.append(Text(HANDLE, SANS_SB, 40, W / 2, 1570, b(41.2), T, tracking=3, anim='rise'))
+        G.append(Text(HANDLE, SANS_SB, 40, W / 2, 1570, b(43.2), T, tracking=3, anim='rise'))
     return G
 
 
@@ -488,11 +488,11 @@ GRADS = [
     (b(24), b(32), 'center', 0.35),
     (b(32), b(36), 'top', 0.85),
     (b(32), b(36), 'bottom', 0.80),
-    (b(36), 99, 'bottom', 0.92),
+    (b(40), 99, 'bottom', 0.92),
 ]
-SWEEPS = [(b(6) - 0.25, 0.55), (b(14) - 0.25, 0.5), (b(36) - 0.25, 0.6)]
+SWEEPS = [(b(6) - 0.25, 0.55), (b(14) - 0.25, 0.5), (b(36) - 0.25, 0.6), (b(40) - 0.25, 0.5)]
 GLOWS = [(b(28), 0.45), (b(24), 0.25), (b(48), 0.3)]  # warm bloom pulses on impacts
-PUNCH_CUTS = [b(k) for k in (17, 19, 20, 21, 22, 23, 32, 33, 34, 35)]
+PUNCH_CUTS = [b(k) for k in (17, 19, 20, 21, 22, 23, 32, 33, 34, 35, 36)]
 
 
 def shot_at(t):

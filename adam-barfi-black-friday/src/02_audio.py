@@ -407,7 +407,7 @@ place(sfx, impact(1.0), b(24), 0.9)
 place(sfx, impact(1.4), b(28), 1.05)          # the 30% hit
 place(sfx, impact(0.6), b(36), 0.55)
 place(sfx, impact(1.5), b(48), 1.0)            # final brand impact
-for k in (6, 14, 24, 32, 36):
+for k in (6, 14, 24, 32, 36, 40):
     place(sfx, whoosh(0.55), b(k) - 0.45, 0.55)
 for k in (17, 19, 20, 21, 22, 23, 33, 34, 35):  # quick runway cut swishes
     place(sfx, whoosh(0.25, up=(k % 2 == 0)), b(k) - 0.18, 0.22)
@@ -416,7 +416,7 @@ place(sfx, riser(b(28) - b(25)), b(25), 0.75)
 place(sfx, riser(b(48) - b(44)), b(44), 0.35)
 for k, base in ((6.5, 86), (28.1, 86), (40, 91), (48.1, 86)):
     place(sfx, shimmer(2.4, base), b(k), 1.0)
-for tt in (b(0.4), b(1.4), b(14.4), b(17.1), b(19.1), b(21.1), b(26), b(37), b(38.5), b(40.5)):
+for tt in (b(0.4), b(1.4), b(14.4), b(17.1), b(19.1), b(21.1), b(26), b(40.3), b(41.4), b(42.7)):
     place(sfx, tick(), tt, 0.55)
 
 

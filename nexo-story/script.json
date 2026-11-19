@@ -1,0 +1,175 @@
+{
+ "title": "NEXO · یک خانواده، یک پرونده",
+ "voice": {
+  "voiceName": "Charon",
+  "style": "Read the following text aloud in standard Persian (Farsi) with a clear, neutral accent that both Afghan (Dari) and Iranian listeners understand easily. You are a warm, empathetic male storyteller narrating a short true-to-life story for an Instagram ad. Start soft and personal; let the three questions carry a gentle worry; lift with hope when the company NEXO appears; sound confident and clear through the steps; put joyful emphasis on the word 'free' (رایگان); end warmly with a clear, inviting call to action. Medium-fast, flowing pace with short natural pauses between sentences (never long silences). Never read punctuation marks aloud."
+ },
+ "segments": [
+  {
+   "id": "s1",
+   "text": "احمد فقط یک سؤال داشت: آینده‌ی بچه‌هایم چه می‌شود؟",
+   "captions": [
+    "احمد فقط یک سؤال داشت:",
+    "[آینده‌ی بچه‌هایم] چه می‌شود؟"
+   ]
+  },
+  {
+   "id": "s2",
+   "text": "ویزا از کجا؟ کار و درآمد؟ و خانواده‌ام… همراهم می‌آیند؟",
+   "captions": [
+    "[ویزا] از کجا؟",
+    "[کار و درآمد؟]",
+    "و [خانواده‌ام…] همراهم می‌آیند؟"
+   ]
+  },
+  {
+   "id": "s3",
+   "text": "تا اینکه با NEXO، مسیر اقامت عمان برایش روشن شد.",
+   "tts": "تا اینکه با نِکسو، مسیر اقامت عمان برایش روشن شد.",
+   "captions": [
+    "تا اینکه با [NEXO]،",
+    "مسیر [اقامت عمان] برایش روشن شد."
+   ]
+  },
+  {
+   "id": "s4",
+   "text": "اول، ویزای عمان، با بررسی شرایطش.",
+   "captions": [
+    "اول، [ویزای عمان]،",
+    "با بررسی شرایطش."
+   ]
+  },
+  {
+   "id": "s5",
+   "text": "بعد، ثبت شرکت و کسب‌وکارش در عمان، و از همین راه، اقامت.",
+   "captions": [
+    "بعد، [ثبت شرکت]",
+    "و کسب‌وکارش در عمان،",
+    "و از همین راه، [اقامت.]"
+   ]
+  },
+  {
+   "id": "s6",
+   "text": "و بهترین خبر: اقامت همسر و فرزندان زیر ۱۸ سالش، رایگان بود.",
+   "tts": "و بهترین خبر: اقامت همسر و فرزندان زیر هجده سالش، رایگان بود.",
+   "captions": [
+    "و بهترین خبر:",
+    "اقامت [همسر و فرزندان]",
+    "زیر ۱۸ سالش، [رایگان] بود."
+   ]
+  },
+  {
+   "id": "s7",
+   "text": "حتی امکان اقامت پدر و مادرش هم بررسی شد؛ ترانسفر هماهنگ شد، و مراحل قانونی و اداری، قدم‌به‌قدم پیگیری شد.",
+   "captions": [
+    "حتی امکان اقامت [پدر و مادرش]",
+    "هم بررسی شد؛",
+    "[ترانسفر] هماهنگ شد،",
+    "و [مراحل قانونی و اداری]،",
+    "قدم‌به‌قدم پیگیری شد."
+   ]
+  },
+  {
+   "id": "s8",
+   "text": "امروز، احمد و خانواده‌اش زندگی تازه‌ای را در عمان شروع کرده‌اند.",
+   "captions": [
+    "امروز، احمد و خانواده‌اش",
+    "[زندگی تازه‌ای] را",
+    "در عمان شروع کرده‌اند."
+   ]
+  },
+  {
+   "id": "s9",
+   "text": "شما هم از داخل افغانستان یا ایران می‌توانید اقدام کنید. برای مشاوره و ثبت درخواست، همین حالا با NEXO در ارتباط باشید.",
+   "tts": "شما هم از داخل افغانستان یا ایران می‌توانید اقدام کنید. برای مشاوره و ثبت درخواست، همین حالا با نِکسو در ارتباط باشید.",
+   "captions": [
+    "شما هم از داخل [افغانستان] یا [ایران]",
+    "می‌توانید اقدام کنید.",
+    "برای [مشاوره و ثبت درخواست]،",
+    "همین حالا با [NEXO] در ارتباط باشید."
+   ]
+  }
+ ],
+ "lead": 0.3,
+ "tail": 2.4,
+ "scenes": [
+  {
+   "id": "hook",
+   "segs": [
+    "s1"
+   ]
+  },
+  {
+   "id": "doubt",
+   "segs": [
+    "s2"
+   ]
+  },
+  {
+   "id": "reveal",
+   "segs": [
+    "s3"
+   ]
+  },
+  {
+   "id": "path",
+   "segs": [
+    "s4",
+    "s5"
+   ]
+  },
+  {
+   "id": "family",
+   "segs": [
+    "s6"
+   ]
+  },
+  {
+   "id": "care",
+   "segs": [
+    "s7"
+   ]
+  },
+  {
+   "id": "life",
+   "segs": [
+    "s8"
+   ]
+  },
+  {
+   "id": "cta",
+   "segs": [
+    "s9"
+   ]
+  }
+ ],
+ "anchors": {
+  "q": "s1:آینده‌ی",
+  "visaQ": "s2:ویزا",
+  "workQ": "s2:کار",
+  "famQ": "s2:خانواده‌ام…",
+  "comeQ": "s2:همراهم",
+  "nexo": "s3:NEXO،",
+  "route": "s3:مسیر",
+  "lit": "s3:روشن",
+  "visa": "s4:ویزای",
+  "check": "s4:بررسی",
+  "company": "s5:ثبت",
+  "biz": "s5:کسب‌وکارش",
+  "res": "s5:اقامت.",
+  "best": "s6:بهترین",
+  "spouse": "s6:همسر",
+  "free": "s6:رایگان",
+  "parents": "s7:پدر",
+  "transfer": "s7:ترانسفر",
+  "legal": "s7:مراحل",
+  "step": "s7:قدم‌به‌قدم",
+  "today": "s8:امروز،",
+  "newlife": "s8:زندگی",
+  "you": "s9:شما",
+  "af": "s9:افغانستان",
+  "ir": "s9:ایران",
+  "consult": "s9:مشاوره",
+  "nexo2": "s9:NEXO"
+ }
+}

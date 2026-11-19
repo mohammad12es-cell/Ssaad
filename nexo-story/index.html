@@ -1,0 +1,473 @@
+<!doctype html>
+<!-- SOURCE TEMPLATE. NEXO · "one family, one file" (Oman visa & residency). Edit this file, then run `python3 build.py`. -->
+<html lang="fa" dir="rtl" data-resolution="portrait">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <script src="assets/gsap.min.js"></script>
+    <style>
+      @font-face { font-family: "Vazirmatn"; font-weight: 700; src: url("assets/fonts/vazirmatn-latin-700-normal.woff2") format("woff2"); }
+      @font-face { font-family: "Vazirmatn"; font-weight: 900; src: url("assets/fonts/vazirmatn-latin-900-normal.woff2") format("woff2"); }
+      @font-face { font-family: "Vazirmatn"; font-weight: 700; src: url("assets/fonts/vazirmatn-arabic-700-normal.woff2") format("woff2"); unicode-range: U+0600-06FF, U+0750-077F, U+08A0-08FF, U+200C-200E, U+2026, U+FB50-FDFF, U+FE70-FEFC; }
+      @font-face { font-family: "Vazirmatn"; font-weight: 800; src: url("assets/fonts/vazirmatn-arabic-800-normal.woff2") format("woff2"); unicode-range: U+0600-06FF, U+0750-077F, U+08A0-08FF, U+200C-200E, U+2026, U+FB50-FDFF, U+FE70-FEFC; }
+      @font-face { font-family: "Vazirmatn"; font-weight: 900; src: url("assets/fonts/vazirmatn-arabic-900-normal.woff2") format("woff2"); unicode-range: U+0600-06FF, U+0750-077F, U+08A0-08FF, U+200C-200E, U+2026, U+FB50-FDFF, U+FE70-FEFC; }
+      @font-face { font-family: "Cinzel"; font-weight: 700; src: url("assets/fonts/cinzel-latin-700-normal.woff2") format("woff2"); }
+      @font-face { font-family: "Cinzel"; font-weight: 900; src: url("assets/fonts/cinzel-latin-900-normal.woff2") format("woff2"); }
+      /* ===== NEXO poster palette ===== */
+      :root {
+        --navy-hi: #1b2e4a; --navy: #0f1c30; --navy-lo: #050b16; --ink: #fbf3e2; --muted: #b7c0cf;
+        --maroon-hi: #a31c1c; --maroon: #750b0b; --maroon-lo: #4a0606;
+        --gold: linear-gradient(180deg, #fff7dc 0%, #f6dc98 28%, #d9ab55 56%, #f3d589 74%, #a8772d 100%);
+        --gold-dark: #5c3f12; --silver: linear-gradient(180deg, #ffffff 0%, #dfe3e9 30%, #8e959f 58%, #e9ecf0 78%, #7c838d 100%);
+        --font: "Vazirmatn", sans-serif;
+      }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1080px; height: 1920px; overflow: hidden; background: var(--navy-lo); }
+      #root { position: relative; width: 1080px; height: 1920px; overflow: hidden; font-family: var(--font); color: var(--ink); background: var(--navy-lo); }
+      .clip { position: absolute; inset: 0; }
+      .abs { position: absolute; }
+      .scene-in { position: absolute; inset: 0; }
+      .cx { position: absolute; left: 0; right: 0; margin: 0 auto; }
+
+      /* background */
+      #bgGlow { position: absolute; inset: 0; background: radial-gradient(ellipse 80% 55% at 50% 34%, var(--navy-hi) 0%, var(--navy) 45%, var(--navy-lo) 100%); }
+      #dawn { position: absolute; inset: 0; opacity: 0; background: radial-gradient(ellipse 90% 40% at 50% 62%, rgba(246, 196, 112, 0.55) 0%, rgba(200, 120, 70, 0.25) 35%, transparent 70%); }
+      #rays { position: absolute; left: -400px; top: -620px; width: 1880px; height: 1880px; opacity: 0.2;
+        background: repeating-conic-gradient(from 0deg at 50% 50%, rgba(170, 195, 230, 0.16) 0deg 4deg, transparent 4deg 15deg);
+        -webkit-mask-image: radial-gradient(circle at 50% 50%, #000 0%, transparent 62%); mask-image: radial-gradient(circle at 50% 50%, #000 0%, transparent 62%); }
+      #mosque { position: absolute; left: -40px; top: 640px; width: 1160px; height: 760px; opacity: 0.32; }
+      #fog { position: absolute; left: 0; right: 0; top: 1130px; height: 790px; background: linear-gradient(180deg, transparent, var(--navy-lo) 45%); }
+      #vig { position: absolute; inset: 0; background: radial-gradient(ellipse 100% 75% at 50% 45%, transparent 60%, rgba(2, 6, 14, 0.7) 100%); }
+
+      /* metallic gold title: extrusion layer + gradient text */
+      .ttl { position: absolute; top: 236px; left: 40px; right: 40px; height: 150px; isolation: isolate; filter: drop-shadow(0 14px 24px rgba(0, 0, 0, 0.6)); }
+      .ttl .x, .ttl .g { position: absolute; left: 0; right: 0; top: 0; text-align: center; font-weight: 900; font-size: 104px; line-height: 1.3; white-space: nowrap; }
+      .ttl .x { top: 7px; color: var(--gold-dark); -webkit-text-stroke: 3px var(--gold-dark); }
+      .ttl .g { color: transparent; background: var(--gold); -webkit-background-clip: text; background-clip: text; }
+      .ttl.sm .x, .ttl.sm .g { font-size: 84px; }
+      .sub { position: absolute; top: 380px; left: 0; right: 0; text-align: center; font-weight: 800; font-size: 50px; color: var(--ink); text-shadow: 0 4px 16px rgba(0, 0, 0, 0.7); }
+
+      /* pills */
+      .pill { position: absolute; left: 0; right: 0; margin: 0 auto; width: max-content; display: flex; align-items: center; gap: 20px; white-space: nowrap; border-radius: 999px; font-weight: 900; }
+      .glass { padding: 14px 36px 18px 28px; font-size: 48px; color: var(--ink);
+        background: linear-gradient(180deg, rgba(23, 38, 62, 0.94), rgba(7, 13, 25, 0.94)) padding-box, var(--silver) border-box; border: 3px solid transparent; box-shadow: 0 14px 34px rgba(0, 0, 0, 0.5); }
+      .maroon { padding: 14px 40px 18px 30px; font-size: 56px; color: #fff6ea;
+        background: linear-gradient(180deg, var(--maroon-hi), var(--maroon) 55%, var(--maroon-lo)) padding-box, var(--gold) border-box; border: 5px solid transparent; box-shadow: 0 16px 40px rgba(0, 0, 0, 0.55); }
+      .pill svg.ic { width: 60px; height: 60px; flex: none; }
+      .flagC { width: 76px; height: 76px; border-radius: 50%; overflow: hidden; border: 3px solid #e9edf2; flex: none; }
+      .flagC svg { width: 100%; height: 100%; display: block; }
+
+      /* hook: the family photo */
+      #frame { position: absolute; left: 230px; top: 470px; width: 620px; height: 640px; border-radius: 30px; padding: 16px; background: var(--gold); box-shadow: 0 30px 70px rgba(0, 0, 0, 0.65); }
+      #frame .in { position: relative; width: 100%; height: 100%; border-radius: 18px; overflow: hidden; background: radial-gradient(ellipse 80% 70% at 50% 35%, #26405f 0%, #142640 55%, #0a1426 100%); }
+      #frame .spot { position: absolute; left: 50%; top: -40px; width: 520px; height: 640px; margin-left: -260px; background: radial-gradient(ellipse 50% 60% at 50% 30%, rgba(255, 230, 170, 0.28), transparent 70%); }
+      #fam1 { position: absolute; left: 40px; right: 40px; bottom: 26px; height: 470px; }
+      #qmark { position: absolute; left: 0; right: 0; top: 560px; text-align: center; font-weight: 900; font-size: 200px; line-height: 1; color: transparent; background: var(--gold); -webkit-background-clip: text; background-clip: text; filter: drop-shadow(0 0 30px rgba(246, 214, 140, 0.6)); }
+
+      /* doubt: Ahmad alone, tangled lines, question chips */
+      #ahmad { position: absolute; left: 0; right: 0; margin: 0 auto; top: 560px; width: 250px; height: 640px; }
+      #tangle { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; }
+      .chip { position: absolute; display: flex; align-items: center; gap: 16px; white-space: nowrap; padding: 12px 30px 16px 22px; border-radius: 999px; font-weight: 900; font-size: 50px;
+        background: linear-gradient(180deg, rgba(23, 38, 62, 0.95), rgba(7, 13, 25, 0.95)) padding-box, var(--silver) border-box; border: 3px solid transparent; box-shadow: 0 14px 34px rgba(0, 0, 0, 0.55); }
+      .chip svg { width: 58px; height: 58px; flex: none; }
+
+      /* reveal + path: the NEXO folder and what comes out of it */
+      #folder { position: absolute; left: 0; right: 0; margin: 0 auto; top: 760px; width: 600px; height: 380px; }
+      #folder .back { position: absolute; inset: 0; border-radius: 26px; background: linear-gradient(180deg, #1d3354, #0d1a2e); border: 4px solid #c9a052; }
+      #folder .tab { position: absolute; top: -40px; right: 40px; width: 220px; height: 64px; border-radius: 18px 18px 0 0; background: linear-gradient(180deg, #24406a, #1d3354); border: 4px solid #c9a052; border-bottom: none; }
+      #folder .front { position: absolute; left: 0; right: 0; bottom: 0; height: 300px; border-radius: 22px; z-index: 3; display: flex; flex-direction: column; align-items: center; justify-content: center;
+        background: linear-gradient(180deg, #213b62, #0f1e35) padding-box, var(--gold) border-box; border: 5px solid transparent; box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.35); }
+      #folder .front svg { width: 96px; height: 102px; }
+      #folder .front .nx { font-family: "Cinzel", serif; font-weight: 900; font-size: 64px; letter-spacing: 5px; line-height: 1.05; direction: ltr; color: transparent; background: var(--silver); -webkit-background-clip: text; background-clip: text; }
+      #folder .front .lb { font-weight: 800; font-size: 34px; color: #e9d29a; margin-top: 4px; }
+      #folder .items { position: absolute; left: 0; right: 0; bottom: 120px; height: 760px; z-index: 2; }
+      #goldRoute { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; }
+      .doc { position: absolute; left: 0; right: 0; margin: 0 auto; bottom: 0; width: 360px; height: 360px; border-radius: 14px; background: linear-gradient(180deg, #fbf4e4, #efe3c8); box-shadow: 0 18px 40px rgba(0, 0, 0, 0.5); }
+      .doc .ln { position: absolute; right: 44px; height: 14px; border-radius: 7px; background: #c9b896; }
+      .doc .hd { position: absolute; top: 28px; left: 0; right: 0; text-align: center; font-family: "Cinzel", serif; font-weight: 900; font-size: 40px; letter-spacing: 3px; color: #7a5a22; direction: ltr; }
+      #stamp { position: absolute; left: 34px; top: 150px; width: 186px; height: 186px; }
+      #docTick { position: absolute; right: 34px; top: 196px; width: 84px; height: 84px; }
+      #bldg { position: absolute; left: 0; right: 0; margin: 0 auto; bottom: 0; width: 375px; height: 500px; }
+      .rcard { position: absolute; width: 400px; height: 252px; border-radius: 22px; padding: 18px 22px; overflow: hidden;
+        background: linear-gradient(160deg, #243f66, #0f1d33 70%) padding-box, var(--gold) border-box; border: 4px solid transparent; box-shadow: 0 20px 44px rgba(0, 0, 0, 0.6); }
+      .rcard .t1 { font-family: "Cinzel", serif; font-weight: 900; font-size: 20px; letter-spacing: 1px; color: #f1d38a; direction: ltr; text-align: left; }
+      .rcard .t2 { font-weight: 800; font-size: 25px; color: #e7e9ee; text-align: left; direction: rtl; position: absolute; left: 22px; top: 50px; }
+      .rcard .ph { position: absolute; right: 22px; top: 22px; width: 132px; height: 170px; border-radius: 12px; background: linear-gradient(180deg, #e9dcc0, #cdb98f); overflow: hidden; }
+      .rcard .ph svg { position: absolute; left: 0; right: 0; bottom: -6px; margin: 0 auto; height: 160px; }
+      .rcard .ln { position: absolute; left: 22px; height: 12px; border-radius: 6px; background: rgba(233, 237, 242, 0.35); }
+      .rcard .chipc { position: absolute; left: 22px; bottom: 22px; width: 58px; height: 44px; border-radius: 8px; background: var(--gold); }
+      .rcard .fl { position: absolute; left: 96px; bottom: 26px; width: 54px; height: 36px; border-radius: 5px; overflow: hidden; }
+      #freeStamp { position: absolute; left: 0; right: 0; margin: 0 auto; top: 790px; width: 560px; height: 170px; display: flex; align-items: center; justify-content: center; border-radius: 26px;
+        font-weight: 900; font-size: 112px; color: #fff3e2; background: linear-gradient(180deg, var(--maroon-hi), var(--maroon) 55%, var(--maroon-lo)) padding-box, var(--gold) border-box; border: 7px solid transparent;
+        box-shadow: 0 24px 60px rgba(0, 0, 0, 0.6), inset 0 2px 0 rgba(255, 255, 255, 0.2); }
+      .spark { position: absolute; width: 34px; height: 34px; }
+
+      /* care */
+      #elders { position: absolute; left: 0; right: 0; margin: 0 auto; top: 540px; width: 520px; height: 560px; border-radius: 30px; padding: 14px; background: var(--gold); box-shadow: 0 26px 60px rgba(0, 0, 0, 0.6); }
+      #elders .in { position: relative; width: 100%; height: 100%; border-radius: 18px; overflow: hidden; background: radial-gradient(ellipse 80% 70% at 50% 35%, #26405f 0%, #142640 55%, #0a1426 100%); }
+      #mag { position: absolute; left: 600px; top: 620px; width: 260px; height: 260px; }
+      #route { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; }
+      #clip { position: absolute; left: 0; right: 0; margin: 0 auto; top: 520px; width: 470px; height: 600px; }
+      .clbl { top: 418px; }
+
+      /* life */
+      #fam2 { position: absolute; left: 0; right: 0; margin: 0 auto; top: 600px; width: 720px; height: 553px; }
+
+      /* end card */
+      #logo { position: absolute; top: 560px; left: 0; right: 0; display: flex; flex-direction: column; align-items: center; }
+      #logo svg { width: 170px; height: 180px; }
+      #logo .nexo { font-family: "Cinzel", serif; font-weight: 900; font-size: 120px; line-height: 1; letter-spacing: 8px; direction: ltr; color: transparent; background: var(--silver); -webkit-background-clip: text; background-clip: text; filter: drop-shadow(0 4px 0 #3a414c) drop-shadow(0 12px 20px rgba(0, 0, 0, 0.55)); }
+      #disc { position: absolute; top: 1056px; left: 70px; right: 70px; display: flex; align-items: center; gap: 14px; padding: 14px 26px; border-radius: 34px; font-weight: 700; font-size: 26px; line-height: 1.45; color: var(--muted);
+        background: rgba(5, 10, 20, 0.78); border: 2px solid rgba(220, 226, 235, 0.32); }
+      #disc svg { width: 42px; height: 42px; flex: none; }
+
+      /* captions: karaoke */
+      .cap { display: flex; align-items: flex-start; justify-content: center; }
+      .cap-in { margin-top: 1196px; max-width: 1000px; text-align: center; font-weight: 900; font-size: 54px; line-height: 1.45; }
+      .cap .w { position: relative; isolation: isolate; display: inline-block; padding: 0 10px 4px; color: rgba(251, 243, 226, 0.4); text-shadow: 0 4px 16px rgba(0, 0, 0, 0.9); }
+      .cap .w i { position: absolute; inset: 4px 0 2px; border-radius: 16px; background: var(--gold); opacity: 0; z-index: -1; }
+      .cap .w span { position: relative; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="48.200" data-width="1080" data-height="1920">
+
+      <!-- ============ background (all scenes) ============ -->
+      <div id="bg" class="clip" data-start="0" data-duration="48.200" data-track-index="0">
+        <div id="bgGlow"></div>
+        <div id="dawn"></div>
+        <div id="rays"></div>
+        <svg id="mosque" viewBox="0 0 1160 760" aria-hidden="true">
+          <defs>
+            <linearGradient id="mq" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#c9d6e8" stop-opacity="0.55" /><stop offset="0.6" stop-color="#7f93ad" stop-opacity="0.32" /><stop offset="1" stop-color="#2a3a52" stop-opacity="0" /></linearGradient>
+          </defs>
+          <g fill="url(#mq)">
+            <rect x="96" y="120" width="44" height="560" /><rect x="86" y="300" width="64" height="16" /><rect x="88" y="440" width="60" height="14" /><path d="M92,120 L118,40 L144,120 Z" /><rect x="114" y="10" width="8" height="34" />
+            <rect x="150" y="430" width="860" height="250" /><path d="M240,430 a62,62 0 0 1 124,0 Z" /><path d="M790,430 a62,62 0 0 1 124,0 Z" />
+            <rect x="380" y="300" width="400" height="140" /><path d="M400,300 C400,150 470,96 580,82 C690,96 760,150 760,300 Z" /><rect x="576" y="34" width="8" height="52" /><circle cx="580" cy="30" r="9" />
+            <rect x="1016" y="250" width="34" height="430" /><path d="M1012,250 L1033,186 L1054,250 Z" />
+          </g>
+          <g fill="#0b1528" opacity="0.55">
+            <path d="M200,680 v-120 a34,34 0 0 1 68,0 v120 Z" /><path d="M300,680 v-120 a34,34 0 0 1 68,0 v120 Z" /><path d="M800,680 v-120 a34,34 0 0 1 68,0 v120 Z" /><path d="M900,680 v-120 a34,34 0 0 1 68,0 v120 Z" />
+            <path d="M420,440 v-90 a26,26 0 0 1 52,0 v90 Z" /><path d="M500,440 v-90 a26,26 0 0 1 52,0 v90 Z" /><path d="M608,440 v-90 a26,26 0 0 1 52,0 v90 Z" /><path d="M688,440 v-90 a26,26 0 0 1 52,0 v90 Z" /><path d="M500,680 v-150 a80,80 0 0 1 160,0 v150 Z" />
+          </g>
+          <g stroke="#e9f0fa" stroke-opacity="0.18" stroke-width="3" fill="none"><path d="M580,84 C540,140 520,220 520,300" /><path d="M580,84 C620,140 640,220 640,300" /><path d="M580,84 C500,130 455,210 450,300" /><path d="M580,84 C660,130 705,210 710,300" /><path d="M580,84 L580,300" /></g>
+        </svg>
+        <div id="fog"></div>
+        <div id="vig"></div>
+      </div>
+
+      <!-- ============ 1 hook: the family photo ============ -->
+      <div id="hook" class="clip" data-scene="hook" data-start="0.000" data-duration="4.395" data-track-index="1"><div class="scene-in">
+        <div class="ttl" id="tHook"><span class="x" aria-hidden="true">یک پدر، یک سؤال</span><span class="g">یک پدر، یک سؤال</span></div>
+        <div id="frame"><div class="in"><div class="spot"></div>
+          <svg id="fam1" viewBox="0 0 540 470"><use href="#man" x="20" y="10" width="160" height="440" /><use href="#woman" x="150" y="50" width="150" height="400" /><use href="#boy" x="290" y="170" width="110" height="280" /><use href="#girl" x="390" y="190" width="100" height="260" /><rect x="0" y="448" width="540" height="6" rx="3" fill="#c9a052" opacity="0.5" /></svg>
+        </div></div>
+        <div id="qmark">؟</div>
+      </div></div>
+
+      <!-- ============ 2 doubt: Ahmad and his questions ============ -->
+      <div id="doubt" class="clip" data-scene="doubt" data-start="4.395" data-duration="4.850" data-track-index="2"><div class="scene-in">
+        <div class="ttl sm" id="tDoubt"><span class="x" aria-hidden="true">سؤال‌های بی‌جواب</span><span class="g">سؤال‌های بی‌جواب</span></div>
+        <svg id="tangle" viewBox="0 0 1080 1920" aria-hidden="true">
+          <g fill="none" stroke="#c9d2de" stroke-opacity="0.35" stroke-width="4" stroke-dasharray="10 14" stroke-linecap="round">
+            <path class="tg" d="M540,1180 C300,1100 760,980 420,900 C200,850 880,780 640,700 C460,640 300,760 260,640" />
+            <path class="tg" d="M540,1180 C820,1080 280,1000 700,920 C900,880 220,760 500,690 C700,640 820,760 860,620" />
+            <path class="tg" d="M540,1180 C420,1020 660,1000 560,880 C470,770 720,720 600,600" />
+          </g>
+        </svg>
+        <svg id="ahmad" viewBox="0 0 120 320"><use href="#man" x="0" y="0" width="120" height="320" /></svg>
+        <div class="chip" id="cVisa" style="right: 90px; top: 560px"><svg viewBox="0 0 64 64"><rect x="14" y="6" width="36" height="52" rx="5" fill="#f3d58a" /><circle cx="32" cy="28" r="9" fill="none" stroke="#0f1c30" stroke-width="3" /><rect x="22" y="44" width="20" height="4" rx="2" fill="#0f1c30" /></svg><span>ویزا؟</span></div>
+        <div class="chip" id="cWork" style="left: 70px; top: 760px"><svg viewBox="0 0 64 64"><rect x="6" y="18" width="52" height="38" rx="7" fill="#f3d58a" /><path d="M22,18 v-6 a5,5 0 0 1 5,-5 h10 a5,5 0 0 1 5,5 v6" stroke="#f3d58a" stroke-width="5" fill="none" /><rect x="6" y="32" width="52" height="4" fill="#0f1c30" /></svg><span>کار و درآمد؟</span></div>
+        <div class="chip" id="cFam" style="right: 70px; top: 960px"><svg viewBox="0 0 64 64"><circle cx="20" cy="16" r="7" fill="#f3d58a" /><circle cx="42" cy="18" r="6" fill="#f3d58a" /><path d="M10,58 v-22 a10,10 0 0 1 20,0 v22 Z" fill="#f3d58a" /><path d="M33,58 v-18 a9,9 0 0 1 18,0 v18 Z" fill="#f3d58a" /></svg><span>خانواده؟</span></div>
+      </div></div>
+
+      <!-- ============ 3 reveal + 4 path: the NEXO file ============ -->
+      <div id="reveal" class="clip" data-scene="reveal" data-start="9.245" data-duration="3.910" data-track-index="1"><div class="scene-in">
+        <div class="ttl" id="tReveal"><span class="x" aria-hidden="true">مسیر روشن شد</span><span class="g">مسیر روشن شد</span></div>
+        <svg id="goldRoute" viewBox="0 0 1080 1920" aria-hidden="true">
+          <defs><linearGradient id="gp" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#f6dc98" /><stop offset="1" stop-color="#f6dc98" stop-opacity="0" /></linearGradient></defs>
+          <path id="goldPath" d="M540,1140 C540,980 640,900 560,780 C500,690 540,600 540,470" fill="none" stroke="url(#gp)" stroke-width="14" stroke-linecap="round" />
+        </svg>
+        <svg id="ahmad2" viewBox="0 0 120 320" style="position: absolute; left: 0; right: 0; margin: 0 auto; top: 560px; width: 250px; height: 640px"><use href="#man" x="0" y="0" width="120" height="320" /></svg>
+      </div></div>
+
+      <div id="path" class="clip" data-scene="path" data-start="13.155" data-duration="7.415" data-track-index="2"><div class="scene-in">
+        <div class="ttl sm" id="tPath"><span class="x" aria-hidden="true">پرونده‌ی احمد</span><span class="g">پرونده‌ی احمد</span></div>
+      </div></div>
+
+      <!-- the folder lives on its own track from the reveal to the end of the path (one object carried across both scenes) -->
+      <div id="fileHost" class="clip" data-start="9.245" data-duration="11.325" data-track-index="3">
+        <div id="folder">
+          <div class="tab"></div><div class="back"></div>
+          <div class="items">
+            <div class="doc" id="doc"><div class="hd">VISA · OMAN</div>
+              <div class="ln" style="top: 92px; width: 240px"></div><div class="ln" style="top: 124px; width: 290px"></div>
+              <svg id="docTick" viewBox="0 0 72 72"><circle cx="36" cy="36" r="32" fill="#d9ab55" /><path d="M20,37 L31,48 L52,24" stroke="#16120a" stroke-width="7" fill="none" stroke-linecap="round" stroke-linejoin="round" /></svg>
+              <svg id="stamp" viewBox="0 0 220 220"><g fill="none" stroke="#9b6b22" stroke-width="7" opacity="0.9"><circle cx="110" cy="110" r="96" /><circle cx="110" cy="110" r="76" stroke-width="3" /></g>
+                <text x="110" y="100" text-anchor="middle" font-family="Cinzel, serif" font-weight="900" font-size="44" fill="#9b6b22">VISA</text><text x="110" y="148" text-anchor="middle" font-family="Cinzel, serif" font-weight="700" font-size="30" fill="#9b6b22">OMAN</text></svg>
+            </div>
+            <svg id="bldg" viewBox="0 0 420 560">
+              <defs><linearGradient id="bw" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f7efdc" /><stop offset="1" stop-color="#d9c8a2" /></linearGradient></defs>
+              <rect x="70" y="150" width="280" height="410" rx="10" fill="url(#bw)" /><rect x="60" y="138" width="300" height="22" rx="6" fill="#d9ab55" />
+              <g fill="#e8c06c">
+                <rect x="100" y="190" width="50" height="60" rx="5" /><rect x="185" y="190" width="50" height="60" rx="5" /><rect x="270" y="190" width="50" height="60" rx="5" />
+                <rect x="100" y="280" width="50" height="60" rx="5" /><rect x="185" y="280" width="50" height="60" rx="5" /><rect x="270" y="280" width="50" height="60" rx="5" />
+                <rect x="100" y="370" width="50" height="60" rx="5" /><rect x="270" y="370" width="50" height="60" rx="5" />
+              </g>
+              <rect id="door" x="170" y="440" width="80" height="120" rx="8" fill="#1d3354" />
+              <rect x="208" y="28" width="6" height="112" fill="#d9ab55" /><g transform="translate(214 30)"><rect width="84" height="56" fill="#db161b" /><rect x="22" width="62" height="18.7" fill="#fff" /><rect x="22" y="37.3" width="62" height="18.7" fill="#008000" /></g>
+              <rect x="120" y="96" width="180" height="44" rx="10" fill="#1d3354" stroke="#d9ab55" stroke-width="3" /><text x="210" y="128" text-anchor="middle" font-family="Vazirmatn" font-weight="900" font-size="30" fill="#f3d58a">شرکت</text>
+            </svg>
+          </div>
+          <div class="front"><svg viewBox="0 0 132 140"><use href="#shield" /></svg><div class="nx">NEXO</div><div class="lb">پرونده‌ی احمد</div></div>
+        </div>
+        <div class="pill glass" id="lVisa" style="top: 372px"><svg class="ic" viewBox="0 0 36 36"><circle cx="18" cy="18" r="16" fill="#d9ab55" /><use href="#tick" /></svg><span>ویزای عمان</span></div>
+        <div class="pill glass" id="lCo" style="top: 372px"><svg class="ic" viewBox="0 0 36 36"><circle cx="18" cy="18" r="16" fill="#d9ab55" /><use href="#tick" /></svg><span>ثبت شرکت و کسب‌وکار</span></div>
+        <div class="pill glass" id="lRes" style="top: 372px"><svg class="ic" viewBox="0 0 36 36"><circle cx="18" cy="18" r="16" fill="#d9ab55" /><use href="#tick" /></svg><span>اقامت از طریق شرکت</span></div>
+      </div>
+
+      <!-- residency cards: Ahmad's card comes out in the path scene and stays for the family payoff -->
+      <div id="cardsHost" class="clip" data-start="13.155" data-duration="12.590" data-track-index="4">
+        <div class="rcard" id="cA" style="left: 340px; top: 600px"><div class="t1">RESIDENT CARD</div><div class="t2">سلطنة عُمان</div><div class="ph"><svg viewBox="0 0 120 320"><use href="#man" /></svg></div><div class="ln" style="top: 104px; width: 150px"></div><div class="ln" style="top: 132px; width: 120px"></div><div class="chipc"></div><div class="fl"><svg viewBox="0 0 90 60" width="54" height="36"><use href="#flagOM" /></svg></div></div>
+        <div class="rcard" id="cB" style="left: 340px; top: 600px"><div class="t1">RESIDENT CARD</div><div class="t2">سلطنة عُمان</div><div class="ph"><svg viewBox="0 0 120 320"><use href="#woman" /></svg></div><div class="ln" style="top: 104px; width: 150px"></div><div class="ln" style="top: 132px; width: 120px"></div><div class="chipc"></div><div class="fl"><svg viewBox="0 0 90 60" width="54" height="36"><use href="#flagOM" /></svg></div></div>
+        <div class="rcard" id="cC" style="left: 340px; top: 600px"><div class="t1">RESIDENT CARD</div><div class="t2">سلطنة عُمان</div><div class="ph"><svg viewBox="0 0 120 320"><use href="#boy" /></svg></div><div class="ln" style="top: 104px; width: 150px"></div><div class="ln" style="top: 132px; width: 120px"></div><div class="chipc"></div><div class="fl"><svg viewBox="0 0 90 60" width="54" height="36"><use href="#flagOM" /></svg></div></div>
+        <div class="rcard" id="cD" style="left: 340px; top: 600px"><div class="t1">RESIDENT CARD</div><div class="t2">سلطنة عُمان</div><div class="ph"><svg viewBox="0 0 120 320"><use href="#girl" /></svg></div><div class="ln" style="top: 104px; width: 150px"></div><div class="ln" style="top: 132px; width: 120px"></div><div class="chipc"></div><div class="fl"><svg viewBox="0 0 90 60" width="54" height="36"><use href="#flagOM" /></svg></div></div>
+      </div>
+
+      <!-- ============ 5 family: free residency (the payoff) ============ -->
+      <div id="family" class="clip" data-scene="family" data-start="20.570" data-duration="5.175" data-track-index="2"><div class="scene-in">
+        <div class="ttl" id="tBest"><span class="x" aria-hidden="true">بهترین خبر</span><span class="g">بهترین خبر</span></div>
+        <div class="ttl" id="tFree"><span class="x" aria-hidden="true">اقامت رایگان</span><span class="g">اقامت رایگان</span></div>
+        <div class="sub" id="sFree">همسر و فرزندان زیر ۱۸ سال</div>
+        <div id="freeStamp">رایگان</div>
+        <svg class="spark" style="left: 170px; top: 720px" viewBox="0 0 34 34"><use href="#sp" /></svg><svg class="spark" style="left: 880px; top: 760px" viewBox="0 0 34 34"><use href="#sp" /></svg>
+        <svg class="spark" style="left: 230px; top: 1020px" viewBox="0 0 34 34"><use href="#sp" /></svg><svg class="spark" style="left: 830px; top: 1040px" viewBox="0 0 34 34"><use href="#sp" /></svg><svg class="spark" style="left: 520px; top: 690px" viewBox="0 0 34 34"><use href="#sp" /></svg>
+      </div></div>
+
+      <!-- ============ 6 care: parents, transfer, legal steps ============ -->
+      <div id="care" class="clip" data-scene="care" data-start="25.745" data-duration="8.080" data-track-index="1"><div class="scene-in">
+        <div class="ttl sm" id="tCare"><span class="x" aria-hidden="true">همه‌چیز، قدم‌به‌قدم</span><span class="g">همه‌چیز، قدم‌به‌قدم</span></div>
+        <div id="elders"><div class="in"><svg viewBox="0 0 492 532" style="position: absolute; inset: 0"><use href="#oldman" x="70" y="80" width="170" height="440" /><use href="#oldwoman" x="250" y="110" width="160" height="410" /><rect x="0" y="516" width="492" height="6" rx="3" fill="#c9a052" opacity="0.5" /></svg></div></div>
+        <svg id="mag" viewBox="0 0 260 260"><circle cx="105" cy="105" r="78" fill="rgba(220,240,255,0.14)" stroke="#e7c06a" stroke-width="16" /><path d="M160,160 L232,232" stroke="#e7c06a" stroke-width="26" stroke-linecap="round" /><path d="M64,80 a52,52 0 0 1 40,-28" stroke="#fff" stroke-opacity="0.6" stroke-width="8" fill="none" stroke-linecap="round" /></svg>
+        <svg id="route" viewBox="0 0 1080 1920" aria-hidden="true">
+          <defs><mask id="mR" maskUnits="userSpaceOnUse"><path id="mRp" d="M860,1000 C800,620 300,620 220,900" stroke="#fff" stroke-width="16" fill="none" /></mask></defs>
+          <path id="rLine" d="M860,1000 C800,620 300,620 220,900" stroke="#f3d58a" stroke-width="8" stroke-dasharray="4 18" stroke-linecap="round" fill="none" mask="url(#mR)" />
+          <g id="pinFrom" transform="translate(860 1000)"><circle r="62" fill="#0f1c30" stroke="#e9edf2" stroke-width="5" /><g transform="translate(-50 -26) scale(0.55)"><use href="#flagAFc" /></g><g transform="translate(0 -26) scale(0.55)"><use href="#flagIRc" /></g></g>
+          <g id="pinTo" transform="translate(220 900)"><path d="M0,0 C-14,-26 -58,-52 -58,-100 A58,58 0 1 1 58,-100 C58,-52 14,-26 0,0 Z" fill="#e6c172" stroke="#7a5418" stroke-width="3" /><circle cx="0" cy="-100" r="40" fill="#0f1c30" /><g transform="translate(-36 -136) scale(0.8)"><use href="#flagOMc" /></g></g>
+          <g id="plane"><path d="M30,0 C30,-2 28,-3 26,-3 L18,-3 L9,-15 L5,-15 L10,-3 L2,-3 L-2,-8 L-5,-8 L-3,0 L-5,8 L-2,8 L2,3 L10,3 L5,15 L9,15 L18,3 L26,3 C28,3 30,2 30,0 Z" fill="#fff4d6" transform="scale(2.2)" /></g>
+        </svg>
+        <svg id="clip" viewBox="0 0 470 600">
+          <rect x="20" y="40" width="430" height="550" rx="26" fill="#b98a5a" /><rect x="46" y="70" width="378" height="496" rx="14" fill="#fbf4e4" /><rect x="150" y="20" width="170" height="60" rx="16" fill="#d9ab55" />
+          <g id="cl1"><rect x="90" y="150" width="56" height="56" rx="10" fill="none" stroke="#2c5a45" stroke-width="5" /><rect x="170" y="166" width="220" height="22" rx="11" fill="#c9b896" /></g>
+          <g id="cl2"><rect x="90" y="280" width="56" height="56" rx="10" fill="none" stroke="#2c5a45" stroke-width="5" /><rect x="170" y="296" width="190" height="22" rx="11" fill="#c9b896" /></g>
+          <g id="cl3"><rect x="90" y="410" width="56" height="56" rx="10" fill="none" stroke="#2c5a45" stroke-width="5" /><rect x="170" y="426" width="210" height="22" rx="11" fill="#c9b896" /></g>
+          <path id="ck1" d="M98,180 L114,196 L142,160" stroke="#b8862e" stroke-width="10" fill="none" stroke-linecap="round" stroke-linejoin="round" />
+          <path id="ck2" d="M98,310 L114,326 L142,290" stroke="#b8862e" stroke-width="10" fill="none" stroke-linecap="round" stroke-linejoin="round" />
+          <path id="ck3" d="M98,440 L114,456 L142,420" stroke="#b8862e" stroke-width="10" fill="none" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+        <div class="pill glass clbl" id="lPar"><svg class="ic" viewBox="0 0 36 36"><circle cx="18" cy="18" r="16" fill="#d9ab55" /><use href="#tick" /></svg><span>بررسی اقامت پدر و مادر</span></div>
+        <div class="pill glass clbl" id="lTr"><svg class="ic" viewBox="0 0 36 36"><circle cx="18" cy="18" r="16" fill="#d9ab55" /><use href="#tick" /></svg><span>ترانسفر و جابه‌جایی</span></div>
+        <div class="pill glass clbl" id="lLeg"><svg class="ic" viewBox="0 0 36 36"><circle cx="18" cy="18" r="16" fill="#d9ab55" /><use href="#tick" /></svg><span>مراحل قانونی و اداری</span></div>
+      </div></div>
+
+      <!-- ============ 7 life: a new life in Oman ============ -->
+      <div id="life" class="clip" data-scene="life" data-start="33.825" data-duration="4.250" data-track-index="2"><div class="scene-in">
+        <div class="ttl sm" id="tLife"><span class="x" aria-hidden="true">زندگی تازه در عمان</span><span class="g">زندگی تازه در عمان</span></div>
+        <svg id="fam2" viewBox="0 0 560 430"><g id="w1"><use href="#man" x="10" y="10" width="150" height="410" /></g><g id="w2"><use href="#woman" x="140" y="44" width="140" height="376" /></g><g id="w3"><use href="#boy" x="290" y="160" width="100" height="260" /></g><g id="w4"><use href="#girl" x="400" y="176" width="92" height="244" /></g></svg>
+      </div></div>
+
+      <!-- ============ 8 call to action + end card ============ -->
+      <div id="cta" class="clip" data-scene="cta" data-start="38.075" data-duration="10.125" data-track-index="1"><div class="scene-in">
+        <div class="ttl sm" id="tYou"><span class="x" aria-hidden="true">شما هم می‌توانید</span><span class="g">شما هم می‌توانید</span></div>
+        <div class="pill glass" id="pAF" style="top: 410px; left: 470px; right: auto; margin: 0"><span class="flagC"><svg viewBox="0 0 90 90"><use href="#flagAFc" /></svg></span><span>داخل افغانستان</span></div>
+        <div class="pill glass" id="pIR" style="top: 410px; left: 120px; right: auto; margin: 0"><span class="flagC"><svg viewBox="0 0 90 90"><use href="#flagIRc" /></svg></span><span>ایران</span></div>
+        <div id="logo"><svg viewBox="0 0 132 140"><use href="#shield" /></svg><div class="nexo">NEXO</div></div>
+        <div class="pill maroon" id="ctaP" style="top: 912px; font-size: 46px">برای مشاوره و ثبت درخواست با ما در ارتباط باشید</div>
+        <div id="disc"><svg viewBox="0 0 46 46"><circle cx="23" cy="23" r="20" fill="none" stroke="#e6c172" stroke-width="3" /><rect x="20.5" y="19" width="5" height="15" rx="2" fill="#e6c172" /><circle cx="23" cy="13" r="3" fill="#e6c172" /></svg>
+          <span>داستان نمادین است. صدور ویزا و اقامت، از جمله اقامت اعضای خانواده، تابع شرایط قانونی و تأیید مراجع عمان است.</span></div>
+      </div></div>
+
+      <div id="cap0" class="clip cap" data-start="0.380" data-duration="2.000" data-track-index="9"><div class="cap-in"><span class="w"><i></i><span>احمد</span></span><span class="w"><i></i><span>فقط</span></span><span class="w"><i></i><span>یک</span></span><span class="w"><i></i><span>سؤال</span></span><span class="w"><i></i><span>داشت:</span></span></div></div>
+      <div id="cap1" class="clip cap" data-start="2.320" data-duration="2.270" data-track-index="9"><div class="cap-in"><span class="w hi"><i></i><span>آینده‌ی</span></span><span class="w hi"><i></i><span>بچه‌هایم</span></span><span class="w"><i></i><span>چه</span></span><span class="w"><i></i><span>می‌شود؟</span></span></div></div>
+      <div id="cap2" class="clip cap" data-start="4.530" data-duration="1.380" data-track-index="9"><div class="cap-in"><span class="w hi"><i></i><span>ویزا</span></span><span class="w"><i></i><span>از</span></span><span class="w"><i></i><span>کجا؟</span></span></div></div>
+      <div id="cap3" class="clip cap" data-start="5.850" data-duration="1.130" data-track-index="9"><div class="cap-in"><span class="w hi"><i></i><span>کار</span></span><span class="w hi"><i></i><span>و</span></span><span class="w hi"><i></i><span>درآمد؟</span></span></div></div>
+      <div id="cap4" class="clip cap" data-start="6.920" data-duration="2.510" data-track-index="9"><div class="cap-in"><span class="w"><i></i><span>و</span></span><span class="w hi"><i></i><span>خانواده‌ام…</span></span><span class="w"><i></i><span>همراهم</span></span><span class="w"><i></i><span>می‌آیند؟</span></span></div></div>
+      <div id="cap5" class="clip cap" data-start="9.370" data-duration="1.150" data-track-index="9"><div class="cap-in"><span class="w"><i></i><span>تا</span></span><span class="w"><i></i><span>اینکه</span></span><span class="w"><i></i><span>با</span></span><span class="w hi"><i></i><span>NEXO،</span></span></div></div>
+      <div id="cap6" class="clip cap" data-start="10.460" data-duration="2.930" data-track-index="9"><div class="cap-in"><span class="w"><i></i><span>مسیر</span></span><span class="w hi"><i></i><span>اقامت</span></span><span class="w hi"><i></i><span>عمان</span></span><span class="w"><i></i><span>برایش</span></span><span class="w"><i></i><span>روشن</span></span><span class="w"><i></i><span>شد.</span></span></div></div>
+      <div id="cap7" class="clip cap" data-start="13.330" data-duration="1.430" data-track-index="9"><div class="cap-in"><span class="w"><i></i><span>اول،</span></span><span class="w hi"><i></i><span>ویزای</span></span><span class="w hi"><i></i><span>عمان،</span></span></div></div>
+      <div id="cap8" class="clip cap" data-start="14.700" data-duration="1.740" data-track-index="9"><div class="cap-in"><span class="w"><i></i><span>با</span></span><span class="w"><i></i><span>بررسی</span></span><span class="w"><i></i><span>شرایطش.</span></span></div></div>
+      <div id="cap9" class="clip cap" data-start="16.380" data-duration="1.240" data-track-index="9"><div class="cap-in"><span class="w"><i></i><span>بعد،</span></span><span class="w hi"><i></i><span>ثبت</span></span><span class="w hi"><i></i><span>شرکت</span></span></div></div>
+      <div id="cap10" class="clip cap" data-start="17.560" data-duration="1.380" data-track-index="9"><div class="cap-in"><span class="w"><i></i><span>و</span></span><span class="w"><i></i><span>کسب‌وکارش</span></span><span class="w"><i></i><span>در</span></span><span class="w"><i></i><span>عمان،</span></span></div></div>
+      <div id="cap11" class="clip cap" data-start="18.880" data-duration="1.960" data-track-index="9"><div class="cap-in"><span class="w"><i></i><span>و</span></span><span class="w"><i></i><span>از</span></span><span class="w"><i></i><span>همین</span></span><span class="w"><i></i><span>راه،</span></span><span class="w hi"><i></i><span>اقامت.</span></span></div></div>
+      <div id="cap12" class="clip cap" data-start="20.780" data-duration="1.430" data-track-index="9"><div class="cap-in"><span class="w"><i></i><span>و</span></span><span class="w"><i></i><span>بهترین</span></span><span class="w"><i></i><span>خبر:</span></span></div></div>
+      <div id="cap13" class="clip cap" data-start="22.150" data-duration="1.350" data-track-index="9"><div class="cap-in"><span class="w"><i></i><span>اقامت</span></span><span class="w hi"><i></i><span>همسر</span></span><span class="w hi"><i></i><span>و</span></span><span class="w hi"><i></i><span>فرزندان</span></span></div></div>
+      <div id="cap14" class="clip cap" data-start="23.440" data-duration="2.550" data-track-index="9"><div class="cap-in"><span class="w"><i></i><span>زیر</span></span><span class="w"><i></i><span>۱۸</span></span><span class="w"><i></i><span>سالش،</span></span><span class="w hi"><i></i><span>رایگان</span></span><span class="w"><i></i><span>بود.</span></span></div></div>
+      <div id="cap15" class="clip cap" data-start="25.930" data-duration="2.050" data-track-index="9"><div class="cap-in"><span class="w"><i></i><span>حتی</span></span><span class="w"><i></i><span>امکان</span></span><span class="w"><i></i><span>اقامت</span></span><span class="w hi"><i></i><span>پدر</span></span><span class="w hi"><i></i><span>و</span></span><span class="w hi"><i></i><span>مادرش</span></span></div></div>
+      <div id="cap16" class="clip cap" data-start="27.920" data-duration="1.240" data-track-index="9"><div class="cap-in"><span class="w"><i></i><span>هم</span></span><span class="w"><i></i><span>بررسی</span></span><span class="w"><i></i><span>شد؛</span></span></div></div>
+      <div id="cap17" class="clip cap" data-start="29.100" data-duration="1.360" data-track-index="9"><div class="cap-in"><span class="w hi"><i></i><span>ترانسفر</span></span><span class="w"><i></i><span>هماهنگ</span></span><span class="w"><i></i><span>شد،</span></span></div></div>
+      <div id="cap18" class="clip cap" data-start="30.400" data-duration="1.540" data-track-index="9"><div class="cap-in"><span class="w"><i></i><span>و</span></span><span class="w hi"><i></i><span>مراحل</span></span><span class="w hi"><i></i><span>قانونی</span></span><span class="w hi"><i></i><span>و</span></span><span class="w hi"><i></i><span>اداری،</span></span></div></div>
+      <div id="cap19" class="clip cap" data-start="31.880" data-duration="2.150" data-track-index="9"><div class="cap-in"><span class="w"><i></i><span>قدم‌به‌قدم</span></span><span class="w"><i></i><span>پیگیری</span></span><span class="w"><i></i><span>شد.</span></span></div></div>
+      <div id="cap20" class="clip cap" data-start="33.970" data-duration="1.710" data-track-index="9"><div class="cap-in"><span class="w"><i></i><span>امروز،</span></span><span class="w"><i></i><span>احمد</span></span><span class="w"><i></i><span>و</span></span><span class="w"><i></i><span>خانواده‌اش</span></span></div></div>
+      <div id="cap21" class="clip cap" data-start="35.620" data-duration="1.140" data-track-index="9"><div class="cap-in"><span class="w hi"><i></i><span>زندگی</span></span><span class="w hi"><i></i><span>تازه‌ای</span></span><span class="w"><i></i><span>را</span></span></div></div>
+      <div id="cap22" class="clip cap" data-start="36.700" data-duration="1.650" data-track-index="9"><div class="cap-in"><span class="w"><i></i><span>در</span></span><span class="w"><i></i><span>عمان</span></span><span class="w"><i></i><span>شروع</span></span><span class="w"><i></i><span>کرده‌اند.</span></span></div></div>
+      <div id="cap23" class="clip cap" data-start="38.290" data-duration="2.040" data-track-index="9"><div class="cap-in"><span class="w"><i></i><span>شما</span></span><span class="w"><i></i><span>هم</span></span><span class="w"><i></i><span>از</span></span><span class="w"><i></i><span>داخل</span></span><span class="w hi"><i></i><span>افغانستان</span></span><span class="w"><i></i><span>یا</span></span><span class="w hi"><i></i><span>ایران</span></span></div></div>
+      <div id="cap24" class="clip cap" data-start="40.270" data-duration="1.570" data-track-index="9"><div class="cap-in"><span class="w"><i></i><span>می‌توانید</span></span><span class="w"><i></i><span>اقدام</span></span><span class="w"><i></i><span>کنید.</span></span></div></div>
+      <div id="cap25" class="clip cap" data-start="41.780" data-duration="2.040" data-track-index="9"><div class="cap-in"><span class="w"><i></i><span>برای</span></span><span class="w hi"><i></i><span>مشاوره</span></span><span class="w hi"><i></i><span>و</span></span><span class="w hi"><i></i><span>ثبت</span></span><span class="w hi"><i></i><span>درخواست،</span></span></div></div>
+      <div id="cap26" class="clip cap" data-start="43.760" data-duration="2.540" data-track-index="9"><div class="cap-in"><span class="w"><i></i><span>همین</span></span><span class="w"><i></i><span>حالا</span></span><span class="w"><i></i><span>با</span></span><span class="w hi"><i></i><span>NEXO</span></span><span class="w"><i></i><span>در</span></span><span class="w"><i></i><span>ارتباط</span></span><span class="w"><i></i><span>باشید.</span></span></div></div>
+
+      <audio id="vo" src="assets/voiceover.wav" data-start="0" data-duration="45.913" data-volume="1"></audio>
+      <audio id="music" src="assets/music.wav" data-start="0" data-duration="48.200" data-volume="1"></audio>
+      <audio id="sfx" src="assets/sfx.wav" data-start="0" data-duration="48.200" data-volume="1"></audio>
+
+      <!-- shared symbols -->
+      <svg width="0" height="0" style="position: absolute" aria-hidden="true">
+        <defs>
+          <linearGradient id="gf" x1="0" y1="0" x2="0.3" y2="1"><stop offset="0" stop-color="#fff2cc" /><stop offset="0.45" stop-color="#e6bd68" /><stop offset="1" stop-color="#a67830" /></linearGradient>
+          <linearGradient id="svg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff" /><stop offset="0.35" stop-color="#d9dee5" /><stop offset="0.6" stop-color="#8b929c" /><stop offset="0.8" stop-color="#eef1f4" /><stop offset="1" stop-color="#737a84" /></linearGradient>
+          <symbol id="man" viewBox="0 0 120 320"><g fill="url(#gf)"><circle cx="60" cy="34" r="24" /><path d="M26,76 C26,66 42,62 60,62 C78,62 94,66 94,76 L102,176 C103,186 92,188 89,180 L84,128 L84,190 L82,314 C82,320 64,320 64,314 L62,210 L58,210 L56,314 C56,320 38,320 38,314 L36,190 L36,128 L31,180 C28,188 17,186 18,176 Z" /></g></symbol>
+          <symbol id="woman" viewBox="0 0 120 320"><g fill="url(#gf)"><path d="M60,8 C80,8 92,24 92,44 C92,58 86,66 84,72 C98,76 104,84 104,96 L60,98 L16,96 C16,84 22,76 36,72 C34,66 28,58 28,44 C28,24 40,8 60,8 Z" /><path d="M30,92 C38,82 82,82 90,92 L106,300 C106,312 96,314 60,314 C24,314 14,312 14,300 Z" /></g></symbol>
+          <symbol id="boy" viewBox="0 0 120 320"><g fill="url(#gf)"><circle cx="60" cy="44" r="30" /><path d="M24,98 C24,86 42,82 60,82 C78,82 96,86 96,98 L102,196 C103,206 92,208 89,200 L84,150 L84,206 L82,314 C82,320 64,320 64,314 L62,226 L58,226 L56,314 C56,320 38,320 38,314 L36,206 L36,150 L31,200 C28,208 17,206 18,196 Z" /></g></symbol>
+          <symbol id="girl" viewBox="0 0 120 320"><g fill="url(#gf)"><circle cx="60" cy="46" r="30" /><path d="M82,30 C102,30 106,58 96,74 C92,60 88,44 82,30 Z" /><path d="M32,96 C40,86 80,86 88,96 L104,272 C104,282 96,284 60,284 C24,284 16,282 16,272 Z" /><rect x="40" y="278" width="14" height="38" rx="7" /><rect x="66" y="278" width="14" height="38" rx="7" /></g></symbol>
+          <symbol id="oldman" viewBox="0 0 140 320"><g fill="url(#gf)"><circle cx="62" cy="40" r="24" /><path d="M28,84 C30,72 46,68 64,68 C82,68 96,74 96,86 L102,182 C103,192 92,194 89,186 L84,134 L84,194 L82,314 C82,320 64,320 64,314 L62,212 L58,212 L56,314 C56,320 38,320 38,314 L36,194 L36,134 L31,184 C28,192 17,190 18,180 Z" /><path d="M112,170 L118,316" stroke="url(#gf)" stroke-width="8" stroke-linecap="round" /><path d="M96,176 C104,166 116,166 116,178" stroke="url(#gf)" stroke-width="8" fill="none" stroke-linecap="round" /></g></symbol>
+          <symbol id="oldwoman" viewBox="0 0 120 320"><g fill="url(#gf)"><path d="M60,14 C80,14 92,30 92,50 C92,64 86,72 84,78 C98,82 104,90 104,102 L60,104 L16,102 C16,90 22,82 36,78 C34,72 28,64 28,50 C28,30 40,14 60,14 Z" /><path d="M30,98 C38,88 82,88 90,98 L104,302 C104,312 96,314 60,314 C24,314 16,312 16,302 Z" /></g></symbol>
+          <symbol id="shield" viewBox="0 0 132 140"><path d="M66,6 L120,22 L120,66 C120,100 96,122 66,134 C36,122 12,100 12,66 L12,22 Z" fill="none" stroke="url(#svg)" stroke-width="9" stroke-linejoin="round" /><path d="M66,30 L94,62 L78,62 L78,104 L54,104 L54,62 L38,62 Z" fill="url(#svg)" /><path d="M30,52 L54,84 L54,100 L30,68 Z M102,52 L78,84 L78,100 L102,68 Z" fill="url(#svg)" opacity="0.85" /></symbol>
+          <g id="tick"><path d="M9,18 L15,24 L27,11" stroke="#16120a" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round" /></g>
+          <g id="sp"><path d="M17,0 C18,10 24,16 34,17 C24,18 18,24 17,34 C16,24 10,18 0,17 C10,16 16,10 17,0 Z" fill="#fff0c0" /></g>
+          <g id="afEmb" fill="none" stroke="#fff" stroke-width="2.4"><path d="M-11,9 A14,14 0 0 1 -12,-6" /><path d="M11,9 A14,14 0 0 0 12,-6" /><rect x="-6" y="-2" width="12" height="9" fill="#fff" stroke="none" /><path d="M-6,-2 L0,-8 L6,-2 Z" fill="#fff" stroke="none" /><path d="M-9,11 L9,11" /></g>
+          <g id="flagAFc"><rect x="0" y="0" width="30" height="90" fill="#000" /><rect x="30" y="0" width="30" height="90" fill="#be0000" /><rect x="60" y="0" width="30" height="90" fill="#007a36" /><g transform="translate(45 45) scale(1.3)"><use href="#afEmb" /></g></g>
+          <g id="flagIRc"><rect x="0" y="0" width="90" height="30" fill="#239f40" /><rect x="0" y="30" width="90" height="30" fill="#fff" /><rect x="0" y="60" width="90" height="30" fill="#da0000" /><g transform="translate(45 45)" fill="#da0000"><path d="M0,-11 C-3,-6 -3,4 0,11 C3,4 3,-6 0,-11 Z" /><path d="M-4,-9 C-11,-4 -11,6 -3,10 C-7,5 -7,-3 -4,-9 Z" /><path d="M4,-9 C11,-4 11,6 3,10 C7,5 7,-3 4,-9 Z" /></g></g>
+          <g id="flagOMc"><rect x="0" y="0" width="90" height="90" fill="#db161b" /><rect x="30" y="0" width="60" height="30" fill="#fff" /><rect x="30" y="60" width="60" height="30" fill="#008000" /><g transform="translate(15 16)" stroke="#fff" stroke-width="2.6" fill="none" stroke-linecap="round"><path d="M-8,-9 L8,9" /><path d="M8,-9 L-8,9" /><path d="M0,-10 L0,6 C0,9 3,10 5,8" /></g></g>
+          <g id="flagOM"><rect x="0" y="0" width="90" height="60" fill="#db161b" /><rect x="24" y="0" width="66" height="20" fill="#fff" /><rect x="24" y="40" width="66" height="20" fill="#008000" /></g>
+        </defs>
+      </svg>
+    </div>
+
+    <script>
+      window.__T = {"total": 48.2, "anchors": {"q": 2.38, "visaQ": 4.59, "workQ": 5.91, "famQ": 7.12, "comeQ": 8.17, "nexo": 9.98, "route": 10.52, "lit": 12.22, "visa": 14.05, "check": 14.96, "company": 16.92, "biz": 17.74, "res": 19.82, "best": 20.88, "spouse": 22.6, "free": 24.68, "parents": 27.2, "transfer": 29.16, "legal": 30.56, "step": 31.94, "today": 34.03, "newlife": 35.68, "you": 38.35, "af": 39.06, "ir": 39.82, "consult": 42.04, "nexo2": 44.62}, "scenes": [{"id": "hook", "start": 0.0, "first": 0.44, "last": 4.2}, {"id": "doubt", "start": 4.395, "first": 4.59, "last": 9.06}, {"id": "reveal", "start": 9.245, "first": 9.43, "last": 12.92}, {"id": "path", "start": 13.155, "first": 13.39, "last": 20.3}, {"id": "family", "start": 20.57, "first": 20.84, "last": 25.5}, {"id": "care", "start": 25.745, "first": 25.99, "last": 33.62}, {"id": "life", "start": 33.825, "first": 34.03, "last": 37.8}, {"id": "cta", "start": 38.075, "first": 38.35, "last": 45.8}], "lines": [{"start": 0.44, "hold": 2.38, "w": [[0.44, 0.76], [0.87, 1.02], [1.02, 1.28], [1.28, 1.62], [1.62, 1.98]]}, {"start": 2.38, "hold": 4.59, "w": [[2.38, 2.7], [2.7, 3.5], [3.5, 3.7], [3.7, 4.2]]}, {"start": 4.59, "hold": 5.91, "w": [[4.59, 4.88], [4.88, 5.14], [5.14, 5.52]]}, {"start": 5.91, "hold": 6.98, "w": [[5.91, 6.16], [6.16, 6.24], [6.2, 6.584]]}, {"start": 6.98, "hold": 9.43, "w": [[6.98, 7.12], [7.12, 7.8], [8.17, 8.52], [8.52, 9.06]]}, {"start": 9.43, "hold": 10.52, "w": [[9.43, 9.52], [9.52, 9.86], [9.86, 9.98], [9.98, 10.52]]}, {"start": 10.52, "hold": 13.39, "w": [[10.52, 11.02], [11.02, 11.52], [11.52, 11.84], [11.84, 12.22], [12.22, 12.62], [12.62, 12.92]]}, {"start": 13.39, "hold": 14.76, "w": [[13.39, 13.74], [14.05, 14.32], [14.32, 14.76]]}, {"start": 14.76, "hold": 16.44, "w": [[14.76, 14.96], [14.96, 15.3], [15.3, 15.9]]}, {"start": 16.44, "hold": 17.62, "w": [[16.44, 16.7], [16.92, 17.16], [17.16, 17.62]]}, {"start": 17.62, "hold": 18.94, "w": [[17.62, 17.74], [17.74, 18.28], [18.28, 18.44], [18.44, 18.8]]}, {"start": 18.94, "hold": 20.84, "w": [[18.94, 19.08], [19.08, 19.28], [19.28, 19.56], [19.56, 19.82], [19.82, 20.3]]}, {"start": 20.84, "hold": 22.21, "w": [[20.84, 20.92], [20.88, 21.44], [21.44, 21.92]]}, {"start": 22.21, "hold": 23.5, "w": [[22.21, 22.6], [22.6, 22.96], [22.96, 23.06], [23.06, 23.5]]}, {"start": 23.5, "hold": 25.99, "w": [[23.5, 23.72], [23.72, 23.88], [23.88, 24.42], [24.68, 25.24], [25.24, 25.5]]}, {"start": 25.99, "hold": 27.98, "w": [[25.99, 26.14], [26.14, 26.8], [26.8, 27.2], [27.2, 27.54], [27.54, 27.62], [27.56, 27.98]]}, {"start": 27.98, "hold": 29.16, "w": [[27.98, 28.14], [28.14, 28.48], [28.48, 28.8]]}, {"start": 29.16, "hold": 30.46, "w": [[29.16, 29.5], [29.5, 29.92], [29.92, 30.18]]}, {"start": 30.46, "hold": 31.94, "w": [[30.46, 30.56], [30.56, 30.98], [30.98, 31.52], [31.52, 31.6], [31.58, 31.94]]}, {"start": 31.94, "hold": 34.03, "w": [[31.94, 32.94], [32.94, 33.34], [33.34, 33.62]]}, {"start": 34.03, "hold": 35.68, "w": [[34.03, 34.36], [34.68, 35.04], [35.04, 35.12], [35.06, 35.68]]}, {"start": 35.68, "hold": 36.76, "w": [[35.68, 36.12], [36.12, 36.62], [36.62, 36.76]]}, {"start": 36.76, "hold": 38.35, "w": [[36.76, 36.92], [36.92, 37.18], [37.18, 37.44], [37.44, 37.8]]}, {"start": 38.35, "hold": 40.33, "w": [[38.35, 38.54], [38.54, 38.72], [38.72, 38.86], [38.86, 39.06], [39.06, 39.66], [39.66, 39.82], [39.82, 40.04]]}, {"start": 40.33, "hold": 41.84, "w": [[40.33, 40.82], [40.82, 41.12], [41.12, 41.36]]}, {"start": 41.84, "hold": 43.82, "w": [[41.84, 42.04], [42.04, 42.5], [42.5, 42.62], [42.62, 42.96], [42.96, 43.52]]}, {"start": 43.82, "hold": 46.3, "w": [[43.82, 44.02], [44.02, 44.42], [44.42, 44.62], [44.62, 44.94], [44.94, 45.18], [45.18, 45.5], [45.5, 45.8]]}]};
+      const T = window.__T, AN = T.anchors;
+      const tl = gsap.timeline({ paused: true });
+      const $ = (s) => document.querySelector(s), $$ = (s) => document.querySelectorAll(s);
+      const SC = {}; T.scenes.forEach((s, i) => (SC[s.id] = Object.assign({}, s, { next: T.scenes[i + 1] ? T.scenes[i + 1].start : T.total })));
+      const inn = (sel, t, o = {}) => tl.fromTo(sel, Object.assign({ opacity: 0, y: 40, scale: 0.94 }, o.from || {}), Object.assign({ opacity: 1, y: 0, scale: 1, duration: o.d || 0.5, ease: o.ease || "power3.out" }, o.to || {}), t);
+      const out = (sel, t, d = 0.28) => tl.to(sel, { opacity: 0, y: -30, duration: d, ease: "power2.in" }, t);
+
+      // background: slow drift; dawn for the new-life scene
+      tl.fromTo("#rays", { rotation: 0 }, { rotation: 22, duration: T.total, ease: "none" }, 0);
+      tl.fromTo("#mosque", { x: 0, scale: 1 }, { x: -60, scale: 1.05, duration: SC.life.start, ease: "none" }, 0);
+      tl.to("#mosque", { opacity: 0.85, scale: 1.18, x: -90, y: -40, duration: 1.4, ease: "power2.inOut" }, SC.life.start - 0.2);
+      tl.fromTo("#dawn", { opacity: 0 }, { opacity: 1, duration: 1.6, ease: "power2.out" }, SC.life.start);
+      tl.to(["#mosque", "#dawn"], { opacity: 0.32, duration: 0.8, ease: "power2.inOut" }, SC.cta.start);
+
+      // every scene: quick cross-dissolve with a small push
+      T.scenes.forEach((s, i) => {
+        const el = $("#" + s.id + " .scene-in");
+        if (i) tl.fromTo(el, { opacity: 0, scale: 1.04 }, { opacity: 1, scale: 1, duration: 0.4, ease: "power2.out" }, s.start);
+        if (i < T.scenes.length - 1) tl.to(el, { opacity: 0, scale: 0.97, duration: 0.3, ease: "power2.in" }, SC[s.id].next - 0.3);
+      });
+
+      // 1 hook: frame 0 already shows the family and the title; slow push in, then the question mark
+      tl.fromTo("#frame", { scale: 1 }, { scale: 1.06, duration: SC.doubt.start, ease: "none" }, 0);
+      inn("#qmark", AN.q - 0.05, { from: { y: 60, scale: 0.5 }, ease: "back.out(2)" });
+      tl.fromTo("#qmark", { rotation: -6 }, { rotation: 6, duration: 0.5, yoyo: true, repeat: 3, ease: "sine.inOut" }, AN.q + 0.4);
+
+      // 2 doubt: Ahmad alone; tangled lines draw; three questions pop around him
+      inn("#tDoubt", SC.doubt.start + 0.1);
+      tl.fromTo("#ahmad", { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.5, ease: "power3.out" }, SC.doubt.start);
+      $$("#tangle .tg").forEach((p, i) => tl.fromTo(p, { opacity: 0 }, { opacity: 1, duration: 0.6 }, SC.doubt.start + 0.2 + i * 0.25));
+      [["#cVisa", "visaQ", 60], ["#cWork", "workQ", -60], ["#cFam", "famQ", 60]].forEach(([sel, k, dx]) => inn(sel, AN[k] - 0.08, { from: { x: dx, y: 0, scale: 0.6 }, ease: "back.out(1.8)" }));
+      tl.to(["#cVisa", "#cWork", "#cFam"], { x: "+=8", duration: 0.06, yoyo: true, repeat: 7, ease: "none" }, AN.comeQ);
+      tl.to("#ahmad", { scale: 0.96, duration: 0.6, ease: "sine.inOut" }, AN.comeQ);
+
+      // 3 reveal: the NEXO file arrives, the tangle straightens into one gold path
+      const gp = $("#goldPath"), gL = gp.getTotalLength(); gp.setAttribute("stroke-dasharray", `${gL} ${gL}`);
+      tl.fromTo(gp, { attr: { "stroke-dashoffset": gL } }, { attr: { "stroke-dashoffset": 0 }, duration: 1.4, ease: "power2.inOut" }, AN.route - 0.1);
+      inn("#tReveal", AN.route - 0.05);
+      tl.fromTo("#ahmad2", { opacity: 1 }, { opacity: 0.0, y: -60, scale: 0.8, duration: 0.6, ease: "power2.in" }, AN.lit + 0.1);
+      tl.fromTo("#rays", { opacity: 0.2 }, { opacity: 0.5, duration: 0.8, yoyo: true, repeat: 1, ease: "sine.inOut" }, AN.lit - 0.2);
+      tl.fromTo("#folder", { opacity: 0, y: 420, scale: 0.8 }, { opacity: 1, y: 0, scale: 1, duration: 0.7, ease: "back.out(1.3)" }, AN.nexo - 0.2);
+      tl.to("#folder", { y: 40, scale: 0.92, duration: 0.6, ease: "power2.inOut" }, SC.path.start - 0.2);
+
+      // 4 path: visa page and stamp -> company building -> Ahmad's residency card
+      inn("#tPath", SC.path.start + 0.1);
+      tl.fromTo("#doc", { y: 420, opacity: 0 }, { y: -160, opacity: 1, duration: 0.6, ease: "power3.out" }, AN.visa - 0.3);
+      tl.fromTo("#stamp", { opacity: 0, scale: 1.9, rotation: -30 }, { opacity: 1, scale: 1, rotation: -14, duration: 0.3, ease: "power4.in" }, AN.visa + 0.08);
+      tl.fromTo("#doc", { x: 0 }, { x: 6, duration: 0.05, yoyo: true, repeat: 3, immediateRender: false }, AN.visa + 0.38);
+      tl.fromTo("#docTick", { opacity: 0, scale: 0 }, { opacity: 1, scale: 1, duration: 0.4, ease: "back.out(2.4)" }, AN.check);
+      inn("#lVisa", AN.visa + 0.2, { from: { y: 30 } }); out("#lVisa", AN.company - 0.35, 0.22);
+      tl.to("#doc", { y: 560, opacity: 0, duration: 0.45, ease: "power2.in" }, AN.company - 0.4);
+      tl.fromTo("#bldg", { y: 620, opacity: 0 }, { y: 0, opacity: 1, duration: 0.7, ease: "back.out(1.2)" }, AN.company - 0.1);
+      inn("#lCo", AN.company + 0.2, { from: { y: 30 } }); out("#lCo", AN.res - 0.35, 0.22);
+      tl.to("#bldg", { scale: 0.86, y: 40, duration: 0.5, ease: "power2.inOut" }, AN.res - 0.4);
+      // Ahmad's card slides out of the building door
+      tl.fromTo("#cA", { opacity: 0, y: 260, scale: 0.3 }, { opacity: 1, y: 0, scale: 1, duration: 0.6, ease: "back.out(1.5)" }, AN.res - 0.1);
+      tl.fromTo("#cA", { rotationY: -70, transformPerspective: 900 }, { rotationY: 0, transformPerspective: 900, duration: 0.6, ease: "power3.out" }, AN.res - 0.1);
+      inn("#lRes", AN.res + 0.2, { from: { y: 30 } }); out("#lRes", SC.family.start - 0.3, 0.22);
+      tl.to("#bldg", { y: 420, opacity: 0, duration: 0.45, ease: "power2.in" }, AN.res + 0.35);
+      tl.to("#cA", { scale: 1.2, y: -20, duration: 0.5, ease: "power3.inOut" }, AN.res + 0.4);
+      tl.to("#folder", { y: 520, opacity: 0, duration: 0.5, ease: "power2.in" }, SC.family.start - 0.35);
+
+      // 5 family: the cards fan out, the free stamp lands
+      inn("#tBest", SC.family.start + 0.1); out("#tBest", AN.free - 0.35, 0.22);
+      tl.to("#cA", { x: -250, y: -60, rotation: -9, scale: 1, duration: 0.6, ease: "power3.inOut" }, AN.best);
+      [["#cB", 250, -60, 9], ["#cC", -250, 260, -6], ["#cD", 250, 260, 6]].forEach(([sel, x, y, r], i) => {
+        tl.fromTo(sel, { opacity: 0, x: 0, y: 140, rotation: 0, scale: 0.4 }, { opacity: 1, x, y, rotation: r, scale: 1, duration: 0.6, ease: "back.out(1.4)" }, AN.spouse + i * 0.16);
+      });
+      tl.fromTo("#freeStamp", { opacity: 0, scale: 2.2, rotation: -24 }, { opacity: 1, scale: 1, rotation: -8, duration: 0.32, ease: "power4.in" }, AN.free - 0.15);
+      tl.fromTo(["#cA", "#cB", "#cC", "#cD"], { filter: "brightness(1)" }, { filter: "brightness(1.25)", duration: 0.25, yoyo: true, repeat: 1 }, AN.free + 0.15);
+      inn("#tFree", AN.free + 0.1, { from: { scale: 0.7 }, ease: "back.out(1.8)" }); inn("#sFree", AN.free + 0.3, { from: { y: 20 } });
+      $$("#family .spark").forEach((s, i) => tl.fromTo(s, { opacity: 0, scale: 0, rotation: 0 }, { opacity: 1, scale: 1.6, rotation: 90, duration: 0.5, ease: "back.out(2)", yoyo: true, repeat: 1 }, AN.free + 0.1 + i * 0.07));
+      tl.to(["#cA", "#cB", "#cC", "#cD"], { opacity: 0, scale: 0.9, duration: 0.3, ease: "power2.in" }, SC.care.start - 0.3);
+
+      // 6 care: parents (magnifier) -> transfer (plane) -> legal checklist
+      inn("#tCare", SC.care.start + 0.1);
+      inn("#elders", SC.care.start + 0.05, { from: { y: 60 } });
+      tl.fromTo("#mag", { opacity: 0, x: 120, y: 80 }, { opacity: 1, x: 0, y: 0, duration: 0.5, ease: "power3.out" }, AN.parents - 0.1);
+      tl.to("#mag", { x: -360, y: 140, duration: 1.4, ease: "sine.inOut" }, AN.parents + 0.4);
+      inn("#lPar", AN.parents + 0.1, { from: { y: 30 } }); out("#lPar", AN.transfer - 0.4, 0.22);
+      tl.to(["#elders", "#mag"], { opacity: 0, y: -60, duration: 0.4, ease: "power2.in" }, AN.transfer - 0.45);
+      tl.fromTo(["#pinFrom", "#pinTo"], { opacity: 0, scale: 0.4, transformOrigin: "50% 50%" }, { opacity: 1, scale: 1, duration: 0.45, ease: "back.out(2)", stagger: 0.12 }, AN.transfer - 0.25);
+      (function () { const p = $("#rLine"), L = p.getTotalLength(), mp = $("#mRp"), pl = $("#plane"), st = { k: 0 }; mp.setAttribute("stroke-dasharray", `${L} ${L}`);
+        tl.fromTo(mp, { attr: { "stroke-dashoffset": L } }, { attr: { "stroke-dashoffset": 0 }, duration: 1.2, ease: "power1.inOut" }, AN.transfer + 0.1);
+        const place = () => { const k = Math.min(1, st.k), a = p.getPointAtLength(L * k), b = p.getPointAtLength(Math.min(L, L * k + 2)); pl.setAttribute("transform", `translate(${a.x} ${a.y}) rotate(${(Math.atan2(b.y - a.y, b.x - a.x) * 180) / Math.PI})`); pl.setAttribute("opacity", st.k <= 0 || st.k >= 1 ? 0 : 1); };
+        tl.fromTo(st, { k: 0 }, { k: 1, duration: 1.2, ease: "power1.inOut", onUpdate: place }, AN.transfer + 0.1); place(); })();
+      inn("#lTr", AN.transfer + 0.1, { from: { y: 30 } }); out("#lTr", AN.legal - 0.4, 0.22);
+      tl.to(["#route"], { opacity: 0, duration: 0.35, ease: "power2.in" }, AN.legal - 0.4);
+      inn("#clip", AN.legal - 0.25, { from: { y: 80, rotation: -4 }, to: { rotation: 0 } });
+      ["#ck1", "#ck2", "#ck3"].forEach((sel, i) => { const p = $(sel), L = p.getTotalLength(); p.setAttribute("stroke-dasharray", `${L} ${L}`); tl.fromTo(p, { attr: { "stroke-dashoffset": L } }, { attr: { "stroke-dashoffset": 0 }, duration: 0.25, ease: "power2.out" }, AN.legal + 0.3 + i * 0.35); });
+      inn("#lLeg", AN.legal + 0.15, { from: { y: 30 } });
+      tl.fromTo("#clip", { filter: "brightness(1)" }, { filter: "brightness(1.18)", duration: 0.3, yoyo: true, repeat: 1 }, AN.step);
+
+      // 7 life: the family walks in front of the mosque at dawn
+      inn("#tLife", AN.newlife - 0.2);
+      ["#w1", "#w2", "#w3", "#w4"].forEach((sel, i) => {
+        tl.fromTo(sel, { x: 700, opacity: 0 }, { x: 0, opacity: 1, duration: 1.3, ease: "power2.out" }, SC.life.start + 0.05 + i * 0.12);
+        tl.fromTo(sel, { y: 0 }, { y: -10, duration: 0.18, yoyo: true, repeat: 5, ease: "sine.inOut" }, SC.life.start + 0.05 + i * 0.12);
+      });
+
+      // 8 call to action, then the end card: the mark lands once, with weight
+      inn("#tYou", AN.you - 0.1);
+      inn("#pAF", AN.af - 0.1, { from: { x: 80, y: 0 }, ease: "back.out(1.6)" }); inn("#pIR", AN.ir - 0.1, { from: { x: -80, y: 0 }, ease: "back.out(1.6)" });
+      tl.fromTo("#logo", { opacity: 0, scale: 1.8, y: -40 }, { opacity: 1, scale: 1, y: 0, duration: 0.55, ease: "power4.in" }, AN.consult - 0.45);
+      tl.fromTo("#logo", { filter: "brightness(1)" }, { filter: "brightness(1.5)", duration: 0.2, yoyo: true, repeat: 1 }, AN.consult + 0.1);
+      inn("#ctaP", AN.consult + 0.25, { from: { scale: 0.7, y: 0 }, ease: "back.out(1.6)" });
+      inn("#disc", AN.nexo2 - 0.6, { from: { y: 20 } });
+
+      // captions: the line fades in, each word lights up as it is spoken
+      T.lines.forEach((L, i) => {
+        const cap = $("#cap" + i), el = cap.firstElementChild, ws = el.querySelectorAll(".w");
+        tl.fromTo(el, { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.2, ease: "power2.out" }, L.start - 0.06);
+        tl.to(el, { opacity: 0, duration: 0.12 }, L.hold - 0.12);
+        ws.forEach((w, j) => {
+          const s = L.w[j][0], nx = j < ws.length - 1 ? L.w[j + 1][0] : Math.min(L.hold - 0.12, L.w[j][1] + 0.25), bx = w.firstElementChild, done = w.classList.contains("hi") ? "#f4d68c" : "#fbf3e2";
+          tl.fromTo(bx, { opacity: 0, scale: 0.82 }, { opacity: 1, scale: 1, duration: 0.12, ease: "back.out(2)" }, s - 0.03);
+          tl.fromTo(w, { color: "rgba(251,243,226,0.4)" }, { color: "#0b1528", duration: 0.08 }, s - 0.03);
+          tl.to(bx, { opacity: 0, duration: 0.12 }, nx - 0.04); tl.to(w, { color: done, duration: 0.1 }, nx - 0.04);
+        });
+      });
+
+      window.__timelines = window.__timelines || {};
+      window.__timelines["main"] = tl;
+    </script>
+  </body>
+</html>

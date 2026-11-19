@@ -53,3 +53,17 @@
 | Product consistency | Each product is one persistent asset, reused unchanged between its campaign and the montage |
 | Safe margins | Key copy sits within x 105–975 and y 255–1540 of 1080×1920 |
 | Issues found and fixed during QC | Crack glow covered the whole sphere; fracture flash blew out to white; nested-transmission perfume liquid rendered invisible; can label wrapped and was unreadable; product tags overlapped products; sneaker silhouette too low; portal opening overexposed; watch plates flared; montage wireframe bloomed white; logo "R" glyph rendered hollow (font contour winding; fixed with containment-based hole detection); logo overexposed; delivery bitrate too high (28 → 14 Mbps); cutdown sneaker beat replaced with the hero angle |
+
+## Bug-fix pass (v2)
+Found by an automated per-frame analysis (frame-to-frame luminance jumps, black/clipped pixels) plus visual inspection of every flagged frame. Unexplained frame jumps dropped from 15 to 0; the remaining flagged frames are the intentional speed-ramp orbit.
+| Bug | Where | Root cause | Fix |
+|---|---|---|---|
+| Square light blobs, gray/black rectangles | 0.6 s, 1.6 s, 2.6 s, 24.9 s, 34.5 s | NaN/Inf HDR pixels (HalfFloat overflow) smeared into blocks by the bloom mip chain | Sanitize NaN and clamp HDR before bloom (`post.js`) |
+| Huge square dust sprites near the camera | Hook, montage | Point size unbounded as depth → 0 | Cap point size, fade near-camera points (`lib.js`) |
+| Strobing during the shatter | 1.6–2.3 s | Camera shake at 90 rad/s aliased at 24 fps | Lower-frequency, smaller shake |
+| Flat orange disc left after the explosion | 2.6 s, montage | Core light mesh never hidden | Hide core after the flare |
+| White flash, camera flies through portal ring | 14.3–14.5 s | Orbit path crossed the portal disc | Portal closes before the orbit |
+| Light-bar flash / monolith blacking out frame | 14.5–15 s | First monoliths sat on the orbit path | Monoliths moved outward |
+| Lug flash on the watch | 28.8 s | Mirror-polished flat boxes | Brushed finish on lugs |
+| Black first frame | 0.0 s | Fade-in started from full black | Shorter, partial fade-in |
+| Fragile CLI parsing / encode args | `render.mjs`, `deliver.py` | String-split argv; hard-coded slice | Proper parser; helper function |

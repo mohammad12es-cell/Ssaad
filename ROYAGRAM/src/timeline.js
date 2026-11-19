@@ -51,7 +51,7 @@ export function gradeAt(t) {
   flash += 0.32 * Math.exp(-Math.max(0, t - 1.55) * 9) * (t >= 1.55 ? 1 : 0); // fracture flash
   for (const c of CUTS) { const d = t - c; if (d >= 0 && d < 0.25) flash += 0.12 * Math.exp(-d * 18); }
   const logo = 41.9; if (t >= logo) flash += 0.42 * Math.exp(-(t - logo) * 6);
-  const fadeIn = 1 - easeOut(range(t, 0, 0.5));
+  const fadeIn = 0.6 * (1 - easeOut(range(t, 0, 0.25)));
   // controlled silence: near-black beat before the brand reveal
   const hush = track(t, [[41.3, 0], [41.55, 0.82], [41.88, 0.82], [41.9, 0]]);
   let bloom = 0.5;

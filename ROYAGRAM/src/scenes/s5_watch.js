@@ -41,7 +41,7 @@ export function build(ctx) {
   const caseProf = [[0.88, -0.17], [0.97, -0.17], [1.01, -0.12], [1.03, 0.0], [1.01, 0.12], [0.97, 0.17], [0.88, 0.17]].map(([x, y]) => new THREE.Vector2(x, y));
   const caseG = new THREE.Group();
   const cm = new THREE.Mesh(new THREE.LatheGeometry(caseProf, 128), steel); cm.rotation.x = Math.PI / 2; caseG.add(cm);
-  for (const sx of [-1, 1]) for (const sy of [-1, 1]) { const lug = new THREE.Mesh(new THREE.BoxGeometry(0.16, 0.42, 0.24, 1, 1, 1), steel); lug.position.set(sx * 0.6, sy * 0.98, -0.03); lug.rotation.z = sx * sy * -0.18; caseG.add(lug); }
+  for (const sx of [-1, 1]) for (const sy of [-1, 1]) { const lug = new THREE.Mesh(new THREE.BoxGeometry(0.16, 0.42, 0.24, 1, 1, 1), brushed); lug.position.set(sx * 0.6, sy * 0.98, -0.03); lug.rotation.z = sx * sy * -0.18; caseG.add(lug); }
   add(caseG, 0, 0, 5);
   // crown
   const crown = new THREE.Group();

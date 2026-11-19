@@ -123,7 +123,7 @@ export function build(ctx) {
     const pre = sstep(BURST - 0.5, BURST, lt) * (lt < BURST ? 1 : 0);
     core.scale.setScalar(lt < BURST ? 0.001 + pre * 0.9 : 0.9 + (1 - flare) * -0.8 + flare * 0.6);
     core.material.color.setRGB(12, 7, 2.5).multiplyScalar(lt < BURST ? pre * 0.3 : flare * 0.9);
-    core.visible = lt > BURST - 0.5;
+    core.visible = lt > BURST - 0.5 && lt < BURST + 0.45;
     coreLight.intensity = (lt < BURST ? pre * 3 : flare * 30 + 1.5);
     sphere.rotation.y = lt * 0.25; sphere.rotation.x = 0.15 + lt * 0.05;
     sphere.position.y = Math.sin(lt * 1.3) * 0.03;
@@ -134,8 +134,8 @@ export function build(ctx) {
     const x = track(lt, [[0, 0.25], [BURST, 0.0], [4.6, -0.45]]);
     const y = track(lt, [[0, 0.35], [BURST, 0.1], [4.6, -0.2]]);
     const roll = track(lt, [[0, 0.0], [BURST, 0.02], [4.6, -0.22, easeIn]]);
-    const shake = lt > BURST ? Math.exp(-(lt - BURST) * 6) * 0.05 : 0;
-    setCam(camera, [x + shake * Math.sin(lt * 90), y + shake * Math.cos(lt * 77), z], [0, 0, z - 6], roll);
+    const shake = lt > BURST ? Math.exp(-(lt - BURST) * 5) * 0.035 : 0;
+    setCam(camera, [x + shake * Math.sin(lt * 19), y + shake * Math.cos(lt * 23), z], [0, 0, z - 6], roll);
     if (opt.variant === 1) { // montage: close orbit through shards
       const a = lt * 0.6;
       setCam(camera, [Math.sin(a) * 2.4, 0.3, Math.cos(a) * 2.4], [0, 0, 0], 0.1);

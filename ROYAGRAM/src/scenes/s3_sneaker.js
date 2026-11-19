@@ -63,7 +63,7 @@ export function build(ctx) {
     const slab = new THREE.Mesh(new THREE.BoxGeometry(w, h, d), slabMat); slab.position.y = h / 2; grp.add(slab);
     const line = new THREE.Mesh(new THREE.BoxGeometry(0.06, h * 0.92, 0.06), lineMat); line.position.set(-side * (w / 2 + 0.01), h * 0.5, d / 2 + 0.01); grp.add(line);
     const cap = new THREE.Mesh(new THREE.BoxGeometry(w * 1.02, 0.08, d * 1.02), lineMat); cap.position.y = h * (0.55 + r() * 0.3); grp.add(cap);
-    grp.position.set(side * (5.2 + i * 0.55 + r() * 0.6), 0, -3 - i * 5.2);
+    grp.position.set(side * (8.4 + i * 0.55 + r() * 0.6), 0, -5 - i * 5.2);
     grp.rotation.y = side * 0.08;
     arch.add(grp); slabs.push({ grp, h, delay: i * 0.07 + (side > 0 ? 0.04 : 0) });
   }
@@ -95,6 +95,8 @@ export function build(ctx) {
     for (const s of slabs) { const k = easeInOutQuint(range(lt, 2.8 + s.delay, 4.6 + s.delay)); s.grp.position.y = -s.h * (1 - k) - 0.3; s.grp.visible = k > 0.001; }
     megaRing.position.y = lerp(-17, 2, easeInOut(range(lt, 3.3, 5.6)));
     lineMat.color.setRGB(5.0, 3.0, 1.1).multiplyScalar(0.4 + 0.6 * night);
+    const close = 1 - easeInOut(range(lt, 2.4, 3.1));
+    portal.scale.setScalar(Math.max(1e-3, close)); portal.visible = close > 0.002; pLight.intensity = 10 * close;
     PU.uI.value = lerp(0.5, 0.28, sstep(3.0, 5.0, lt)) * (lt < 0.7 ? lerp(0.75, 1.0, lt / 0.7) : 1);
 
     // shoe choreography

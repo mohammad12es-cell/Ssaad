@@ -155,7 +155,8 @@ export function dust(count, spread, opts = {}) {
         vec4 mv = modelViewMatrix*vec4(p,1.0); gl_Position = projectionMatrix*mv;
         float tw = 0.55 + 0.45*sin(uTime*(1.5+aRnd.w*3.0) + aRnd.x*40.0);
         vA = tw * (0.35 + 0.65*aRnd.z);
-        gl_PointSize = uSize * (0.4 + aRnd.y) * (uH/1920.0) * (6.0 / max(0.5,-mv.z)); }`,
+        vA *= smoothstep(0.8, 2.5, -mv.z);
+        gl_PointSize = min(uSize * (0.4 + aRnd.y) * (6.0 / max(0.5,-mv.z)), 9.0) * (uH/1920.0); }`,
     fragmentShader: `uniform vec3 uColor; uniform float uOpacity; varying float vA;
       void main(){ vec2 d = gl_PointCoord-0.5; float r = length(d); float a = smoothstep(0.5,0.0,r); a = a*a; gl_FragColor = vec4(uColor*a*vA*uOpacity*2.0, 1.0); }`,
   });

@@ -1,7 +1,12 @@
 // Frame renderer: headless Chromium (software WebGL) -> PNG frames
 // usage: node src/render.mjs --out renders/frames --from 0 --to 1080 --workers 3 [--scale 1] [--step 1] [--only s1]
 import http from 'node:http'; import fs from 'node:fs'; import path from 'node:path'; import { createRequire } from 'node:module'; const { chromium } = createRequire(import.meta.url)('playwright');
-const args = Object.fromEntries(process.argv.slice(2).join(' ').split('--').filter(Boolean).map((s) => { const [k, ...v] = s.trim().split(' '); return [k, v.join(' ')]; }));
+const args = {};
+for (let i = 2, a = process.argv; i < a.length; i++) {
+  if (!a[i].startsWith('--')) continue;
+  const k = a[i].slice(2), next = a[i + 1];
+  args[k] = next !== undefined && !next.startsWith('--') ? (i++, next) : true;
+}
 const ROOT = path.resolve(path.dirname(new URL(import.meta.url).pathname), '..');
 const out = path.resolve(ROOT, args.out || 'renders/frames'); fs.mkdirSync(out, { recursive: true });
 const from = +(args.from ?? 0), to = +(args.to ?? 1080), workers = +(args.workers ?? 3), scale = +(args.scale ?? 1), step = +(args.step ?? 1);

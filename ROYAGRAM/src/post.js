@@ -87,6 +87,8 @@ export const TransitionShader = {
         col = p < 0.5 ? texture2D(tA, uv).rgb : texture2D(tB, uv).rgb;
         col += vec3(3.0, 2.6, 2.1) * pow(1.0 - abs(p*2.0 - 1.0), 4.0);
       }
+      if (col.r != col.r || col.g != col.g || col.b != col.b) col = vec3(0.0);
+      col = clamp(col, 0.0, 12.0);
       gl_FragColor = vec4(col, 1.0);
     }`,
 };

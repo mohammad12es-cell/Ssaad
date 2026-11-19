@@ -6,6 +6,7 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 os.chdir(ROOT)
 D = 'deliverables'; os.makedirs(D, exist_ok=True); os.makedirs(f'{D}/thumbnails', exist_ok=True); os.makedirs(f'{D}/audio', exist_ok=True)
 FR = 'renders/frames/f%05d.png'
+def x264(level='4.2'): return ['-c:v', 'libx264', '-preset', 'slow', '-profile:v', 'high', '-level', level, '-pix_fmt', 'yuv420p', '-color_primaries', 'bt709', '-color_trc', 'bt709', '-colorspace', 'bt709', '-movflags', '+faststart']
 X264 = ['-c:v', 'libx264', '-preset', 'slow', '-profile:v', 'high', '-level', '4.2', '-pix_fmt', 'yuv420p', '-color_primaries', 'bt709', '-color_trc', 'bt709', '-colorspace', 'bt709', '-movflags', '+faststart']
 AAC = ['-c:a', 'aac', '-b:a', '320k', '-ar', '48000']
 def ff(*a): print('ffmpeg', ' '.join(a[-1:])); subprocess.run(['ffmpeg', '-y', '-hide_banner', '-loglevel', 'error', *a], check=True)
@@ -15,7 +16,7 @@ ff('-framerate', '24', '-i', FR, '-i', 'audio/mix/mix.wav', *X264, '-crf', '17',
 # 2. subtitled version (burned-in, top safe zone)
 ff('-i', f'{D}/ROYAGRAM_Launch_45s_1080x1920_NoSubs.mp4', '-vf', 'ass=src/subtitles.ass', *X264, '-crf', '17', '-maxrate', '14M', '-bufsize', '28M', '-c:a', 'copy', f'{D}/ROYAGRAM_Launch_45s_1080x1920_Subtitled.mp4')
 # 3. UHD 2160x3840 master — Lanczos upscale of the 1080p render (see README: native 4K = render.mjs --scale 2)
-ff('-framerate', '24', '-i', FR, '-i', 'audio/mix/mix.wav', '-vf', 'scale=2160:3840:flags=lanczos', *X264[:6], '-level', '5.2', *X264[8:], '-crf', '20', '-maxrate', '16M', '-bufsize', '32M', *AAC, '-t', '45', '-shortest', f'{D}/ROYAGRAM_Launch_45s_2160x3840_UHD-upscale.mp4')
+ff('-framerate', '24', '-i', FR, '-i', 'audio/mix/mix.wav', '-vf', 'scale=2160:3840:flags=lanczos', *x264('5.2'), '-crf', '20', '-maxrate', '16M', '-bufsize', '32M', *AAC, '-t', '45', '-shortest', f'{D}/ROYAGRAM_Launch_45s_2160x3840_UHD-upscale.mp4')
 # 4. 15-second cutdown (beat-aligned EDL shared with the audio build)
 edl = json.load(open('src/cutdown_edl.json'))
 parts = ''.join(f"[0:v]trim=start={a}:end={b},setpts=PTS-STARTPTS[v{i}];" for i, (a, b) in enumerate(edl['segments']))

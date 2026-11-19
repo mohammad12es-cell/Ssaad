@@ -18,7 +18,7 @@ ffmpeg -v error -y -i "$PIC" -i "$MIX" -map 0:v -map 1:a -c:v copy -c:a pcm_s24l
   output/ADAM_BARFI_BlackFriday_MASTER.mov
 
 # 3) Separate stems (already 48 kHz / 24-bit): voiceover, music, sfx, full mix
-cp audio/stem_vo.wav    output/STEM_voiceover_fa.wav
+[ -f audio/stem_vo.wav ] && cp audio/stem_vo.wav output/STEM_voiceover_fa.wav || rm -f output/STEM_voiceover_fa.wav
 cp audio/stem_music.wav output/STEM_music.wav
 cp audio/stem_sfx.wav   output/STEM_sfx.wav
 cp audio/mix.wav        output/MIX_full.wav

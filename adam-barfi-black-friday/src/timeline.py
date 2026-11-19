@@ -51,6 +51,9 @@ SHOTS = [
 ]
 
 # ---------------------------------------------------------------- voiceover
+# Default cut has NO narration (music + sound design + Persian on-screen text).
+# NARRATION=1 restores the Persian voiceover version.
+NARRATION = os.environ.get("NARRATION", "0") == "1"
 # (file, start). Start times are chosen from Whisper word timings so that
 # "سی" (thirty) in line 3 lands on the 30% reveal at beat 28.
 VO = [
@@ -61,3 +64,5 @@ VO = [
     ('vo5.wav', 18.80),
     ('vo6.wav', 22.30),
 ]
+if not NARRATION:
+    VO = []

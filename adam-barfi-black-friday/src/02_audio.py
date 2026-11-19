@@ -366,10 +366,11 @@ for fname, start in VO:
         p = os.path.join(VOD, 'raw_' + fname)
     x = process_vo(load_vo(p))
     place(vo, x, start, 0.70)
-vo = reverb(vo, 0.7, 6000, 0.08, seed=21)  # small, expensive-sounding room
+if VO:
+    vo = reverb(vo, 0.7, 6000, 0.08, seed=21)  # small, expensive-sounding room
 
 # ------------------------------------------------------------------ mix
-vo_env = np.sqrt(lp(vo.mean(1) ** 2, 8, 1).clip(0))
+vo_env = np.sqrt(lp(vo.mean(1) ** 2, 8, 1).clip(0)) if VO else np.zeros(N)
 duck = 1.0 - 0.6 * np.clip(vo_env / 0.05, 0, 1)        # ~ -8 dB under VO
 duck = lp(duck, 6, 1)[:, None]
 
@@ -382,7 +383,12 @@ mix = (music * duck + sfx + vo) * fade
 mix = np.tanh(mix * 1.05) / np.tanh(1.05)
 
 os.makedirs(os.path.join(ROOT, 'audio'), exist_ok=True)
-for name, x in (('stem_music', music * fade), ('stem_sfx', sfx * fade), ('stem_vo', vo * fade), ('mix_pre', mix)):
+stems = [('stem_music', music * fade), ('stem_sfx', sfx * fade), ('mix_pre', mix)]
+if VO:
+    stems.append(('stem_vo', vo * fade))
+elif os.path.exists(os.path.join(ROOT, 'audio', 'stem_vo.wav')):
+    os.remove(os.path.join(ROOT, 'audio', 'stem_vo.wav'))
+for name, x in stems:
     sf.write(os.path.join(ROOT, 'audio', name + '.wav'), np.clip(x, -1, 1), SR, subtype='PCM_24')
 
 # loudness: -14 LUFS integrated, -1 dBTP (Instagram/Reels target)

@@ -15,7 +15,7 @@ import cv2
 from PIL import Image, ImageDraw, ImageFont, ImageFilter
 
 sys.path.insert(0, os.path.dirname(__file__))
-from timeline import FPS, W, H, b, BEAT, DURATION, SHOTS, HANDLE
+from timeline import FPS, W, H, b, BEAT, DURATION, SHOTS, HANDLE, NARRATION
 
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 FONTS = os.path.join(ROOT, 'assets', 'fonts')
@@ -430,12 +430,16 @@ def build_graphics():
     G.append(Text('FRIDAY.', SERIF_BLACK, 250, W / 2, 1030, b(1.4), b(5.55), fill='gold', tracking=4,
                   anim='track', track_from=50, max_w=900, shimmer=(b(2.2), b(4.2))))
     G.append(Rule(W / 2, 1210, 300, b(2.0), b(5.5)))
+    G.append(Text('یه فرصت خاص، برای یه استایل متفاوت', FA_MED, 54, W / 2, 1300, b(2.6), b(5.55), rtl=True,
+                  anim='wipe', max_w=860))
     # SCENE 02
-    G.append(Text('ADAM BARFI', SERIF_SB, 128, W / 2, 1170, b(6.4), b(13.6), fill='gold', tracking=22,
+    G.append(Text('ADAM BARFI', SERIF_SB, 128, W / 2, 1100, b(6.4), b(13.6), fill='gold', tracking=22,
                   anim='track', track_from=70, max_w=900, shimmer=(b(7.5), b(9.5))))
-    G.append(Text('آدم برفی', FA_BOLD, 92, W / 2, 1300, 5.10, b(13.6), rtl=True, anim='wipe', dur_in=0.5))
-    G.append(Rule(W / 2, 1392, 520, 5.40, b(13.6)))
-    G.append(Text('THE BLACK FRIDAY EDITION', SANS_M, 34, W / 2, 1450, 5.60, b(13.6), tracking=11, anim='rise'))
+    G.append(Text('آدم برفی', FA_BOLD, 92, W / 2, 1228, 5.10, b(13.6), rtl=True, anim='wipe', dur_in=0.5))
+    G.append(Rule(W / 2, 1318, 520, 5.40, b(13.6)))
+    G.append(Text('THE BLACK FRIDAY EDITION', SANS_M, 34, W / 2, 1372, 5.60, b(13.6), tracking=11, anim='rise'))
+    G.append(Text('بلک فرایدی آدم برفی شروع شد!', FA_BOLD, 58, W / 2, 1468, 5.95, b(13.6), fill='gold', rtl=True,
+                  anim='wipe', max_w=860))
     # SCENE 03
     G.append(Text('YOUR STYLE.', SERIF_XB, 150, W / 2, 1120, b(14.4), b(18.6), anim='rise', max_w=880))
     G.append(Text('YOUR MOMENT.', SERIF_I, 150, W / 2, 1275, b(17), b(18.6), fill='gold', anim='rise', max_w=900))
@@ -458,11 +462,14 @@ def build_graphics():
     G.append(Text('UP TO 30% OFF', SERIF_XB, 104, W / 2, 300, b(32), b(35.6), fill='gold', anim='rise',
                   shimmer=(b(32.4), b(34))))
     G.append(Text('تا ۳۰٪ تخفیف ویژه', FA_BOLD, 54, W / 2, 415, b(32.3), b(35.6), rtl=True, anim='wipe'))
+    G.append(Text('وقتشه استایل مورد علاقه‌تو انتخاب کنی', FA_BOLD, 60, W / 2, 1400, b(32.4), b(35.6), rtl=True,
+                  anim='wipe', max_w=860))
     # SCENE 05 — CTA end card
     T = 1e9
     G.append(Text('ADAM BARFI', SERIF_SB, 122, W / 2, 905, b(36.4), T, fill='gold', tracking=22, anim='track',
                   track_from=64, max_w=900, shimmer=(b(47.8), b(49.6))))
-    G.append(Text('آدم برفی', FA_BOLD, 80, W / 2, 1025, b(37.2), T, rtl=True, anim='wipe'))
+    G.append(Text('آدم برفی؛ استایل تو، انتخاب تو', FA_BOLD, 64, W / 2, 1025, b(37.2), T, rtl=True, anim='wipe',
+                  max_w=860))
     G.append(Rule(W / 2, 1100, 560, b(37.7), T))
     G.append(Text('BLACK FRIDAY  ·  UP TO 30% OFF', SANS_SB, 40, W / 2, 1160, b(38.1), T, tracking=7, anim='rise', max_w=860))
     G.append(Text('YOUR NEXT FAVORITE LOOK IS WAITING.', CORM_I, 58, W / 2, 1238, b(38.8), T, fill='gold', anim='rise', max_w=880))
@@ -480,6 +487,7 @@ GRADS = [
     (b(14), b(24), 'bottom', 0.90),
     (b(24), b(32), 'center', 0.35),
     (b(32), b(36), 'top', 0.85),
+    (b(32), b(36), 'bottom', 0.80),
     (b(36), 99, 'bottom', 0.92),
 ]
 SWEEPS = [(b(6) - 0.25, 0.55), (b(14) - 0.25, 0.5), (b(36) - 0.25, 0.6)]

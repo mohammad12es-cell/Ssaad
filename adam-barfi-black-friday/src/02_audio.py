@@ -1,5 +1,6 @@
 """Original soundtrack, sound design and mix for the ADAM BARFI Black Friday reel.
-Music: upbeat Christmas-pop arrangement of the public-domain "Deck the Halls".
+Music: Christmas "Deck the Halls" opening (public domain) that switches into a high-energy
+original electro-house track.
 
 Everything here is synthesised from scratch (no samples, no licensed music):
   - music  : 120 BPM dark fashion-runway electronic, D minor (i-VI-iv-V)
@@ -278,10 +279,12 @@ def snare():
     return (body * 0.6 + nz) * 0.45
 
 
-# ---- "Deck the Halls" (traditional Welsh, public domain) — upbeat Christmas pop arrangement
-# G major, 120 BPM: Motown-style 8th-note piano, octave bass, four-on-the-floor, claps,
-# sleigh bells, glockenspiel/celesta lead, brass stabs. The rising "fa-la-la" line builds
-# straight into the 30% hit; the final "fa-la-la ... la" cadence closes on the brand card.
+# ---- Two-part soundtrack
+#  PART 1 (0 - 7.2 s): Christmas — "Deck the Halls" (traditional, public domain) on music box,
+#          piano, glockenspiel and sleigh bells; a riser + snare build switches the track.
+#  PART 2 (7.2 s - end): high-energy original electro-house in G minor (Gm Eb Bb F):
+#          four-on-the-floor, sidechain pump, rolling 16th bass, supersaw stabs, lead hook.
+#          Drop 1 under the fashion scene, breakdown under BLACK FRIDAY, bigger drop 2 on 30%.
 
 def piano(notes, dur=0.42, vel=1.0):
     n = int(dur * SR); t = np.arange(n) / SR
@@ -294,35 +297,32 @@ def piano(notes, dur=0.42, vel=1.0):
     return s / len(notes) * 0.42 * vel
 
 
-def brass(notes, dur=0.3):
+def supersaw(notes, dur, cutoff=6000, attack=0.005):
     n = int(dur * SR); t = np.arange(n) / SR
-    s = np.zeros(n)
+    out = np.zeros((n, 2))
     for m in notes:
-        for d in (-0.004, 0.004):
-            s += saw(mtof(m), n, d)
-    e = np.exp(-t / 0.03)
-    s = lp(s, 1500) * (1 - e) + lp(s, 4500) * e
-    s *= np.clip(t / 0.01, 0, 1) * np.clip((dur - t) / 0.06, 0, 1)
-    return s / len(notes) * 0.22
+        for i, d in enumerate((-0.011, -0.007, -0.003, 0.0, 0.003, 0.007, 0.011)):
+            s = saw(mtof(m), n, d)
+            pan = (i - 3) / 3
+            out[:, 0] += s * (1 - pan) * 0.5
+            out[:, 1] += s * (1 + pan) * 0.5
+    out = lp(out, cutoff, 2)
+    e = np.clip(t / attack, 0, 1) * np.clip((dur - t) / 0.03, 0, 1)
+    return out * e[:, None] / (len(notes) * 7) * 0.9
 
 
-G4, A4, B4, C5, Cs5, D5, E5, Fs4, Fs5, G5 = 67, 69, 71, 72, 73, 74, 76, 66, 78, 79
-L1 = [(0, D5, 1.5), (1.5, C5, .5), (2, B4, 1), (3, A4, 1), (4, G4, 1), (5, A4, 1), (6, B4, 1), (7, G4, 1)]
-L2 = [(0, A4, .5), (.5, B4, .5), (1, C5, .5), (1.5, A4, .5), (2, B4, 1.5), (3.5, A4, .5), (4, G4, 1), (5, Fs4, 1), (6, G4, 2)]
-L3 = [(0, A4, 1.5), (1.5, B4, .5), (2, C5, 1), (3, A4, 1), (4, B4, 1.5), (5.5, C5, .5), (6, D5, 1), (7, A4, 1)]
-L4 = [(0, B4, .5), (.5, Cs5, .5), (1, D5, 1), (2, E5, .5), (2.5, Fs5, .5), (3, G5, 1), (4, Fs5, 1), (5, E5, 1), (6, D5, 2)]
-L5 = [(0, E5, .5), (.5, E5, .5), (1, E5, .5), (1.5, E5, .5), (2, D5, 1.5), (3.5, C5, .5), (4, B4, 1), (5, A4, 1), (6, G4, 2)]
-_G = (43, [59, 62, 67]); _C = (48, [60, 64, 67]); _D = (50, [57, 62, 66]); _A = (45, [57, 61, 64]); _Am = (45, [57, 60, 64])
-HARM = {'L1': [_G, _G, _G, _D], 'L2': [_D, _G, _D, _G], 'L3': [_D, _D, _G, _D],
-        'L4': [_G, _A, _D, _D], 'L5': [_C, _D, _G, _G]}
-SONG = [(0, 'L1', L1), (8, 'L2', L2), (16, 'L3', L3), (24, 'L4', L4), (32, 'L1', L1), (40, 'L5', L5)]
+def roll_bass(m, dur):
+    n = int(dur * SR); t = np.arange(n) / SR
+    s = saw(mtof(m), n) * 0.7 + np.sin(2 * np.pi * mtof(m) * t)
+    e = np.exp(-t / 0.035)
+    s = lp(s, 420) * (1 - e) + lp(s, 1400) * e
+    return np.tanh(s * 2.0) * np.clip((dur - t) / 0.01, 0, 1) * np.exp(-t / 0.2) * 0.5
 
 
-def chord_at(k):
-    for k0, name, _ in SONG:
-        if k0 <= k < k0 + 8:
-            return HARM[name][int((k - k0) // 2)]
-    return _G
+def crash():
+    n = int(2.5 * SR); t = np.arange(n) / SR
+    s = hp(rng.standard_normal((n, 2)), 5000, 2) * np.exp(-t / 0.7)[:, None]
+    return s * 0.18
 
 
 music = buf()
@@ -330,83 +330,126 @@ drums = buf()
 bells = buf()
 sfx = buf()
 END_K = 48
+SWITCH = 14
 
-# lead melody: celesta + glock (intro / tension / CTA), bright pluck-bell in the drops
-for k0, name, line in SONG:
+# ===================== PART 1 — Christmas =====================
+G4, A4, B4, C5, D5, Fs4 = 67, 69, 71, 72, 74, 66
+L1 = [(0, D5, 1.5), (1.5, C5, .5), (2, B4, 1), (3, A4, 1), (4, G4, 1), (5, A4, 1), (6, B4, 1), (7, G4, 1)]
+L2 = [(0, A4, .5), (.5, B4, .5), (1, C5, .5), (1.5, A4, .5), (2, B4, 1.5), (3.5, A4, .5), (4, G4, 1), (5, Fs4, 1)]
+_G = [59, 62, 67]; _D = [57, 62, 66]
+XH = [_G, _G, _G, _D, _D, _G, _D, _G]          # half-bar chords over k0..16
+for k0, line in ((0, L1), (8, L2)):
     for off, m, d in line:
         k = k0 + off
-        drop = (14 <= k < 24) or (28 <= k < 40)
-        place(bells, celesta(m + 12, dur=max(1.0, d * BEAT + 0.7)), b(k), 0.95, pan=-0.12)
-        place(bells, glock(m + 12), b(k), 0.38 if k >= 6 else 0.2, pan=0.3)
-        if drop:
-            place(bells, pluck(m, max(0.3, d * BEAT)), b(k), 1.3, pan=-0.05)
-
-# piano: 8th-note chord pulses (accent on the off-beats = festive pop bounce)
-for kk in np.arange(0, END_K, 0.5):
-    root, notes = chord_at(kk)
+        place(bells, celesta(m + 12, dur=max(1.0, d * BEAT + 0.7)), b(k), 1.0, pan=-0.12)
+        place(bells, glock(m + 12), b(k), 0.4, pan=0.3)
+for kk in np.arange(0, SWITCH, 0.5):
+    notes = XH[int(kk // 2)]
     off = abs(kk % 1 - 0.5) < 1e-6
-    if kk < 6 and off:
-        continue
-    if 23.5 <= kk < 24:
-        continue
-    v = (0.9 if off else 0.55) * (0.7 if kk < 14 else 1.0)
-    if 24 <= kk < 28:
-        v = 0.5 + 0.5 * (kk - 24) / 4
-    place(music, piano([m + 12 for m in notes] + [notes[0] + 24], 0.4, v), b(kk), 1.0, pan=0.12)
-# left-hand / strings bed
-for k0 in range(0, END_K, 2):
-    root, notes = chord_at(k0)
-    place(music, strings(notes, 2 * BEAT + 0.3), b(k0), 0.5 if k0 >= 6 else 0.7)
-music = reverb(music, 1.8, 7000, 0.22, seed=11)
-
-# octave bass (pumping 8ths) from the build on
-for kk in np.arange(6, END_K - 1, 0.5):
-    if 23.5 <= kk < 28 and kk not in (24, 26):
-        continue
-    root, _ = chord_at(kk)
-    oct_ = 12 if abs(kk % 1 - 0.5) < 1e-6 else 0
-    g = 0.8 if kk >= 14 else 0.5
-    place(music, bass_note(root - 12 + oct_, BEAT * 0.45), b(kk), g)
-
-# brass stabs on phrase turnarounds
-for k in (7.5, 15.5, 23, 31.5, 39.5, 46):
-    root, notes = chord_at(k)
-    place(music, brass([m + 12 for m in notes], 0.35), b(k), 1.0, pan=-0.2)
-    place(music, brass([m + 12 for m in notes], 0.25), b(k + 0.5), 0.8, pan=0.2)
-
-# sleigh bells: 8ths in the intro, 16ths with the groove
-for kk in np.arange(0, END_K, 0.25):
+    v = (0.85 if off else 0.5) * (0.6 + 0.4 * kk / SWITCH)
+    place(music, piano([m + 12 for m in notes] + [notes[0] + 24], 0.4, v), b(kk), 1.0, pan=0.1)
+    root = 43 if notes is _G else 38
+    if kk >= 4:
+        place(music, bass_note(root + (12 if off else 0), BEAT * 0.45), b(kk), 0.45)
+for k0 in range(0, SWITCH, 2):
+    place(music, strings(XH[k0 // 2], 2 * BEAT + 0.3), b(k0), 0.55)
+for kk in np.arange(0, SWITCH, 0.25):
     q = kk % 1
     on8 = abs(q) < 1e-6 or abs(q - 0.5) < 1e-6
-    if kk < 6:
-        if on8: place(bells, sleigh(1.0 if abs(q) < 1e-6 else 0.6), b(kk), 1.0, pan=0.4)
-    elif not (23.5 <= kk < 24):
-        place(bells, sleigh(1.0 if on8 else 0.55), b(kk), 1.0, pan=0.4)
-music += reverb(bells, 2.2, 9000, 0.28, seed=13)
+    if on8 or kk >= 6:
+        place(bells, sleigh(1.0 if on8 else 0.55), b(kk), 1.1, pan=0.4)
+CLP = clap()
+for kk in range(4, SWITCH):
+    if kk % 2 == 1:
+        place(drums, CLP, b(kk), 0.55)
+# switch build: kick on beats + snare roll + riser
+K = kick(); SN = snare()
+for kk in range(10, SWITCH):
+    place(drums, lp(K, 300 + 600 * (kk - 10)), b(kk), 0.5 + 0.1 * (kk - 10))
+steps = np.arange(11, SWITCH - 0.25, 0.125)
+for i, kk in enumerate(steps):
+    place(drums, SN, b(kk), 0.15 + 0.5 * i / len(steps), pan=0.1)
+place(sfx, riser(b(SWITCH) - b(10)), b(10), 0.8)
+place(sfx, impact(1.2), b(SWITCH), 0.9)
 
+# ===================== PART 2 — electro-house =====================
+EP = [(43, [62, 67, 70, 74]), (39, [63, 67, 70, 75]), (46, [62, 65, 70, 74]), (41, [60, 65, 69, 72])]  # Gm Eb Bb F
+
+
+def echord(k):
+    return EP[int(k // 2) % 4]          # one chord every 2 beats = fast, driving
+
+
+groove1 = lambda k: SWITCH <= k < 23.5
+groove2 = lambda k: 28 <= k < 46
+synth = buf()
+# supersaw stab rhythm per 2 beats: 0, .75, 1.5  (syncopated hook)
+for k0 in np.arange(SWITCH, END_K, 2):
+    root, notes = echord(k0)
+    for off, ln in ((0, 0.6), (0.75, 0.6), (1.5, 0.45)):
+        k = k0 + off
+        if groove1(k) or groove2(k):
+            big = groove2(k)
+            place(synth, supersaw([m + 12 for m in notes] + ([notes[0] + 24] if big else []), BEAT * ln,
+                                  7500 if big else 5500), b(k), 1.0 if k < 40 else 0.7)
+    if 24 <= k0 < 28:   # breakdown: long rising pads
+        place(synth, supersaw([m + 12 for m in notes], 2 * BEAT, 1500 + 1500 * (k0 - 24), attack=0.3), b(k0), 0.9)
+# lead hook (pluck + saw) — 4-bar phrase, G minor
+HOOK = [(0, 74), (0.75, 74), (1.5, 72), (2.25, 70), (3, 67), (4, 70), (4.75, 72), (5.5, 74), (6.25, 77), (7, 74),
+        (8, 79), (8.75, 77), (9.5, 74), (10.25, 72), (11, 70), (12, 72), (12.75, 70), (13.5, 69), (14.25, 65), (15, 67)]
+for start in (16, 32):
+    for off, m in HOOK:
+        k = start + off
+        if (groove1(k) or groove2(k)) and k < 40:
+            place(synth, pluck(m + 12, 0.32), b(k), 1.5, pan=0.15)
+            place(synth, supersaw([m + 12], 0.22, 6000), b(k), 0.6)
+# rolling bass: 16ths, rests on the downbeat (kick), octave jumps
+for kk in np.arange(SWITCH, 46, 0.25):
+    if not (groove1(kk) or groove2(kk)):
+        continue
+    if abs(kk % 1) < 1e-6:
+        continue
+    root, _ = echord(kk)
+    m = root - 12 + (12 if abs(kk % 1 - 0.5) < 1e-6 else 0)
+    place(synth, roll_bass(m, BEAT * 0.24), b(kk), 0.9 if abs(kk % 1 - 0.5) < 1e-6 else 0.6)
 # drums
-K = kick(); CLP = clap(); SN = snare()
-for kk in np.arange(0, END_K, 0.5):
+for kk in np.arange(SWITCH, END_K, 0.25):
+    g = groove1(kk) or groove2(kk)
+    if not g:
+        continue
+    q = kk % 1
     tb = b(kk)
-    whole = abs(kk - round(kk)) < 1e-6
-    groove = (14 <= kk < 23.5) or (28 <= kk < 46)
-    build = 6 <= kk < 14
-    if whole:
-        if groove:
-            place(drums, K, tb, 0.95 if kk < 40 else 0.75)
-        elif build and int(kk) % 2 == 0:
-            place(drums, lp(K, 400 + 3000 * (kk - 6) / 8), tb, 0.55 + 0.3 * (kk - 6) / 8)
-        if (groove or build) and int(kk) % 2 == 1:
-            place(drums, CLP, tb, 0.85 if groove else 0.55, pan=0.05)
-            if groove:
-                place(drums, SN, tb, 0.35)
-    elif groove:
-        place(drums, hat(True), tb, 0.45, pan=-0.2)
-# snare builds
-for k0, k1, stp, g in ((21, 23.5, 0.25, 0.5), (26, 27.75, 0.125, 0.6)):
-    steps = np.arange(k0, k1, stp)
-    for i, kk in enumerate(steps):
-        place(drums, SN, b(kk), g * (0.3 + 0.7 * i / len(steps)), pan=0.1)
+    if abs(q) < 1e-6:
+        place(drums, K, tb, 1.0)
+        if int(kk) % 2 == 1:
+            place(drums, CLP, tb, 0.9); place(drums, SN, tb, 0.45)
+    if abs(q - 0.5) < 1e-6:
+        place(drums, hat(True), tb, 0.55, pan=-0.2)
+    else:
+        place(drums, hat(), tb, 0.3, pan=0.25)
+for k in (SWITCH, 28, 36):
+    place(drums, crash(), b(k), 1.0)
+# breakdown build to 30%
+for kk in (24, 25, 26, 27):
+    place(drums, lp(K, 250), b(kk), 0.5)
+steps = np.arange(25, 27.875, 0.125)
+for i, kk in enumerate(steps):
+    place(drums, SN, b(kk), 0.15 + 0.55 * i / len(steps), pan=0.1)
+
+# sidechain pump on everything melodic in the house section
+t = np.arange(N) / SR
+pump = np.ones(N)
+for kk in np.arange(SWITCH, END_K, 1.0):
+    if groove1(kk) or groove2(kk):
+        i0 = int(b(kk) * SR); n = int(BEAT * SR)
+        tt = np.arange(n) / SR
+        seg = 1 - 0.65 * np.exp(-tt / 0.11)
+        pump[i0:i0 + n] = np.minimum(pump[i0:i0 + n], seg[:max(0, min(n, N - i0))])
+synth = reverb(synth, 1.4, 8000, 0.18, seed=17) * pump[:, None]
+
+music = reverb(music, 1.8, 7000, 0.22, seed=11)
+music += reverb(bells, 2.2, 9000, 0.28, seed=13)
+music += synth * 0.9
 music += drums
 
 # ------------------------------------------------------------------ sound design

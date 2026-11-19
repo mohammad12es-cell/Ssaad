@@ -88,7 +88,10 @@ python3 src/render.py         # picture -> build/picture.mp4   (--stills 5.5,14.
 
 ## Music and fonts licensing
 
-- The music is an upbeat Christmas-pop arrangement of the public-domain carol *Deck the Halls*. It has bouncing piano, octave bass, a four-on-the-floor beat, claps, sleigh bells, glockenspiel and brass stabs. The rising "fa-la-la" line lands on the 30% hit. The arrangement and every sound are original and synthesised in `src/02_audio.py` with no samples, so they are free to use, with no copyright claims on Instagram.
+- The music comes in two parts.
+  - 0–7 s, Christmas: *Deck the Halls*, a public-domain carol, on music box, piano, glockenspiel and sleigh bells.
+  - From 7.2 s, after a riser and snare build: a high-energy original electro-house track in G minor. It has a four-on-the-floor beat with sidechain pump, rolling 16th-note bass, supersaw stabs and a lead hook. The bigger second drop lands on the 30% hit.
+  - Every sound is synthesised in `src/02_audio.py` with no samples, so there are no copyright claims.
 - The default cut has no narration: music, sound effects and Persian on-screen text only. `NARRATION=1` restores the voiceover version.
 - The voice is Piper TTS `fa_IR-magnoliasis-medium`. See that model's card on Hugging Face for its licence.
 - The fonts are Playfair Display, Cormorant Garamond, Montserrat and Vazirmatn. All are under the SIL Open Font License.

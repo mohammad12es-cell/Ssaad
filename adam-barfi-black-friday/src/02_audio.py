@@ -1,6 +1,5 @@
 """Original soundtrack, sound design and mix for the ADAM BARFI Black Friday reel.
-Music: Christmas opening (music box + sleigh bells on the public-domain Jingle Bells
-melody) turning into a modern festive half-time beat.
+Music: upbeat Christmas-pop arrangement of the public-domain "Deck the Halls".
 
 Everything here is synthesised from scratch (no samples, no licensed music):
   - music  : 120 BPM dark fashion-runway electronic, D minor (i-VI-iv-V)
@@ -202,9 +201,7 @@ def tick():
 
 
 # ------------------------------------------------------------------ arrangement
-# "Christmas into Black Friday": opens as a music-box / sleigh-bell Christmas piece playing the
-# public-domain "Jingle Bells" chorus, then the same melody turns into a modern half-time
-# festive beat. 120 BPM, G major.
+# Instrument helpers (shared by the Christmas arrangement below).
 # Every note and sound is synthesised here (original arrangement, no samples).
 
 def celesta(m, dur=1.6, bright=1.0):
@@ -281,122 +278,135 @@ def snare():
     return (body * 0.6 + nz) * 0.45
 
 
-# G major, Jingle Bells changes: | G | G | G | G | C | G | D | G |  (then bars 1-4 again)
-_G = (43, [62, 67, 71, 74]); _C = (48, [60, 64, 67, 72]); _D = (38, [62, 66, 69, 74])
-CH = [_G, _G, _G, _G, _C, _G, _D, _G]
+# ---- "Deck the Halls" (traditional Welsh, public domain) — upbeat Christmas pop arrangement
+# G major, 120 BPM: Motown-style 8th-note piano, octave bass, four-on-the-floor, claps,
+# sleigh bells, glockenspiel/celesta lead, brass stabs. The rising "fa-la-la" line builds
+# straight into the 30% hit; the final "fa-la-la ... la" cadence closes on the brand card.
+
+def piano(notes, dur=0.42, vel=1.0):
+    n = int(dur * SR); t = np.arange(n) / SR
+    s = np.zeros(n)
+    for m in notes:
+        f = mtof(m)
+        for h, (a, d) in enumerate([(1.0, 0.9), (0.5, 0.45), (0.28, 0.25), (0.14, 0.12), (0.08, 0.07)], 1):
+            s += a * np.sin(2 * np.pi * f * h * (1 + 0.0004 * h * h) * t) * np.exp(-t / d)
+    s *= np.clip(t / 0.003, 0, 1) * np.clip((dur - t) / 0.04, 0, 1)
+    return s / len(notes) * 0.42 * vel
+
+
+def brass(notes, dur=0.3):
+    n = int(dur * SR); t = np.arange(n) / SR
+    s = np.zeros(n)
+    for m in notes:
+        for d in (-0.004, 0.004):
+            s += saw(mtof(m), n, d)
+    e = np.exp(-t / 0.03)
+    s = lp(s, 1500) * (1 - e) + lp(s, 4500) * e
+    s *= np.clip(t / 0.01, 0, 1) * np.clip((dur - t) / 0.06, 0, 1)
+    return s / len(notes) * 0.22
+
+
+G4, A4, B4, C5, Cs5, D5, E5, Fs4, Fs5, G5 = 67, 69, 71, 72, 73, 74, 76, 66, 78, 79
+L1 = [(0, D5, 1.5), (1.5, C5, .5), (2, B4, 1), (3, A4, 1), (4, G4, 1), (5, A4, 1), (6, B4, 1), (7, G4, 1)]
+L2 = [(0, A4, .5), (.5, B4, .5), (1, C5, .5), (1.5, A4, .5), (2, B4, 1.5), (3.5, A4, .5), (4, G4, 1), (5, Fs4, 1), (6, G4, 2)]
+L3 = [(0, A4, 1.5), (1.5, B4, .5), (2, C5, 1), (3, A4, 1), (4, B4, 1.5), (5.5, C5, .5), (6, D5, 1), (7, A4, 1)]
+L4 = [(0, B4, .5), (.5, Cs5, .5), (1, D5, 1), (2, E5, .5), (2.5, Fs5, .5), (3, G5, 1), (4, Fs5, 1), (5, E5, 1), (6, D5, 2)]
+L5 = [(0, E5, .5), (.5, E5, .5), (1, E5, .5), (1.5, E5, .5), (2, D5, 1.5), (3.5, C5, .5), (4, B4, 1), (5, A4, 1), (6, G4, 2)]
+_G = (43, [59, 62, 67]); _C = (48, [60, 64, 67]); _D = (50, [57, 62, 66]); _A = (45, [57, 61, 64]); _Am = (45, [57, 60, 64])
+HARM = {'L1': [_G, _G, _G, _D], 'L2': [_D, _G, _D, _G], 'L3': [_D, _D, _G, _D],
+        'L4': [_G, _A, _D, _D], 'L5': [_C, _D, _G, _G]}
+SONG = [(0, 'L1', L1), (8, 'L2', L2), (16, 'L3', L3), (24, 'L4', L4), (32, 'L1', L1), (40, 'L5', L5)]
 
 
 def chord_at(k):
-    i = int(k // 4)
-    return CH[i % 8] if i < 8 else CH[(i - 8) % 4]
+    for k0, name, _ in SONG:
+        if k0 <= k < k0 + 8:
+            return HARM[name][int((k - k0) // 2)]
+    return _G
 
 
 music = buf()
 drums = buf()
 bells = buf()
 sfx = buf()
-
-TOTAL_BEATS = int((DURATION - b(0)) / BEAT) + 1
 END_K = 48
 
-# 1) "Jingle Bells" (J. Pierpont, 1857, public domain) chorus melody: (beat-in-bar, midi, beats)
-B4, C5, D5, G4, A4 = 71, 72, 74, 67, 69
-BARS_A = [[(0, B4, 1), (1, B4, 1), (2, B4, 2)],
-          [(0, B4, 1), (1, B4, 1), (2, B4, 2)],
-          [(0, B4, 1), (1, D5, 1), (2, G4, 1.5), (3.5, A4, 0.5)],
-          [(0, B4, 4)]]
-BARS_B = [[(0, C5, 1), (1, C5, 1), (2, C5, 1.5), (3.5, C5, 0.5)],
-          [(0, C5, 1), (1, B4, 1), (2, B4, 1), (3, B4, 0.5), (3.5, B4, 0.5)],
-          [(0, D5, 1), (1, D5, 1), (2, C5, 1), (3, A4, 1)],
-          [(0, G4, 4)]]
-MELODY = []
-for bar, notes in enumerate(BARS_A + BARS_B + BARS_A):
-    for off, m, d in notes:
-        MELODY.append((bar * 4 + off, m, d))
-for k, m, d in MELODY:
-    if k >= END_K:
-        break
-    if k < 14 or 24 <= k < 28 or k >= 36:
-        place(bells, celesta(m + 12, dur=max(1.2, d * BEAT + 0.8)), b(k), 1.0, pan=-0.15)   # music box
-        if k >= 6 and not (24 <= k < 28):
-            place(bells, glock(m + 12), b(k), 0.4, pan=0.3)
-    else:
-        place(bells, pluck(m + 12, max(0.3, d * BEAT)), b(k), 1.4, pan=-0.1)               # bright synth lead
-        place(bells, celesta(m + 24, bright=0.6), b(k), 0.5, pan=0.25)
-# bell "answers" (G-D-G arpeggio) on the long held notes
-for k0 in (12, 28, 44):
-    for i, m in enumerate((79, 74, 83, 86)):
-        place(bells, glock(m), b(k0 + 1 + i * 0.5), 0.45, pan=0.35)
+# lead melody: celesta + glock (intro / tension / CTA), bright pluck-bell in the drops
+for k0, name, line in SONG:
+    for off, m, d in line:
+        k = k0 + off
+        drop = (14 <= k < 24) or (28 <= k < 40)
+        place(bells, celesta(m + 12, dur=max(1.0, d * BEAT + 0.7)), b(k), 0.95, pan=-0.12)
+        place(bells, glock(m + 12), b(k), 0.38 if k >= 6 else 0.2, pan=0.3)
+        if drop:
+            place(bells, pluck(m, max(0.3, d * BEAT)), b(k), 1.3, pan=-0.05)
 
-# 2) pads / strings
-for bar in range(0, END_K + 4, 4):
-    root, notes = chord_at(bar)
-    if bar < 6:
-        place(music, strings(notes, 4 * BEAT + 0.4), b(bar), 0.6)
-    elif 24 <= bar < 28:
-        place(music, strings(notes + [notes[1] + 12], 4 * BEAT + 0.4), b(bar), 0.9)
-    else:
-        place(music, strings(notes, 4 * BEAT + 0.4), b(bar), 0.75)
-        place(music, pad_chord(notes, 4 * BEAT + 0.3), b(bar), 0.25)
-music = reverb(music, 3.0, 6000, 0.3, seed=11)
+# piano: 8th-note chord pulses (accent on the off-beats = festive pop bounce)
+for kk in np.arange(0, END_K, 0.5):
+    root, notes = chord_at(kk)
+    off = abs(kk % 1 - 0.5) < 1e-6
+    if kk < 6 and off:
+        continue
+    if 23.5 <= kk < 24:
+        continue
+    v = (0.9 if off else 0.55) * (0.7 if kk < 14 else 1.0)
+    if 24 <= kk < 28:
+        v = 0.5 + 0.5 * (kk - 24) / 4
+    place(music, piano([m + 12 for m in notes] + [notes[0] + 24], 0.4, v), b(kk), 1.0, pan=0.12)
+# left-hand / strings bed
+for k0 in range(0, END_K, 2):
+    root, notes = chord_at(k0)
+    place(music, strings(notes, 2 * BEAT + 0.3), b(k0), 0.5 if k0 >= 6 else 0.7)
+music = reverb(music, 1.8, 7000, 0.22, seed=11)
 
-# 3) sleigh bells: 8ths in the intro, 16ths in the drops
+# octave bass (pumping 8ths) from the build on
+for kk in np.arange(6, END_K - 1, 0.5):
+    if 23.5 <= kk < 28 and kk not in (24, 26):
+        continue
+    root, _ = chord_at(kk)
+    oct_ = 12 if abs(kk % 1 - 0.5) < 1e-6 else 0
+    g = 0.8 if kk >= 14 else 0.5
+    place(music, bass_note(root - 12 + oct_, BEAT * 0.45), b(kk), g)
+
+# brass stabs on phrase turnarounds
+for k in (7.5, 15.5, 23, 31.5, 39.5, 46):
+    root, notes = chord_at(k)
+    place(music, brass([m + 12 for m in notes], 0.35), b(k), 1.0, pan=-0.2)
+    place(music, brass([m + 12 for m in notes], 0.25), b(k + 0.5), 0.8, pan=0.2)
+
+# sleigh bells: 8ths in the intro, 16ths with the groove
 for kk in np.arange(0, END_K, 0.25):
     q = kk % 1
-    accent = 1.0 if abs(q) < 1e-6 or abs(q - 0.5) < 1e-6 else 0.55
-    if kk < 14 and abs(q - 0.25) > 1e-6 and abs(q - 0.75) > 1e-6:
-        place(bells, sleigh(accent * (1.1 if kk < 6 else 1.0)), b(kk), 1.0, pan=0.4)
-    elif (14 <= kk < 23.5) or (28 <= kk < 44):
-        place(bells, sleigh(accent), b(kk), 1.0, pan=0.4)
-music += reverb(bells, 2.4, 9000, 0.32, seed=13)
+    on8 = abs(q) < 1e-6 or abs(q - 0.5) < 1e-6
+    if kk < 6:
+        if on8: place(bells, sleigh(1.0 if abs(q) < 1e-6 else 0.6), b(kk), 1.0, pan=0.4)
+    elif not (23.5 <= kk < 24):
+        place(bells, sleigh(1.0 if on8 else 0.55), b(kk), 1.0, pan=0.4)
+music += reverb(bells, 2.2, 9000, 0.28, seed=13)
 
-# 4) modern beat (enters on the scene-3 drop)
-K = kick()
-SN = snare()
-CLP = clap()
-for kk in np.arange(0, END_K, 0.25):
+# drums
+K = kick(); CLP = clap(); SN = snare()
+for kk in np.arange(0, END_K, 0.5):
     tb = b(kk)
-    drop = (14 <= kk < 23.5) or (28 <= kk < 36)
-    soft = 36 <= kk < 44
-    build = 10 <= kk < 14
-    pos = kk % 4
-    if drop or soft:
-        if pos in (0.0, 1.5, 2.75) or (pos == 3.5 and int(kk // 4) % 2):
-            place(drums, K, tb, 0.95 if drop else 0.6)
-        if pos == 2.0:
-            place(drums, SN, tb, 0.9 if drop else 0.55)
-            place(drums, CLP, tb, 0.6 if drop else 0.3)
-        g = 0.32 if abs(kk % 0.5) < 1e-6 else 0.18
-        place(drums, hat(), tb, g, pan=0.25)
-    elif build and abs(kk % 1) < 1e-6:
-        place(drums, lp(K, 300 + 2000 * (kk - 10) / 4), tb, 0.5 + 0.4 * (kk - 10) / 4)
-    elif kk in (24, 25, 26, 27):
-        place(drums, lp(K, 280), tb, 0.55)
-# hat triplet rolls at phrase ends
-for k0 in (17, 21, 31, 35):
-    for i in range(6):
-        place(drums, hat(), b(k0 + 0.5 + i / 6), 0.25 + 0.03 * i, pan=0.25)
-# snare build into BLACK FRIDAY and into 30
-for k0, k1, stp, g in ((20, 23.5, 0.25, 0.5), (26, 27.75, 0.125, 0.6)):
+    whole = abs(kk - round(kk)) < 1e-6
+    groove = (14 <= kk < 23.5) or (28 <= kk < 46)
+    build = 6 <= kk < 14
+    if whole:
+        if groove:
+            place(drums, K, tb, 0.95 if kk < 40 else 0.75)
+        elif build and int(kk) % 2 == 0:
+            place(drums, lp(K, 400 + 3000 * (kk - 6) / 8), tb, 0.55 + 0.3 * (kk - 6) / 8)
+        if (groove or build) and int(kk) % 2 == 1:
+            place(drums, CLP, tb, 0.85 if groove else 0.55, pan=0.05)
+            if groove:
+                place(drums, SN, tb, 0.35)
+    elif groove:
+        place(drums, hat(True), tb, 0.45, pan=-0.2)
+# snare builds
+for k0, k1, stp, g in ((21, 23.5, 0.25, 0.5), (26, 27.75, 0.125, 0.6)):
     steps = np.arange(k0, k1, stp)
     for i, kk in enumerate(steps):
         place(drums, SN, b(kk), g * (0.3 + 0.7 * i / len(steps)), pan=0.1)
-
-# 5) 808 bass with glides + string stabs
-prev = None
-for kk in np.arange(14, 44, 2):
-    if 23.5 <= kk < 28:
-        prev = None
-        continue
-    root, notes = chord_at(kk)
-    m = root - 12 if root > 40 else root
-    m += 12
-    place(drums, bass808(m, BEAT * 1.9, prev), b(kk), 0.85 if kk < 36 else 0.55)
-    prev = m
-    if kk < 36 and kk % 4 == 0:
-        place(music, stab(notes), b(kk), 1.0)
-        place(music, stab(notes), b(kk + 1.5), 0.6)
-
 music += drums
 
 # ------------------------------------------------------------------ sound design
@@ -465,7 +475,7 @@ vo_env = np.sqrt(lp(vo.mean(1) ** 2, 8, 1).clip(0)) if VO else np.zeros(N)
 duck = 1.0 - 0.6 * np.clip(vo_env / 0.05, 0, 1)        # ~ -8 dB under VO
 duck = lp(duck, 6, 1)[:, None]
 
-music *= 0.42
+music = music / (np.abs(music).max() + 1e-9) * 0.85   # peak-normalise the arrangement
 sfx = np.tanh(sfx * 0.36 * 1.2) / 1.2   # soft-limit stacked impacts
 # fades
 fade = np.ones((N, 1)); tail = int(0.35 * SR)

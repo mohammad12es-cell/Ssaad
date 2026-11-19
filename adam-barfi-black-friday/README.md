@@ -88,7 +88,7 @@ python3 src/render.py         # picture -> build/picture.mp4   (--stills 5.5,14.
 
 ## Music and fonts licensing
 
-- The music opens as a Christmas piece: music box, glockenspiel, sleigh bells and strings play the public-domain *Jingle Bells* chorus (J. Pierpont, 1857). The same melody then turns into a modern half-time beat with 808 bass. The arrangement and every sound are original and synthesised in `src/02_audio.py` with no samples, so they are free to use.
+- The music is an upbeat Christmas-pop arrangement of the public-domain carol *Deck the Halls*. It has bouncing piano, octave bass, a four-on-the-floor beat, claps, sleigh bells, glockenspiel and brass stabs. The rising "fa-la-la" line lands on the 30% hit. The arrangement and every sound are original and synthesised in `src/02_audio.py` with no samples, so they are free to use, with no copyright claims on Instagram.
 - The default cut has no narration: music, sound effects and Persian on-screen text only. `NARRATION=1` restores the voiceover version.
 - The voice is Piper TTS `fa_IR-magnoliasis-medium`. See that model's card on Hugging Face for its licence.
 - The fonts are Playfair Display, Cormorant Garamond, Montserrat and Vazirmatn. All are under the SIL Open Font License.

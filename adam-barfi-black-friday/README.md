@@ -88,6 +88,7 @@ python3 src/render.py         # picture -> build/picture.mp4   (--stills 5.5,14.
 
 ## Music and fonts licensing
 
-- The music and sound effects are 100% original. They are synthesised in `src/02_audio.py` with no samples, so they are free to use.
+- The music opens as a Christmas piece: music box, glockenspiel, sleigh bells and strings play the public-domain *Carol of the Bells* (Shchedryk, Leontovych 1916) motif. The same motif then turns into a modern half-time beat with 808 bass. The arrangement and every sound are original and synthesised in `src/02_audio.py` with no samples, so they are free to use.
+- The default cut has no narration: music, sound effects and Persian on-screen text only. `NARRATION=1` restores the voiceover version.
 - The voice is Piper TTS `fa_IR-magnoliasis-medium`. See that model's card on Hugging Face for its licence.
 - The fonts are Playfair Display, Cormorant Garamond, Montserrat and Vazirmatn. All are under the SIL Open Font License.

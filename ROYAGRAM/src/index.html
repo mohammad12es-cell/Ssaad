@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>ROYAGRAM — Launch Film</title>
+<script type="importmap">{ "imports": { "three": "/node_modules/three/build/three.module.js", "three/addons/": "/node_modules/three/examples/jsm/", "opentype": "/node_modules/opentype.js/dist/opentype.module.js" } }</script>
+<style>
+  @font-face { font-family: "Syncopate"; font-weight: 700; src: url("/node_modules/@fontsource/syncopate/files/syncopate-latin-700-normal.woff2") format("woff2"); }
+  @font-face { font-family: "Syncopate"; font-weight: 400; src: url("/node_modules/@fontsource/syncopate/files/syncopate-latin-400-normal.woff2") format("woff2"); }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { background: #000; overflow: hidden; }
+  #gl { position: absolute; left: 0; top: 0; display: block; }
+  #ui { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; transform-origin: 0 0; pointer-events: none; color: #fff; font-family: "Inter", sans-serif; -webkit-font-smoothing: antialiased; }
+  .o { position: absolute; left: 0; right: 0; text-align: center; opacity: 0; will-change: opacity, transform, filter; }
+  .disp { font-family: "Syncopate", sans-serif; font-weight: 700; text-transform: uppercase; }
+  .gold { background: linear-gradient(100deg, #8a6a2c 0%, #f3dc9c 28%, #fff4d2 40%, #c9a24a 55%, #7a5a22 75%, #e9cf88 100%); background-size: 220% 100%; -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .chrome { background: linear-gradient(180deg, #ffffff 0%, #d9dde3 42%, #6f7680 52%, #e8ebef 70%, #ffffff 100%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .shadow { filter: drop-shadow(0 6px 24px rgba(0,0,0,0.75)); }
+  #hook { top: 1215px; font-size: 62px; line-height: 1.18; letter-spacing: 0.08em; }
+  #hook .ln { overflow: hidden; padding: 0.06em 0; }
+  #hook .ln div { display: block; }
+  .tag { top: 1385px; }
+  .tag .k { font-family: "Inter"; font-weight: 500; font-size: 22px; letter-spacing: 0.42em; color: #d8b56a; padding-left: 0.42em; }
+  .tag .t { margin-top: 14px; font-size: 44px; letter-spacing: 0.22em; padding-left: 0.22em; }
+  .tag .s { margin-top: 12px; font-family: "Inter"; font-weight: 300; font-size: 24px; letter-spacing: 0.3em; color: rgba(255,255,255,0.78); padding-left: 0.3em; }
+  .tag .rule { width: 0px; height: 1px; margin: 22px auto 0; background: linear-gradient(90deg, transparent, #d8b56a, transparent); }
+  .cap { top: 1235px; }
+  .cap .n { font-family: "Inter"; font-weight: 500; font-size: 22px; letter-spacing: 0.5em; color: #d8b56a; padding-left: 0.5em; }
+  .cap .w { margin-top: 16px; font-size: 70px; line-height: 1.08; letter-spacing: 0.06em; padding-left: 0.06em; }
+  #frame { position: absolute; left: 70px; right: 70px; top: 260px; bottom: 470px; opacity: 0; }
+  #frame i { position: absolute; width: 46px; height: 46px; border-color: rgba(255,255,255,0.7); border-style: solid; border-width: 0; }
+  #frame .tl { left: 0; top: 0; border-left-width: 2px; border-top-width: 2px; } #frame .tr { right: 0; top: 0; border-right-width: 2px; border-top-width: 2px; }
+  #frame .bl { left: 0; bottom: 0; border-left-width: 2px; border-bottom-width: 2px; } #frame .br { right: 0; bottom: 0; border-right-width: 2px; border-bottom-width: 2px; }
+  #frame .tc { position: absolute; top: 18px; left: 64px; font: 500 20px "JetBrains Mono", monospace; letter-spacing: 0.12em; color: rgba(255,255,255,0.8); }
+  #frame .rec { position: absolute; top: 18px; right: 64px; font: 500 20px "JetBrains Mono", monospace; letter-spacing: 0.12em; color: rgba(255,255,255,0.8); }
+  #frame .rec b { display: inline-block; width: 12px; height: 12px; border-radius: 50%; background: #e0b35a; margin-right: 10px; vertical-align: 1px; }
+  #final { position: absolute; inset: 0; }
+  #f1 { top: 1010px; font-family: "Inter"; font-weight: 300; font-size: 34px; letter-spacing: 0.34em; padding-left: 0.34em; }
+  #f2 { top: 1100px; font-family: "Inter"; font-weight: 500; font-size: 21px; letter-spacing: 0.32em; color: #d8b56a; padding-left: 0.32em; }
+  #f2 em { font-style: normal; color: rgba(255,255,255,0.35); padding: 0 0.6em; }
+  #f3 { top: 1218px; font-size: 30px; letter-spacing: 0.1em; line-height: 1.5; padding-left: 0.1em; }
+  #f4 { top: 1338px; }
+  #f4 span { display: inline-block; padding: 20px 40px 20px 46px; border: 1.5px solid rgba(216,181,106,0.9); border-radius: 999px; font-family: "Inter"; font-weight: 600; font-size: 24px; letter-spacing: 0.3em; color: #fff; background: rgba(216,181,106,0.08); }
+  #frule { position: absolute; left: 50%; top: 1170px; height: 1px; width: 0; transform: translateX(-50%); background: linear-gradient(90deg, transparent, rgba(216,181,106,0.9), transparent); }
+</style>
+</head>
+<body>
+<canvas id="gl"></canvas>
+<div id="ui">
+  <div id="frame"><i class="tl"></i><i class="tr"></i><i class="bl"></i><i class="br"></i><div class="tc" id="tc">00:00:31:00</div><div class="rec"><b></b>4K · 24P</div></div>
+  <div id="hook" class="o disp shadow"><div class="ln"><div class="chrome">Ordinary is</div></div><div class="ln"><div class="chrome">not the limit.</div></div></div>
+
+  <div id="tag1" class="o tag shadow"><div class="k">CONCEPT 01 · FRAGRANCE</div><div class="t disp gold">ORVANE Nº7</div><div class="s">EAU DE PARFUM</div><div class="rule"></div></div>
+  <div id="tag2" class="o tag shadow"><div class="k">CONCEPT 02 · PERFORMANCE</div><div class="t disp gold">KINETRA AERO</div><div class="s">ENGINEERED FOR MOTION</div><div class="rule"></div></div>
+  <div id="tag3" class="o tag shadow"><div class="k">CONCEPT 03 · BEVERAGE</div><div class="t disp gold">LUMIQ</div><div class="s">SPARKLING YUZU</div><div class="rule"></div></div>
+  <div id="tag4" class="o tag shadow"><div class="k">CONCEPT 04 · HOROLOGY</div><div class="t disp gold">VERANTH</div><div class="s">CALIBRE 01 · AUTOMATIC</div><div class="rule"></div></div>
+
+  <div id="cap1" class="o cap shadow"><div class="n">01 — 04</div><div class="w disp chrome">Video<br>Production</div></div>
+  <div id="cap2" class="o cap shadow"><div class="n">02 — 04</div><div class="w disp chrome">AI<br>Visuals</div></div>
+  <div id="cap3" class="o cap shadow"><div class="n">03 — 04</div><div class="w disp chrome">Creative<br>Editing</div></div>
+  <div id="cap4" class="o cap shadow"><div class="n">04 — 04</div><div class="w disp chrome">Motion<br>Design</div></div>
+
+  <div id="final">
+    <div id="f1" class="o">WE MAKE IDEAS VISIBLE.</div>
+    <div id="frule"></div>
+    <div id="f2" class="o">VIDEO PRODUCTION<em>·</em>AI VISUALS<em>·</em>CREATIVE EDITING</div>
+    <div id="f3" class="o disp chrome">Let’s create<br>something unexpected.</div>
+    <div id="f4" class="o"><span>DM US FOR YOUR NEXT PROJECT.</span></div>
+  </div>
+</div>
+<script type="module" src="./main.js"></script>
+</body>
+</html>

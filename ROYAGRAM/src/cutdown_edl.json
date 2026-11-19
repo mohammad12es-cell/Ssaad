@@ -1,0 +1,41 @@
+{
+ "duration": 15.0,
+ "segments": [
+  [
+   0.0,
+   3.5
+  ],
+  [
+   7.0,
+   9.0
+  ],
+  [
+   15.5,
+   17.0
+  ],
+  [
+   19.5,
+   21.0
+  ],
+  [
+   28.5,
+   30.5
+  ],
+  [
+   40.5,
+   45.0
+  ]
+ ],
+ "vo": [
+  {
+   "file": "vo01.wav",
+   "t": 0.35,
+   "text": "What if ordinary could become extraordinary?"
+  },
+  {
+   "file": "vo07.wav",
+   "t": 7.35,
+   "text": "Your vision. Our creativity. Let's make it real."
+  }
+ ]
+}

@@ -140,3 +140,14 @@ export function frame(t) {
   updateDust(t);
   renderer.render(scene, camera);
 }
+
+// one still frame for the cover: pose in screen px, no timeline
+export function still(o) {
+  if (!fontsDone && fontsReady()) { redraw(foil); fontsDone = true; }
+  const pos = px(o.x, o.y); pass.position.copy(pos); pass.scale.setScalar(o.s); pass.rotation.set(o.rx, o.ry, o.rz);
+  glint.intensity = o.glint || 0; glint.position.set(pos.x + 0.35 * o.s, pos.y + 0.45 * o.s, 1.4);
+  shadow.position.set(pos.x + 0.15 * o.s, pos.y - 0.12 * o.s, -0.4); shadow.scale.set(2.2 * o.s, 2.8 * o.s, 1);
+  updateDust(o.t || 4);
+  renderer.render(scene, camera);
+  return fontsDone;
+}

@@ -1,0 +1,202 @@
+<!doctype html>
+<!-- NEXO · Oman visa & residency: reel cover in the poster style. Render: node tools/render_cover.cjs -->
+<html lang="fa" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <script type="importmap">{ "imports": { "three": "../assets/three.module.js" } }</script>
+    <style>
+      @font-face { font-family: "Vazirmatn"; font-weight: 700; src: url("../assets/fonts/vazirmatn-latin-700-normal.woff2") format("woff2"); }
+      @font-face { font-family: "Vazirmatn"; font-weight: 900; src: url("../assets/fonts/vazirmatn-latin-900-normal.woff2") format("woff2"); }
+      @font-face { font-family: "Vazirmatn"; font-weight: 500; src: url("../assets/fonts/vazirmatn-arabic-500-normal.woff2") format("woff2"); unicode-range: U+0600-06FF, U+0750-077F, U+08A0-08FF, U+200C-200E, U+FB50-FDFF, U+FE70-FEFC; }
+      @font-face { font-family: "Vazirmatn"; font-weight: 700; src: url("../assets/fonts/vazirmatn-arabic-700-normal.woff2") format("woff2"); unicode-range: U+0600-06FF, U+0750-077F, U+08A0-08FF, U+200C-200E, U+FB50-FDFF, U+FE70-FEFC; }
+      @font-face { font-family: "Vazirmatn"; font-weight: 800; src: url("../assets/fonts/vazirmatn-arabic-800-normal.woff2") format("woff2"); unicode-range: U+0600-06FF, U+0750-077F, U+08A0-08FF, U+200C-200E, U+FB50-FDFF, U+FE70-FEFC; }
+      @font-face { font-family: "Vazirmatn"; font-weight: 900; src: url("../assets/fonts/vazirmatn-arabic-900-normal.woff2") format("woff2"); unicode-range: U+0600-06FF, U+0750-077F, U+08A0-08FF, U+200C-200E, U+FB50-FDFF, U+FE70-FEFC; }
+      @font-face { font-family: "Cinzel"; font-weight: 700; src: url("../assets/fonts/cinzel-latin-700-normal.woff2") format("woff2"); }
+      @font-face { font-family: "Cinzel"; font-weight: 900; src: url("../assets/fonts/cinzel-latin-900-normal.woff2") format("woff2"); }
+
+      /* ===== palette, sampled from the NEXO poster ===== */
+      :root {
+        --navy-hi: #1b2e4a; --navy: #0f1c30; --navy-lo: #050b16; --ink: #fbf3e2; --muted: #b7c0cf;
+        --maroon-hi: #a31c1c; --maroon: #750b0b; --maroon-lo: #4a0606;
+        --gold: linear-gradient(180deg, #fff7dc 0%, #f6dc98 28%, #d9ab55 56%, #f3d589 74%, #a8772d 100%);
+        --gold-flat: #e6c172; --gold-dark: #5c3f12;
+        --silver: linear-gradient(180deg, #ffffff 0%, #dfe3e9 30%, #8e959f 58%, #e9ecf0 78%, #7c838d 100%);
+        --font: "Vazirmatn", sans-serif;
+      }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1080px; height: 1920px; overflow: hidden; background: var(--navy-lo); }
+      #root { position: relative; width: 1080px; height: 1920px; overflow: hidden; font-family: var(--font); color: var(--ink); background: var(--navy-lo); }
+      .clip { position: absolute; inset: 0; }
+
+      /* background: navy glow, light rays, mosque silhouette */
+      #bgGlow { position: absolute; inset: 0; background: radial-gradient(ellipse 80% 55% at 50% 30%, var(--navy-hi) 0%, var(--navy) 45%, var(--navy-lo) 100%); }
+      #rays { position: absolute; left: -400px; top: -700px; width: 1880px; height: 1880px; opacity: 0.22;
+        background: repeating-conic-gradient(from 0deg at 50% 50%, rgba(170, 195, 230, 0.16) 0deg 4deg, transparent 4deg 15deg);
+        -webkit-mask-image: radial-gradient(circle at 50% 50%, #000 0%, transparent 62%); mask-image: radial-gradient(circle at 50% 50%, #000 0%, transparent 62%); }
+      #mosque { position: absolute; left: -40px; top: 640px; width: 1160px; height: 760px; opacity: 0.5; }
+      #fog { position: absolute; left: 0; right: 0; top: 1100px; height: 820px; background: linear-gradient(180deg, transparent, var(--navy-lo) 55%); }
+      #gl { position: absolute; inset: 0; width: 1080px; height: 1920px; }
+      #vig { position: absolute; inset: 0; background: radial-gradient(ellipse 100% 75% at 50% 45%, transparent 60%, rgba(2, 6, 14, 0.7) 100%); }
+
+      /* logo */
+      #logo { position: absolute; top: 176px; left: 0; right: 0; display: flex; flex-direction: column; align-items: center; transform-origin: 50% 0; }
+      #shield { width: 132px; height: 140px; }
+      .nexo { position: relative; margin-top: 4px; font-family: "Cinzel", serif; font-weight: 900; font-size: 92px; line-height: 1; letter-spacing: 6px; direction: ltr;
+        background: var(--silver); -webkit-background-clip: text; background-clip: text; color: transparent;
+        filter: drop-shadow(0 3px 0 #3a414c) drop-shadow(0 10px 18px rgba(0, 0, 0, 0.55)); }
+
+      /* metallic gold headline with a bronze extrusion behind it */
+      .gold { position: relative; display: block; text-align: center; font-weight: 900; color: transparent; background: var(--gold); -webkit-background-clip: text; background-clip: text; }
+      .goldWrap .x { position: absolute; left: 0; right: 0; top: 7px; display: block; text-align: center; font-weight: 900; color: var(--gold-dark); -webkit-text-stroke: 3px var(--gold-dark); }
+      .goldWrap { position: absolute; left: 30px; right: 30px; isolation: isolate; filter: drop-shadow(0 16px 26px rgba(0, 0, 0, 0.6)); }
+      .shine { position: absolute; left: 0; right: 0; top: 0; display: block; text-align: center; font-weight: 900; color: transparent;
+        background: linear-gradient(100deg, transparent 0%, transparent 42%, rgba(255, 255, 255, 0.95) 50%, transparent 58%, transparent 100%);
+        background-size: 300% 100%; background-position: 100% 0; -webkit-background-clip: text; background-clip: text; }
+
+      /* pills */
+      .pill { position: absolute; left: 0; right: 0; margin: 0 auto; width: max-content; display: flex; align-items: center; gap: 22px; white-space: nowrap; border-radius: 999px; font-weight: 900; }
+      .pill.maroon { padding: 16px 44px 20px 30px; font-size: 64px; color: #fff6ea;
+        background: linear-gradient(180deg, var(--maroon-hi), var(--maroon) 55%, var(--maroon-lo)) padding-box, var(--gold) border-box; border: 5px solid transparent;
+        box-shadow: 0 16px 40px rgba(0, 0, 0, 0.55), inset 0 2px 0 rgba(255, 255, 255, 0.2); }
+      .pill.glass { padding: 14px 40px 18px 30px; font-size: 50px; color: var(--ink);
+        background: linear-gradient(180deg, rgba(23, 38, 62, 0.92), rgba(7, 13, 25, 0.92)) padding-box, var(--silver) border-box; border: 3px solid transparent;
+        box-shadow: 0 14px 34px rgba(0, 0, 0, 0.5); }
+      .flagR { width: 96px; height: 62px; border-radius: 10px; overflow: hidden; border: 2px solid #f1d58f; flex: none; }
+      .flagC { width: 84px; height: 84px; border-radius: 50%; overflow: hidden; border: 3px solid #e9edf2; flex: none; box-shadow: 0 4px 12px rgba(0,0,0,.4); }
+      .flagC svg, .flagR svg { width: 100%; height: 100%; display: block; }
+
+      /* scene 2: where you can apply from */
+      #routes { position: absolute; inset: 0; width: 1080px; height: 1920px; overflow: visible; }
+      #pinLbl { position: absolute; top: 1176px; left: 0; right: 0; }
+      #pinLbl .gold { font-size: 92px; line-height: 1.2; }
+
+      /* scene 3: services card */
+      #card { position: absolute; top: 384px; left: 52px; right: 52px; height: 930px; border-radius: 40px;
+        background: linear-gradient(180deg, rgba(16, 29, 50, 0.94), rgba(6, 12, 24, 0.95)) padding-box, var(--gold) border-box; border: 4px solid transparent;
+        box-shadow: 0 30px 70px rgba(0, 0, 0, 0.6); }
+      #tab { position: absolute; top: 314px; right: 92px; height: 116px; padding: 0 40px 0 40px; display: flex; align-items: center; gap: 20px; border-radius: 26px;
+        background: var(--gold); color: #1b1409; font-weight: 900; font-size: 64px; box-shadow: 0 14px 30px rgba(0, 0, 0, 0.5); }
+      #tab svg { width: 70px; height: 70px; }
+      .row { position: absolute; left: 92px; right: 92px; height: 104px; display: flex; align-items: center; gap: 22px; font-weight: 800; font-size: 41px; color: var(--ink); white-space: nowrap; }
+      .row .ck { flex: none; width: 62px; height: 62px; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 10px rgba(0,0,0,.45); }
+      .row .ck.g { background: var(--gold); } .row .ck.s { background: var(--silver); }
+      .row .ck svg { width: 36px; height: 36px; }
+      .row .hiBg { position: absolute; inset: -4px -26px; border-radius: 999px; z-index: -1; transform-origin: 100% 50%;
+        background: linear-gradient(90deg, rgba(74, 6, 6, 0.96), rgba(130, 16, 16, 0.96)) padding-box, var(--gold) border-box; border: 3px solid transparent; }
+      .row.hi { isolation: isolate; font-weight: 900; }
+      .row em { font-style: normal; color: #f4d27f; }
+
+      /* scene 4: call to action */
+      #cta { top: 606px; }
+      #cta.pill.glass { font-size: 54px; line-height: 1.38; text-align: center; padding: 18px 46px 22px 34px; border-radius: 60px; }
+      #cta svg { width: 72px; height: 72px; flex: none; }
+      #disc { position: absolute; top: 1206px; left: 70px; right: 70px; display: flex; align-items: center; gap: 16px; padding: 18px 28px; border-radius: 999px;
+        font-weight: 700; font-size: 29px; line-height: 1.45; color: var(--muted); background: rgba(5, 10, 20, 0.75); border: 2px solid rgba(220, 226, 235, 0.35); }
+      #disc svg { width: 46px; height: 46px; flex: none; }
+    
+      #rays { transform: rotate(7deg); }
+      #logo { top: 300px; transform: scale(0.92); }
+      .shineStatic { position: absolute; left: 0; right: 0; top: 0; display: block; text-align: center; font-weight: 900; color: transparent;
+        background: linear-gradient(100deg, transparent 30%, rgba(255,255,255,0.55) 44%, transparent 52%); -webkit-background-clip: text; background-clip: text; }
+      #sticker { position: absolute; left: 46px; top: 1214px; width: 486px; padding: 18px 24px 22px; border-radius: 34px; transform: rotate(-7deg); text-align: center;
+        background: linear-gradient(180deg, var(--maroon-hi), var(--maroon) 55%, var(--maroon-lo)) padding-box, var(--gold) border-box; border: 5px solid transparent;
+        box-shadow: 0 22px 50px rgba(0, 0, 0, 0.6), inset 0 2px 0 rgba(255,255,255,0.2); }
+      #sticker .big { display: block; white-space: nowrap; font-weight: 900; font-size: 66px; line-height: 1.15; color: transparent; background: var(--gold); -webkit-background-clip: text; background-clip: text; }
+      #sticker .small { display: block; white-space: nowrap; font-weight: 800; font-size: 33px; line-height: 1.4; color: #fff3e4; }
+      #from { top: 1506px; font-size: 46px; }
+      #from .flagC { width: 70px; height: 70px; }
+    </style>
+  </head>
+  <body>
+    <div id="root">
+      <div id="bgGlow"></div>
+      <div id="rays"></div>
+      <svg id="mosque" viewBox="0 0 1160 760" aria-hidden="true">
+          <defs>
+            <linearGradient id="mq" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#c9d6e8" stop-opacity="0.55" /><stop offset="0.6" stop-color="#7f93ad" stop-opacity="0.32" /><stop offset="1" stop-color="#2a3a52" stop-opacity="0" /></linearGradient>
+            <radialGradient id="mqGlow" cx="0.42" cy="0.3" r="0.6"><stop offset="0" stop-color="#e8c77a" stop-opacity="0.22" /><stop offset="1" stop-color="#e8c77a" stop-opacity="0" /></radialGradient>
+          </defs>
+          <rect x="0" y="0" width="1160" height="760" fill="url(#mqGlow)" />
+          <g fill="url(#mq)">
+            <!-- minaret -->
+            <rect x="96" y="120" width="44" height="560" /><rect x="86" y="300" width="64" height="16" /><rect x="88" y="440" width="60" height="14" />
+            <path d="M92,120 L118,40 L144,120 Z" /><rect x="114" y="10" width="8" height="34" />
+            <!-- side wings with small domes -->
+            <rect x="150" y="430" width="860" height="250" />
+            <path d="M240,430 a62,62 0 0 1 124,0 Z" /><path d="M790,430 a62,62 0 0 1 124,0 Z" />
+            <!-- central drum and big dome -->
+            <rect x="380" y="300" width="400" height="140" />
+            <path d="M400,300 C400,150 470,96 580,82 C690,96 760,150 760,300 Z" />
+            <rect x="576" y="34" width="8" height="52" /><circle cx="580" cy="30" r="9" />
+            <!-- second minaret, right -->
+            <rect x="1016" y="250" width="34" height="430" /><path d="M1012,250 L1033,186 L1054,250 Z" />
+          </g>
+          <!-- arches cut into the wings and drum -->
+          <g fill="#0b1528" opacity="0.55">
+            <path d="M200,680 v-120 a34,34 0 0 1 68,0 v120 Z" /><path d="M300,680 v-120 a34,34 0 0 1 68,0 v120 Z" /><path d="M800,680 v-120 a34,34 0 0 1 68,0 v120 Z" /><path d="M900,680 v-120 a34,34 0 0 1 68,0 v120 Z" />
+            <path d="M420,440 v-90 a26,26 0 0 1 52,0 v90 Z" /><path d="M500,440 v-90 a26,26 0 0 1 52,0 v90 Z" /><path d="M608,440 v-90 a26,26 0 0 1 52,0 v90 Z" /><path d="M688,440 v-90 a26,26 0 0 1 52,0 v90 Z" />
+            <path d="M500,680 v-150 a80,80 0 0 1 160,0 v150 Z" />
+          </g>
+          <!-- dome ribs -->
+          <g stroke="#e9f0fa" stroke-opacity="0.18" stroke-width="3" fill="none">
+            <path d="M580,84 C540,140 520,220 520,300" /><path d="M580,84 C620,140 640,220 640,300" /><path d="M580,84 C500,130 455,210 450,300" /><path d="M580,84 C660,130 705,210 710,300" /><path d="M580,84 L580,300" />
+          </g>
+        </svg>
+      <div id="fog"></div>
+      <canvas id="gl" width="1080" height="1920"></canvas>
+      <div id="vig"></div>
+
+      <div id="logo">
+          <svg id="shield" viewBox="0 0 132 140" aria-label="NEXO">
+            <defs>
+              <linearGradient id="sv" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff" /><stop offset="0.35" stop-color="#d9dee5" /><stop offset="0.6" stop-color="#8b929c" /><stop offset="0.8" stop-color="#eef1f4" /><stop offset="1" stop-color="#737a84" /></linearGradient>
+            </defs>
+            <path id="shOut" d="M66,6 L120,22 L120,66 C120,100 96,122 66,134 C36,122 12,100 12,66 L12,22 Z" fill="none" stroke="url(#sv)" stroke-width="9" stroke-linejoin="round" />
+            <path id="shArrow" d="M66,30 L94,62 L78,62 L78,104 L54,104 L54,62 L38,62 Z" fill="url(#sv)" />
+            <path id="shWing" d="M30,52 L54,84 L54,100 L30,68 Z M102,52 L78,84 L78,100 L102,68 Z" fill="url(#sv)" opacity="0.85" />
+          </svg>
+          <div class="nexo">NEXO</div>
+        </div>
+      
+
+      <div class="goldWrap" style="top: 548px">
+        <span class="x" aria-hidden="true" style="font-size: 132px; line-height: 1.2">ویزا و اقامت</span><span class="gold" style="font-size: 132px; line-height: 1.2">ویزا و اقامت</span>
+        <span class="shineStatic" style="font-size: 132px; line-height: 1.2">ویزا و اقامت</span>
+      </div>
+      <div class="goldWrap" style="top: 706px">
+        <span class="x" aria-hidden="true" style="font-size: 132px; line-height: 1.2">کشور عمان</span><span class="gold" style="font-size: 132px; line-height: 1.2">کشور عمان</span>
+      </div>
+      <div class="pill maroon" style="top: 884px"><span>ویژه اتباع افغانستان</span><span class="flagR"><svg viewBox="0 0 90 60"><use href="#flagAF" /></svg></span></div>
+
+      <div id="sticker"><span class="big">اقامت رایگان</span><span class="small">همسر و فرزندان زیر ۱۸ سال</span></div>
+
+      <div class="pill glass" id="from">
+        <span class="flagC"><svg viewBox="0 0 90 90"><use href="#flagAFc" /></svg></span><span>اقدام از داخل افغانستان و ایران</span><span class="flagC"><svg viewBox="0 0 90 90"><use href="#flagIRc" /></svg></span>
+      </div>
+
+      <!-- shared symbols: flags (simplified emblems), tick -->
+      <svg width="0" height="0" style="position: absolute" aria-hidden="true">
+        <defs>
+          <g id="tick"><path d="M8,19 L15,26 L29,10" stroke="#16120a" stroke-width="5" fill="none" stroke-linecap="round" stroke-linejoin="round" /></g>
+          <g id="afEmb" fill="none" stroke="#fff" stroke-width="2.4"><path d="M-11,9 A14,14 0 0 1 -12,-6" /><path d="M11,9 A14,14 0 0 0 12,-6" /><rect x="-6" y="-2" width="12" height="9" fill="#fff" stroke="none" /><path d="M-6,-2 L0,-8 L6,-2 Z" fill="#fff" stroke="none" /><path d="M-9,11 L9,11" /></g>
+          <g id="flagAF"><rect x="0" y="0" width="30" height="60" fill="#000" /><rect x="30" y="0" width="30" height="60" fill="#be0000" /><rect x="60" y="0" width="30" height="60" fill="#007a36" /><g transform="translate(45 30) scale(1.15)"><use href="#afEmb" /></g></g>
+          <g id="flagAFc"><rect x="0" y="0" width="30" height="90" fill="#000" /><rect x="30" y="0" width="30" height="90" fill="#be0000" /><rect x="60" y="0" width="30" height="90" fill="#007a36" /><g transform="translate(45 45) scale(1.3)"><use href="#afEmb" /></g></g>
+          <g id="flagIRc"><rect x="0" y="0" width="90" height="30" fill="#239f40" /><rect x="0" y="30" width="90" height="30" fill="#fff" /><rect x="0" y="60" width="90" height="30" fill="#da0000" />
+            <g transform="translate(45 45)" fill="#da0000"><path d="M0,-11 C-3,-6 -3,4 0,11 C3,4 3,-6 0,-11 Z" /><path d="M-4,-9 C-11,-4 -11,6 -3,10 C-7,5 -7,-3 -4,-9 Z" /><path d="M4,-9 C11,-4 11,6 3,10 C7,5 7,-3 4,-9 Z" /></g></g>
+          <g id="flagOMc"><rect x="0" y="0" width="90" height="90" fill="#db161b" /><rect x="30" y="0" width="60" height="30" fill="#fff" /><rect x="30" y="60" width="60" height="30" fill="#008000" />
+            <g transform="translate(15 16)" stroke="#fff" stroke-width="2.6" fill="none" stroke-linecap="round"><path d="M-8,-9 L8,9" /><path d="M8,-9 L-8,9" /><path d="M0,-10 L0,6 C0,9 3,10 5,8" /></g></g>
+        </defs>
+      </svg>
+    
+    </div>
+    <script type="module">
+      import { still } from "../assets/world.js";
+      const pose = { x: 618, y: 1236, s: 0.8, rx: -0.1, ry: -0.42, rz: 0.1, glint: 2.5, t: 4 };
+      await document.fonts.ready;
+      for (let i = 0; i < 40 && !still(pose); i++) await new Promise((r) => requestAnimationFrame(r));
+      still(pose);
+      window.__ready = true;
+    </script>
+  </body>
+</html>

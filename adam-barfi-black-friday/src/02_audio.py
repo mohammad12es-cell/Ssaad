@@ -1,6 +1,6 @@
 """Original soundtrack, sound design and mix for the ADAM BARFI Black Friday reel.
-Music: Christmas opening (music box + sleigh bells on the public-domain Carol of the Bells
-ostinato) turning into a modern festive half-time beat.
+Music: Christmas opening (music box + sleigh bells on the public-domain Jingle Bells
+melody) turning into a modern festive half-time beat.
 
 Everything here is synthesised from scratch (no samples, no licensed music):
   - music  : 120 BPM dark fashion-runway electronic, D minor (i-VI-iv-V)
@@ -202,9 +202,9 @@ def tick():
 
 
 # ------------------------------------------------------------------ arrangement
-# "Christmas into Black Friday": opens as a music-box / sleigh-bell Christmas piece on the
-# public-domain "Shchedryk" (Carol of the Bells, Leontovych 1916) ostinato, then the same
-# motif turns into a modern half-time festive trap/pop beat. 120 BPM, G minor.
+# "Christmas into Black Friday": opens as a music-box / sleigh-bell Christmas piece playing the
+# public-domain "Jingle Bells" chorus, then the same melody turns into a modern half-time
+# festive beat. 120 BPM, G major.
 # Every note and sound is synthesised here (original arrangement, no samples).
 
 def celesta(m, dur=1.6, bright=1.0):
@@ -281,17 +281,14 @@ def snare():
     return (body * 0.6 + nz) * 0.45
 
 
-# G minor: Gm  F  Eb  D   (i  VII  VI  V)
-PROG = [
-    (43, [62, 67, 70, 74]),
-    (41, [60, 65, 69, 72]),
-    (39, [58, 63, 67, 70]),
-    (38, [57, 62, 66, 69]),
-]
+# G major, Jingle Bells changes: | G | G | G | G | C | G | D | G |  (then bars 1-4 again)
+_G = (43, [62, 67, 71, 74]); _C = (48, [60, 64, 67, 72]); _D = (38, [62, 66, 69, 74])
+CH = [_G, _G, _G, _G, _C, _G, _D, _G]
 
 
 def chord_at(k):
-    return PROG[int(k // 4) % 4]
+    i = int(k // 4)
+    return CH[i % 8] if i < 8 else CH[(i - 8) % 4]
 
 
 music = buf()
@@ -302,25 +299,34 @@ sfx = buf()
 TOTAL_BEATS = int((DURATION - b(0)) / BEAT) + 1
 END_K = 48
 
-# 1) the ostinato (Bb A Bb G), one cycle per 2 beats
-OST = [(0.0, 70, 0.75), (0.75, 69, 0.25), (1.0, 70, 0.5), (1.5, 67, 0.5)]
-for cyc in np.arange(0, END_K, 2):
-    for off, m, _ in OST:
-        k = cyc + off
-        if 23.5 <= k < 24:
-            continue
-        if k < 14 or 24 <= k < 28 or k >= 36:
-            place(bells, celesta(m + 12, bright=1.0), b(k), 0.9, pan=-0.2)       # music box
-            if k >= 6 and not (24 <= k < 28):
-                place(bells, glock(m + 24), b(k), 0.35, pan=0.3)
-        else:
-            place(bells, pluck(m + 12, 0.4), b(k), 1.3, pan=-0.15)               # synth pluck in the drop
-            place(bells, celesta(m + 24, bright=0.6), b(k), 0.45, pan=0.25)
-# counter-melody bells (descending) in the brand scene and CTA
-DESC = [74, 72, 70, 69, 67, 65, 63, 62]
-for k0 in (6, 38):
-    for i, m in enumerate(DESC):
-        place(bells, glock(m + 12), b(k0 + 4 + i * 0.5), 0.55, pan=0.35)
+# 1) "Jingle Bells" (J. Pierpont, 1857, public domain) chorus melody: (beat-in-bar, midi, beats)
+B4, C5, D5, G4, A4 = 71, 72, 74, 67, 69
+BARS_A = [[(0, B4, 1), (1, B4, 1), (2, B4, 2)],
+          [(0, B4, 1), (1, B4, 1), (2, B4, 2)],
+          [(0, B4, 1), (1, D5, 1), (2, G4, 1.5), (3.5, A4, 0.5)],
+          [(0, B4, 4)]]
+BARS_B = [[(0, C5, 1), (1, C5, 1), (2, C5, 1.5), (3.5, C5, 0.5)],
+          [(0, C5, 1), (1, B4, 1), (2, B4, 1), (3, B4, 0.5), (3.5, B4, 0.5)],
+          [(0, D5, 1), (1, D5, 1), (2, C5, 1), (3, A4, 1)],
+          [(0, G4, 4)]]
+MELODY = []
+for bar, notes in enumerate(BARS_A + BARS_B + BARS_A):
+    for off, m, d in notes:
+        MELODY.append((bar * 4 + off, m, d))
+for k, m, d in MELODY:
+    if k >= END_K:
+        break
+    if k < 14 or 24 <= k < 28 or k >= 36:
+        place(bells, celesta(m + 12, dur=max(1.2, d * BEAT + 0.8)), b(k), 1.0, pan=-0.15)   # music box
+        if k >= 6 and not (24 <= k < 28):
+            place(bells, glock(m + 12), b(k), 0.4, pan=0.3)
+    else:
+        place(bells, pluck(m + 12, max(0.3, d * BEAT)), b(k), 1.4, pan=-0.1)               # bright synth lead
+        place(bells, celesta(m + 24, bright=0.6), b(k), 0.5, pan=0.25)
+# bell "answers" (G-D-G arpeggio) on the long held notes
+for k0 in (12, 28, 44):
+    for i, m in enumerate((79, 74, 83, 86)):
+        place(bells, glock(m), b(k0 + 1 + i * 0.5), 0.45, pan=0.35)
 
 # 2) pads / strings
 for bar in range(0, END_K + 4, 4):
@@ -328,7 +334,7 @@ for bar in range(0, END_K + 4, 4):
     if bar < 6:
         place(music, strings(notes, 4 * BEAT + 0.4), b(bar), 0.6)
     elif 24 <= bar < 28:
-        place(music, strings([62, 67, 70, 74, 79], 4 * BEAT + 0.4), b(bar), 0.9)
+        place(music, strings(notes + [notes[1] + 12], 4 * BEAT + 0.4), b(bar), 0.9)
     else:
         place(music, strings(notes, 4 * BEAT + 0.4), b(bar), 0.75)
         place(music, pad_chord(notes, 4 * BEAT + 0.3), b(bar), 0.25)

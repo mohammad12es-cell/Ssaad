@@ -1,0 +1,324 @@
+{
+ "title": "TEHRAN — 323 (cinematic life montage)",
+ "format": {
+  "width": 1080,
+  "height": 1920,
+  "fps": 30
+ },
+ "music": {
+  "file": "score.wav",
+  "bpm": 90,
+  "beats": 62
+ },
+ "sources": {
+  "TEH": {
+   "file": "51667561-TEHRAN_is_the_most_vibrant_city_in_IRAN_tehran_tehranpic_tehrangeles_tehran_iran_____.mp4",
+   "orient": "transpose=2",
+   "note": "pixels stored 90deg CW, no rotation metadata -> rotate CCW (verified per shot)"
+  },
+  "V1": {
+   "file": "213ceb25-VID_20261120_195847_542.mp4",
+   "content_crop": "1024:580:0:350",
+   "orient": null,
+   "grade": "eq=contrast=1.14:saturation=1.12:gamma=0.96",
+   "note": "upright, letterboxed 16:9 inside 1024x1280"
+  },
+  "V2": {
+   "file": "34a8dedc-VID_20261120_195822_956.mp4",
+   "content_crop": "720:1280:152:0",
+   "orient": null,
+   "note": "upright 9:16, pillarboxed"
+  }
+ },
+ "shots": [
+  {
+   "act": "opening",
+   "beats": 4,
+   "type": "photo",
+   "src": "dd27b8d9-image.jpg",
+   "cx": 0.3,
+   "cy": 0.47,
+   "zoom": [
+    1.0,
+    1.1
+   ],
+   "fade_in": 0.9,
+   "why": "mystery: a glowing tail-light in the dark, car not yet revealed"
+  },
+  {
+   "act": "opening",
+   "beats": 4,
+   "type": "video",
+   "src": "TEH",
+   "in": 1.05,
+   "out": 2.2,
+   "frame": "window",
+   "cx": 0.53,
+   "why": "the city at night — establishing the world"
+  },
+  {
+   "act": "development",
+   "beats": 2,
+   "type": "video",
+   "src": "TEH",
+   "in": 3.9,
+   "out": 4.8,
+   "frame": "window",
+   "cx": 0.42,
+   "why": "headlights of the city's traffic..."
+  },
+  {
+   "act": "development",
+   "beats": 2,
+   "type": "photo",
+   "src": "4bfaacae-image.jpg",
+   "cx": 0.72,
+   "cy": 0.5,
+   "zoom": [
+    1.0,
+    1.06
+   ],
+   "why": "...match-cut to our car's headlight"
+  },
+  {
+   "act": "development",
+   "beats": 2,
+   "type": "photo",
+   "src": "127f61aa-image.jpg",
+   "cx": 0.6,
+   "cy": 0.5,
+   "zoom": [
+    1.04,
+    1.0
+   ],
+   "why": "the owner — hands on the wheel"
+  },
+  {
+   "act": "development",
+   "beats": 2,
+   "type": "video",
+   "src": "TEH",
+   "in": 6.35,
+   "out": 7.0,
+   "frame": "full",
+   "cx": 0.6,
+   "why": "a lone figure in the neon — the mood of the person"
+  },
+  {
+   "act": "development",
+   "beats": 4,
+   "type": "video",
+   "src": "V1",
+   "in": 0.0,
+   "out": 2.4,
+   "frame": "window",
+   "cx": 0.33,
+   "why": "the car in motion, first full reveal"
+  },
+  {
+   "act": "development",
+   "beats": 2,
+   "type": "photo",
+   "src": "cbfad1ce-image.jpg",
+   "cx": 0.38,
+   "cy": 0.45,
+   "zoom": [
+    1.0,
+    1.07
+   ],
+   "why": "detail: the purple heart of the car"
+  },
+  {
+   "act": "development",
+   "beats": 2,
+   "type": "photo",
+   "src": "d834e0a8-image.jpg",
+   "pan": [
+    0.15,
+    0.85
+   ],
+   "why": "a quiet daylight memory under the trees"
+  },
+  {
+   "act": "build",
+   "beats": 2,
+   "type": "video",
+   "src": "TEH",
+   "in": 3.25,
+   "out": 3.9,
+   "frame": "full",
+   "cx": 0.55,
+   "why": "towering architecture — tension rises",
+   "grade": "eq=gamma=1.35:brightness=0.02"
+  },
+  {
+   "act": "build",
+   "beats": 2,
+   "type": "video",
+   "src": "TEH",
+   "in": 4.8,
+   "out": 6.3,
+   "frame": "window",
+   "cx": 0.5,
+   "why": "the whole city from above"
+  },
+  {
+   "act": "build",
+   "beats": 2,
+   "type": "photo",
+   "src": "c1db9650-image.jpg",
+   "cx": 0.45,
+   "cy": 0.5,
+   "zoom": [
+    1.0,
+    1.08
+   ],
+   "why": "purple cabin glow — getting in"
+  },
+  {
+   "act": "build",
+   "beats": 2,
+   "type": "photo",
+   "src": "92134b41-image.jpg",
+   "cx": 0.42,
+   "cy": 0.5,
+   "zoom": [
+    1.3,
+    1.4
+   ],
+   "why": "POV: wheel, dash and the highway lights ahead",
+   "anchor_y": 0.08
+  },
+  {
+   "act": "peak",
+   "beats": 6,
+   "type": "video",
+   "src": "V2",
+   "in": 1.75,
+   "out": 3.65,
+   "frame": "full",
+   "cx": 0.5,
+   "ramp": {
+    "normal_for": 0.5,
+    "slow_factor": 2.5
+   },
+   "why": "CLIMAX on the drop: night drive under fireworks, speed-ramped into slow motion"
+  },
+  {
+   "act": "peak",
+   "beats": 1,
+   "type": "video",
+   "src": "TEH",
+   "in": 9.7,
+   "out": 10.2,
+   "frame": "window",
+   "cx": 0.6,
+   "why": "fast cut: city energy"
+  },
+  {
+   "act": "peak",
+   "beats": 1,
+   "type": "video",
+   "src": "V1",
+   "in": 12.0,
+   "out": 12.67,
+   "frame": "window",
+   "cx": 0.5,
+   "why": "fast cut: rolling shot"
+  },
+  {
+   "act": "peak",
+   "beats": 1,
+   "type": "video",
+   "src": "TEH",
+   "in": 8.8,
+   "out": 9.25,
+   "frame": "full",
+   "cx": 0.58,
+   "why": "fast cut: night crosswalk"
+  },
+  {
+   "act": "peak",
+   "beats": 1,
+   "type": "photo",
+   "src": "92ab6d02-image.jpg",
+   "cx": 0.5,
+   "cy": 0.5,
+   "zoom": [
+    1.0,
+    1.05
+   ],
+   "why": "the portrait — the man and his car"
+  },
+  {
+   "act": "peak",
+   "beats": 2,
+   "type": "video",
+   "src": "V1",
+   "in": 13.0,
+   "out": 14.33,
+   "frame": "window",
+   "cx": 0.5,
+   "why": "dynamic roll around the car"
+  },
+  {
+   "act": "peak",
+   "beats": 2,
+   "type": "video",
+   "src": "TEH",
+   "in": 7.0,
+   "out": 7.6,
+   "frame": "window",
+   "cx": 0.6,
+   "why": "skyline at golden hour, slowed"
+  },
+  {
+   "act": "peak",
+   "beats": 2,
+   "type": "video",
+   "src": "V2",
+   "in": 5.0,
+   "out": 6.33,
+   "frame": "full",
+   "cx": 0.5,
+   "why": "the car drives on into the night"
+  },
+  {
+   "act": "breakdown",
+   "beats": 4,
+   "type": "video",
+   "src": "TEH",
+   "in": 7.74,
+   "out": 8.8,
+   "frame": "full",
+   "cx": 0.52,
+   "dissolve_out": 0.5,
+   "why": "music drops away: slow-motion stillness on golden water"
+  },
+  {
+   "act": "ending",
+   "beats": 4,
+   "type": "photo",
+   "src": "92dc5f7d-image.jpg",
+   "pan": [
+    0.4,
+    0.6
+   ],
+   "dissolve_out": 0.6,
+   "why": "nostalgia: autumn, the car at rest"
+  },
+  {
+   "act": "ending",
+   "beats": 6,
+   "type": "video",
+   "src": "TEH",
+   "in": 10.25,
+   "out": 13.0,
+   "frame": "full",
+   "cx": 0.47,
+   "fade_out": 1.6,
+   "title": "T E H R A N",
+   "why": "final image: Milad Tower — the city that frames the story; resolves with the last chord"
+  }
+ ]
+}

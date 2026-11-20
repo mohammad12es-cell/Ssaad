@@ -36,7 +36,7 @@ Every frame and every sound was **generated procedurally in this project**: a ha
 - 1080 × 1920, 24 fps, 600 frames, PNG RGB lossless intermediates
 - Scene buffer: RGBA16F, 4× MSAA; DOF: 36-tap golden-angle gather with a foreground-aware CoC; bloom: UnrealBloom (5 mips)
 - Grade: ACES filmic (RRT+ODT fit), warm highlights and neutral blacks, sRGB output, 3.5% luminance-weighted grain
-- Encode: `libx264 -preset slow -crf 15 -profile:v high -level 4.2 -tune film -g 48`, BT.709 tagged, `yuv420p`, `+faststart`; audio AAC-LC 320 kb/s, 48 kHz stereo
+- Encode: `libx264 -preset slow -crf 17 -maxrate 20M -bufsize 40M -profile:v high -level 4.2 -tune grain -g 48`, BT.709 tagged, `yuv420p`, `+faststart`; audio AAC-LC 320 kb/s, 48 kHz stereo
 - Render time: about 6 s per table frame and about 2–3 s per city frame per worker; 2 workers in parallel on 4 CPU cores
 
 ## 5. Sound design (`source/audio/build_audio.py`)
@@ -55,5 +55,25 @@ Stems are delivered in `audio/`: `stem_music.wav`, `stem_sfx.wav`, `stem_ambienc
 4. **Logo:** no official ROYAGRAM logo file was supplied, so the end card uses a typographic wordmark. Replace `#logo` in `source/index.html` with the official SVG to update.
 5. Persian-language text was intentionally not added. The film uses English-only typography, and Persian identity is carried visually and musically. If a Persian wordmark (e.g. «رویاگرام») is wanted, please supply the official spelling and lettering.
 
-## 7. Quality control
-(filled from measurements of the final file — see below)
+## 7. Quality control (measured on the delivered file by `source/qc.py`, plus visual review of frames decoded from the MP4)
+| Check | Result |
+|---|---|
+| Container / video | MP4, H.264 High@4.2, **1080 × 1920**, yuv420p, **24 fps**, **600 frames**, **25.000 s**, BT.709 tagged, faststart, 62.2 MB (about 20 Mb/s) |
+| Audio | AAC-LC 48 kHz stereo, 320 kb/s; **-14.2 LUFS integrated**, LRA 7.8 LU, **true peak -1.1 dBTP** (Instagram target is about -14 LUFS) |
+| Decode errors / corrupted frames | **None** (full `ffmpeg -v error` decode pass) |
+| Black frames | No accidental black frames. `blackdetect` flags only the **scripted deep-black end card** (23.00–23.33 s while the ring and logo fade in, and 24.29–24.96 s as the card settles to a dim wordmark). The wordmark stays visible to the last frame. |
+| Flicker | **No single-frame luminance spikes** across all 600 lossless frames. Every large luminance change lands on an intended cut or flash (frames 192, 400–413, 480, 552). Fine wood detail fades with distance to prevent moiré shimmer. |
+| Encode fidelity vs lossless frames | SSIM 0.961 overall (Y 0.944; the gap is mostly the random film grain, which no encoder reproduces exactly) |
+| 9:16 composition and safe zones | Title at y = 318 px; end card between 806 and 1040 px. Nothing important above 220 px or below 1600 px. |
+| Glass consistency | One lathe profile, one material, one sun direction (back-left) and one front camera axis in every table shot. Shot 5 reuses the exact opening camera key. |
+| Typography / spelling | "ORDINARY IS BORING." / "ROYAGRAM" / "SMALL THINGS. BIG WORLDS." checked; no Persian text used (see limitation 5) |
+| Watermarks | None (all content generated in this project; OFL fonts embedded) |
+| Clean ending and loop | Music and sfx fade before 24.97 s; the end ring echoes the drop's ripple, and the dim card loops into the lit opening |
+
+## 8. Files
+- `final/ROYAGRAM_Ordinary-Is-Boring_Reel_1080x1920_24fps.mp4`: the Reel
+- `final/thumbnail_1080x1920.jpg` (frame 430, the city rising above the rim) and `final/thumbnail_grid_1080x1350.jpg` (4:5 profile-grid crop)
+- `final/cover_1080x1920.jpg`: designed cover (`source/cover.html` on frame 445)
+- `audio/mix_master.wav`, `audio/stem_music.wav`, `audio/stem_sfx.wav`, `audio/stem_ambience.wav`
+- `source/`: film (`index.html`, `js/`), renderer (`render.mjs`), audio (`audio/build_audio.py`), encode (`assemble.sh`), QC (`qc.py`), cover (`cover.html`)
+- Lossless PNG frames are not committed (about 2 GB); `render.mjs` regenerates them deterministically.

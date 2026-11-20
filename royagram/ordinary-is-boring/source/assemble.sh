@@ -8,7 +8,7 @@ mkdir -p final
 ffmpeg -y -hide_banner -loglevel error \
   -framerate 24 -i "$FR/%04d.png" -i audio/mix_master.wav \
   -vf "scale=1080:1920:flags=lanczos:out_color_matrix=bt709:out_range=tv,format=yuv420p" \
-  -c:v libx264 -preset slow -crf 15 -profile:v high -level 4.2 -tune film -g 48 -bf 2 \
+  -c:v libx264 -preset slow -crf 17 -maxrate 20M -bufsize 40M -profile:v high -level 4.2 -tune grain -g 48 -bf 2 \
   -colorspace bt709 -color_primaries bt709 -color_trc bt709 -color_range tv \
   -c:a aac -b:a 320k -ar 48000 -ac 2 \
   -t 25 -movflags +faststart "$OUT"

@@ -1,0 +1,36 @@
+{
+ "title": "TEHRAN — 323 (horizontal cut)",
+ "format": {"width": 1920, "height": 1080, "fps": 30},
+ "music": {"file": "b853ca49-Jon-Lajoie-Everyday-Normal-Guy-2-320.mp3", "artist": "Jon Lajoie", "title": "Everyday Normal Guy 2", "bpm_detected": 89.1, "start_beat_index": 5, "note": "song plays from 0:00; the montage starts on the first strong downbeat (beat index 5, ~4.39s); the intro before it carries the rotate-phone prompt"},
+ "sources": {
+  "TEH": {"file": "51667561-TEHRAN_is_the_most_vibrant_city_in_IRAN_tehran_tehranpic_tehrangeles_tehran_iran_____.mp4", "orient": "transpose=2"},
+  "V1": {"file": "213ceb25-VID_20261120_195847_542.mp4", "content_crop": "1024:576:0:352", "grade": "eq=contrast=1.14:saturation=1.12:gamma=0.96"},
+  "V2": {"file": "34a8dedc-VID_20261120_195822_956.mp4", "content_crop": "720:1280:152:0"}
+ },
+ "shots": [
+  {"beats": 4, "type": "photo", "src": "dd27b8d9-image.jpg", "cx": 0.27, "cy": 0.47, "zoom": [1.55, 1.75], "fade_in": 0.35, "why": "mystery: glowing tail-light"},
+  {"beats": 4, "type": "video", "src": "TEH", "in": 1.05, "out": 2.20, "frame": "full", "why": "the city at night, racking into focus"},
+  {"beats": 2, "type": "video", "src": "TEH", "in": 3.90, "out": 4.80, "frame": "full", "why": "city headlights..."},
+  {"beats": 2, "type": "photo", "src": "4bfaacae-image.jpg", "cx": 0.70, "cy": 0.50, "zoom": [1.45, 1.55], "why": "...match-cut to our headlight"},
+  {"beats": 2, "type": "photo", "src": "127f61aa-image.jpg", "cx": 0.55, "cy": 0.50, "zoom": [1.08, 1.00], "why": "the owner, hands on the wheel"},
+  {"beats": 2, "type": "video", "src": "TEH", "in": 6.35, "out": 7.00, "frame": "full", "why": "lone figure in the neon"},
+  {"beats": 4, "type": "video", "src": "V1", "in": 0.00, "out": 2.40, "frame": "full", "why": "first rolling reveal"},
+  {"beats": 2, "type": "photo", "src": "cbfad1ce-image.jpg", "cx": 0.40, "cy": 0.45, "zoom": [1.25, 1.35], "why": "purple heart of the car"},
+  {"beats": 2, "type": "photo", "src": "d834e0a8-image.jpg", "cx": 0.50, "cy": 0.62, "zoom": [1.0, 1.06], "why": "daylight memory under the trees"},
+  {"beats": 2, "type": "video", "src": "TEH", "in": 3.25, "out": 3.90, "frame": "full", "grade": "eq=gamma=1.35:brightness=0.02", "why": "towering architecture"},
+  {"beats": 2, "type": "video", "src": "TEH", "in": 4.80, "out": 6.30, "frame": "full", "why": "the city from above"},
+  {"beats": 2, "type": "photo", "src": "c1db9650-image.jpg", "cx": 0.50, "cy": 0.55, "zoom": [1.0, 1.07], "why": "purple cabin glow"},
+  {"beats": 2, "type": "photo", "src": "92134b41-image.jpg", "cx": 0.50, "cy": 0.0, "zoom": [1.0, 1.06], "anchor_y": 0.0, "why": "POV onto the highway (framed above the lap)"},
+  {"beats": 6, "type": "video", "src": "V2", "in": 1.75, "out": 3.65, "frame": "window", "win_aspect": 0.75, "cy": 0.45, "ramp": {"normal_for": 0.5, "slow_factor": 2.5}, "why": "peak: night drive under fireworks, speed-ramped into slow motion"},
+  {"beats": 1, "type": "video", "src": "TEH", "in": 9.70, "out": 10.20, "frame": "full", "why": "fast cut"},
+  {"beats": 1, "type": "video", "src": "V1", "in": 12.00, "out": 12.67, "frame": "full", "why": "fast cut"},
+  {"beats": 1, "type": "video", "src": "TEH", "in": 8.80, "out": 9.25, "frame": "full", "why": "fast cut"},
+  {"beats": 1, "type": "photo", "src": "92ab6d02-image.jpg", "cx": 0.50, "cy": 0.37, "zoom": [1.0, 1.05], "why": "the portrait"},
+  {"beats": 2, "type": "video", "src": "V1", "in": 13.00, "out": 14.33, "frame": "full", "why": "roll around the car"},
+  {"beats": 2, "type": "video", "src": "TEH", "in": 7.00, "out": 7.60, "frame": "full", "why": "golden-hour skyline, slowed"},
+  {"beats": 2, "type": "video", "src": "V2", "in": 5.00, "out": 6.33, "frame": "window", "win_aspect": 0.75, "cy": 0.5, "why": "driving on into the night"},
+  {"beats": 4, "type": "video", "src": "TEH", "in": 7.74, "out": 8.80, "frame": "full", "dissolve_out": 0.5, "why": "slow-motion golden water"},
+  {"beats": 4, "type": "photo", "src": "92dc5f7d-image.jpg", "cx": 0.50, "cy": 0.56, "zoom": [1.0, 1.08], "dissolve_out": 0.6, "why": "autumn nostalgia"},
+  {"beats": 6, "type": "video", "src": "TEH", "in": 10.25, "out": 13.00, "frame": "full", "fade_out": 1.8, "title": "T E H R A N", "why": "Milad Tower — final image"}
+ ]
+}

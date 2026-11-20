@@ -10,7 +10,7 @@ BUNDLE=$B/bundle
 echo "== EP$NN: bundle"; npx remotion bundle src/index.ts --out-dir $BUNDLE >/dev/null 2>&1
 echo "== EP$NN: audio"; python3 src/audio/score.py "$N"
 echo "== EP$NN: picture"; t0=$(date +%s)
-npx remotion render $BUNDLE "Ep$NN" $B/video/ep${NN}_pic.mp4 --codec=h264 --crf=12 --muted --concurrency=$CONC --log=error
+npx remotion render $BUNDLE "Ep$NN" $B/video/ep${NN}_pic.mp4 --codec=h264 --crf=12 --muted --concurrency=$CONC --timeout=300000 --props="{\"quality\":{\"scale\":${SCALE:-0.85},\"samples\":${SAMPLES:-2},\"shadows\":true}}" --log=error
 echo "   picture took $(( $(date +%s)-t0 ))s"
 echo "== EP$NN: subtitle layers"
 for L in FA EN; do npx remotion render $BUNDLE "Subs${L}${NN}" $B/subs/ep${NN}_${L}.mov --codec=prores --prores-profile=4444 --pixel-format=yuva444p10le --image-format=png --concurrency=4 --log=error; done

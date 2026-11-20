@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=1080, height=1920" />
+<title>ROYAGRAM — Ordinary Is Boring</title>
+<script type="importmap">{ "imports": { "three": "./vendor/three.module.js" } }</script>
+<style>
+  @font-face { font-family: "Cormorant"; font-weight: 600; src: url("fonts/cormorant-garamond-latin-600-normal.woff2") format("woff2"); }
+  @font-face { font-family: "Cormorant"; font-weight: 500; src: url("fonts/cormorant-garamond-latin-500-normal.woff2") format("woff2"); }
+  @font-face { font-family: "InterF"; font-weight: 300; src: url("fonts/inter-latin-300-normal.woff2") format("woff2"); }
+  @font-face { font-family: "InterF"; font-weight: 500; src: url("fonts/inter-latin-500-normal.woff2") format("woff2"); }
+  @font-face { font-family: "InterF"; font-weight: 600; src: url("fonts/inter-latin-600-normal.woff2") format("woff2"); }
+  :root { --cream: #F3E6CC; --gold: #E3A548; }
+  html, body { margin: 0; width: 1080px; height: 1920px; overflow: hidden; background: #050302; }
+  #stage { position: relative; width: 1080px; height: 1920px; overflow: hidden; }
+  #gl { position: absolute; inset: 0; width: 1080px; height: 1920px; display: block; }
+  .ov { position: absolute; left: 0; right: 0; text-align: center; pointer-events: none; will-change: opacity, filter, transform; }
+  #title { top: 318px; font-family: "InterF"; font-weight: 600; font-size: 44px; color: var(--cream); letter-spacing: 0.32em; padding-left: 0.32em; opacity: 0;
+           text-shadow: 0 0 24px rgba(0,0,0,0.55); }
+  #title .rule { display: block; width: 92px; height: 2px; margin: 26px auto 0; background: linear-gradient(90deg, transparent, var(--gold), transparent); }
+  #endcard { inset: 0; background: #050302; opacity: 0; }
+  #ring { position: absolute; left: 50%; top: 880px; width: 10px; height: 10px; border-radius: 50%; transform: translate(-50%,-50%);
+          border: 2px solid rgba(227,165,72,0.9); box-shadow: 0 0 24px rgba(227,165,72,0.55), inset 0 0 18px rgba(227,165,72,0.35); }
+  #ring2 { position: absolute; left: 50%; top: 880px; width: 10px; height: 10px; border-radius: 50%; transform: translate(-50%,-50%);
+          border: 1px solid rgba(243,230,204,0.5); }
+  #logo { position: absolute; left: 0; right: 0; top: 806px; text-align: center; font-family: "Cormorant"; font-weight: 600; font-size: 132px; line-height: 1;
+          letter-spacing: 0.2em; padding-left: 0.2em;
+          background: linear-gradient(100deg, #8a5a1c 0%, #e8b45c 30%, #fff1cf var(--sx), #e8b45c calc(var(--sx) + 12%), #a8692a 100%);
+          -webkit-background-clip: text; background-clip: text; color: transparent; --sx: 45%; }
+  #logoGlow { position: absolute; left: 0; right: 0; top: 806px; text-align: center; font-family: "Cormorant"; font-weight: 600; font-size: 132px; line-height: 1;
+          letter-spacing: 0.2em; padding-left: 0.2em; color: rgba(227,165,72,0.55); filter: blur(22px); }
+  #tag { position: absolute; left: 0; right: 0; top: 1004px; text-align: center; font-family: "InterF"; font-weight: 500; font-size: 29px; color: var(--cream);
+          letter-spacing: 0.42em; padding-left: 0.42em; }
+  #flare { position: absolute; left: 0; right: 0; top: 868px; height: 3px; background: radial-gradient(ellipse at var(--fx) 50%, rgba(255,236,200,0.95), rgba(255,200,120,0.0) 30%); opacity: 0; }
+</style>
+</head>
+<body>
+<div id="stage">
+  <canvas id="gl" width="1080" height="1920"></canvas>
+  <div id="title" class="ov">ORDINARY IS BORING.<span class="rule"></span></div>
+  <div id="endcard" class="ov">
+    <div id="ring"></div><div id="ring2"></div>
+    <div id="logoGlow">ROYAGRAM</div>
+    <div id="logo">ROYAGRAM</div>
+    <div id="flare"></div>
+    <div id="tag">SMALL THINGS. BIG WORLDS.</div>
+  </div>
+</div>
+<script type="module" src="js/main.js"></script>
+</body>
+</html>

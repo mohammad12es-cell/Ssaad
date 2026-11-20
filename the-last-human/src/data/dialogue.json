@@ -1,0 +1,32 @@
+{
+  "_doc": "Single source of truth for every spoken line and translated on-screen text. start = seconds into the episode. kind: speech | onscreen. who: kael | eve | vex | child | system. fx: voice processing preset. hi_en / hi_fa = words to highlight in subtitles (used sparingly). Voice durations and lip-sync envelopes are generated into voice.json by src/audio/voice.py.",
+  "lines": [
+    { "id": "e01_l1", "ep": 1, "kind": "onscreen", "who": "system", "start": 26.4, "end": 29.3, "en": "UNKNOWN HUMAN DETECTED.", "fa": "انسانِ ناشناس شناسایی شد.", "hi_en": ["UNKNOWN"], "hi_fa": ["ناشناس"] },
+    { "id": "e01_v1", "ep": 1, "kind": "speech", "who": "system", "start": 27.0, "en": "Unknown human detected.", "fa": "", "subtitle": false },
+
+    { "id": "e02_l1", "ep": 2, "kind": "speech", "who": "eve", "start": 14.2, "en": "Citizen identification failed.", "fa": "شناسایی شهروند ناموفق بود.", "hi_en": [], "hi_fa": [] },
+    { "id": "e02_l2", "ep": 2, "kind": "speech", "who": "eve", "fx": "whisper", "start": 26.3, "en": "Impossible. He's not connected.", "fa": "غیرممکن است. او متصل نیست.", "hi_en": ["connected"], "hi_fa": ["متصل"] },
+
+    { "id": "e03_l1", "ep": 3, "kind": "speech", "who": "child", "start": 26.8, "en": "Kael... don't trust your memories.", "fa": "کِیل... به خاطراتت اعتماد نکن.", "hi_en": ["memories"], "hi_fa": ["خاطراتت"] },
+
+    { "id": "e04_l1", "ep": 4, "kind": "onscreen", "who": "system", "start": 3.6, "end": 5.0, "en": "TARGET ACQUIRED", "fa": "هدف شناسایی شد", "hi_en": [], "hi_fa": [] },
+
+    { "id": "e05_l1", "ep": 5, "kind": "speech", "who": "vex", "start": 15.4, "length": 1.75, "en": "If you're watching this, the experiment has started again.", "fa": "اگر این را می‌بینی، آزمایش دوباره شروع شده است.", "hi_en": ["again"], "hi_fa": ["دوباره"] },
+    { "id": "e05_l2", "ep": 5, "kind": "onscreen", "who": "system", "start": 27.2, "end": 30.0, "en": "PROJECT HUMANITY", "fa": "پروژهٔ انسانیت", "hi_en": [], "hi_fa": ["انسانیت"] },
+
+    { "id": "e06_l1", "ep": 6, "kind": "speech", "who": "vex", "start": 15.6, "length": 1.75, "en": "Neo-Eden was never built to save humanity.", "fa": "نئو-ادن هرگز برای نجات بشریت ساخته نشد.", "hi_en": ["never"], "hi_fa": ["هرگز"] },
+    { "id": "e06_l2", "ep": 6, "kind": "speech", "who": "kael", "fx": "whisper", "start": 27.4, "en": "How many times?", "fa": "چند بار؟", "hi_en": [], "hi_fa": [] },
+
+    { "id": "e07_l1", "ep": 7, "kind": "speech", "who": "eve", "start": 7.4, "en": "You were never supposed to remember.", "fa": "تو هرگز نباید به یاد می‌آوردی.", "hi_en": ["remember"], "hi_fa": ["به یاد"] },
+    { "id": "e07_l2", "ep": 7, "kind": "speech", "who": "kael", "start": 16.6, "en": "What am I?", "fa": "من چی هستم؟", "hi_en": [], "hi_fa": [] },
+    { "id": "e07_l3", "ep": 7, "kind": "speech", "who": "eve", "fx": "glitch", "start": 26.2, "length": 1.25, "en": "You are the only variable I cannot control.", "fa": "تو تنها متغیری هستی که نمی‌توانم کنترلش کنم.", "hi_en": ["variable"], "hi_fa": ["متغیری"] },
+
+    { "id": "e08_l1", "ep": 8, "kind": "onscreen", "who": "system", "start": 22.2, "end": 27.0, "en": "ORIGINAL SUBJECT: UNKNOWN", "fa": "سوژهٔ اصلی: ناشناخته", "hi_en": ["UNKNOWN"], "hi_fa": ["ناشناخته"] },
+
+    { "id": "e09_l1", "ep": 9, "kind": "speech", "who": "eve", "start": 15.6, "en": "If you shut me down, you will lose everything.", "fa": "اگر خاموشم کنی، همه‌چیز را از دست می‌دهی.", "hi_en": ["everything"], "hi_fa": ["همه‌چیز"] },
+
+    { "id": "e10_l1", "ep": 10, "kind": "onscreen", "who": "system", "start": 12.4, "end": 19.8, "en": "PROJECT: HUMANITY — SIMULATION #8921", "fa": "پروژه: انسانیت — شبیه‌سازی شمارهٔ ۸۹۲۱", "hi_en": ["#8921"], "hi_fa": ["۸۹۲۱"] },
+    { "id": "e10_l2", "ep": 10, "kind": "speech", "who": "eve", "start": 20.3, "en": "Welcome back, Kael. You've reached the end before.", "fa": "خوش برگشتی، کِیل. تو قبلاً هم به پایان رسیده‌ای.", "hi_en": ["before"], "hi_fa": ["قبلاً"] },
+    { "id": "e10_l3", "ep": 10, "kind": "onscreen", "who": "system", "start": 27.6, "end": 30.0, "en": "THE LAST HUMAN — SEASON 01 — END.", "fa": "آخرین انسان — فصل اول — پایان.", "hi_en": [], "hi_fa": ["پایان"] }
+  ]
+}

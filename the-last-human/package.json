@@ -1,0 +1,26 @@
+{
+  "name": "the-last-human",
+  "version": "1.0.0",
+  "private": true,
+  "description": "THE LAST HUMAN — Season 01. 10-episode procedural 3D cyberpunk series (Remotion + Three.js).",
+  "scripts": {
+    "studio": "remotion studio src/index.ts",
+    "render": "bash scripts/render_episode.sh"
+  },
+  "dependencies": {
+    "@fontsource/orbitron": "^5.3.0",
+    "@fontsource/rajdhani": "^5.3.0",
+    "@remotion/cli": "^4.0.545",
+    "@types/react": "^19.3.0",
+    "@types/three": "^0.170.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "remotion": "^4.0.545",
+    "three": "^0.170.0",
+    "typescript": "^7.0.2",
+    "vazirmatn": "^33.0.3"
+  },
+  "devDependencies": {
+    "tsx": "^4.19.2"
+  }
+}

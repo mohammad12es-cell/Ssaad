@@ -1,0 +1,4 @@
+node_modules/
+build/
+assets/voice/_raw/
+assets/voice/models/*.onnx

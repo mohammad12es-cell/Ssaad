@@ -6,7 +6,7 @@ import { makeAdTextures } from "./ads.js";
 
 // ---------- shared fog (custom shaders + built-in materials use matching values) ----------
 export const FOG = {
-  uFogLow: { value: new THREE.Color(0x100d2c) },   // city glow trapped in the mist (violet-blue)
+  uFogLow: { value: new THREE.Color(0x0a0d26) },   // city glow trapped in the mist (violet-blue)
   uFogHigh: { value: new THREE.Color(0x05060f) },  // high altitude: near black
   uFogDensity: { value: 0.0052 },
   uCloudBase: { value: 230 },
@@ -29,7 +29,7 @@ const STREET_HALF = 9.5;
 export function buildWorld(scene, fontsReady) {
   const R = rng(20250101);
   const world = { update: [], ads: [], reflectHide: [], vehicles: [] };
-  scene.fog = new THREE.FogExp2(0x15123a, 0.0105);
+  scene.fog = new THREE.FogExp2(0x0d1030, 0.0105);
   scene.background = new THREE.Color(0x020309);
 
   // ---------- sky dome ----------
@@ -52,7 +52,7 @@ export function buildWorld(scene, fontsReady) {
 
   // ---------- towers (instanced, procedural windows) ----------
   const towerMat = new THREE.ShaderMaterial({
-    uniforms: { ...FOG, uCam: { value: new THREE.Vector3() }, uWinBoost: { value: 1.0 }, uTime: { value: 0 } },
+    uniforms: { ...FOG, uCam: { value: new THREE.Vector3() }, uWinBoost: { value: 0.8 }, uTime: { value: 0 } },
     vertexShader: /* glsl */ `
       attribute float aSeed; attribute float aKind;
       varying vec3 vW; varying vec3 vN; varying vec3 vL; varying float vSeed; varying float vKind; varying vec3 vSize;
@@ -492,7 +492,7 @@ export function buildWorld(scene, fontsReady) {
   world.lights = {};
   const mk = (name, col, I, dist) => { const l = new THREE.PointLight(col, I, dist, 1.6); scene.add(l); world.lights[name] = l; return l; };
   mk("cyan", 0x22e6ff, 40, 16);
-  mk("violet", 0x8a4dff, 40, 16);
+  mk("violet", 0x6a5cff, 30, 16);
   mk("top", 0x9fc8ff, 18, 14);
   mk("fill", 0x3050ff, 10, 12);
 

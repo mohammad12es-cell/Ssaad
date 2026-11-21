@@ -1,0 +1,44 @@
+<!doctype html>
+<!-- IRAM CO. "one door, three keys" cover: a still of the 3D world + title. Render: node tools/render_cover.cjs ../output -->
+<html lang="fa" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <script type="importmap">{ "imports": { "three": "../assets/three.module.js" } }</script>
+    <style>
+      @font-face { font-family: "Vazirmatn"; font-weight: 900; src: url("../assets/fonts/vazirmatn-latin-900-normal.woff2") format("woff2"); }
+      @font-face { font-family: "Vazirmatn"; font-weight: 800; src: url("../assets/fonts/vazirmatn-arabic-800-normal.woff2") format("woff2"); unicode-range: U+0600-06FF, U+0750-077F, U+08A0-08FF, U+200C-200E, U+2026, U+FB50-FDFF, U+FE70-FEFC; }
+      @font-face { font-family: "Vazirmatn"; font-weight: 900; src: url("../assets/fonts/vazirmatn-arabic-900-normal.woff2") format("woff2"); unicode-range: U+0600-06FF, U+0750-077F, U+08A0-08FF, U+200C-200E, U+2026, U+FB50-FDFF, U+FE70-FEFC; }
+      :root { --ink: #faf2e0; --dark: #06140d; --acc: #dcad58; --gold: linear-gradient(180deg, #fff0c2 0%, #f4d68c 30%, #dcad58 70%, #c8954a 100%); }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1080px; height: 1920px; overflow: hidden; background: #0b2017; font-family: "Vazirmatn", sans-serif; }
+      #gl { position: absolute; inset: 0; width: 1080px; height: 1920px; }
+      #labels { position: absolute; inset: 0; }
+      .lbl { position: absolute; left: 0; top: 0; opacity: 0; white-space: nowrap; font-weight: 900; }
+      .lbl.sign { display: none; }
+      .lbl.pick { font-size: 44px; padding: 8px 28px 12px; border-radius: 999px; color: var(--ink); background: color-mix(in srgb, var(--dark) 82%, transparent); border: 3px solid var(--acc); }
+      #shade { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(6,20,13,0.82) 0%, rgba(6,20,13,0.25) 24%, transparent 36%, transparent 70%, rgba(6,20,13,0.75) 84%, rgba(6,20,13,0.9) 100%); }
+      #t1 { position: absolute; top: 300px; left: 0; right: 0; text-align: center; font-weight: 900; font-size: 128px; line-height: 1.15; color: transparent; background: var(--gold); -webkit-background-clip: text; background-clip: text; filter: drop-shadow(0 4px 0 #5a3324) drop-shadow(0 14px 30px rgba(0,0,0,0.6)); }
+      #t2 { position: absolute; top: 455px; left: 0; right: 0; text-align: center; font-weight: 900; font-size: 74px; color: var(--ink); text-shadow: 0 6px 24px rgba(0,0,0,0.8); }
+      #q { position: absolute; top: 1370px; left: 50%; transform: translateX(-50%); white-space: nowrap; padding: 18px 46px 24px; border-radius: 999px; background: var(--gold); color: var(--dark); font-weight: 900; font-size: 64px; box-shadow: 0 20px 50px rgba(0,0,0,0.5); }
+      #logo { position: absolute; top: 1500px; left: 50%; width: 420px; margin-left: -210px; filter: drop-shadow(0 8px 20px rgba(0,0,0,0.6)); }
+    </style>
+  </head>
+  <body>
+    <canvas id="gl" width="1080" height="1920"></canvas>
+    <div id="labels"></div>
+    <div id="shade"></div>
+    <div id="t1">۳ راه اقامت</div>
+    <div id="t2">ارمنستان</div>
+    <div id="q">کدوم مسیر مال توئه؟</div>
+    <img id="logo" src="../assets/iram-logo.png" alt="IRAM CO." />
+    <script type="module">
+      window.__T = await (await fetch("../timing.json")).json();
+      const { still } = await import("../assets/world.js");
+      await document.fonts.ready;
+      const AN = window.__T.anchors;
+      still({ t: AN.act + 0.35 });
+      requestAnimationFrame(() => (window.__ready = true));
+    </script>
+  </body>
+</html>

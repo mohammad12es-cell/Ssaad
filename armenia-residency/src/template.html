@@ -1,0 +1,236 @@
+<!doctype html>
+<!-- SOURCE TEMPLATE (IRAM CO. · one door, three keys · Three.js). Edit this file, then run `python3 build.py` to regenerate index.html. -->
+<html lang="fa" dir="rtl" data-resolution="portrait">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <script src="assets/gsap.min.js"></script>
+    <script type="importmap">{ "imports": { "three": "./assets/three.module.js" } }</script>
+    <style>
+      @font-face { font-family: "Vazirmatn"; font-weight: 400; src: url("assets/fonts/vazirmatn-latin-400-normal.woff2") format("woff2"); }
+      @font-face { font-family: "Vazirmatn"; font-weight: 700; src: url("assets/fonts/vazirmatn-latin-700-normal.woff2") format("woff2"); }
+      @font-face { font-family: "Vazirmatn"; font-weight: 900; src: url("assets/fonts/vazirmatn-latin-900-normal.woff2") format("woff2"); }
+      @font-face { font-family: "Vazirmatn"; font-weight: 500; src: url("assets/fonts/vazirmatn-arabic-500-normal.woff2") format("woff2"); unicode-range: U+0600-06FF, U+0750-077F, U+0870-088E, U+0890-0891, U+0897-08E1, U+08E3-08FF, U+200C-200E, U+2010-2011, U+204F, U+2E41, U+FB50-FDFF, U+FE70-FE74, U+FE76-FEFC; }
+      @font-face { font-family: "Vazirmatn"; font-weight: 700; src: url("assets/fonts/vazirmatn-arabic-700-normal.woff2") format("woff2"); unicode-range: U+0600-06FF, U+0750-077F, U+0870-088E, U+0890-0891, U+0897-08E1, U+08E3-08FF, U+200C-200E, U+2010-2011, U+204F, U+2E41, U+FB50-FDFF, U+FE70-FE74, U+FE76-FEFC; }
+      @font-face { font-family: "Vazirmatn"; font-weight: 800; src: url("assets/fonts/vazirmatn-arabic-800-normal.woff2") format("woff2"); unicode-range: U+0600-06FF, U+0750-077F, U+0870-088E, U+0890-0891, U+0897-08E1, U+08E3-08FF, U+200C-200E, U+2010-2011, U+204F, U+2E41, U+FB50-FDFF, U+FE70-FE74, U+FE76-FEFC; }
+      @font-face { font-family: "Vazirmatn"; font-weight: 900; src: url("assets/fonts/vazirmatn-arabic-900-normal.woff2") format("woff2"); unicode-range: U+0600-06FF, U+0750-077F, U+0870-088E, U+0890-0891, U+0897-08E1, U+08E3-08FF, U+200C-200E, U+2010-2011, U+204F, U+2E41, U+FB50-FDFF, U+FE70-FE74, U+FE76-FEFC; }
+
+      /* PALETTE: IRAM CO. forest green + metallic gold + cream, on Yerevan pink tuff. world.js uses the same values. */
+      :root {
+        --bg-1: #0b2017; --pri: #2f8a5c; --acc: #dcad58; --acc-hi: #f4d68c; --acc-lo: #a9792f;
+        --ink: #faf2e0; --dark: #06140d; --warn: #d8463a; --tuff: #c98f7a;
+        --gold: linear-gradient(180deg, #fff0c2 0%, #f4d68c 30%, #dcad58 70%, #c8954a 100%);
+        --font: "Vazirmatn", sans-serif;
+      }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { margin: 0; width: 1080px; height: 1920px; overflow: hidden; background: var(--bg-1); }
+      #root { position: relative; width: 100%; height: 100%; overflow: hidden; font-family: var(--font); color: var(--ink); background: var(--bg-1); }
+      .clip { position: absolute; inset: 0; }
+      .scene-in { position: absolute; inset: 0; }
+
+      #gl { position: absolute; inset: 0; width: 1080px; height: 1920px; display: block; }
+      #vig { position: absolute; inset: 0; background:
+        linear-gradient(180deg, color-mix(in srgb, var(--dark) 55%, transparent) 0%, transparent 18%, transparent 58%, color-mix(in srgb, var(--dark) 62%, transparent) 72%, color-mix(in srgb, var(--dark) 86%, transparent) 100%); }
+      #labels { position: absolute; inset: 0; }
+      .lbl { position: absolute; left: 0; top: 0; opacity: 0; white-space: nowrap; font-weight: 900; }
+      .lbl.sign { font-size: 64px; color: transparent; background: var(--gold); -webkit-background-clip: text; background-clip: text; filter: drop-shadow(0 3px 0 #5a3324) drop-shadow(0 8px 18px rgba(0, 0, 0, 0.55)); }
+      .lbl.step { font-size: 44px; padding: 10px 30px 14px; border-radius: 999px; color: var(--dark); background: var(--gold); box-shadow: 0 14px 34px rgba(0, 0, 0, 0.45); }
+      .lbl.pick { font-size: 40px; padding: 8px 26px 12px; border-radius: 999px; color: var(--ink); background: color-mix(in srgb, var(--dark) 80%, transparent); border: 3px solid var(--acc); }
+
+      /* headlines (top band, under the status bar) */
+      .hl {
+        position: absolute; top: 236px; left: 40px; right: 40px; text-align: center;
+        font-weight: 900; font-size: 92px; line-height: 1.3; color: var(--ink);
+        text-shadow: 0 6px 30px color-mix(in srgb, var(--dark) 90%, transparent), 0 2px 0 color-mix(in srgb, var(--dark) 60%, transparent);
+      }
+      .hl .hw { display: inline-block; white-space: nowrap; }
+      .hl em { font-style: normal; color: transparent; background: var(--gold); -webkit-background-clip: text; background-clip: text; filter: drop-shadow(0 6px 18px color-mix(in srgb, var(--dark) 85%, transparent)); text-shadow: none; }
+      .hl .num { display: inline-flex; align-items: center; justify-content: center; width: 112px; height: 112px; border-radius: 50%; background: var(--gold); color: var(--dark); text-shadow: none; font-size: 76px; margin-left: 18px; vertical-align: -8px; }
+      .hl.sm { font-size: 78px; }
+
+      /* chips that land on the beats (lower middle, above the captions) */
+      .chip {
+        position: absolute; left: 50%; top: 958px; transform-origin: 50% 50%; white-space: nowrap; display: flex; align-items: center; gap: 22px;
+        padding: 18px 40px 22px; border-radius: 30px; font-weight: 900; font-size: 54px; color: var(--ink);
+        background: color-mix(in srgb, var(--dark) 84%, transparent); border: 4px solid var(--acc); box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+      }
+      .chip .ic { width: 70px; height: 70px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; background: var(--gold); flex: none; }
+      .chip.warn { border-color: var(--warn); }
+      .chip.warn .ic { background: var(--warn); }
+      .chip.ok .ic { background: var(--pri); }
+
+      /* free consultation badge */
+      #free {
+        position: absolute; top: 300px; left: 50%; width: 820px; margin-left: -410px; text-align: center; padding: 30px 20px 40px; border-radius: 46px;
+        background: var(--gold); color: var(--dark); box-shadow: 0 30px 70px rgba(0, 0, 0, 0.45), inset 0 3px 0 rgba(255, 255, 255, 0.6);
+      }
+      #free .a { display: block; font-weight: 900; font-size: 108px; line-height: 1.15; }
+      #free .b { display: block; font-weight: 800; font-size: 50px; color: color-mix(in srgb, var(--dark) 80%, transparent); }
+
+      /* CTA: comment box typing «اقامت» */
+      #cbox {
+        position: absolute; top: 760px; left: 90px; right: 90px; height: 172px; border-radius: 86px; background: var(--ink);
+        display: flex; align-items: center; padding: 0 24px; gap: 24px; direction: rtl; border: 4px solid var(--acc); box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
+      }
+      #cbox .av { flex: 0 0 122px; height: 122px; border-radius: 50%; background: var(--pri); overflow: hidden; }
+      #cbox .field { flex: 1; height: 100px; display: flex; align-items: center; }
+      #ctext { font-weight: 900; font-size: 80px; color: var(--dark); clip-path: inset(0% 0% 0% 100%); white-space: nowrap; }
+      #caret { width: 6px; height: 76px; background: var(--pri); margin-right: 8px; }
+      #send { flex: 0 0 122px; height: 122px; border-radius: 50%; background: var(--gold); display: flex; align-items: center; justify-content: center; }
+      #endLogo { position: absolute; top: 330px; left: 50%; width: 760px; margin-left: -380px; filter: drop-shadow(0 16px 30px rgba(0, 0, 0, 0.4)); }
+      #endCard { position: absolute; top: 280px; left: 80px; right: 80px; height: 360px; border-radius: 48px; background: color-mix(in srgb, var(--ink) 94%, transparent); box-shadow: 0 30px 70px rgba(0, 0, 0, 0.35); }
+      #site { position: absolute; top: 1000px; left: 0; right: 0; text-align: center; font-weight: 900; font-size: 58px; direction: ltr; letter-spacing: 2px; color: var(--ink); text-shadow: 0 6px 22px rgba(0, 0, 0, 0.6); }
+
+      /* captions: karaoke, word by word */
+      .cap { display: flex; align-items: flex-start; justify-content: center; }
+      .cap-in { margin-top: 1150px; max-width: 1000px; text-align: center; font-weight: 900; font-size: 60px; line-height: 1.5; }
+      .cap .w { position: relative; isolation: isolate; display: inline-block; padding: 0 12px 4px; color: color-mix(in srgb, var(--ink) 40%, transparent); text-shadow: 0 4px 18px color-mix(in srgb, var(--dark) 95%, transparent); }
+      .cap .w i { position: absolute; inset: 4px 0 2px; border-radius: 18px; background: var(--gold); opacity: 0; z-index: -1; box-shadow: 0 8px 26px color-mix(in srgb, var(--acc) 35%, transparent); }
+      .cap .w span { position: relative; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="__TOTAL__" data-width="1080" data-height="1920">
+
+      <!-- ============ Three.js stage (assets/world.js) ============ -->
+      <div id="stage" class="clip" data-start="0" data-duration="__TOTAL__" data-track-index="0">
+        <canvas id="gl" width="1080" height="1920"></canvas>
+        <div id="vig"></div>
+        <div id="labels" data-layout-allow-overlap></div>
+      </div>
+
+      <!-- ============ scene titles (data-at = anchor name, "start" = scene start) ============ -->
+      <div id="hook" class="clip" data-scene="hook" data-track-index="1"><div class="scene-in">
+        <h1 class="hl" data-at="ways">فقط <em>۳ راه</em> داره</h1>
+      </div></div>
+      <div id="key1" class="clip" data-scene="key1" data-track-index="2"><div class="scene-in">
+        <h1 class="hl sm" data-at="start"><span class="num">۱</span>ثبت <em>شرکت</em></h1>
+        <div class="chip" id="cBiz" data-layout-allow-overlap><span class="ic"><svg width="44" height="44" viewBox="0 0 48 48"><path d="M8 42V14l12-6v34M20 42V8l14 6v28M34 42V22l8 4v16M4 42h40" fill="none" stroke="#06140d" stroke-width="4" stroke-linejoin="round" /></svg></span>راه‌اندازی کسب‌وکار</div>
+      </div></div>
+      <div id="check" class="clip" data-scene="check" data-track-index="1"><div class="scene-in">
+        <div class="chip warn" id="cAlone" data-layout-allow-overlap><span class="ic"><svg width="44" height="44" viewBox="0 0 48 48"><path d="M24 8v20M24 36v4" stroke="#faf2e0" stroke-width="6" stroke-linecap="round" /></svg></span>به‌تنهایی کافی نیست</div>
+        <div class="chip ok" id="cLegal" data-layout-allow-overlap><span class="ic"><svg width="44" height="44" viewBox="0 0 48 48"><path d="M10 25l9 9 19-20" fill="none" stroke="#faf2e0" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" /></svg></span>بررسی کامل شرایط قانونی</div>
+      </div></div>
+      <div id="key2" class="clip" data-scene="key2" data-track-index="2"><div class="scene-in">
+        <h1 class="hl sm" data-at="start"><span class="num">۲</span>اقامت <em>کاری</em></h1>
+        <div class="chip" id="cPermit" data-layout-allow-overlap><span class="ic"><svg width="44" height="44" viewBox="0 0 48 48"><rect x="6" y="10" width="36" height="28" rx="4" fill="none" stroke="#06140d" stroke-width="4" /><circle cx="18" cy="22" r="5" fill="#06140d" /><path d="M28 20h8M28 28h8M12 32h12" stroke="#06140d" stroke-width="4" stroke-linecap="round" /></svg></span>کار + مجوزهای لازم</div>
+      </div></div>
+      <div id="key3" class="clip" data-scene="key3" data-track-index="1"><div class="scene-in">
+        <h1 class="hl sm" data-at="start"><span class="num">۳</span>اقامت <em>تحصیلی</em></h1>
+        <div class="chip" id="cLang" data-layout-allow-overlap><span class="ic"><svg width="44" height="44" viewBox="0 0 48 48"><path d="M8 10h22a6 6 0 0 1 6 6v22H14a6 6 0 0 1-6-6z" fill="none" stroke="#06140d" stroke-width="4" stroke-linejoin="round" /><path d="M14 18h14M14 25h10" stroke="#06140d" stroke-width="4" stroke-linecap="round" /></svg></span>دوره‌های زبان</div>
+        <div class="chip" id="cUni" data-layout-allow-overlap><span class="ic"><svg width="44" height="44" viewBox="0 0 48 48"><path d="M4 18L24 9l20 9-20 9z M12 22v10c4 5 20 5 24 0V22" fill="none" stroke="#06140d" stroke-width="4" stroke-linejoin="round" /></svg></span>دانشگاه</div>
+        <div class="chip ok" id="cEasy" data-layout-allow-overlap><span class="ic"><svg width="44" height="44" viewBox="0 0 48 48"><path d="M10 25l9 9 19-20" fill="none" stroke="#faf2e0" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" /></svg></span>بدون دردسر</div>
+      </div></div>
+      <div id="waste" class="clip" data-scene="waste" data-track-index="2"><div class="scene-in">
+        <h1 class="hl sm" data-at="money"><em>پول و وقتت</em> رو هدر نده</h1>
+        <h1 class="hl sm" data-at="which">کدوم <em>مسیر</em> مال توئه؟</h1>
+      </div></div>
+      <div id="open" class="clip" data-scene="open" data-track-index="1"><div class="scene-in">
+        <div id="free"><span class="a">مشاوره‌ی رایگان</span><span class="b">مسیر اقامتت رو با ما پیدا کن</span></div>
+      </div></div>
+      <div id="cta" class="clip" data-scene="cta" data-track-index="2"><div class="scene-in">
+        <div id="endCard"></div>
+        <img id="endLogo" src="assets/iram-logo.png" alt="IRAM CO." />
+        <div id="cbox">
+          <div class="av"><svg width="122" height="122" viewBox="0 0 124 124"><circle cx="62" cy="48" r="22" fill="#faf2e0" /><path d="M22,118 C26,86 98,86 102,118 Z" fill="#faf2e0" /></svg></div>
+          <div class="field"><div id="ctext">اقامت</div><div id="caret"></div></div>
+          <div id="send"><svg width="62" height="62" viewBox="0 0 64 64"><path d="M54,10 L8,30 L26,36 L32,56 Z" fill="#06140d" /></svg></div>
+        </div>
+        <div id="site">IRAMCO.ORG</div>
+      </div></div>
+
+      <!--__CAPTIONS__-->
+
+      <audio id="vo" src="assets/voiceover.wav" data-start="0" data-duration="__VO_DUR__" data-volume="1"></audio>
+      <audio id="music" src="assets/music.wav" data-start="0" data-duration="__TOTAL__" data-volume="1"></audio>
+      <audio id="sfx" src="assets/sfx.wav" data-start="0" data-duration="__TOTAL__" data-volume="1"></audio>
+    </div>
+
+    <script>
+      window.__T = /*__TIMING__*/null;
+      const T = window.__T, AN = T.anchors;
+      const tl = gsap.timeline({ paused: true });
+      window.__timelines = window.__timelines || {};
+      window.__timelines["main"] = tl;
+      const $ = (id) => document.getElementById(id);
+      const SC = {};
+      T.scenes.forEach((s, i) => { SC[s.id] = Object.assign({}, s, { i, next: T.scenes[i + 1] ? T.scenes[i + 1].start : T.total }); });
+      const atOf = (sid, key) => (key === "start" ? SC[sid].start + (SC[sid].i ? 0.25 : 0.15) : AN[key] - 0.08);
+
+      // headline words rise in one after another (an <em> or .num stays one unit)
+      document.querySelectorAll(".hl").forEach((h) => {
+        const parts = [];
+        Array.from(h.childNodes).forEach((n) => {
+          if (n.nodeType === 3) n.textContent.split(/\s+/).filter(Boolean).forEach((w) => parts.push(document.createTextNode(w)));
+          else parts.push(n);
+        });
+        h.textContent = "";
+        parts.forEach((p, i) => { const s = document.createElement("span"); s.className = "hw"; s.appendChild(p); h.appendChild(s); if (i < parts.length - 1) h.appendChild(document.createTextNode(" ")); });
+      });
+
+      T.scenes.forEach((s, i) => {
+        const root = $(s.id), inner = root.querySelector(".scene-in");
+        tl.fromTo(inner, { opacity: 0 }, { opacity: 1, duration: 0.3, ease: "power2.out" }, SC[s.id].start);
+        if (i < T.scenes.length - 1) tl.to(inner, { opacity: 0, duration: 0.22, ease: "power2.in" }, SC[s.id].next - 0.22);
+        const hls = Array.from(root.querySelectorAll(".hl"));
+        hls.forEach((h, k) => {
+          const tin = atOf(s.id, h.dataset.at);
+          tl.fromTo(h.querySelectorAll(".hw"), { opacity: 0, y: 54, scale: 0.9 }, { opacity: 1, y: 0, scale: 1, duration: 0.55, ease: "power3.out", stagger: 0.08 }, tin);
+          if (k < hls.length - 1) tl.to(h, { opacity: 0, y: -36, duration: 0.24, ease: "power2.in" }, atOf(s.id, hls[k + 1].dataset.at) - 0.26);
+        });
+      });
+
+      // chips: pop in on their word, give way to the next chip in the same scene
+      function chip(sel, at, out, from = { y: 40 }) {
+        tl.fromTo(sel, { xPercent: -50, opacity: 0, scale: 0.7, ...from }, { xPercent: -50, opacity: 1, scale: 1, y: 0, duration: 0.42, ease: "back.out(1.8)" }, at);
+        if (out) tl.to(sel, { opacity: 0, y: -40, scale: 0.92, duration: 0.22, ease: "power2.in" }, out);
+      }
+      chip("#cBiz", AN.biz - 0.1, null);
+      chip("#cAlone", AN.alone - 0.05, AN.legal - 0.25);
+      tl.fromTo("#cAlone", { x: 0 }, { x: 10, duration: 0.05, yoyo: true, repeat: 5, ease: "none", immediateRender: false }, AN.alone + 0.4);
+      chip("#cLegal", AN.legal - 0.05, null);
+      chip("#cPermit", AN.permit - 0.1, null);
+      chip("#cLang", AN.lang - 0.1, AN.uni - 0.2);
+      chip("#cUni", AN.uni - 0.1, AN.easy - 0.25);
+      chip("#cEasy", AN.easy - 0.05, null);
+
+      // free consultation badge
+      tl.fromTo("#free", { opacity: 0, y: 80, scale: 0.8 }, { opacity: 1, y: 0, scale: 1, duration: 0.6, ease: "back.out(1.6)" }, AN.free - 0.35);
+      tl.fromTo("#free .a", { scale: 1 }, { scale: 1.06, duration: 0.22, yoyo: true, repeat: 1, ease: "sine.inOut" }, AN.free + 0.2);
+
+      // captions: line fades in, each word lights up (gold pill) as it is spoken, then stays bright
+      T.lines.forEach((L, i) => {
+        const cap = $("cap" + i), inner = cap.firstElementChild, ws = inner.querySelectorAll(".w");
+        tl.fromTo(inner, { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: 0.2, ease: "power2.out" }, L.start - 0.06);
+        tl.to(inner, { opacity: 0, duration: 0.12, ease: "power1.in" }, L.hold - 0.12);
+        ws.forEach((w, j) => {
+          const [s] = L.w[j], nxt = j < ws.length - 1 ? L.w[j + 1][0] : Math.min(L.hold - 0.12, L.w[j][1] + 0.25);
+          const bx = w.firstElementChild, done = w.classList.contains("hi") ? "#f4d68c" : "#faf2e0";
+          tl.fromTo(bx, { opacity: 0, scale: 0.82 }, { opacity: 1, scale: 1, duration: 0.12, ease: "back.out(2)" }, s - 0.03);
+          tl.fromTo(w, { color: "rgba(250,242,224,0.40)" }, { color: "#06140d", duration: 0.08 }, s - 0.03);
+          tl.to(bx, { opacity: 0, duration: 0.12, ease: "power1.in" }, nxt - 0.04);
+          tl.to(w, { color: done, duration: 0.1 }, nxt - 0.04);
+        });
+      });
+
+      // CTA: the comment types «اقامت», the logo card lands, the site holds
+      (function () {
+        const s = SC.cta;
+        tl.fromTo("#cbox", { opacity: 0, y: 150 }, { opacity: 1, y: 0, duration: 0.6, ease: "back.out(1.4)" }, AN.word - 0.5);
+        tl.fromTo("#ctext", { clipPath: "inset(0% 0% 0% 100%)" }, { clipPath: "inset(0% 0% 0% 0%)", duration: 0.5, ease: "steps(5)" }, AN.word + 0.02);
+        tl.fromTo("#caret", { opacity: 1 }, { opacity: 0, duration: 0.26, yoyo: true, repeat: 11, ease: "steps(1)" }, AN.word - 0.3);
+        tl.to("#send", { scale: 1.16, duration: 0.3, yoyo: true, repeat: 5, ease: "sine.inOut" }, AN.comment + 0.1);
+        tl.fromTo("#endCard", { opacity: 0, scaleY: 0.2 }, { opacity: 1, scaleY: 1, duration: 0.5, ease: "power3.out" }, s.start + 0.2);
+        tl.fromTo("#endLogo", { opacity: 0, y: 40, scale: 0.9 }, { opacity: 1, y: 0, scale: 1, duration: 0.6, ease: "power3.out" }, s.start + 0.45);
+        tl.fromTo("#site", { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.5, ease: "power3.out" }, Math.min(s.last + 0.2, T.total - 1.8));
+      })();
+    </script>
+    <script type="module">
+      import { frame } from "./assets/world.js";
+      const state = { t: 0 };
+      frame(0);
+      window.__timelines["main"].fromTo(state, { t: 0 }, { t: window.__T.total, duration: window.__T.total, ease: "none", onUpdate: () => frame(state.t) }, 0);
+      window.__timelines["main"].seek(0);
+    </script>
+  </body>
+</html>

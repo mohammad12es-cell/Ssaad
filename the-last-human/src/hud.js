@@ -55,8 +55,8 @@ export function makeHud(scene) {
     // main message (types in)
     const msg1 = "UNKNOWN HUMAN", msg2 = "DETECTED";
     const n = Math.floor(clamp(k / 0.45) * (msg1.length + msg2.length));
-    glow(g, msg1.slice(0, n), 250, 190, "900 76px Orbitron", RED, 26);
-    glow(g, msg2.slice(0, Math.max(0, n - msg1.length)), 250, 278, "900 76px Orbitron", RED, 26);
+    glow(g, msg1.slice(0, n), 236, 190, "900 64px Orbitron", RED, 26);
+    glow(g, msg2.slice(0, Math.max(0, n - msg1.length)), 236, 276, "900 64px Orbitron", RED, 26);
     // data rows
     const rows = [["NEURAL LINK", "NOT FOUND"], ["CITIZEN ID", "NULL"], ["SIGNAL", "NONE"], ["THREAT CLASS", "UNDEFINED"]];
     rows.forEach(([a, b], i) => {

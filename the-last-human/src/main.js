@@ -247,6 +247,11 @@ function renderCity(t, sh) {
     }
   }
   if (t > T.detect && t < 20) red = 0.08;
+  // never let a passer-by walk through the lens (except the deliberate ear insert)
+  for (const { h } of crowd) {
+    const p = h.root.position;
+    h.root.visible = sh.id === "3b-citizen-ear" || Math.hypot(p.x - cam.position.x, p.z - cam.position.z) > 0.75;
+  }
   world.tick(t, cam);
   renderReflection(renderer, scene, cam, world);
   post.renderPass.scene = scene; post.renderPass.camera = cam;

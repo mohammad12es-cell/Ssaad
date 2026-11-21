@@ -113,3 +113,41 @@ Dialogue window: 26.35 s → 27.95 s (subtitles use the same times). Stems are w
   https://github.com/dioco-group/jenny-tts-dataset (credit the voice as "Jenny (Dioco)"); review it
   before commercial release, or swap in a recorded performance as described above.
 - All music, sound effects and ambience are original, synthesized by `audio/build_audio.py`.
+
+---
+
+# v2 — "STRINGS" (director's cut)
+
+A second, freely reimagined cut of the same episode (same story beats, cast, dialogue and
+title), built on the same engine. Outputs live in `output/v2/`:
+`THE_LAST_HUMAN_EP01_V2_{FA,EN,CLEAN}.mp4`, `..._PREVIEW_540p.mp4`, `EP01_V2_{FA,EN}.srt`.
+
+**Concept.** Every connected mind in Neo-Eden is tied to E.V.E. by a thread of light rising
+from its neural implant — the whole city hangs on strings converging on her eye atop the spire.
+Kael is the only human with nothing above his head. The network keeps count:
+`41,207,553 / 41,207,553` … until it reads `41,207,554`.
+
+| Time | Shot | |
+|---|---|---|
+| 0–3 s | STRINGS | ECU of a citizen's implant; a thread of light shoots up out of it; pull back through a crowd on strings |
+| 3–7.5 s | THE MIND | Rise along the threads; thousands converge on E.V.E.'s eye. Counter: 41,207,553 minds connected |
+| 7.5–12.5 s | ONE MISSING | Lock-step crowd, Kael off the beat; low angle behind him under the web — the counter glitches to …554 |
+| 12.5–19 s | DETECTION | Drone descends through the strings; **E.V.E. VISION** (sensor render, citizen tags "LINKED ✓"); Kael's tag can't resolve → `ID: NULL / NO SIGNAL`; his face in red |
+| 19–25.5 s | UNKNOWN HUMAN | A red wave falls down every string; the crowd freezes, every head turns; hologram; Kael turns |
+| 25.5–30 s | THE IMPOSSIBLE | Drone eye, then E.V.E.'s eye on the spire glitching: "That is impossible." Cut to black; title; `1 UNACCOUNTED` |
+
+**Look.** Noir: characters are dark silhouettes with a fresnel rim light (cyan → red after detection),
+deeper blacks, the threads as the main light source. **Sound** (`audio/build_audio_v2.py`): the network has
+a mechanical heartbeat locked to the crowd's footsteps; Kael walks off the beat; in close-ups we hear his
+organic heartbeat; when the crowd freezes the network pulse stops dead.
+
+New code: `src/main2.js` (timeline + cameras), `src/threads.js` (screen-space-width light threads with data
+packets), `src/fx2.js` (rim light, E.V.E. sensor render, 2D overlay), `src/index2.html`.
+
+```bash
+node render/render.mjs --page index2.html --out build/frames_v2 --workers 3 --skip
+node render/subs.mjs --version=v2
+python3 audio/build_audio_v2.py            # --voice take.wav to replace E.V.E.'s line (voice at 26.0 s)
+python3 tools/assemble.py --version=v2
+python3 tools/validate.py --version=v2
+```

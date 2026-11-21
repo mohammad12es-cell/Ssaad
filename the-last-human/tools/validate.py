@@ -12,9 +12,11 @@ def frame(p, t):
 ok = True
 def check(cond, msg):
     global ok; ok &= bool(cond); print(("  PASS " if cond else "  FAIL ") + msg)
-files = ["THE_LAST_HUMAN_EP01_FA.mp4", "THE_LAST_HUMAN_EP01_EN.mp4", "THE_LAST_HUMAN_EP01_CLEAN.mp4"]
+VER = next((a.split("=")[1] for a in sys.argv[1:] if a.startswith("--version=")), "")
+TAG = f"EP01_{VER.upper()}" if VER else "EP01"; OUT = f"output/{VER}" if VER else "output"
+files = [f"THE_LAST_HUMAN_{TAG}_FA.mp4", f"THE_LAST_HUMAN_{TAG}_EN.mp4", f"THE_LAST_HUMAN_{TAG}_CLEAN.mp4"]
 for f in files:
-    p = os.path.join("output", f); print(f)
+    p = os.path.join(OUT, f); print(f)
     d = probe(p); v = [s for s in d["streams"] if s["codec_type"] == "video"][0]; a = [s for s in d["streams"] if s["codec_type"] == "audio"]
     check(v["codec_name"] == "h264" and v["pix_fmt"] == "yuv420p", f"video h264 {v['pix_fmt']} {v.get('profile')}")
     check(v["width"] == 1080 and v["height"] == 1920, f"resolution {v['width']}x{v['height']} (9:16)")
@@ -27,14 +29,16 @@ for f in files:
     r = subprocess.run(["ffmpeg", "-v", "error", "-i", p, "-f", "null", "-"], capture_output=True, text=True)
     check(r.returncode == 0 and not r.stderr.strip(), "full decode without errors")
 print("subtitles (difference vs CLEAN in the subtitle band)")
-clean = os.path.join("output", files[2])
+clean = os.path.join(OUT, files[2])
 band = (slice(1380, 1520), slice(60, 1020))
-for f, t, expect in [(files[0], 27.2, True), (files[1], 27.2, True), (files[0], 21.8, True), (files[1], 21.8, False), (files[0], 12.0, False), (files[1], 12.0, False)]:
-    diff = np.abs(frame(os.path.join("output", f), t)[band] - frame(clean, t)[band]).mean()
+checks = [(files[0], 27.2, True), (files[1], 27.2, True), (files[0], 21.8, True), (files[1], 21.8, False), (files[0], 12.0, False), (files[1], 12.0, False)]
+if VER: checks = [(files[0], 26.8, True), (files[1], 26.8, True), (files[0], 22.5, True), (files[1], 22.5, False), (files[0], 9.0, False), (files[1], 9.0, False)]
+for f, t, expect in checks:
+    diff = np.abs(frame(os.path.join(OUT, f), t)[band] - frame(clean, t)[band]).mean()
     check((diff > 4) == expect, f"{f.split('_')[-1]} @ {t}s subtitle {'present' if expect else 'absent'} (mean diff {diff:.1f})")
-for s in ("EP01_FA.srt", "EP01_EN.srt"):
-    txt = open(os.path.join("output", s), encoding="utf-8").read()
+for s in (f"{TAG}_FA.srt", f"{TAG}_EN.srt"):
+    txt = open(os.path.join(OUT, s), encoding="utf-8").read()
     check("-->" in txt, f"{s} readable UTF-8 SRT")
-check("«این غیرممکنه.»" in open("output/EP01_FA.srt", encoding="utf-8").read(), "Persian line exact")
-check("That is impossible." in open("output/EP01_EN.srt", encoding="utf-8").read(), "English line exact")
+check("«این غیرممکنه.»" in open(os.path.join(OUT, f"{TAG}_FA.srt"), encoding="utf-8").read(), "Persian line exact")
+check("That is impossible." in open(os.path.join(OUT, f"{TAG}_EN.srt"), encoding="utf-8").read(), "English line exact")
 print("ALL CHECKS PASSED" if ok else "SOME CHECKS FAILED"); sys.exit(0 if ok else 1)

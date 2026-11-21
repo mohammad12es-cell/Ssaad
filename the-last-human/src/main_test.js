@@ -1,0 +1,28 @@
+import * as THREE from "three";
+import { buildWorld, renderReflection } from "./world.js";
+import { buildPost } from "./post.js";
+const W = 1080, H = 1920;
+const canvas = document.getElementById("gl");
+const renderer = new THREE.WebGLRenderer({ canvas, antialias: false, preserveDrawingBuffer: true, powerPreference: "high-performance" });
+renderer.setPixelRatio(1); renderer.setSize(W, H, false);
+renderer.toneMapping = THREE.ACESFilmicToneMapping; renderer.toneMappingExposure = 1.1;
+await document.fonts.load("900 40px Orbitron"); await document.fonts.load("700 40px Rajdhani"); await document.fonts.load("600 40px Rajdhani");
+const scene = new THREE.Scene();
+const cam = new THREE.PerspectiveCamera(50, W / H, 0.05, 5000);
+const world = buildWorld(scene);
+const post = buildPost(renderer, scene, cam, W, H);
+const views = [[[70, 320, 180], [-10, 80, -200], 50], [[0, 40, 60], [0, 12, -100], 50], [[0, 1.2, 10], [0, 3, -30], 40]];
+window.renderFrame = (f) => {
+  const v = views[f % 3]; const t = f / 30;
+  cam.fov = v[2]; cam.position.set(...v[0]); cam.lookAt(...v[1]); cam.updateProjectionMatrix(); cam.updateMatrixWorld();
+  world.tick(t, cam);
+  const t0 = performance.now();
+  renderReflection(renderer, scene, cam, world);
+  post.grade.uTime.value = t;
+  post.composer.render();
+  const t1 = performance.now();
+  const url = canvas.toDataURL("image/png");
+  console.warn(`frame ${f} render ${(t1 - t0).toFixed(0)}ms encode ${(performance.now() - t1).toFixed(0)}ms`);
+  return url;
+};
+window.__ready = true;

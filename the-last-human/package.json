@@ -1,0 +1,16 @@
+{
+  "name": "the-last-human",
+  "private": true,
+  "type": "module",
+  "description": "THE LAST HUMAN — Episode 01: NO SIGNAL. Procedural Three.js episode rendered frame-by-frame in headless Chromium.",
+  "scripts": {
+    "preview": "node render/preview.mjs",
+    "frames": "node render/render.mjs --out build/frames --workers 3 --skip",
+    "stills": "node render/render.mjs --out build/stills --frames 0,45,100,200,280,350,395,450,510,540,580,640,720,800,860,890",
+    "subs": "node render/subs.mjs",
+    "audio": "python3 audio/build_audio.py",
+    "assemble": "bash tools/assemble.sh",
+    "validate": "python3 tools/validate.py",
+    "all": "npm run frames && npm run subs && npm run audio && npm run assemble && npm run validate"
+  }
+}

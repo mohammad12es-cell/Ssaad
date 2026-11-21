@@ -127,10 +127,12 @@ function stage(t) {
   // hologram panel: between drone and Kael, facing Kael
   const hk = smooth(range(t, T.holo, T.holo + 0.25));
   hud.panel.visible = t > T.holo && t < 26;
-  if (hud.panel.visible) {
+  { // position is always computed (the 5a camera aims at it before it appears)
     const toK = V(K.x - D.pos.x, 0, K.z - D.pos.z).normalize();
     hud.panel.position.copy(D.pos).addScaledVector(toK, 1.05); hud.panel.position.y -= 0.55;
     hud.panel.lookAt(hud.panel.position.clone().add(toK));
+  }
+  if (hud.panel.visible) {
     const flick = hash(Math.floor(t * 30) * 2.7) > 0.93 ? 0.45 : 1;
     hud.U.uAmt.value = hk * flick * (t < T.holo + 0.3 ? (hash(Math.floor(t * 60)) > 0.5 ? 1 : 0.2) : 1);
     hud.U.uGlitch.value = (t > T.holo + 1.2 && hash(Math.floor(t * 30) * 5.1) > 0.93 ? 1 : 0);

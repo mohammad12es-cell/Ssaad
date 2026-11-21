@@ -49,3 +49,30 @@ Audience: Persian-speaking business owners, page owners and creators who want be
 3. Pick today's idea + hook from the formula; write the script (30–50 s, Persian), beats, CTA keyword.
 4. Build with `shahcutt/engine` (new_reel.py), Gemini voice, render, cover.
 5. Send the draft (video, cover, caption, keyword, DM text). **Publish only after Shahin approves.**
+
+## 6. Strong-reel checklist (score every script before building; build only at 8/10 or more)
+
+| # | Part | Pass when |
+|---|---|---|
+| 1 | Hook, 0–1.5 s | Frame 0 shows a big sentence that opens a gap (confession, secret, mistake, bold number); the first spoken words say the same thing; no greeting, logo or price |
+| 2 | Hook proof, 1.5–4 s | A concrete number, result or visual proves the hook is worth staying for |
+| 3 | Body promise | The viewer knows by 5 s what they will get by the end (3 steps, 1 story, a before→after) |
+| 4 | Re-hooks | Every 5–7 s a new beat: number, contrast, "but…", a step counter, a visual change |
+| 5 | Open loop | The best part (the result, step 3, the reveal) is held for the last third |
+| 6 | Value | A viewer can apply one thing today without buying anything |
+| 7 | Proof | Real numbers or real work from Shahin; nothing invented |
+| 8 | CTA | One keyword, tied to a specific free gift, said and shown in the last 5 s |
+| 9 | Length & pace | 30–45 s, no pause over 0.35 s, a visual change at least every 3 s |
+| 10 | Loop / share | The last line or frame makes rewatching or sending to a friend natural |
+
+## 7. Where the formulas come from (no bot browsing of Instagram)
+
+- Explore itself is personal and has no API; it is never scraped.
+- Supermetrics «Instagram Public Data» (official API): top posts of niche hashtags (#تدوین #موشن_گرافیک #ادیت #تولید_محتوا #videoediting #motiongraphics) and public competitor posts — once Shahin logs in.
+- vidIQ outlier search: reels beating their creator's median (5 credits, max one a day).
+- Screen recordings Shahin sends from his own Explore: transcribed with Whisper and read frame by frame; each one adds a line to the formula log below.
+
+## 8. Formula log (one line per analysed outlier)
+
+| Date | Source | Hook (first 2 s) | Body device | CTA | Why it worked |
+|---|---|---|---|---|---|

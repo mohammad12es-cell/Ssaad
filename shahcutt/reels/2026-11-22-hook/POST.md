@@ -2,7 +2,8 @@
 
 - Formula: confession hook on frame 0 («منم اول باورم نمی‌شد») + his own numbers (65% vs 27.5% skip rate, from page insights) + 3 rules + chart proof + comment CTA.
 - Comment keyword: **هوک**
-- Length: ~36 s. Cover: frame 0 (hook text).
+- Length: 36.3 s. Cover: frame 0 (hook text) → output/shahcutt-2026-11-22-hook-cover.png. Video: output/shahcutt-2026-11-22-hook.mp4
+- Checklist score (PLAYBOOK §6): 9/10 — hook, proof (65%), promise (3 things), re-hooks every 3–4 s, open loop (result chart held to the end), value, real numbers, keyword CTA, pace; weaker on #10 (no loop/share line).
 
 ## Caption
 

@@ -1,0 +1,43 @@
+{
+ "title": "@shahcutt · قانون ۳ ثانیه‌ی اول",
+ "voice": {
+  "voiceName": "Charon",
+  "style": "Read the following text aloud in natural, conversational Tehrani Persian (Farsi), as a confident young Iranian video editor talking straight to his Instagram audience. Open with a surprised, personal confession on the first sentence; sound like you are sharing a secret you learned the hard way; give the three tips (یک، دو، سه) a crisp, punchy rhythm; sound proud but honest on the result; end with a friendly, inviting call to action, stressing the word «هوک». Fast, energetic Reels pace with only very short pauses (never long silences). Never read punctuation marks or guillemets aloud."
+ },
+ "tail": 2.2,
+ "segments": [
+  {"id": "s1", "text": "منم اول باورم نمی‌شد؛ توی بعضی از ریلزهام، ۶۵ درصد آدما همون ثانیه‌های اول رد می‌شدن.",
+   "tts": "منم اول باورم نمی‌شد؛ توی بعضی از ریلزهام، شصت و پنج درصد آدما همون ثانیه‌های اول رد می‌شدن.",
+   "captions": ["منم اول [باورم نمی‌شد؛]", "توی بعضی از ریلزهام،", "[۶۵ درصد] آدما", "همون ثانیه‌های اول رد می‌شدن."]},
+  {"id": "s2", "text": "مشکل تدوین نبود؛ مشکل سه ثانیه‌ی اول بود.",
+   "captions": ["مشکل تدوین نبود؛", "مشکل [سه ثانیه‌ی اول] بود."]},
+  {"id": "s3", "text": "اگه آدما همون اول رد بشن، اینستاگرام هم ریلزت رو به آدمای کمتری نشون می‌ده.",
+   "captions": ["اگه آدما همون اول رد بشن،", "[اینستاگرام] هم ریلزت رو", "به آدمای کمتری نشون می‌ده."]},
+  {"id": "s4", "text": "پس توی سه ثانیه‌ی اول، این سه تا کار رو بکن.",
+   "captions": ["پس توی سه ثانیه‌ی اول،", "این [سه تا کار] رو بکن."]},
+  {"id": "s5", "text": "یک: از وسط ماجرا شروع کن، نه با سلام و معرفی.",
+   "captions": ["یک: از [وسط ماجرا] شروع کن،", "نه با سلام و معرفی."]},
+  {"id": "s6", "text": "دو: همون فریم اول، یه جمله‌ی درشت بذار که سؤال بسازه.",
+   "captions": ["دو: همون فریم اول،", "یه [جمله‌ی درشت] بذار", "که سؤال بسازه."]},
+  {"id": "s7", "text": "سه: جواب رو تا آخر ویدیو نگه دار.",
+   "captions": ["سه: جواب رو", "[تا آخر ویدیو] نگه دار."]},
+  {"id": "s8", "text": "ریلی که با همین فرمول ساختم، رد شدنش زیر ۳۰ درصد بود.",
+   "tts": "ریلی که با همین فرمول ساختم، رد شدنش زیر سی درصد بود.",
+   "captions": ["ریلی که با همین فرمول ساختم،", "رد شدنش [زیر ۳۰ درصد] بود."]},
+  {"id": "s9", "text": "اگه می‌خوای هوک ریلزت رو برات بررسی کنم، کلمه‌ی «هوک» رو کامنت کن.",
+   "captions": ["اگه می‌خوای هوک ریلزت رو", "برات بررسی کنم،", "کلمه‌ی [«هوک»] رو کامنت کن."]}
+ ],
+ "beats": [
+  {"at": "s1:منم", "kind": "hook", "lines": ["منم اول", "[باورم نمی‌شد]"]},
+  {"at": "s1:۶۵", "kind": "stat", "n": 65, "suffix": "٪", "label": "همون ثانیه‌های اول [رد] می‌شدن"},
+  {"at": "s2:مشکل", "kind": "text", "lines": ["مشکل", "[تدوین] نبود"]},
+  {"at": "s2:مشکل#2", "kind": "text", "lines": ["مشکل", "[۳ ثانیه‌ی اول] بود"]},
+  {"at": "s3:اینستاگرام", "kind": "text", "lines": ["رد شدن یعنی", "[دیده نشدن]"]},
+  {"at": "s4:این", "kind": "text", "lines": ["[۳ کار]", "توی ۳ ثانیه‌ی اول"]},
+  {"at": "s5:یک:", "kind": "rule", "num": "۱", "lines": ["از [وسط ماجرا]", "شروع کن"]},
+  {"at": "s6:دو:", "kind": "rule", "num": "۲", "lines": ["فریم اول:", "یه [جمله‌ی درشت]"]},
+  {"at": "s7:سه:", "kind": "rule", "num": "۳", "lines": ["جواب رو", "[تا آخر] نگه دار"]},
+  {"at": "s8:ریلی", "kind": "chart", "title": "رد شدن در [ثانیه‌های اول]", "bars": [{"v": 65, "label": "هوک ضعیف"}, {"v": 27.5, "label": "با این فرمول", "good": true}]},
+  {"at": "s9:اگه", "kind": "cta", "lines": ["هوک ریلزت رو", "[برات بررسی می‌کنم]"], "word": "هوک", "word_at": "s9:«هوک»"}
+ ]
+}

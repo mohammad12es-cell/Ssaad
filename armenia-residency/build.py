@@ -163,6 +163,10 @@ def make_audio(total, an, sc, voice):
     add(sfx, pop(820), an["comment"] + 0.1, 0.4); add(sfx, shimmer(1.0), total - 2.3, 0.3)
 
     mus *= 0.30 / max(1e-6, np.abs(mus).max())
+    if os.environ.get("MUSIC") == "tail":
+        # the narration already carries its own music bed (the client's reference mix): keep only our closing chord after it
+        vend = int((len(voice) / SR - 0.4) * SR); mus[: min(n, vend)] = 0; fi = int(0.6 * SR)
+        if vend < n: mus[vend: vend + fi] *= np.linspace(0, 1, min(fi, n - vend))
     v = np.pad(voice[:n], (0, max(0, n - len(voice)))); hop = int(0.01 * SR); kk = n // hop
     e = np.sqrt((v[: kk * hop].reshape(kk, hop) ** 2).mean(1)); on = np.convolve((e > e.max() * 10 ** (-30 / 20)).astype(float), np.ones(35) / 35, "same")
     mus[: kk * hop] *= np.repeat(1 - 0.5 * np.clip(on * 1.5, 0, 1), hop)

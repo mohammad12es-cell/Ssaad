@@ -1,0 +1,14 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<script type="importmap">{ "imports": { "three": "/engine/vendor/three.module.js" } }</script>
+<style>@font-face{font-family:Montserrat;font-weight:600;src:url(/engine/fonts/montserrat-latin-600-normal.woff2) format('woff2')}
+html,body{margin:0;background:#000;overflow:hidden} canvas{position:absolute;left:0;top:0;width:100vw;height:100vh;display:block} #hud{pointer-events:none}</style>
+</head><body>
+<canvas id="gl"></canvas><canvas id="hud"></canvas>
+<script type="module">
+import { boot } from '/engine/lib/stage.js';
+const cfg = await (await fetch('./config.json')).json();
+const film = await import(new URLSearchParams(location.search).get('film') || './scene.js');
+await boot(film, cfg);
+</script>
+</body></html>

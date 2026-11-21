@@ -1,0 +1,85 @@
+{
+  "id": "VIDEO_001",
+  "title": "WHAT HAPPENS WHEN YOU FALL ASLEEP?",
+  "brand": "ODDLY EXPLAINED",
+  "width": 1080,
+  "height": 1920,
+  "fps": 30,
+  "duration": 30,
+  "samples": 4,
+  "voice": { "engine": "kokoro-82m", "voice": "am_fenrir", "speed": 1.0, "lang": "en-us" },
+  "shots": [
+    { "id": "hook",   "start": 0,  "end": 4 },
+    { "id": "dive",   "start": 4,  "end": 9 },
+    { "id": "nrem",   "start": 9,  "end": 15 },
+    { "id": "rem",    "start": 15, "end": 21 },
+    { "id": "memory", "start": 21, "end": 26 },
+    { "id": "reveal", "start": 26, "end": 30 }
+  ],
+  "narration": [
+    { "id": "n1", "shot": "hook",   "at": 0.35, "tts": "Every night, your brain begins a remarkable transformation.",
+      "en": ["Every night, your brain begins", "a remarkable transformation."],
+      "fa": ["هر شب، مغز شما وارد", "یک تحول شگفت‌انگیز می‌شود."] },
+    { "id": "n2", "shot": "dive",   "at": 4.15, "tts": "As you fall asleep, its activity changes in carefully coordinated stages.",
+      "en": ["As you fall asleep, its activity changes", "in carefully coordinated stages."],
+      "fa": ["وقتی به خواب می‌روید، فعالیت مغز", "در مراحلی هماهنگ تغییر می‌کند."] },
+    { "id": "n3", "shot": "nrem",   "at": 9.35, "tts": "During N-REM sleep, brain activity shifts through different patterns.",
+      "en": ["During NREM sleep, brain activity", "shifts through different patterns."],
+      "fa": ["در خواب غیرREM،", "الگوهای فعالیت مغز تغییر می‌کنند."] },
+    { "id": "n4", "shot": "rem",    "at": 14.75, "tts": "During REM sleep, brain activity becomes more wake-like, and vivid dreams are especially common.",
+      "en": ["During REM sleep, brain activity", "becomes more wake-like,", "and vivid dreams are especially common."],
+      "fa": ["در خواب REM، فعالیت مغز", "به حالت بیداری شباهت بیشتری پیدا می‌کند", "و رؤیاهای واضح رایج‌تر هستند."] },
+    { "id": "n5", "shot": "memory", "at": 21.4, "tts": "Meanwhile, sleep helps your brain process memories and support learning.",
+      "en": ["Meanwhile, sleep helps your brain", "process memories and support learning."],
+      "fa": ["در همین حین، خواب به پردازش خاطرات", "و یادگیری کمک می‌کند."] },
+    { "id": "n6", "shot": "reveal", "at": 26.05, "tts": "And that's only part of what happens while you sleep.",
+      "en": ["And that's only part of", "what happens while you sleep."],
+      "fa": ["و این فقط بخشی از اتفاقاتی است", "که هنگام خواب رخ می‌دهند."] }
+  ],
+  "srt_full": {
+    "en": [
+      "Every night, your brain begins a remarkable transformation.",
+      "As you fall asleep, its activity changes in carefully coordinated stages.",
+      "During NREM sleep, brain activity shifts through different patterns.",
+      "During REM sleep, brain activity becomes more wake-like, and vivid dreams are especially common.",
+      "Meanwhile, sleep helps your brain process memories and support learning.",
+      "And that's only part of what happens while you sleep."
+    ],
+    "fa": [
+      "هر شب، مغز شما وارد یک تحول شگفت‌انگیز می‌شود.",
+      "وقتی به خواب می‌روید، فعالیت مغز در مراحلی هماهنگ تغییر می‌کند.",
+      "در خواب غیرREM، الگوهای فعالیت مغز تغییر می‌کنند.",
+      "در خواب REM، فعالیت مغز به حالت بیداری شباهت بیشتری پیدا می‌کند و رؤیاهای واضح رایج‌تر هستند.",
+      "در همین حین، خواب به پردازش خاطرات و یادگیری کمک می‌کند.",
+      "و این فقط بخشی از اتفاقاتی است که هنگام خواب رخ می‌دهند."
+    ]
+  },
+  "titles": {
+    "en": {
+      "hook": "YOUR BRAIN NEVER<br>SIMPLY SWITCHES OFF.",
+      "nrem": "NREM SLEEP",
+      "nrem_sub": "Non-rapid eye movement",
+      "rem": "REM SLEEP",
+      "rem_sub": "Rapid eye movement",
+      "end_q": "WHAT ELSE IS YOUR<br>BRAIN DOING?",
+      "tag_viz": "STYLIZED VISUALIZATION · NOT A BRAIN RECORDING",
+      "tag_dream": "ARTISTIC INTERPRETATION OF DREAM IMAGERY",
+      "tag_memory": "VISUAL METAPHOR · MEMORY PROCESSING",
+      "tag_trace": "STYLIZED EEG-LIKE TRACE",
+      "series": "VIDEO 001"
+    },
+    "fa": {
+      "hook": "مغز شما هرگز<br>به‌سادگی خاموش نمی‌شود.",
+      "nrem": "خواب NREM",
+      "nrem_sub": "خواب بدون حرکات سریع چشم",
+      "rem": "خواب REM",
+      "rem_sub": "خواب با حرکات سریع چشم",
+      "end_q": "مغز شما دیگر<br>چه کارهایی می‌کند؟",
+      "tag_viz": "تصویرسازی هنری · نه تصویر واقعی مغز",
+      "tag_dream": "برداشت هنری از تصاویر رؤیا",
+      "tag_memory": "استعاره‌ی تصویری · پردازش خاطرات",
+      "tag_trace": "نمودار نمادین شبیه EEG",
+      "series": "ویدیوی ۰۰۱"
+    }
+  }
+}

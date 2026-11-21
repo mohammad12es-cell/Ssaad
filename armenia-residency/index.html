@@ -1,0 +1,271 @@
+<!doctype html>
+<!-- SOURCE TEMPLATE (IRAM CO. · one door, three keys · Three.js). Edit this file, then run `python3 build.py` to regenerate index.html. -->
+<html lang="fa" dir="rtl" data-resolution="portrait">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <script src="assets/gsap.min.js"></script>
+    <script type="importmap">{ "imports": { "three": "./assets/three.module.js" } }</script>
+    <style>
+      @font-face { font-family: "Vazirmatn"; font-weight: 400; src: url("assets/fonts/vazirmatn-latin-400-normal.woff2") format("woff2"); }
+      @font-face { font-family: "Vazirmatn"; font-weight: 700; src: url("assets/fonts/vazirmatn-latin-700-normal.woff2") format("woff2"); }
+      @font-face { font-family: "Vazirmatn"; font-weight: 900; src: url("assets/fonts/vazirmatn-latin-900-normal.woff2") format("woff2"); }
+      @font-face { font-family: "Vazirmatn"; font-weight: 500; src: url("assets/fonts/vazirmatn-arabic-500-normal.woff2") format("woff2"); unicode-range: U+0600-06FF, U+0750-077F, U+0870-088E, U+0890-0891, U+0897-08E1, U+08E3-08FF, U+200C-200E, U+2010-2011, U+204F, U+2E41, U+FB50-FDFF, U+FE70-FE74, U+FE76-FEFC; }
+      @font-face { font-family: "Vazirmatn"; font-weight: 700; src: url("assets/fonts/vazirmatn-arabic-700-normal.woff2") format("woff2"); unicode-range: U+0600-06FF, U+0750-077F, U+0870-088E, U+0890-0891, U+0897-08E1, U+08E3-08FF, U+200C-200E, U+2010-2011, U+204F, U+2E41, U+FB50-FDFF, U+FE70-FE74, U+FE76-FEFC; }
+      @font-face { font-family: "Vazirmatn"; font-weight: 800; src: url("assets/fonts/vazirmatn-arabic-800-normal.woff2") format("woff2"); unicode-range: U+0600-06FF, U+0750-077F, U+0870-088E, U+0890-0891, U+0897-08E1, U+08E3-08FF, U+200C-200E, U+2010-2011, U+204F, U+2E41, U+FB50-FDFF, U+FE70-FE74, U+FE76-FEFC; }
+      @font-face { font-family: "Vazirmatn"; font-weight: 900; src: url("assets/fonts/vazirmatn-arabic-900-normal.woff2") format("woff2"); unicode-range: U+0600-06FF, U+0750-077F, U+0870-088E, U+0890-0891, U+0897-08E1, U+08E3-08FF, U+200C-200E, U+2010-2011, U+204F, U+2E41, U+FB50-FDFF, U+FE70-FE74, U+FE76-FEFC; }
+
+      /* PALETTE: IRAM CO. forest green + metallic gold + cream, on Yerevan pink tuff. world.js uses the same values. */
+      :root {
+        --bg-1: #0b2017; --pri: #2f8a5c; --acc: #dcad58; --acc-hi: #f4d68c; --acc-lo: #a9792f;
+        --ink: #faf2e0; --dark: #06140d; --warn: #d8463a; --tuff: #c98f7a;
+        --gold: linear-gradient(180deg, #fff0c2 0%, #f4d68c 30%, #dcad58 70%, #c8954a 100%);
+        --font: "Vazirmatn", sans-serif;
+      }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { margin: 0; width: 1080px; height: 1920px; overflow: hidden; background: var(--bg-1); }
+      #root { position: relative; width: 100%; height: 100%; overflow: hidden; font-family: var(--font); color: var(--ink); background: var(--bg-1); }
+      .clip { position: absolute; inset: 0; }
+      .scene-in { position: absolute; inset: 0; }
+
+      #gl { position: absolute; inset: 0; width: 1080px; height: 1920px; display: block; }
+      #vig { position: absolute; inset: 0; background:
+        linear-gradient(180deg, color-mix(in srgb, var(--dark) 55%, transparent) 0%, transparent 18%, transparent 58%, color-mix(in srgb, var(--dark) 62%, transparent) 72%, color-mix(in srgb, var(--dark) 86%, transparent) 100%); }
+      #labels { position: absolute; inset: 0; }
+      .lbl { position: absolute; left: 0; top: 0; opacity: 0; white-space: nowrap; font-weight: 900; }
+      .lbl.sign { font-size: 64px; color: transparent; background: var(--gold); -webkit-background-clip: text; background-clip: text; filter: drop-shadow(0 3px 0 #5a3324) drop-shadow(0 8px 18px rgba(0, 0, 0, 0.55)); }
+      .lbl.step { font-size: 44px; padding: 10px 30px 14px; border-radius: 999px; color: var(--dark); background: var(--gold); box-shadow: 0 14px 34px rgba(0, 0, 0, 0.45); }
+      .lbl.pick { font-size: 40px; padding: 8px 26px 12px; border-radius: 999px; color: var(--ink); background: color-mix(in srgb, var(--dark) 80%, transparent); border: 3px solid var(--acc); }
+
+      /* headlines (top band, under the status bar) */
+      .hl {
+        position: absolute; top: 236px; left: 40px; right: 40px; text-align: center;
+        font-weight: 900; font-size: 92px; line-height: 1.3; color: var(--ink);
+        text-shadow: 0 6px 30px color-mix(in srgb, var(--dark) 90%, transparent), 0 2px 0 color-mix(in srgb, var(--dark) 60%, transparent);
+      }
+      .hl .hw { display: inline-block; white-space: nowrap; }
+      .hl em { font-style: normal; color: transparent; background: var(--gold); -webkit-background-clip: text; background-clip: text; filter: drop-shadow(0 6px 18px color-mix(in srgb, var(--dark) 85%, transparent)); text-shadow: none; }
+      .hl .num { display: inline-flex; align-items: center; justify-content: center; width: 112px; height: 112px; border-radius: 50%; background: var(--gold); color: var(--dark); text-shadow: none; font-size: 76px; margin-left: 18px; vertical-align: -8px; }
+      .hl.sm { font-size: 78px; }
+
+      /* chips that land on the beats (lower middle, above the captions) */
+      .chip {
+        position: absolute; left: 50%; top: 958px; transform-origin: 50% 50%; white-space: nowrap; display: flex; align-items: center; gap: 22px;
+        padding: 18px 40px 22px; border-radius: 30px; font-weight: 900; font-size: 54px; color: var(--ink);
+        background: color-mix(in srgb, var(--dark) 84%, transparent); border: 4px solid var(--acc); box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+      }
+      .chip .ic { width: 70px; height: 70px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; background: var(--gold); flex: none; }
+      .chip.warn { border-color: var(--warn); }
+      .chip.warn .ic { background: var(--warn); }
+      .chip.ok .ic { background: var(--pri); }
+
+      /* free consultation badge */
+      #free {
+        position: absolute; top: 300px; left: 50%; width: 820px; margin-left: -410px; text-align: center; padding: 30px 20px 40px; border-radius: 46px;
+        background: var(--gold); color: var(--dark); box-shadow: 0 30px 70px rgba(0, 0, 0, 0.45), inset 0 3px 0 rgba(255, 255, 255, 0.6);
+      }
+      #free .a { display: block; font-weight: 900; font-size: 108px; line-height: 1.15; }
+      #free .b { display: block; font-weight: 800; font-size: 50px; color: color-mix(in srgb, var(--dark) 80%, transparent); }
+
+      /* CTA: comment box typing «اقامت» */
+      #cbox {
+        position: absolute; top: 760px; left: 90px; right: 90px; height: 172px; border-radius: 86px; background: var(--ink);
+        display: flex; align-items: center; padding: 0 24px; gap: 24px; direction: rtl; border: 4px solid var(--acc); box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
+      }
+      #cbox .av { flex: 0 0 122px; height: 122px; border-radius: 50%; background: var(--pri); overflow: hidden; }
+      #cbox .field { flex: 1; height: 100px; display: flex; align-items: center; }
+      #ctext { font-weight: 900; font-size: 80px; color: var(--dark); clip-path: inset(0% 0% 0% 100%); white-space: nowrap; }
+      #caret { width: 6px; height: 76px; background: var(--pri); margin-right: 8px; }
+      #send { flex: 0 0 122px; height: 122px; border-radius: 50%; background: var(--gold); display: flex; align-items: center; justify-content: center; }
+      #endLogo { position: absolute; top: 330px; left: 50%; width: 760px; margin-left: -380px; filter: drop-shadow(0 16px 30px rgba(0, 0, 0, 0.4)); }
+      #endCard { position: absolute; top: 280px; left: 80px; right: 80px; height: 360px; border-radius: 48px; background: color-mix(in srgb, var(--ink) 94%, transparent); box-shadow: 0 30px 70px rgba(0, 0, 0, 0.35); }
+      #site { position: absolute; top: 1000px; left: 0; right: 0; text-align: center; font-weight: 900; font-size: 58px; direction: ltr; letter-spacing: 2px; color: var(--ink); text-shadow: 0 6px 22px rgba(0, 0, 0, 0.6); }
+
+      /* captions: karaoke, word by word */
+      .cap { display: flex; align-items: flex-start; justify-content: center; }
+      .cap-in { margin-top: 1150px; max-width: 1000px; text-align: center; font-weight: 900; font-size: 60px; line-height: 1.5; }
+      .cap .w { position: relative; isolation: isolate; display: inline-block; padding: 0 12px 4px; color: color-mix(in srgb, var(--ink) 40%, transparent); text-shadow: 0 4px 18px color-mix(in srgb, var(--dark) 95%, transparent); }
+      .cap .w i { position: absolute; inset: 4px 0 2px; border-radius: 18px; background: var(--gold); opacity: 0; z-index: -1; box-shadow: 0 8px 26px color-mix(in srgb, var(--acc) 35%, transparent); }
+      .cap .w span { position: relative; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="57.660" data-width="1080" data-height="1920">
+
+      <!-- ============ Three.js stage (assets/world.js) ============ -->
+      <div id="stage" class="clip" data-start="0" data-duration="57.660" data-track-index="0">
+        <canvas id="gl" width="1080" height="1920"></canvas>
+        <div id="vig"></div>
+        <div id="labels" data-layout-allow-overlap></div>
+      </div>
+
+      <!-- ============ scene titles (data-at = anchor name, "start" = scene start) ============ -->
+      <div id="hook" class="clip" data-scene="hook" data-start="0.000" data-duration="6.090" data-track-index="1"><div class="scene-in">
+        <h1 class="hl" data-at="ways">فقط <em>۳ راه</em> داره</h1>
+      </div></div>
+      <div id="key1" class="clip" data-scene="key1" data-start="6.090" data-duration="7.930" data-track-index="2"><div class="scene-in">
+        <h1 class="hl sm" data-at="start"><span class="num">۱</span>ثبت <em>شرکت</em></h1>
+        <div class="chip" id="cBiz" data-layout-allow-overlap><span class="ic"><svg width="44" height="44" viewBox="0 0 48 48"><path d="M8 42V14l12-6v34M20 42V8l14 6v28M34 42V22l8 4v16M4 42h40" fill="none" stroke="#06140d" stroke-width="4" stroke-linejoin="round" /></svg></span>راه‌اندازی کسب‌وکار</div>
+      </div></div>
+      <div id="check" class="clip" data-scene="check" data-start="14.020" data-duration="6.730" data-track-index="1"><div class="scene-in">
+        <div class="chip warn" id="cAlone" data-layout-allow-overlap><span class="ic"><svg width="44" height="44" viewBox="0 0 48 48"><path d="M24 8v20M24 36v4" stroke="#faf2e0" stroke-width="6" stroke-linecap="round" /></svg></span>به‌تنهایی کافی نیست</div>
+        <div class="chip ok" id="cLegal" data-layout-allow-overlap><span class="ic"><svg width="44" height="44" viewBox="0 0 48 48"><path d="M10 25l9 9 19-20" fill="none" stroke="#faf2e0" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" /></svg></span>بررسی کامل شرایط قانونی</div>
+      </div></div>
+      <div id="key2" class="clip" data-scene="key2" data-start="20.750" data-duration="8.400" data-track-index="2"><div class="scene-in">
+        <h1 class="hl sm" data-at="start"><span class="num">۲</span>اقامت <em>کاری</em></h1>
+        <div class="chip" id="cPermit" data-layout-allow-overlap><span class="ic"><svg width="44" height="44" viewBox="0 0 48 48"><rect x="6" y="10" width="36" height="28" rx="4" fill="none" stroke="#06140d" stroke-width="4" /><circle cx="18" cy="22" r="5" fill="#06140d" /><path d="M28 20h8M28 28h8M12 32h12" stroke="#06140d" stroke-width="4" stroke-linecap="round" /></svg></span>کار + مجوزهای لازم</div>
+      </div></div>
+      <div id="key3" class="clip" data-scene="key3" data-start="29.150" data-duration="9.440" data-track-index="1"><div class="scene-in">
+        <h1 class="hl sm" data-at="start"><span class="num">۳</span>اقامت <em>تحصیلی</em></h1>
+        <div class="chip" id="cLang" data-layout-allow-overlap><span class="ic"><svg width="44" height="44" viewBox="0 0 48 48"><path d="M8 10h22a6 6 0 0 1 6 6v22H14a6 6 0 0 1-6-6z" fill="none" stroke="#06140d" stroke-width="4" stroke-linejoin="round" /><path d="M14 18h14M14 25h10" stroke="#06140d" stroke-width="4" stroke-linecap="round" /></svg></span>دوره‌های زبان</div>
+        <div class="chip" id="cUni" data-layout-allow-overlap><span class="ic"><svg width="44" height="44" viewBox="0 0 48 48"><path d="M4 18L24 9l20 9-20 9z M12 22v10c4 5 20 5 24 0V22" fill="none" stroke="#06140d" stroke-width="4" stroke-linejoin="round" /></svg></span>دانشگاه</div>
+        <div class="chip ok" id="cEasy" data-layout-allow-overlap><span class="ic"><svg width="44" height="44" viewBox="0 0 48 48"><path d="M10 25l9 9 19-20" fill="none" stroke="#faf2e0" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" /></svg></span>بدون دردسر</div>
+      </div></div>
+      <div id="waste" class="clip" data-scene="waste" data-start="38.590" data-duration="8.655" data-track-index="2"><div class="scene-in">
+        <h1 class="hl sm" data-at="money"><em>پول و وقتت</em> رو هدر نده</h1>
+        <h1 class="hl sm" data-at="which">کدوم <em>مسیر</em> مال توئه؟</h1>
+      </div></div>
+      <div id="open" class="clip" data-scene="open" data-start="47.245" data-duration="3.775" data-track-index="1"><div class="scene-in">
+        <div id="free"><span class="a">مشاوره‌ی رایگان</span><span class="b">مسیر اقامتت رو با ما پیدا کن</span></div>
+      </div></div>
+      <div id="cta" class="clip" data-scene="cta" data-start="51.020" data-duration="6.640" data-track-index="2"><div class="scene-in">
+        <div id="endCard"></div>
+        <img id="endLogo" src="assets/iram-logo.png" alt="IRAM CO." />
+        <div id="cbox">
+          <div class="av"><svg width="122" height="122" viewBox="0 0 124 124"><circle cx="62" cy="48" r="22" fill="#faf2e0" /><path d="M22,118 C26,86 98,86 102,118 Z" fill="#faf2e0" /></svg></div>
+          <div class="field"><div id="ctext">اقامت</div><div id="caret"></div></div>
+          <div id="send"><svg width="62" height="62" viewBox="0 0 64 64"><path d="M54,10 L8,30 L26,36 L32,56 Z" fill="#06140d" /></svg></div>
+        </div>
+        <div id="site">IRAMCO.ORG</div>
+      </div></div>
+
+      <div id="cap0" class="clip cap" data-start="0.280" data-duration="1.980" data-track-index="9"><div class="cap-in"><span class="w"><i></i><span>به</span></span><span class="w hi"><i></i><span>هیچ</span></span><span class="w hi"><i></i><span>روشی</span></span><span class="w"><i></i><span>نمی‌تونی</span></span></div></div>
+      <div id="cap1" class="clip cap" data-start="2.200" data-duration="1.620" data-track-index="9"><div class="cap-in"><span class="w hi"><i></i><span>اقامت</span></span><span class="w hi"><i></i><span>ارمنستان</span></span><span class="w"><i></i><span>رو</span></span><span class="w"><i></i><span>بگیری،</span></span></div></div>
+      <div id="cap2" class="clip cap" data-start="3.760" data-duration="1.400" data-track-index="9"><div class="cap-in"><span class="w"><i></i><span>مگر</span></span><span class="w"><i></i><span>اینکه</span></span><span class="w"><i></i><span>از</span></span><span class="w"><i></i><span>این</span></span><span class="w"><i></i><span>راه‌هایی</span></span></div></div>
+      <div id="cap3" class="clip cap" data-start="5.100" data-duration="1.140" data-track-index="9"><div class="cap-in"><span class="w"><i></i><span>که</span></span><span class="w"><i></i><span>می‌گم</span></span><span class="w"><i></i><span>اقدام</span></span><span class="w"><i></i><span>کنی.</span></span></div></div>
+      <div id="cap4" class="clip cap" data-start="6.180" data-duration="1.440" data-track-index="9"><div class="cap-in"><span class="w hi"><i></i><span>اولیش،</span></span><span class="w"><i></i><span>اقامت</span></span><span class="w"><i></i><span>از</span></span><span class="w"><i></i><span>طریق</span></span></div></div>
+      <div id="cap5" class="clip cap" data-start="7.560" data-duration="2.240" data-track-index="9"><div class="cap-in"><span class="w hi"><i></i><span>ثبت</span></span><span class="w hi"><i></i><span>شرکت</span></span><span class="w"><i></i><span>و</span></span><span class="w"><i></i><span>فعالیت</span></span><span class="w"><i></i><span>تجاریه.</span></span></div></div>
+      <div id="cap6" class="clip cap" data-start="9.740" data-duration="1.460" data-track-index="9"><div class="cap-in"><span class="w"><i></i><span>اگه</span></span><span class="w"><i></i><span>قصد</span></span><span class="w hi"><i></i><span>راه‌اندازی</span></span><span class="w hi"><i></i><span>کسب‌وکار</span></span></div></div>
+      <div id="cap7" class="clip cap" data-start="11.140" data-duration="1.160" data-track-index="9"><div class="cap-in"><span class="w"><i></i><span>توی</span></span><span class="w"><i></i><span>ارمنستان</span></span><span class="w"><i></i><span>رو</span></span><span class="w"><i></i><span>داری،</span></span></div></div>
+      <div id="cap8" class="clip cap" data-start="12.240" data-duration="2.040" data-track-index="9"><div class="cap-in"><span class="w"><i></i><span>می‌تونی</span></span><span class="w"><i></i><span>از</span></span><span class="w"><i></i><span>این</span></span><span class="w"><i></i><span>مسیر</span></span><span class="w"><i></i><span>اقدام</span></span><span class="w"><i></i><span>کنی.</span></span></div></div>
+      <div id="cap9" class="clip cap" data-start="14.220" data-duration="1.500" data-track-index="9"><div class="cap-in"><span class="w"><i></i><span>البته</span></span><span class="w"><i></i><span>که</span></span><span class="w"><i></i><span>فقط</span></span><span class="w"><i></i><span>ثبت</span></span><span class="w"><i></i><span>شرکت</span></span></div></div>
+      <div id="cap10" class="clip cap" data-start="15.660" data-duration="2.580" data-track-index="9"><div class="cap-in"><span class="w hi"><i></i><span>به‌تنهایی</span></span><span class="w"><i></i><span>بهت</span></span><span class="w"><i></i><span>اقامت</span></span><span class="w"><i></i><span>نمی‌ده</span></span></div></div>
+      <div id="cap11" class="clip cap" data-start="18.180" data-duration="1.460" data-track-index="9"><div class="cap-in"><span class="w"><i></i><span>و</span></span><span class="w hi"><i></i><span>شرایط</span></span><span class="w hi"><i></i><span>قانونیت</span></span></div></div>
+      <div id="cap12" class="clip cap" data-start="19.580" data-duration="1.320" data-track-index="9"><div class="cap-in"><span class="w"><i></i><span>باید</span></span><span class="w"><i></i><span>کامل</span></span><span class="w"><i></i><span>بررسی</span></span><span class="w"><i></i><span>بشه.</span></span></div></div>
+      <div id="cap13" class="clip cap" data-start="20.840" data-duration="1.900" data-track-index="9"><div class="cap-in"><span class="w hi"><i></i><span>دوم،</span></span><span class="w hi"><i></i><span>اقامت</span></span><span class="w hi"><i></i><span>کاریه.</span></span></div></div>
+      <div id="cap14" class="clip cap" data-start="22.680" data-duration="0.980" data-track-index="9"><div class="cap-in"><span class="w"><i></i><span>اگه</span></span><span class="w"><i></i><span>توی</span></span><span class="w"><i></i><span>ارمنستان</span></span></div></div>
+      <div id="cap15" class="clip cap" data-start="23.600" data-duration="1.240" data-track-index="9"><div class="cap-in"><span class="w hi"><i></i><span>مشغول</span></span><span class="w hi"><i></i><span>به</span></span><span class="w hi"><i></i><span>کار</span></span><span class="w"><i></i><span>بشی</span></span></div></div>
+      <div id="cap16" class="clip cap" data-start="24.780" data-duration="1.400" data-track-index="9"><div class="cap-in"><span class="w"><i></i><span>و</span></span><span class="w"><i></i><span>شرایط</span></span><span class="w"><i></i><span>و</span></span><span class="w hi"><i></i><span>مجوزهای</span></span><span class="w hi"><i></i><span>لازم</span></span></div></div>
+      <div id="cap17" class="clip cap" data-start="26.120" data-duration="1.420" data-track-index="9"><div class="cap-in"><span class="w"><i></i><span>رو</span></span><span class="w"><i></i><span>داشته</span></span><span class="w"><i></i><span>باشی،</span></span><span class="w"><i></i><span>می‌تونی</span></span></div></div>
+      <div id="cap18" class="clip cap" data-start="27.480" data-duration="1.940" data-track-index="9"><div class="cap-in"><span class="w"><i></i><span>از</span></span><span class="w"><i></i><span>این</span></span><span class="w"><i></i><span>مسیر</span></span><span class="w"><i></i><span>اقامت</span></span><span class="w"><i></i><span>بگیری.</span></span></div></div>
+      <div id="cap19" class="clip cap" data-start="29.360" data-duration="2.120" data-track-index="9"><div class="cap-in"><span class="w hi"><i></i><span>سومش،</span></span><span class="w hi"><i></i><span>اقامت</span></span><span class="w hi"><i></i><span>تحصیلیه.</span></span></div></div>
+      <div id="cap20" class="clip cap" data-start="31.420" data-duration="1.320" data-track-index="9"><div class="cap-in"><span class="w"><i></i><span>از</span></span><span class="w hi"><i></i><span>دوره‌های</span></span><span class="w hi"><i></i><span>زبان</span></span><span class="w"><i></i><span>گرفته</span></span></div></div>
+      <div id="cap21" class="clip cap" data-start="32.680" data-duration="2.230" data-track-index="9"><div class="cap-in"><span class="w"><i></i><span>تا</span></span><span class="w hi"><i></i><span>دانشگاه</span></span><span class="w"><i></i><span>و</span></span><span class="w"><i></i><span>رشته‌های</span></span><span class="w"><i></i><span>مختلف،</span></span></div></div>
+      <div id="cap22" class="clip cap" data-start="34.850" data-duration="2.310" data-track-index="9"><div class="cap-in"><span class="w"><i></i><span>می‌تونی</span></span><span class="w"><i></i><span>اقدام</span></span><span class="w"><i></i><span>کنی</span></span><span class="w"><i></i><span>و</span></span><span class="w"><i></i><span>یه</span></span><span class="w"><i></i><span>اقامت</span></span></div></div>
+      <div id="cap23" class="clip cap" data-start="37.100" data-duration="1.640" data-track-index="9"><div class="cap-in"><span class="w hi"><i></i><span>بدون</span></span><span class="w hi"><i></i><span>دردسر</span></span><span class="w"><i></i><span>داشته</span></span><span class="w"><i></i><span>باشی.</span></span></div></div>
+      <div id="cap24" class="clip cap" data-start="38.680" data-duration="1.560" data-track-index="9"><div class="cap-in"><span class="w"><i></i><span>پس</span></span><span class="w"><i></i><span>اگه</span></span><span class="w"><i></i><span>قصد</span></span><span class="w"><i></i><span>مهاجرت</span></span></div></div>
+      <div id="cap25" class="clip cap" data-start="40.180" data-duration="1.230" data-track-index="9"><div class="cap-in"><span class="w"><i></i><span>به</span></span><span class="w"><i></i><span>ارمنستان</span></span><span class="w"><i></i><span>داری،</span></span></div></div>
+      <div id="cap26" class="clip cap" data-start="41.350" data-duration="1.150" data-track-index="9"><div class="cap-in"><span class="w"><i></i><span>قبل</span></span><span class="w"><i></i><span>از</span></span><span class="w"><i></i><span>اینکه</span></span><span class="w hi"><i></i><span>پول</span></span><span class="w hi"><i></i><span>و</span></span><span class="w hi"><i></i><span>وقتت</span></span></div></div>
+      <div id="cap27" class="clip cap" data-start="42.440" data-duration="0.940" data-track-index="9"><div class="cap-in"><span class="w"><i></i><span>رو</span></span><span class="w hi"><i></i><span>هدر</span></span><span class="w"><i></i><span>بدی،</span></span></div></div>
+      <div id="cap28" class="clip cap" data-start="43.320" data-duration="1.680" data-track-index="9"><div class="cap-in"><span class="w"><i></i><span>اول</span></span><span class="w"><i></i><span>ببین</span></span><span class="w hi"><i></i><span>کدوم</span></span><span class="w hi"><i></i><span>مسیر</span></span></div></div>
+      <div id="cap29" class="clip cap" data-start="44.940" data-duration="2.530" data-track-index="9"><div class="cap-in"><span class="w"><i></i><span>با</span></span><span class="w"><i></i><span>شرایطت</span></span><span class="w"><i></i><span>سازگاره،</span></span><span class="w"><i></i><span>بعد</span></span><span class="w"><i></i><span>اقدام</span></span><span class="w"><i></i><span>کن.</span></span></div></div>
+      <div id="cap30" class="clip cap" data-start="47.410" data-duration="0.970" data-track-index="9"><div class="cap-in"><span class="w"><i></i><span>برای</span></span><span class="w"><i></i><span>همین</span></span><span class="w"><i></i><span>می‌تونی</span></span><span class="w"><i></i><span>از</span></span></div></div>
+      <div id="cap31" class="clip cap" data-start="48.320" data-duration="1.540" data-track-index="9"><div class="cap-in"><span class="w hi"><i></i><span>مشاوره‌ی</span></span><span class="w hi"><i></i><span>رایگان</span></span><span class="w"><i></i><span>اقامت</span></span><span class="w"><i></i><span>ما</span></span></div></div>
+      <div id="cap32" class="clip cap" data-start="49.800" data-duration="1.480" data-track-index="9"><div class="cap-in"><span class="w"><i></i><span>استفاده</span></span><span class="w"><i></i><span>کنی.</span></span></div></div>
+      <div id="cap33" class="clip cap" data-start="51.220" data-duration="1.240" data-track-index="9"><div class="cap-in"><span class="w"><i></i><span>برای</span></span><span class="w"><i></i><span>این</span></span><span class="w"><i></i><span>کار،</span></span><span class="w"><i></i><span>کلمه‌ی</span></span></div></div>
+      <div id="cap34" class="clip cap" data-start="52.400" data-duration="1.240" data-track-index="9"><div class="cap-in"><span class="w hi"><i></i><span>«اقامت»</span></span><span class="w"><i></i><span>رو</span></span><span class="w hi"><i></i><span>کامنت</span></span><span class="w"><i></i><span>کن</span></span></div></div>
+      <div id="cap35" class="clip cap" data-start="53.580" data-duration="1.880" data-track-index="9"><div class="cap-in"><span class="w"><i></i><span>تا</span></span><span class="w"><i></i><span>ما</span></span><span class="w"><i></i><span>راهنماییت</span></span><span class="w"><i></i><span>کنیم.</span></span></div></div>
+
+      <audio id="vo" src="assets/voiceover.wav" data-start="0" data-duration="55.567" data-volume="1"></audio>
+      <audio id="music" src="assets/music.wav" data-start="0" data-duration="57.660" data-volume="1"></audio>
+      <audio id="sfx" src="assets/sfx.wav" data-start="0" data-duration="57.660" data-volume="1"></audio>
+    </div>
+
+    <script>
+      window.__T = {"total": 57.66, "anchors": {"none": 0.56, "res0": 2.26, "ways": 4.84, "k1": 6.24, "company": 7.62, "biz": 10.16, "path1": 12.94, "alone": 15.72, "legal": 18.82, "checked": 20.24, "k2": 20.9, "work": 23.66, "permit": 25.44, "res2": 28.18, "k3": 29.42, "lang": 31.96, "uni": 32.88, "easy": 37.16, "migrate": 39.78, "money": 42.13, "time": 42.28, "waste": 42.68, "which": 44.42, "act": 46.0, "free": 48.88, "word": 52.46, "comment": 53.08, "guide": 53.96}, "scenes": [{"id": "hook", "start": 0.0, "first": 0.34, "last": 6.06}, {"id": "key1", "start": 6.09, "first": 6.24, "last": 13.76}, {"id": "check", "start": 14.02, "first": 14.28, "last": 20.9}, {"id": "key2", "start": 20.75, "first": 20.9, "last": 28.88}, {"id": "key3", "start": 29.15, "first": 29.42, "last": 38.74}, {"id": "waste", "start": 38.59, "first": 38.74, "last": 47.02}, {"id": "open", "start": 47.245, "first": 47.47, "last": 50.76}, {"id": "cta", "start": 51.02, "first": 51.28, "last": 54.86}], "lines": [{"start": 0.34, "hold": 2.26, "w": [[0.34, 0.56], [0.56, 0.88], [0.88, 1.48], [1.48, 2.26]]}, {"start": 2.26, "hold": 3.82, "w": [[2.26, 2.64], [2.64, 3.34], [3.34, 3.48], [3.48, 3.82]]}, {"start": 3.82, "hold": 5.16, "w": [[3.82, 4.18], [4.18, 4.46], [4.46, 4.7], [4.7, 4.84], [4.84, 5.16]]}, {"start": 5.16, "hold": 6.24, "w": [[5.16, 5.26], [5.26, 5.48], [5.48, 5.8], [5.8, 6.06]]}, {"start": 6.24, "hold": 7.62, "w": [[6.24, 6.92], [6.92, 7.26], [7.26, 7.42], [7.42, 7.62]]}, {"start": 7.62, "hold": 9.8, "w": [[7.62, 7.98], [7.98, 8.32], [8.32, 8.44], [8.44, 8.8], [8.8, 9.28]]}, {"start": 9.8, "hold": 11.2, "w": [[9.8, 9.9], [9.9, 10.16], [10.16, 10.64], [10.64, 11.2]]}, {"start": 11.2, "hold": 12.3, "w": [[11.2, 11.38], [11.38, 11.94], [11.94, 12.06], [12.06, 12.3]]}, {"start": 12.3, "hold": 14.28, "w": [[12.3, 12.64], [12.64, 12.82], [12.82, 12.94], [12.94, 13.22], [13.22, 13.54], [13.67, 13.76]]}, {"start": 14.28, "hold": 15.72, "w": [[14.28, 14.54], [14.54, 14.72], [14.72, 14.96], [14.96, 15.32], [15.32, 15.72]]}, {"start": 15.72, "hold": 18.24, "w": [[15.72, 16.46], [16.46, 17.22], [17.22, 17.76], [17.76, 18.24]]}, {"start": 18.24, "hold": 19.64, "w": [[18.24, 18.38], [18.38, 18.82], [18.82, 19.46]]}, {"start": 19.64, "hold": 20.9, "w": [[19.64, 19.8], [19.8, 20.24], [20.24, 20.6], [20.6, 20.9]]}, {"start": 20.9, "hold": 22.74, "w": [[20.9, 21.72], [21.72, 22.18], [22.18, 22.72]]}, {"start": 22.74, "hold": 23.66, "w": [[22.74, 22.9], [22.9, 23.08], [23.08, 23.66]]}, {"start": 23.66, "hold": 24.84, "w": [[23.66, 24.16], [24.16, 24.26], [24.26, 24.62], [24.62, 24.84]]}, {"start": 24.84, "hold": 26.18, "w": [[24.84, 24.94], [24.94, 25.4], [25.4, 25.48], [25.44, 26.0], [26.0, 26.18]]}, {"start": 26.18, "hold": 27.54, "w": [[26.18, 26.34], [26.34, 26.54], [26.54, 26.88], [27.32, 27.54]]}, {"start": 27.54, "hold": 29.42, "w": [[27.54, 27.72], [27.72, 27.86], [27.86, 28.18], [28.18, 28.58], [28.58, 28.88]]}, {"start": 29.42, "hold": 31.48, "w": [[29.42, 29.86], [29.86, 30.36], [30.36, 31.06]]}, {"start": 31.48, "hold": 32.74, "w": [[31.48, 31.58], [31.58, 31.96], [31.96, 32.32], [32.32, 32.74]]}, {"start": 32.74, "hold": 34.91, "w": [[32.74, 32.88], [32.88, 33.36], [33.36, 33.48], [33.48, 33.86], [33.86, 34.54]]}, {"start": 34.91, "hold": 37.16, "w": [[34.91, 35.22], [35.22, 35.6], [35.695, 35.98], [35.98, 36.08], [36.08, 36.64], [36.64, 37.16]]}, {"start": 37.16, "hold": 38.74, "w": [[37.16, 37.62], [37.62, 38.2], [38.2, 38.5], [38.5, 38.74]]}, {"start": 38.74, "hold": 40.24, "w": [[38.74, 39.36], [39.36, 39.54], [39.54, 39.78], [39.78, 40.24]]}, {"start": 40.24, "hold": 41.41, "w": [[40.24, 40.36], [40.36, 40.94], [40.94, 41.2]]}, {"start": 41.41, "hold": 42.5, "w": [[41.41, 41.62], [41.62, 41.76], [41.76, 41.96], [42.13, 42.26], [42.26, 42.34], [42.28, 42.5]]}, {"start": 42.5, "hold": 43.38, "w": [[42.5, 42.64], [42.68, 42.94], [42.94, 43.38]]}, {"start": 43.38, "hold": 45.0, "w": [[43.38, 44.12], [44.12, 44.42], [44.42, 44.7], [44.7, 45.0]]}, {"start": 45.0, "hold": 47.47, "w": [[45.0, 45.16], [45.16, 45.469], [45.52, 46.0], [46.0, 46.22], [46.22, 46.8], [46.8, 47.02]]}, {"start": 47.47, "hold": 48.38, "w": [[47.47, 47.7], [47.7, 48.02], [48.02, 48.329], [48.329, 48.429]]}, {"start": 48.38, "hold": 49.86, "w": [[48.38, 48.797], [48.88, 49.26], [49.26, 49.68], [49.68, 49.86]]}, {"start": 49.86, "hold": 51.28, "w": [[49.86, 50.4], [50.49, 50.76]]}, {"start": 51.28, "hold": 52.46, "w": [[51.28, 51.52], [51.52, 51.77], [51.77, 52.02], [52.02, 52.46]]}, {"start": 52.46, "hold": 53.64, "w": [[52.46, 52.94], [52.94, 53.08], [53.08, 53.44], [53.44, 53.64]]}, {"start": 53.64, "hold": 55.46, "w": [[53.64, 53.88], [53.88, 53.96], [53.96, 54.407], [54.46, 54.86]]}]};
+      const T = window.__T, AN = T.anchors;
+      const tl = gsap.timeline({ paused: true });
+      window.__timelines = window.__timelines || {};
+      window.__timelines["main"] = tl;
+      const $ = (id) => document.getElementById(id);
+      const SC = {};
+      T.scenes.forEach((s, i) => { SC[s.id] = Object.assign({}, s, { i, next: T.scenes[i + 1] ? T.scenes[i + 1].start : T.total }); });
+      const atOf = (sid, key) => (key === "start" ? SC[sid].start + (SC[sid].i ? 0.25 : 0.15) : AN[key] - 0.08);
+
+      // headline words rise in one after another (an <em> or .num stays one unit)
+      document.querySelectorAll(".hl").forEach((h) => {
+        const parts = [];
+        Array.from(h.childNodes).forEach((n) => {
+          if (n.nodeType === 3) n.textContent.split(/\s+/).filter(Boolean).forEach((w) => parts.push(document.createTextNode(w)));
+          else parts.push(n);
+        });
+        h.textContent = "";
+        parts.forEach((p, i) => { const s = document.createElement("span"); s.className = "hw"; s.appendChild(p); h.appendChild(s); if (i < parts.length - 1) h.appendChild(document.createTextNode(" ")); });
+      });
+
+      T.scenes.forEach((s, i) => {
+        const root = $(s.id), inner = root.querySelector(".scene-in");
+        tl.fromTo(inner, { opacity: 0 }, { opacity: 1, duration: 0.3, ease: "power2.out" }, SC[s.id].start);
+        if (i < T.scenes.length - 1) tl.to(inner, { opacity: 0, duration: 0.22, ease: "power2.in" }, SC[s.id].next - 0.22);
+        const hls = Array.from(root.querySelectorAll(".hl"));
+        hls.forEach((h, k) => {
+          const tin = atOf(s.id, h.dataset.at);
+          tl.fromTo(h.querySelectorAll(".hw"), { opacity: 0, y: 54, scale: 0.9 }, { opacity: 1, y: 0, scale: 1, duration: 0.55, ease: "power3.out", stagger: 0.08 }, tin);
+          if (k < hls.length - 1) tl.to(h, { opacity: 0, y: -36, duration: 0.24, ease: "power2.in" }, atOf(s.id, hls[k + 1].dataset.at) - 0.26);
+        });
+      });
+
+      // chips: pop in on their word, give way to the next chip in the same scene
+      function chip(sel, at, out, from = { y: 40 }) {
+        tl.fromTo(sel, { xPercent: -50, opacity: 0, scale: 0.7, ...from }, { xPercent: -50, opacity: 1, scale: 1, y: 0, duration: 0.42, ease: "back.out(1.8)" }, at);
+        if (out) tl.to(sel, { opacity: 0, y: -40, scale: 0.92, duration: 0.22, ease: "power2.in" }, out);
+      }
+      chip("#cBiz", AN.biz - 0.1, null);
+      chip("#cAlone", AN.alone - 0.05, AN.legal - 0.25);
+      tl.fromTo("#cAlone", { x: 0 }, { x: 10, duration: 0.05, yoyo: true, repeat: 5, ease: "none", immediateRender: false }, AN.alone + 0.4);
+      chip("#cLegal", AN.legal - 0.05, null);
+      chip("#cPermit", AN.permit - 0.1, null);
+      chip("#cLang", AN.lang - 0.1, AN.uni - 0.2);
+      chip("#cUni", AN.uni - 0.1, AN.easy - 0.25);
+      chip("#cEasy", AN.easy - 0.05, null);
+
+      // free consultation badge
+      tl.fromTo("#free", { opacity: 0, y: 80, scale: 0.8 }, { opacity: 1, y: 0, scale: 1, duration: 0.6, ease: "back.out(1.6)" }, AN.free - 0.35);
+      tl.fromTo("#free .a", { scale: 1 }, { scale: 1.06, duration: 0.22, yoyo: true, repeat: 1, ease: "sine.inOut" }, AN.free + 0.2);
+
+      // captions: line fades in, each word lights up (gold pill) as it is spoken, then stays bright
+      T.lines.forEach((L, i) => {
+        const cap = $("cap" + i), inner = cap.firstElementChild, ws = inner.querySelectorAll(".w");
+        tl.fromTo(inner, { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: 0.2, ease: "power2.out" }, L.start - 0.06);
+        tl.to(inner, { opacity: 0, duration: 0.12, ease: "power1.in" }, L.hold - 0.12);
+        ws.forEach((w, j) => {
+          const [s] = L.w[j], nxt = j < ws.length - 1 ? L.w[j + 1][0] : Math.min(L.hold - 0.12, L.w[j][1] + 0.25);
+          const bx = w.firstElementChild, done = w.classList.contains("hi") ? "#f4d68c" : "#faf2e0";
+          tl.fromTo(bx, { opacity: 0, scale: 0.82 }, { opacity: 1, scale: 1, duration: 0.12, ease: "back.out(2)" }, s - 0.03);
+          tl.fromTo(w, { color: "rgba(250,242,224,0.40)" }, { color: "#06140d", duration: 0.08 }, s - 0.03);
+          tl.to(bx, { opacity: 0, duration: 0.12, ease: "power1.in" }, nxt - 0.04);
+          tl.to(w, { color: done, duration: 0.1 }, nxt - 0.04);
+        });
+      });
+
+      // CTA: the comment types «اقامت», the logo card lands, the site holds
+      (function () {
+        const s = SC.cta;
+        tl.fromTo("#cbox", { opacity: 0, y: 150 }, { opacity: 1, y: 0, duration: 0.6, ease: "back.out(1.4)" }, AN.word - 0.5);
+        tl.fromTo("#ctext", { clipPath: "inset(0% 0% 0% 100%)" }, { clipPath: "inset(0% 0% 0% 0%)", duration: 0.5, ease: "steps(5)" }, AN.word + 0.02);
+        tl.fromTo("#caret", { opacity: 1 }, { opacity: 0, duration: 0.26, yoyo: true, repeat: 11, ease: "steps(1)" }, AN.word - 0.3);
+        tl.to("#send", { scale: 1.16, duration: 0.3, yoyo: true, repeat: 5, ease: "sine.inOut" }, AN.comment + 0.1);
+        tl.fromTo("#endCard", { opacity: 0, scaleY: 0.2 }, { opacity: 1, scaleY: 1, duration: 0.5, ease: "power3.out" }, s.start + 0.2);
+        tl.fromTo("#endLogo", { opacity: 0, y: 40, scale: 0.9 }, { opacity: 1, y: 0, scale: 1, duration: 0.6, ease: "power3.out" }, s.start + 0.45);
+        tl.fromTo("#site", { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.5, ease: "power3.out" }, Math.min(s.last + 0.2, T.total - 1.8));
+      })();
+    </script>
+    <script type="module">
+      import { frame } from "./assets/world.js";
+      const state = { t: 0 };
+      frame(0);
+      window.__timelines["main"].fromTo(state, { t: 0 }, { t: window.__T.total, duration: window.__T.total, ease: "none", onUpdate: () => frame(state.t) }, 0);
+      window.__timelines["main"].seek(0);
+    </script>
+  </body>
+</html>

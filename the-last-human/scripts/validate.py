@@ -68,9 +68,14 @@ for lang in ("fa", "en"):
         if l["kind"] == "speech": t = V[l["id"]]["start"] + min(0.8, V[l["id"]]["speech"] / 2)
         else: t = (l["start"] + l["end"]) / 2
         if not os.path.exists(os.path.join(ROOT, FILES[lang])): continue
-        d = np.abs(frame(os.path.join(ROOT, FILES[lang]), t) - frame(os.path.join(ROOT, FILES["clean"]), t)).sum(2) > 40
-        ys, xs = np.nonzero(d)
+        # presence: the subtitle layer's own alpha (exact, independent of encoder noise)
+        r = subprocess.run(["ffmpeg", "-loglevel", "error", "-ss", f"{t:.3f}", "-i", os.path.join(ROOT, f"build/subs/ep{NN}_{lang.upper()}.mov"), "-frames:v", "1", "-f", "rawvideo", "-pix_fmt", "rgba", "-"], capture_output=True)
+        a = np.frombuffer(r.stdout, np.uint8).reshape(1920, 1080, 4)[:, :, 3] > 24
+        ys, xs = np.nonzero(a)
         if len(ys) < 2000: errors.append(f"{lang}: subtitle '{l['id']}' not visible at {t:.2f}s"); continue
+        # and confirm it was actually burned into the deliverable
+        diff = np.abs(frame(os.path.join(ROOT, FILES[lang]), t) - frame(os.path.join(ROOT, FILES["clean"]), t)).sum(2)
+        if diff[a].mean() < 25: errors.append(f"{lang}: subtitle '{l['id']}' not burned in at {t:.2f}s")
         box = (int(xs.min()), int(ys.min()), int(xs.max()), int(ys.max()))
         report.setdefault("subs", []).append({"lang": lang, "id": l["id"], "t": round(t, 2), "box": box})
         if box[0] < 40 or box[2] > 1040 or box[3] > 1700 or box[1] < 1200: errors.append(f"{lang}: subtitle '{l['id']}' outside safe area {box}")

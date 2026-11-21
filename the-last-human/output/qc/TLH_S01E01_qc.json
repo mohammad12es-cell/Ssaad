@@ -1,0 +1,80 @@
+{
+ "episode": 1,
+ "files": {
+  "clean": {
+   "duration": 30.0,
+   "frames": 900,
+   "size": "1080x1920",
+   "fps": "30/1",
+   "vcodec": "h264",
+   "pix": "yuv420p",
+   "mb": 40.88,
+   "acodec": "aac",
+   "sr": "48000",
+   "ch": 2,
+   "lufs": -14.7,
+   "true_peak": -2.3,
+   "black": [
+    [
+     29.4333,
+     29.9667
+    ]
+   ],
+   "freeze": []
+  },
+  "fa": {
+   "duration": 30.0,
+   "frames": 900,
+   "size": "1080x1920",
+   "fps": "30/1",
+   "vcodec": "h264",
+   "pix": "yuv420p",
+   "mb": 40.64,
+   "acodec": "aac",
+   "sr": "48000",
+   "ch": 2,
+   "lufs": -14.7,
+   "true_peak": -2.3
+  },
+  "en": {
+   "duration": 30.0,
+   "frames": 900,
+   "size": "1080x1920",
+   "fps": "30/1",
+   "vcodec": "h264",
+   "pix": "yuv420p",
+   "mb": 40.81,
+   "acodec": "aac",
+   "sr": "48000",
+   "ch": 2,
+   "lufs": -14.7,
+   "true_peak": -2.3
+  }
+ },
+ "subs": [
+  {
+   "lang": "fa",
+   "id": "e01_l1",
+   "t": 27.85,
+   "box": [
+    188,
+    1339,
+    891,
+    1499
+   ]
+  },
+  {
+   "lang": "en",
+   "id": "e01_v1",
+   "t": 27.57,
+   "box": [
+    192,
+    1335,
+    887,
+    1483
+   ]
+  }
+ ],
+ "errors": [],
+ "pass": true
+}

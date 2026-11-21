@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en" data-resolution="portrait">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <script src="assets/gsap.min.js"></script>
+    <script src="assets/characters.js"></script>
+    <style>
+      @font-face { font-family: "Fredoka"; font-weight: 700; src: url("assets/fredoka-latin-700-normal.woff2") format("woff2"); }
+      @font-face { font-family: "Fredoka"; font-weight: 500; src: url("assets/fredoka-latin-500-normal.woff2") format("woff2"); }
+      :root { --ground: #ffe2c4; --ink: #ffffff; --stroke: #2b2a6e; --font-display: "Fredoka", sans-serif; }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { margin: 0; width: 1080px; height: 1920px; overflow: hidden; background: var(--ground); }
+      #root { position: relative; width: 100%; height: 100%; overflow: hidden; font-family: var(--font-display); }
+      .clip { position: absolute; inset: 0; }
+      svg.stage { width: 1080px; height: 1920px; }
+      .cap { position: absolute; left: 50px; right: 50px; top: 250px; bottom: auto; text-align: center; color: var(--ink); font-weight: 700; font-size: 96px; line-height: 1.05;
+        -webkit-text-stroke: 16px var(--stroke); paint-order: stroke fill; }
+      .cap { top: 300px; color: #2b2a6e; -webkit-text-stroke: 0; font-size: 78px; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="14" data-width="1080" data-height="1920">
+      <svg id="world" class="clip stage" data-start="0" data-duration="14" data-track-index="0" viewBox="0 0 1080 1920">
+        <defs>
+          <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffe2c4" /><stop offset="0.6" stop-color="#fff0dc" /><stop offset="1" stop-color="#fff7ea" /></linearGradient>
+          <clipPath id="cardclip"><rect x="40" y="520" width="1000" height="1180" rx="60" /></clipPath>
+          <radialGradient id="glow" cx="0.5" cy="0.5" r="0.5"><stop offset="0" stop-color="#fff6c4" /><stop offset="0.5" stop-color="#ffd27a" stop-opacity="0.7" /><stop offset="1" stop-color="#ffb347" stop-opacity="0" /></radialGradient>
+        </defs>
+        <rect width="1080" height="1920" fill="#fff7ea" />
+        <g clip-path="url(#cardclip)"><rect width="1080" height="1920" fill="url(#sky)" />
+        
+        <g id="zoom" transform="translate(540,1110) scale(1.4) translate(-545,-1300)">
+          <path d="M0,1250 C300,1180 700,1320 1080,1230 L1080,1920 L0,1920 Z" fill="#e8c9a6" />
+          <path d="M0,1520 C320,1470 760,1580 1080,1500 L1080,1920 L0,1920 Z" fill="#d9b48a" />
+          <g id="win"><rect x="440" y="1070" width="170" height="130" rx="14" fill="#fff" /><rect id="winSky" x="450" y="1080" width="150" height="110" rx="8" fill="#9fd8ff" />
+  <circle id="winSun" cx="570" cy="1110" r="18" fill="#ffd166" /><circle id="winMoon" cx="490" cy="1110" r="15" fill="#fff4c8" opacity="0" /><line x1="525" y1="1070" x2="525" y2="1200" stroke="#fff" stroke-width="8" /></g>
+<g id="wallclock"><circle cx="740" cy="1110" r="46" fill="#fff" stroke="#2b2a6e" stroke-width="6" /><text id="time" x="740" y="1120" text-anchor="middle" font-family="Fredoka" font-weight="700" font-size="24" fill="#2b2a6e">6:00</text></g>
+<g id="sofa"><rect x="200" y="1380" width="300" height="70" rx="24" fill="#ff8fb1" /><rect x="190" y="1330" width="50" height="120" rx="20" fill="#ff7aa8" /><rect x="460" y="1330" width="50" height="120" rx="20" fill="#ff7aa8" /><rect x="215" y="1450" width="14" height="30" fill="#7a4a2a" /><rect x="470" y="1450" width="14" height="30" fill="#7a4a2a" /></g>
+<g id="plant"><path d="M600,1440 L690,1440 L675,1500 L615,1500 Z" fill="#c98a5a" />
+  <g id="stem"><rect x="640" y="1100" width="12" height="345" fill="#3fa34d" /><ellipse cx="625" cy="1300" rx="30" ry="12" fill="#3fa34d" transform="rotate(-25 625 1300)" /><ellipse cx="668" cy="1240" rx="30" ry="12" fill="#3fa34d" transform="rotate(25 668 1240)" />
+    <g><circle cx="646" cy="1095" r="52" fill="#ffd166" /><circle cx="646" cy="1095" r="26" fill="#8a5a35" /></g></g></g>
+<g id="pages"></g>
+<g id="peb"></g>
+<g id="pip"></g>
+<text id="zzz" x="330" y="1250" font-family="Fredoka" font-weight="700" font-size="50" fill="#fff" stroke="#2b2a6e" stroke-width="6" paint-order="stroke" opacity="0">Z z z</text>
+<text id="bangP" x="290" y="1230" font-family="Fredoka" font-weight="700" font-size="70" fill="#ff5a5f" stroke="#2b2a6e" stroke-width="7" paint-order="stroke" opacity="0">!!</text>
+
+        </g>
+        <g transform="translate(0,140)"></g>
+        </g><rect x="40" y="520" width="1000" height="1180" rx="60" fill="none" stroke="#2b2a6e" stroke-width="6" /><text x="540" y="1800" text-anchor="middle" font-family="Fredoka" font-weight="700" font-size="58" fill="#2b2a6e">Pip &amp; Pebble 🐸🐌</text>
+      </svg>
+      <div id="c1" class="clip cap" data-start="0" data-duration="1.7" data-track-index="1">Just 5 more minutes… 😴</div>
+<div id="c2" class="clip cap" data-start="1.8" data-duration="3.0" data-track-index="1">5 minutes later…</div>
+<div id="c3" class="clip cap" data-start="4.9" data-duration="2.4" data-track-index="1">…5 days later 🌻</div>
+<div id="c4" class="clip cap" data-start="7.4" data-duration="2.2" data-track-index="1">…5 MONTHS later 🧔</div>
+<div id="c5" class="clip cap" data-start="9.6" data-duration="2.4" data-track-index="1">That was a good<br />5 minutes 😌</div>
+<div id="c6" class="clip cap" data-start="12.0" data-duration="2.0" data-track-index="1">😱💀</div>
+      <audio id="sound" src="assets/audio.wav" data-start="0" data-duration="14" data-volume="1"></audio>
+    </div>
+    <script>
+      const NS = "http://www.w3.org/2000/svg";
+      const $ = (id) => document.getElementById(id);
+      const mk = (tag, attrs, parent) => { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); parent.appendChild(e); return e; };
+      const pipSVG = (s = 0.5) => `<g transform="scale(${s})">${PIP(0, -165, 1)}</g>`;
+      const pebSVG = (s = 0.5, shades = false) => `<g transform="scale(${s})">${PEBBLE(0, -92, 1)}${shades ? `<g><rect x="105" y="-245" width="62" height="44" rx="14" fill="#111"/><rect x="167" y="-240" width="62" height="44" rx="14" fill="#111"/><rect x="150" y="-232" width="30" height="8" fill="#111"/><rect x="115" y="-238" width="18" height="8" rx="4" fill="#fff" opacity=".6"/></g>` : ""}</g>`;
+      // eyelids for Pip (scaled 0.5): eye centres (+/-42.5, -158.5), r 29
+      const lidsSVG = (s = 0.5) => `<g transform="scale(${s / 0.5})"><circle cx="-42.5" cy="-158.5" r="31" fill="#5fcf6a"/><circle cx="42.5" cy="-158.5" r="31" fill="#5fcf6a"/><path d="M-62,-156 C-50,-146 -35,-146 -23,-156 M23,-156 C35,-146 50,-146 62,-156" stroke="#1b1a2e" stroke-width="5" fill="none" stroke-linecap="round"/></g>`;
+      const winkSVG = (s = 0.5) => `<g transform="scale(${s / 0.5})"><circle cx="42.5" cy="-158.5" r="31" fill="#5fcf6a"/><path d="M23,-156 C35,-146 50,-146 62,-156" stroke="#1b1a2e" stroke-width="5" fill="none" stroke-linecap="round"/></g>`;
+      const star = (x, y, s) => `M${x},${y - s} L${x + s * 0.25},${y - s * 0.25} L${x + s},${y} L${x + s * 0.25},${y + s * 0.25} L${x},${y + s} L${x - s * 0.25},${y + s * 0.25} L${x - s},${y} L${x - s * 0.25},${y - s * 0.25} Z`;
+      const tl = gsap.timeline({ paused: true });
+      const pop = (id, t) => tl.fromTo(id, { scale: 0.4, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.22, ease: "back.out(2.5)" }, t);
+      // dust/splash puff helper: creates n circles in group g around (x,y) and animates them at t
+      function puff(g, x, y, t, color = "#e8d6b0", n = 6, spread = 60) {
+        const els = []; for (let i = 0; i < n; i++) els.push(mk("circle", { cx: x, cy: y, r: 22 + (i % 3) * 8, fill: color, opacity: 0 }, $(g)));
+        els.forEach((e, i) => tl.fromTo(e, { opacity: 0.9, x: 0, y: 0, scale: 0.5, transformOrigin: "50% 50%" }, { opacity: 0, x: (i - n / 2) * spread * 0.5, y: -40 - (i % 2) * 40, scale: 1.8, transformOrigin: "50% 50%", duration: 0.7, immediateRender: false }, t));
+        tl.set(els, { opacity: 0 }, 0);
+      }
+      const beard = `<g id="beard" transform="translate(78,-72)"><path d="M-20,0 C-30,40 -10,90 10,110 C25,90 40,50 25,0 Z" fill="#fff"/><path d="M-10,20 q10,10 0,20 M10,30 q10,10 0,20" stroke="#ddd" stroke-width="3" fill="none"/></g>`;
+      $("pip").innerHTML = `<g id="pipIn">${pipSVG(0.5)}<g id="lids" opacity="0">${lidsSVG(0.5)}</g></g>`;
+      $("peb").innerHTML = `<g id="pebIn">${pebSVG(0.5, false)}${beard}<g id="broom" transform="translate(150,-20)"><rect x="-4" y="-90" width="8" height="100" fill="#a0673e"/><path d="M-20,10 L20,10 L26,40 L-26,40 Z" fill="#ffd166"/></g></g>`;
+      for (let i = 0; i < 8; i++) mk("rect", { class: "page", x: 760, y: 1100, width: 40, height: 34, rx: 4, fill: "#fff", stroke: "#2b2a6e", "stroke-width": 3, opacity: 0 }, $("pages"));
+      tl.set("#pip", { x: 350, y: 1400, rotation: -12 }, 0); tl.set("#peb", { x: 770, y: 1490 }, 0);
+      tl.set("#beard", { scale: 0, transformOrigin: "50% 0%" }, 0); tl.set("#stem", { scaleY: 0.08, transformOrigin: "50% 100%" }, 0);
+      // "just 5 minutes"
+      tl.to("#pipIn", { y: -10, duration: 0.3, yoyo: true, repeat: 3 }, 0.2);
+      tl.set("#lids", { opacity: 1 }, 1.4);
+      tl.to("#zzz", { opacity: 1, duration: 0.2 }, 1.6);
+      tl.to("#zzz", { y: -30, duration: 0.6, yoyo: true, repeat: 12, ease: "sine.inOut" }, 1.6);
+      tl.to("#zzz", { opacity: 0, duration: 0.2 }, 9.4);
+      // time-lapse: window day/night, clock, pages
+      const times = ["6:05", "9:00", "2:00", "7:00", "11:00", "4:00", "8:00", "1:00", "6:00", "10:00", "3:00", "9:00", "5:55"];
+      times.forEach((tx, i) => tl.set("#time", { textContent: tx }, 1.8 + i * 0.6));
+      for (let c = 0; c < 3; c++) {
+        const t0 = 1.8 + c * 2.6;
+        tl.to("#winSky", { attr: { fill: "#1b1f52" }, duration: 0.6 }, t0 + 0.6); tl.to("#winSun", { opacity: 0, duration: 0.3 }, t0 + 0.6); tl.to("#winMoon", { opacity: 1, duration: 0.3 }, t0 + 0.9);
+        tl.to("#winSky", { attr: { fill: "#9fd8ff" }, duration: 0.6 }, t0 + 1.9); tl.to("#winSun", { opacity: 1, duration: 0.3 }, t0 + 2.0); tl.to("#winMoon", { opacity: 0, duration: 0.3 }, t0 + 1.9);
+      }
+      document.querySelectorAll(".page").forEach((p, i) => { tl.set(p, { opacity: 1 }, 4.9 + i * 0.5); tl.to(p, { x: 120 - i * 15, y: -260 + (i % 3) * 40, rotation: 180 + i * 40, opacity: 0, duration: 0.8 }, 4.9 + i * 0.5); });
+      // Pebble: sweeps, waters, grows a beard
+      tl.to("#peb", { keyframes: [{ x: 600, duration: 0.8 }, { x: 800, duration: 0.8 }, { x: 680, duration: 0.6 }] }, 1.8);
+      tl.to("#broom", { rotation: 25, transformOrigin: "50% 100%", duration: 0.2, yoyo: true, repeat: 9 }, 1.8);
+      tl.to("#broom", { opacity: 0, duration: 0.2 }, 4.0);
+      tl.to("#stem", { scaleY: 1, duration: 3.2, ease: "power1.inOut" }, 4.2);
+      tl.to("#peb", { x: 735, duration: 0.6 }, 6.8);
+      tl.to("#beard", { scale: 1.3, duration: 2.4, ease: "power1.in" }, 7.0);
+      // wakes up, stretches
+      tl.set("#lids", { opacity: 0 }, 9.6);
+      tl.to("#pip", { rotation: 0, y: 1440, duration: 0.4 }, 9.6);
+      tl.to("#pipIn", { scaleY: 1.25, scaleX: 0.9, transformOrigin: "50% 100%", duration: 0.5, yoyo: true, repeat: 1, ease: "sine.inOut" }, 10.0);
+      // sees the beard & sunflower
+      tl.fromTo("#bangP", { opacity: 0, scale: 0.3, transformOrigin: "50% 50%" }, { opacity: 1, scale: 1, transformOrigin: "50% 50%", duration: 0.2, ease: "back.out(3)" }, 12.0);
+      tl.to("#pipIn", { scaleY: 1.12, duration: 0.1, yoyo: true, repeat: 3 }, 12.0);
+      tl.to("#pebIn", { rotation: -6, transformOrigin: "50% 100%", duration: 0.3, yoyo: true, repeat: 3 }, 12.3);
+
+      pop("#c1", 0.02);
+      pop("#c2", 1.82);
+      pop("#c3", 4.92);
+      pop("#c4", 7.42);
+      pop("#c5", 9.62);
+      pop("#c6", 12.02);
+      window.__timelines = window.__timelines || {};
+      window.__timelines["main"] = tl;
+      tl.seek(0);
+    </script>
+  </body>
+</html>

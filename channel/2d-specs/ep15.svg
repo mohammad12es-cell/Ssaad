@@ -1,0 +1,9 @@
+<g id="bed"><rect x="215" y="1360" width="22" height="120" rx="8" fill="#a0673e" /><rect x="225" y="1420" width="290" height="40" rx="12" fill="#c98a5a" /><rect x="230" y="1460" width="16" height="30" fill="#a0673e" /><rect x="495" y="1460" width="16" height="30" fill="#a0673e" /></g>
+<g id="outlet" transform="translate(-180,0)"><rect x="850" y="1330" width="56" height="76" rx="10" fill="#fff" stroke="#bbb" stroke-width="4" /><rect x="864" y="1352" width="8" height="18" rx="3" fill="#555" /><rect x="884" y="1352" width="8" height="18" rx="3" fill="#555" /></g>
+<path d="M770,1440 C760,1480 700,1470 698,1400" stroke="#fff" stroke-width="7" fill="none" />
+<g id="pcable" transform="translate(-100,0)"><path d="M600,1478 C650,1500 690,1460 740,1488" stroke="#fff" stroke-width="7" fill="none" /><rect id="brick" x="735" y="1470" width="40" height="30" rx="6" fill="#eee" stroke="#bbb" stroke-width="3" /><rect x="772" y="1478" width="10" height="5" fill="#999" /><rect x="772" y="1489" width="10" height="5" fill="#999" />
+  <rect id="plugEnd" x="585" y="1470" width="22" height="14" rx="4" fill="#ddd" /></g>
+<g id="peb"></g>
+<g id="pip"></g>
+<g id="arrow" opacity="0" transform="translate(-100,-20)"><path d="M760,1380 L760,1440" stroke="#ff5a5f" stroke-width="10" stroke-linecap="round" /><path d="M740,1420 L760,1450 L780,1420" stroke="#ff5a5f" stroke-width="10" fill="none" stroke-linecap="round" /></g>
+<path id="glint" d="M0,-24 L5,-5 L24,0 L5,5 L0,24 L-5,5 L-24,0 L-5,-5 Z" fill="#fff" opacity="0" />

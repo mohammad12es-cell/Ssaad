@@ -18,3 +18,11 @@ Descriptions: see the chat message / each one ends with
 | 10 | output/pip-pebble-ep10-alarm-card.mp4 | When you wake up at 8:59… on a Saturday ⏰💀 #animation #cartoon #shorts |
 | 11 | output/pip-pebble-ep11-photo-card.mp4 | When you try to take ONE good photo 📸😂 #animation #cartoon #shorts |
 | 12 | output/pip-pebble-ep12-hide-and-seek-card.mp4 | Pip vs. Pebble: hide and seek 🙈😂 #animation #cartoon #shorts |
+
+# Episodes 13–16 (card style, "everyday situation + twist" like ep10)
+| Ep | File | Title |
+|---|---|---|
+| 13 | output/pip-pebble-ep13-monday-card.mp4 | When you wake up at 8:59… on a MONDAY ⏰💀 (Part 2) #animation #cartoon #shorts |
+| 14 | output/pip-pebble-ep14-five-minutes-card.mp4 | “Just 5 more minutes” 😴💀 #animation #cartoon #shorts |
+| 15 | output/pip-pebble-ep15-battery-card.mp4 | When your phone is at 1% and the charger is far away 🔋💀 #animation #cartoon #shorts |
+| 16 | output/pip-pebble-ep16-dinner-card.mp4 | When mom says “dinner's ready” vs. “who's washing the dishes?” 🍝😂 #animation #cartoon #shorts |

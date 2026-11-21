@@ -1,0 +1,3 @@
+{"id":"ep13c-monday","duration":14,"style":"cast","zoom":1.45,"cx":545,"cy":1310,"sky":["#ffd9e8","#ffe9c8","#fff7ea"],"svg":"ep13.svg","script":"ep13.js",
+ "captions":[["c1",0,1.4,"Part 2: Monday ⏰"],["c2",1.4,1.4,"Snooze 😴"],["c3",2.9,1.3,"8:59 AGAIN?! 😱"],["c4",4.2,1.2,"…it's MONDAY 💀"],["c5",5.4,3.0,"SPEEDRUN 🏃💨"],["c6",8.6,2.2,"Pebble: on time 😎🚌"],["c7",10.8,1.2,"Missed it… 😭"],["c8",12.0,2.0,"…snow day ❄️💀"]],
+ "cues":[["bed","happy",0,14,0.7],["ding",0.2],["ding",0.6],["ding",1.0],["bonk",1.45],["ding",3.0],["ding",3.3],["ding",3.6],["error",4.2],["whoosh",5.4],["whoosh",6.6],["pop",8.4],["rumble",8.6,2.0],["glint",9.2],["sad",10.8],["ding",12.0],["bonk",13.2]]}

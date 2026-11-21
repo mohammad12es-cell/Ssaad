@@ -9,7 +9,7 @@
     "stills": "node render/render.mjs --out build/stills --frames 0,45,100,200,280,350,395,450,510,540,580,640,720,800,860,890",
     "subs": "node render/subs.mjs",
     "audio": "python3 audio/build_audio.py",
-    "assemble": "bash tools/assemble.sh",
+    "assemble": "python3 tools/assemble.py",
     "validate": "python3 tools/validate.py",
     "all": "npm run frames && npm run subs && npm run audio && npm run assemble && npm run validate"
   }

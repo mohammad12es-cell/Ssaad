@@ -20,7 +20,7 @@ this folder. No stock footage, no samples, no paid APIs, no copyrighted music.
 |---|---|
 | Resolution | 1080 × 1920 (9:16), square pixels |
 | Frame rate | 30 fps constant, exactly 900 frames, 30.000 s |
-| Video | H.264 High @ L4.2, yuv420p, CRF 17 (x264 `slow`), GOP 60, BT.709 tags, `+faststart` |
+| Video | H.264 High @ L4.2, yuv420p, CRF 18 capped at 16 Mb/s (x264 `slow`), GOP 60, BT.709 tags, `+faststart` |
 | Audio | AAC-LC 192 kb/s, 48 kHz stereo, mastered to −14 LUFS integrated, −1 dBTP |
 | Frames | rendered losslessly to PNG; each deliverable is encoded once from the PNGs |
 

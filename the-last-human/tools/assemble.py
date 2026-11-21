@@ -8,7 +8,7 @@ out = "output"; os.makedirs(out, exist_ok=True)
 cues = json.load(open("build/subs/cues.json"))
 n = len([f for f in os.listdir("build/frames") if f.endswith(".png")])
 assert n == 900, f"expected 900 frames, found {n}"
-VIDEO = ["-c:v", "libx264", "-preset", "slow", "-crf", "17", "-pix_fmt", "yuv420p", "-profile:v", "high", "-level", "4.2",
+VIDEO = ["-c:v", "libx264", "-preset", "slow", "-crf", "18", "-maxrate", "16M", "-bufsize", "32M", "-pix_fmt", "yuv420p", "-profile:v", "high", "-level", "4.2",
          "-r", "30", "-g", "60", "-x264-params", "keyint=60:min-keyint=30", "-color_primaries", "bt709", "-color_trc", "bt709", "-colorspace", "bt709"]
 AUDIO = ["-c:a", "aac", "-b:a", "192k", "-ar", "48000", "-ac", "2"]
 def encode(name, lang=None):

@@ -104,7 +104,7 @@ Built in a Linux cloud container (no access to Shahin's Chrome, so no AI Studio 
 - Render took 4 min 8 s (software GPU).
 - The last frame matches frame 0: empty paper, so the loop has no visible seam.
 - Cover: `renders/viral-reel-v1-cover.png` (the full hook at 2.1 s).
-- Sent to Shahin on 2026-11-22. Waiting for his notes.
+- Sent to Shahin on 2026-11-22. **Published as a regular Reel with the AI label** on @shahcutt: https://www.instagram.com/reel/DgDzIYQn5hU/. The Trial was refused by Meta through vidIQ; see POST.md.
 
 **Differences from the local setup**
 - **Font:** Tahoma isn't installed in the cloud, so the broken v1 falls back to DejaVu Sans. It still looks like the generic default font.

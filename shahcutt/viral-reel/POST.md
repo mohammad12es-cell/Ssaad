@@ -1,4 +1,4 @@
-# viral-reel «اینو Claude ساخت»: post (draft, NOT published)
+# viral-reel «اینو Claude ساخت»: post (published 2026-11-22)
 
 - Account: @shahcutt (decision 1). Trial Reel: yes, Hook B (decision 6; the Hook B variant still has to be built, see HANDOFF).
 - **Published 2026-11-22** on @shahcutt: https://www.instagram.com/reel/DgDzIYQn5hU/ (media 18139289389658529), via vidIQ.

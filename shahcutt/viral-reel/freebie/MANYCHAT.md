@@ -31,11 +31,10 @@ Paste the full text of `prompt.txt` as its own message, unchanged.
 
 ## DM 4: the checklist
 ```
-اینم چک‌لیست کامل (PDF، ۵ صفحه) با همه‌ی عددها:
-[لینک PDF]
+اینم چک‌لیست کامل (PDF، ۵ صفحه) با همه‌ی عددها 👇
 خروجی Claude رو باهاش چک کن. هر تیکی که نخورد، همون مورد رو دوباره ازش بخواه.
 ```
-- Link: upload `shahcutt-prompt-checklist.pdf` to Google Drive → Share → "Anyone with the link" → paste the link in place of [لینک PDF].
+- Button: **دانلود چک‌لیست 📄** → "Open website" → the Google Drive link of `shahcutt-prompt-checklist.pdf` (shared as "Anyone with the link").
 
 ## DM 5 (5 s delay)
 ```

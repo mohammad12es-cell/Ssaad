@@ -11,8 +11,10 @@ script.json:
     kind hook|text: lines:[...]   ([x] = red glow)
     kind stat:      n, suffix?, label, good?
     kind rule:      num, lines:[...]
-    kind chart:     title, bars:[{v, label, good?}], suffix?
+    kind chart:     title, bars:[{v, label, good?, show?}], suffix?     show = text printed instead of v (e.g. "۵ تا ۷")
+    kind list:      title, rows:[{at:"s7:word", text}]               result checklist, each row ticks in on its word
     kind cta:       lines:[...], word, word_at:"s9:«word»"
+    hook/text may add segs:N  -> a row of N Instagram story bars above the lines that fill one by one
 Voice pipeline: gen_vo.py -> tools/clean_take.py -> tools/tighten.py -> whisper (yerevan-christmas/tools/asr.py)."""
 import json, os, re, shutil, subprocess, sys, wave
 import numpy as np
@@ -22,6 +24,7 @@ sys.path.insert(0, A("tools"))
 from align import align  # noqa: E402
 
 SCRIPT = json.load(open(A("script.json"), encoding="utf-8")); SR = 44100
+SEG_T0, SEG_DT = -0.4, 0.065  # hook story bars: bar i fills at SEG_T0 + i*SEG_DT (the first few are already full on frame 0)
 FA = str.maketrans("0123456789", "۰۱۲۳۴۵۶۷۸۹")
 
 
@@ -64,6 +67,7 @@ def timing(words):
         st = 0.0 if i == 0 else word_time(by, b["at"]) - 0.05
         d = dict(b, start=round(st, 3))
         if b["kind"] == "cta": d["wordAt"] = round(word_time(by, b["word_at"]), 3)
+        if b["kind"] == "list": d["rowsAt"] = [round(word_time(by, r["at"]), 3) for r in b["rows"]]
         beats.append(d)
     for a, b in zip(beats, beats[1:]):
         if b["start"] <= a["start"]: sys.exit(f"beats out of order at {b['at']}")
@@ -117,6 +121,9 @@ def make_audio(total, beats, voice):
     add(mus, pad([110.0, 164.81, 220.0, 261.63], 2.4), total - 2.4, 0.12)
     fi = int(0.4 * SR); mus[:fi] *= np.linspace(0, 1, fi); fo = int(1.2 * SR); mus[-fo:] *= np.linspace(1, 0, fo)
     add(sfx, impact(), 0.02, 0.5)
+    for i in range(beats[0].get("segs", 0)):
+        t = SEG_T0 + i * SEG_DT
+        if t > 0: add(sfx, tick(1700 + 9 * i), t, 0.07)
     for bt in beats[1:]:
         t0 = bt["start"]; add(sfx, whoosh(), t0 - 0.2, 0.3)
         if bt["kind"] == "stat":
@@ -124,6 +131,9 @@ def make_audio(total, beats, voice):
             for i in range(10): add(sfx, tick(1200 + 60 * i), t0 + 0.05 + i * 0.07, 0.2)
         elif bt["kind"] == "chart": add(sfx, riser(0.7), t0 + 0.2, 0.3); add(sfx, pop(780), t0 + 0.75, 0.3); add(sfx, pop(980), t0 + 1.2, 0.3)
         elif bt["kind"] == "rule": add(sfx, pop(560 + 90 * int(str(bt.get("num", "1")).translate(str.maketrans("۰۱۲۳۴۵۶۷۸۹", "0123456789")) or 1)), t0 + 0.02, 0.4)
+        elif bt["kind"] == "list":
+            add(sfx, pop(620), t0 + 0.02, 0.25)
+            for i, ra in enumerate(bt["rowsAt"]): add(sfx, pop(700 + 140 * i), ra, 0.35); add(sfx, chime(1046.5 * 2 ** (i * 4 / 12), 0.7), ra + 0.05, 0.16)
         elif bt["kind"] == "cta":
             for i in range(5): add(sfx, click(), bt["wordAt"] + 0.04 + i * 0.1, 0.3)
             add(sfx, chime(1568.0, 1.0), bt["wordAt"] + 0.6, 0.25)
@@ -143,7 +153,8 @@ def rich(s): return re.sub(r"\[([^\]]+)\]", r"<em>\1</em>", esc(s))
 def beat_html(b):
     k = b["kind"]
     if k in ("hook", "text"):
-        inner = "".join(f'<span class="ln">{rich(x)}</span>' for x in b["lines"])
+        segs = f'<div class="segs">{"<i><b></b></i>" * b["segs"]}</div>' if b.get("segs") else ""
+        inner = segs + "".join(f'<span class="ln">{rich(x)}</span>' for x in b["lines"])
     elif k == "stat":
         inner = (f'<div class="val{" good" if b.get("good") else ""}" data-n="{b["n"]}" data-suf="{esc(b.get("suffix", ""))}">۰{esc(b.get("suffix", ""))}</div>'
                  f'<div class="lab">{rich(b["label"])}</div>')
@@ -151,9 +162,13 @@ def beat_html(b):
         inner = f'<div class="num">{esc(str(b["num"]))}</div>' + "".join(f'<span class="ln">{rich(x)}</span>' for x in b["lines"])
     elif k == "chart":
         mx = max(x["v"] for x in b["bars"]); suf = esc(b.get("suffix", "٪"))
-        bars = "".join(f'<div class="bar{" good" if x.get("good") else ""}"><div class="v">{str(x["v"]).translate(FA).replace(".", "٫")}{suf}</div>'
+        val = lambda x: f'<span dir="rtl">{esc(x["show"])}</span>' if "show" in x else str(x["v"]).translate(FA).replace(".", "٫") + suf
+        bars = "".join(f'<div class="bar{" good" if x.get("good") else ""}"><div class="v">{val(x)}</div>'
                        f'<div class="col" style="height:{int(380 * x["v"] / mx)}px"></div><div class="lb">{esc(x["label"])}</div></div>' for x in b["bars"])
         inner = f'<div class="title">{rich(b["title"])}</div><div class="bars">{bars}</div>'
+    elif k == "list":
+        inner = f'<div class="ttl">{rich(b["title"])}</div>' + "".join(
+            f'<div class="row"><span class="ck"><svg viewBox="0 0 64 64"><path d="M15 33 L27 45 L49 20" /></svg></span><span class="rt">{rich(r["text"])}</span></div>' for r in b["rows"])
     elif k == "cta":
         inner = ("".join(f'<span class="ln">{rich(x)}</span>' for x in b["lines"]) +
                  f'<div class="cbox"><div class="av"></div><div class="field"><div class="word">{esc(b["word"])}</div><div class="caret"></div></div>'
@@ -173,7 +188,7 @@ def build_html(total, lines, beats, vo_dur):
     for i, L in enumerate(lines):
         ws = "".join(f'<span class="w{" hi" if w["hi"] else ""}"><i></i><span>{esc(w["t"])}</span></span>' for w in L["words"])
         caps.append(f'<div id="cap{i}" class="clip cap" data-start="{L["start"] - 0.06:.3f}" data-duration="{L["hold"] - L["start"] + 0.06:.3f}" data-track-index="9"><div class="cap-in">{ws}</div></div>')
-    T = {"total": total, "beats": [{"kind": b["kind"], "start": b["start"], **({"wordAt": b["wordAt"]} if "wordAt" in b else {})} for b in beats],
+    T = {"total": total, "segT0": SEG_T0, "segDt": SEG_DT, "beats": [{"kind": b["kind"], "start": b["start"], **{k: b[k] for k in ("wordAt", "rowsAt", "segs") if k in b}} for b in beats],
          "lines": [{"start": L["start"], "hold": L["hold"], "w": [[w["s"], w["e"]] for w in L["words"]]} for L in lines]}
     html = (tpl.replace("__TOTAL__", f"{total:.3f}").replace("__VO_DUR__", f"{vo_dur:.3f}").replace("<!--__BEATS__-->", "\n        ".join(bh))
             .replace("<!--__CAPTIONS__-->", "\n      ".join(caps)).replace("/*__TIMING__*/null", json.dumps(T, ensure_ascii=False)))

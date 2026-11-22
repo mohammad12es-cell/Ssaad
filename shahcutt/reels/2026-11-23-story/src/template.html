@@ -1,0 +1,167 @@
+<!doctype html>
+<!-- @shahcutt reel engine. Edit script.json (segments + beats), then run `python3 build.py VOICE.wav WHISPER.json` to regenerate index.html. -->
+<html lang="fa" dir="rtl" data-resolution="portrait">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <script src="assets/gsap.min.js"></script>
+    <style>
+      @font-face { font-family: "Vazirmatn"; font-weight: 700; src: url("assets/fonts/vazirmatn-latin-700-normal.woff2") format("woff2"); }
+      @font-face { font-family: "Vazirmatn"; font-weight: 900; src: url("assets/fonts/vazirmatn-latin-900-normal.woff2") format("woff2"); }
+      @font-face { font-family: "Vazirmatn"; font-weight: 700; src: url("assets/fonts/vazirmatn-arabic-700-normal.woff2") format("woff2"); unicode-range: U+0600-06FF, U+0750-077F, U+0870-088E, U+0890-0891, U+0897-08E1, U+08E3-08FF, U+200C-200E, U+2010-2011, U+204F, U+2E41, U+FB50-FDFF, U+FE70-FE74, U+FE76-FEFC; }
+      @font-face { font-family: "Vazirmatn"; font-weight: 800; src: url("assets/fonts/vazirmatn-arabic-800-normal.woff2") format("woff2"); unicode-range: U+0600-06FF, U+0750-077F, U+0870-088E, U+0890-0891, U+0897-08E1, U+08E3-08FF, U+200C-200E, U+2010-2011, U+204F, U+2E41, U+FB50-FDFF, U+FE70-FE74, U+FE76-FEFC; }
+      @font-face { font-family: "Vazirmatn"; font-weight: 900; src: url("assets/fonts/vazirmatn-arabic-900-normal.woff2") format("woff2"); unicode-range: U+0600-06FF, U+0750-077F, U+0870-088E, U+0890-0891, U+0897-08E1, U+08E3-08FF, U+200C-200E, U+2010-2011, U+204F, U+2E41, U+FB50-FDFF, U+FE70-FE74, U+FE76-FEFC; }
+
+      /* @shahcutt look: near-black cinematic ground, one hot accent (red glow), cream type */
+      :root { --bg: #07070a; --ink: #f6f1e8; --mut: #8d8a86; --acc: #ff2e3a; --acc-2: #ffb547; --ok: #3ddc84; --card: #121217; --font: "Vazirmatn", sans-serif; }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { margin: 0; width: 1080px; height: 1920px; overflow: hidden; background: var(--bg); }
+      #root { position: relative; width: 100%; height: 100%; overflow: hidden; font-family: var(--font); color: var(--ink); background: var(--bg); }
+      .clip { position: absolute; inset: 0; }
+
+      /* ground: two slow glow blobs, a fine grid, grain and a vignette */
+      #glowA { position: absolute; width: 1300px; height: 1300px; left: -300px; top: 180px; border-radius: 50%; background: radial-gradient(circle, rgba(255, 46, 58, 0.3) 0%, rgba(255, 46, 58, 0) 62%); }
+      #glowB { position: absolute; width: 1100px; height: 1100px; left: 320px; top: 900px; border-radius: 50%; background: radial-gradient(circle, rgba(255, 181, 71, 0.12) 0%, rgba(255, 181, 71, 0) 60%); }
+      #grid { position: absolute; inset: -40px; opacity: 0.07; background-image: linear-gradient(rgba(255,255,255,0.6) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.6) 1px, transparent 1px); background-size: 90px 90px; }
+      #grain { position: absolute; inset: 0; opacity: 0.08; background-image: radial-gradient(rgba(255,255,255,0.9) 0.5px, transparent 0.6px); background-size: 4px 4px; }
+      #vig { position: absolute; inset: 0; background: radial-gradient(ellipse 100% 75% at 50% 45%, transparent 55%, rgba(0, 0, 0, 0.75) 100%); }
+
+      /* beats live in the stage band 220..1100 px; captions sit at 1180 */
+      #stage { position: absolute; inset: 0; transform-origin: 50% 40%; }
+      .beat .b-in { position: absolute; left: 50px; right: 50px; top: 320px; height: 800px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; gap: 18px; }
+      .ln { display: block; font-weight: 900; line-height: 1.22; white-space: nowrap; }
+      .ln em { font-style: normal; color: var(--acc); text-shadow: 0 0 28px rgba(255, 46, 58, 0.75), 0 0 64px rgba(255, 46, 58, 0.45); }
+      .k-hook .ln { font-size: 146px; }
+      .k-hook .ln:first-of-type { font-size: 100px; color: var(--ink); opacity: 0.92; }
+      /* story bars: a row of Instagram story progress bars that fill one by one */
+      .segs { display: flex; gap: 5px; width: 960px; direction: rtl; margin-bottom: 56px; }
+      .segs i { flex: 1; height: 12px; border-radius: 6px; background: rgba(246, 241, 232, 0.16); overflow: hidden; }
+      .segs b { display: block; height: 100%; border-radius: 6px; background: var(--ink); transform-origin: 100% 50%; box-shadow: 0 0 12px rgba(255, 255, 255, 0.45); }
+      .k-text .ln { font-size: 120px; }
+      .k-stat .val { font-size: 340px; font-weight: 900; line-height: 1; color: var(--acc); text-shadow: 0 0 40px rgba(255, 46, 58, 0.7), 0 0 90px rgba(255, 46, 58, 0.4); direction: ltr; }
+      .k-stat .val.good { color: var(--ok); text-shadow: 0 0 40px rgba(61, 220, 132, 0.6), 0 0 90px rgba(61, 220, 132, 0.35); }
+      .k-stat .lab { font-size: 68px; font-weight: 800; color: var(--ink); max-width: 900px; white-space: normal; line-height: 1.35; }
+      .k-rule .num { width: 200px; height: 200px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 120px; font-weight: 900; color: var(--bg); background: var(--acc); box-shadow: 0 0 60px rgba(255, 46, 58, 0.6); }
+      .k-rule .ln { font-size: 104px; }
+      /* chart: two bars, "weak hook" vs "strong hook" */
+      .k-chart .bars { display: flex; gap: 100px; align-items: flex-end; direction: rtl; }
+      .k-chart .bar { width: 260px; display: flex; flex-direction: column; align-items: center; gap: 16px; }
+      .k-chart .col { width: 220px; border-radius: 26px 26px 10px 10px; background: var(--acc); box-shadow: 0 0 50px rgba(255, 46, 58, 0.5); transform-origin: 50% 100%; }
+      .k-chart .bar.good .col { background: var(--ok); box-shadow: 0 0 50px rgba(61, 220, 132, 0.45); }
+      .k-chart .v { font-size: 88px; font-weight: 900; direction: ltr; }
+      .k-chart .lb { font-size: 46px; font-weight: 800; color: var(--mut); white-space: nowrap; }
+      .k-chart .title { font-size: 72px; font-weight: 900; margin-bottom: 40px; }
+      /* result list: rows tick in on their words */
+      .k-list .ttl { font-size: 120px; font-weight: 900; margin-bottom: 26px; }
+      .k-list .row { display: flex; align-items: center; gap: 30px; width: 920px; direction: rtl; padding: 22px 34px; margin-top: 10px; border-radius: 40px; background: rgba(18, 18, 23, 0.88); box-shadow: inset 0 0 0 2px rgba(61, 220, 132, 0.35), 0 20px 50px rgba(0, 0, 0, 0.5); }
+      .k-list .ck { flex: 0 0 100px; height: 100px; border-radius: 50%; background: var(--ok); display: flex; align-items: center; justify-content: center; box-shadow: 0 0 40px rgba(61, 220, 132, 0.5); }
+      .k-list .ck svg { width: 66px; height: 66px; }
+      .k-list .ck path { fill: none; stroke: #07070a; stroke-width: 9; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 60; }
+      .k-list .rt { font-size: 74px; font-weight: 900; white-space: nowrap; }
+      .k-list .rt em { font-style: normal; color: var(--ok); text-shadow: 0 0 26px rgba(61, 220, 132, 0.6); }
+      /* CTA: an Instagram-style comment box typing the keyword */
+      .k-cta .cbox { width: 900px; height: 170px; border-radius: 85px; background: var(--ink); display: flex; align-items: center; padding: 0 24px; gap: 24px; direction: rtl; box-shadow: 0 0 0 5px var(--acc), 0 24px 60px rgba(0, 0, 0, 0.6); }
+      .k-cta .av { flex: 0 0 120px; height: 120px; border-radius: 50%; background: linear-gradient(135deg, #feda75, #fa7e1e, #d62976, #962fbf); }
+      .k-cta .field { flex: 1; display: flex; align-items: center; }
+      .k-cta .word { font-size: 84px; font-weight: 900; color: var(--bg); white-space: nowrap; }
+      .k-cta .caret { width: 6px; height: 76px; background: var(--acc); margin-right: 8px; }
+      .k-cta .send { flex: 0 0 120px; height: 120px; border-radius: 50%; background: var(--acc); display: flex; align-items: center; justify-content: center; }
+      .k-cta .ln { font-size: 86px; }
+
+      #handle { position: absolute; left: 0; right: 0; top: 1500px; text-align: center; direction: ltr; font-weight: 900; font-size: 40px; letter-spacing: 2px; color: rgba(246, 241, 232, 0.55); }
+
+      /* captions: karaoke, word by word */
+      .cap { display: flex; align-items: flex-start; justify-content: center; }
+      .cap-in { margin-top: 1180px; max-width: 1000px; text-align: center; font-weight: 900; font-size: 58px; line-height: 1.5; }
+      .cap .w { position: relative; isolation: isolate; display: inline-block; padding: 0 12px 4px; color: rgba(246, 241, 232, 0.42); text-shadow: 0 4px 18px rgba(0, 0, 0, 0.95); }
+      .cap .w i { position: absolute; inset: 4px 0 2px; border-radius: 16px; background: var(--acc); opacity: 0; z-index: -1; }
+      .cap .w span { position: relative; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="__TOTAL__" data-width="1080" data-height="1920">
+      <div id="ground" class="clip" data-start="0" data-duration="__TOTAL__" data-track-index="0">
+        <div id="glowA"></div><div id="glowB"></div><div id="grid"></div><div id="grain"></div><div id="vig"></div>
+        <div id="handle">@shahcutt</div>
+      </div>
+      <div id="stage" class="clip" data-start="0" data-duration="__TOTAL__" data-track-index="1" data-layout-allow-overlap>
+        <!--__BEATS__-->
+      </div>
+      <!--__CAPTIONS__-->
+      <audio id="vo" src="assets/voiceover.wav" data-start="0" data-duration="__VO_DUR__" data-volume="1"></audio>
+      <audio id="music" src="assets/music.wav" data-start="0" data-duration="__TOTAL__" data-volume="1"></audio>
+      <audio id="sfx" src="assets/sfx.wav" data-start="0" data-duration="__TOTAL__" data-volume="1"></audio>
+    </div>
+
+    <script>
+      window.__T = /*__TIMING__*/null;
+      const T = window.__T;
+      const tl = gsap.timeline({ paused: true });
+      window.__timelines = window.__timelines || {};
+      window.__timelines["main"] = tl;
+      const $ = (id) => document.getElementById(id);
+
+      // ground drifts slowly for the whole film
+      tl.fromTo("#glowA", { x: 0, y: 0 }, { x: 240, y: -160, duration: T.total, ease: "sine.inOut" }, 0);
+      tl.fromTo("#glowB", { x: 0, y: 0 }, { x: -260, y: -220, duration: T.total, ease: "sine.inOut" }, 0);
+      tl.fromTo("#grid", { y: 0 }, { y: 90, duration: T.total, ease: "none" }, 0);
+
+      // beats: each enters on its word with a camera punch and leaves when the next one starts
+      T.beats.forEach((b, i) => {
+        const el = $("b" + i), inner = el.querySelector(".b-in"), parts = b.kind === "list" ? inner.querySelectorAll(".ttl") : inner.children, next = i < T.beats.length - 1 ? T.beats[i + 1].start : T.total;
+        if (i === 0) {
+          // frame 0 is the thumbnail and the hook: fully visible from the first frame, settling with a slow push
+          tl.fromTo(parts, { scale: 1.08 }, { scale: 1, duration: 1.4, ease: "power2.out", stagger: 0.05 }, 0);
+        } else {
+          tl.fromTo(inner, { opacity: 0 }, { opacity: 1, duration: 0.18, ease: "power2.out" }, b.start - 0.04);
+          tl.fromTo(parts, { y: 70, scale: 0.86, opacity: 0 }, { y: 0, scale: 1, opacity: 1, duration: 0.42, ease: "back.out(1.7)", stagger: 0.09 }, b.start - 0.04);
+          tl.fromTo("#stage", { scale: 1.035 }, { scale: 1, duration: 0.5, ease: "power3.out" }, b.start - 0.04);
+        }
+        if (i < T.beats.length - 1) tl.to(inner, { opacity: 0, y: -40, duration: 0.16, ease: "power2.in" }, next - 0.16);
+        if (b.kind === "stat") {
+          const v = el.querySelector(".val"), num = parseFloat(v.dataset.n), suf = v.dataset.suf || "";
+          const st = { n: 0 }, fa = (x) => String(x).replace(/\d/g, (d) => "۰۱۲۳۴۵۶۷۸۹"[d]);
+          tl.fromTo(st, { n: 0 }, { n: num, duration: 0.8, ease: "power2.out", onUpdate: () => { v.textContent = fa(Math.round(st.n)) + suf; } }, b.start);
+        }
+        if (b.segs) {
+          el.querySelectorAll(".segs b").forEach((s, k) => {
+            const t = T.segT0 + k * T.segDt;
+            if (t <= 0) gsap.set(s, { scaleX: 1 });
+            else tl.fromTo(s, { scaleX: 0 }, { scaleX: 1, duration: T.segDt, ease: "none" }, t);
+          });
+        }
+        if (b.kind === "list") {
+          el.querySelectorAll(".row").forEach((r, k) => {
+            const at = b.rowsAt[k];
+            tl.fromTo(r, { x: -90, opacity: 0, scale: 0.92 }, { x: 0, opacity: 1, scale: 1, duration: 0.42, ease: "back.out(1.6)" }, at - 0.06);
+            tl.fromTo(r.querySelector("path"), { strokeDashoffset: 60 }, { strokeDashoffset: 0, duration: 0.3, ease: "power2.out" }, at + 0.06);
+          });
+        }
+        if (b.kind === "chart") {
+          el.querySelectorAll(".col").forEach((c, k) => tl.fromTo(c, { scaleY: 0 }, { scaleY: 1, duration: 0.7, ease: "power3.out" }, b.start + 0.25 + k * 0.45));
+        }
+        if (b.kind === "cta") {
+          const w = el.querySelector(".word"), car = el.querySelector(".caret");
+          tl.fromTo(w, { clipPath: "inset(0% 0% 0% 100%)" }, { clipPath: "inset(0% 0% 0% 0%)", duration: 0.5, ease: "steps(5)" }, b.wordAt + 0.02);
+          tl.fromTo(car, { opacity: 1 }, { opacity: 0, duration: 0.26, yoyo: true, repeat: 9, ease: "steps(1)" }, b.start);
+          tl.to(el.querySelector(".send"), { scale: 1.15, duration: 0.3, yoyo: true, repeat: 5, ease: "sine.inOut" }, b.wordAt + 0.6);
+        }
+      });
+
+      // captions: line fades in, each word lights up as it is spoken
+      T.lines.forEach((L, i) => {
+        const cap = $("cap" + i), inner = cap.firstElementChild, ws = inner.querySelectorAll(".w");
+        tl.fromTo(inner, { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.18, ease: "power2.out" }, L.start - 0.06);
+        tl.to(inner, { opacity: 0, duration: 0.12, ease: "power1.in" }, L.hold - 0.12);
+        ws.forEach((w, j) => {
+          const [s] = L.w[j], nxt = j < ws.length - 1 ? L.w[j + 1][0] : Math.min(L.hold - 0.12, L.w[j][1] + 0.25);
+          const bx = w.firstElementChild, done = w.classList.contains("hi") ? "#ff6b72" : "#f6f1e8";
+          tl.fromTo(bx, { opacity: 0, scale: 0.82 }, { opacity: 1, scale: 1, duration: 0.1, ease: "back.out(2)" }, s - 0.03);
+          tl.fromTo(w, { color: "rgba(246,241,232,0.42)" }, { color: "#07070a", duration: 0.08 }, s - 0.03);
+          tl.to(bx, { opacity: 0, duration: 0.1, ease: "power1.in" }, nxt - 0.04);
+          tl.to(w, { color: done, duration: 0.1 }, nxt - 0.04);
+        });
+      });
+    </script>
+  </body>
+</html>

@@ -14,6 +14,7 @@ Audience: Persian-speaking business owners, page owners and creators who want be
 | «پیج» comment CTA, white UI cards (invoice 12,000,000 toman) | 216 | 14% | 65% | salesy, weak hook |
 | $70 podcast edit, English, before/after UI | 243 | 12% | 70% | English + price-first |
 | Ray Dalio re-edit, English | 143 | 12% | 65% | English |
+| #1 engine reel: «منم اول باورم نمی‌شد» → «هوک» (3-second rule, 36 s, 2026-11-22) | 183 (first ~11 h) | 22% | 33.5% | Persian hook held people; watch time still short: the middle needs more story |
 
 ## 2. The formula (update it as new data arrives)
 
@@ -22,6 +23,7 @@ Audience: Persian-speaking business owners, page owners and creators who want be
 3. **Emotion before offer**: curiosity, surprise or a personal confession; the service/price never leads.
 4. **One idea, 3 steps or 1 story**, 30–50 s. The answer is completed only near the end (open loop).
 5. **Real numbers from his own work** (skip rates, follower growth 0→12K / 0→22K, 12 videos a week) make it believable.
+   A client case works as a story: mistake + number in the hook → "2 fixes" promise → diagnosis → fixes → result held to the end.
 6. **Comment-keyword CTA** in the last 5 s, one word, tied to a free, specific gift (page review, hook rewrite, checklist).
 7. Visual: dark cinematic ground, one hot accent (red / amber glow), huge Persian type, motion that proves he is a motion designer.
 
@@ -34,6 +36,7 @@ Audience: Persian-speaking business owners, page owners and creators who want be
 - قبل از اینکه برای ادیت پول بدی، اینو ببین
 - یه ویدیوی معمولی رو جلوی چشمت تبدیل می‌کنم به…
 - چرا پیج‌های کوچیک بیشتر از تو ویو می‌گیرن؟
+- روزی ۵۰ تا استوری… اشتباه بود (a real client mistake + a number; used 2026-11-23)
 
 ## 4. CTA, caption and DM rules
 
@@ -73,6 +76,8 @@ Audience: Persian-speaking business owners, page owners and creators who want be
 - Screen recordings Shahin sends from his own Explore: transcribed with Whisper and read frame by frame; each one adds a line to the formula log below.
 
 ## 8. Formula log (one line per analysed outlier)
+
+Days with no outside source (Supermetrics not logged in, no vidIQ credits, no recordings) use the page's own data only and add no line here.
 
 | Date | Source | Hook (first 2 s) | Body device | CTA | Why it worked |
 |---|---|---|---|---|---|

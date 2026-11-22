@@ -1,0 +1,585 @@
+<!doctype html>
+<html lang="fa">
+<head>
+<meta charset="utf-8">
+<title>viral-reel «اینو Claude ساخت» (30 s)</title>
+<script src="assets/vendor/gsap.min.js"></script>
+<script src="assets/bars.js"></script>
+<style>
+@font-face{font-family:"Abar";src:url("assets/fonts/AbarHigh-Light.otf") format("opentype");font-weight:300;font-display:block;}
+@font-face{font-family:"Abar";src:url("assets/fonts/AbarHigh-Bold.otf") format("opentype");font-weight:700;font-display:block;}
+@font-face{font-family:"Abar";src:url("assets/fonts/AbarHigh-ExtraBold.otf") format("opentype");font-weight:800;font-display:block;}
+@font-face{font-family:"Abar";src:url("assets/fonts/AbarHigh-Black.otf") format("opentype");font-weight:900;font-display:block;}
+@font-face{font-family:"Superline";src:url("assets/fonts/Superline-Italic.ttf") format("truetype");font-weight:400;font-display:block;}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:1080px;height:1920px;overflow:hidden;background:#000}
+#root{position:relative;width:1080px;height:1920px;overflow:hidden;font-synthesis:none}
+.scene{position:absolute;inset:0;overflow:hidden}
+.cam{position:absolute;inset:0;transform-origin:540px 960px}
+.bg{position:absolute;inset:-200px}
+.paper{background:radial-gradient(ellipse at 50% 45%,#e4e3df 0%,#d9d8d4 55%,#c9c8c3 100%)}
+.dark{background:radial-gradient(ellipse at 50% 45%,#1a1a19 0%,#0c0c0c 60%,#050505 100%)}
+.grp{position:absolute;inset:0}
+.ln{position:absolute;left:0;width:1080px;text-align:center;white-space:nowrap;direction:rtl;font-family:"Abar",sans-serif;line-height:1.3;color:#0c0c0c}
+.on-dark .ln{color:#f2f1ed}
+.w{display:inline-block;opacity:0;position:relative}
+.red{color:#c8102e}
+.on-dark .red{color:#e5243b}
+.grey{color:#6d6c68}
+#sv1{background:#fff;visibility:hidden}
+.v1{position:absolute;left:0;width:1080px;text-align:center;white-space:nowrap;direction:rtl;font-family:Tahoma,"DejaVu Sans",sans-serif;color:#111;line-height:1.3}
+.lt{display:inline-block;opacity:0}
+.lc{display:inline-block}
+.ltr{display:inline-block;direction:ltr}
+#sB{visibility:hidden;clip-path:circle(0px at 540px 960px)}
+.inner{display:inline-block;position:relative}
+#strike{position:absolute;left:-10px;right:-10px;top:52%;height:8px;margin-top:-4px;background:#c8102e;border-radius:4px;transform:scaleX(0);transform-origin:100% 50%}
+#pillWrap{position:absolute;top:220px;left:0;width:1080px;height:80px}
+.pill{position:absolute;left:0;width:1080px;text-align:center;opacity:0}
+.pill span.pb{display:inline-block;background:#0c0c0c;color:#f2f1ed;padding:10px 34px;border-radius:999px;font-family:"Abar",sans-serif;font-weight:700;font-size:48px;line-height:1.3;direction:rtl}
+.pill.inv span.pb{background:#f2f1ed;color:#0c0c0c}
+.dg{display:inline-block;position:relative;top:.155em;direction:ltr}
+#scan{position:absolute;inset:0;background:repeating-linear-gradient(0deg,rgba(0,0,0,.18) 0 2px,transparent 2px 5px);opacity:0}
+.band{position:absolute;left:0;top:0;width:1080px;height:170px;background:linear-gradient(180deg,transparent,rgba(255,255,255,.45) 40%,rgba(0,0,0,.28) 62%,transparent);transform:translateY(-400px)}
+#rew{position:absolute;left:110px;top:230px;font-family:Consolas,"JetBrains Mono",monospace;font-size:54px;font-weight:700;color:#0c0c0c;letter-spacing:2px;opacity:0}
+#vig{position:absolute;inset:0;background:radial-gradient(ellipse,transparent 55%,rgba(0,0,0,.28) 100%)}
+#grain{position:absolute;inset:-40px;mix-blend-mode:overlay;opacity:.16}
+#flash{position:absolute;inset:0;background:#fff;opacity:0}
+/* beat 3: split demo */
+.sk{display:inline-block;position:relative}
+.split{position:absolute;inset:0;display:flex;justify-content:center;direction:rtl;opacity:0}
+.split i{display:inline-block;font-style:normal}
+/* beat 4: spring graph */
+#g4{opacity:0}
+#graph{position:absolute;left:120px;top:830px;width:840px;height:440px;overflow:visible}
+.lane{position:absolute;left:120px;width:840px;height:74px}
+.lane .track{position:absolute;left:0;right:0;top:36px;height:3px;background:#b9b8b3;border-radius:2px;transform-origin:100% 50%}
+.lane .tgt{position:absolute;left:96px;top:6px;width:0;height:62px;border-left:4px dashed #6d6c68;opacity:0}
+.chip{position:absolute;left:0;top:7px;height:60px;padding:0 26px;border-radius:999px;color:#fff;font-family:"Abar",sans-serif;font-weight:800;font-size:38px;line-height:60px;direction:rtl;white-space:nowrap;opacity:0}
+.chip.lin{background:#8a8984}.chip.spr{background:#c8102e}
+/* beat 5: viewfinder */
+.vf{position:absolute;width:96px;height:96px;border:0 solid #0c0c0c;opacity:0}
+.vf.tl{left:110px;top:196px;border-top-width:9px;border-left-width:9px}
+.vf.tr{left:874px;top:196px;border-top-width:9px;border-right-width:9px}
+.vf.bl{left:110px;top:1360px;border-bottom-width:9px;border-left-width:9px}
+.vf.br{left:874px;top:1360px;border-bottom-width:9px;border-right-width:9px}
+#rec{position:absolute;left:150px;top:1290px;font-family:Consolas,"JetBrains Mono",monospace;font-weight:700;font-size:38px;color:#0c0c0c;direction:ltr;white-space:nowrap;opacity:0}
+#recDot{display:inline-block;width:26px;height:26px;border-radius:50%;background:#c8102e;margin-right:14px;vertical-align:-2px}
+/* beat 6: sound */
+#sD,#sE,#sF,#sG{visibility:hidden}
+#sF,#sG{clip-path:circle(0px at 540px 960px)}
+#spk{position:absolute;left:760px;top:1135px;width:190px;height:190px;opacity:0;overflow:visible}
+#bars{position:absolute;left:130px;top:1130px;width:600px;height:200px;display:flex;align-items:center;justify-content:space-between;direction:ltr}
+#bars i{display:block;width:14px;height:200px;background:#9ef0c8;border-radius:7px;transform:scaleY(0.04);opacity:0}
+/* beat 7: recap pills */
+.fxrow{position:absolute;left:0;width:1080px;display:flex;justify-content:center;gap:30px;direction:rtl}
+.fx{position:relative;height:72px;padding:0 26px 0 22px;border-radius:999px;background:#0c0c0c;color:#f2f1ed;font-family:"Abar",sans-serif;font-weight:700;font-size:36px;line-height:72px;direction:rtl;white-space:nowrap;opacity:0}
+.fx b{display:inline-block;width:40px;height:40px;border-radius:50%;background:#c8102e;color:#fff;font-size:28px;line-height:40px;text-align:center;margin-left:12px;vertical-align:4px}
+.fx b span{position:relative;top:.155em}
+/* beat 8: CTA */
+.mint{display:inline-block;background:#9ef0c8;border-radius:28px;padding:0 44px;position:relative;overflow:hidden}
+#shine{position:absolute;top:-20%;left:0;width:120px;height:140%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.75),transparent);transform:translateX(-200px) skewX(-18deg)}
+</style>
+</head>
+<body>
+<div id="root" data-composition-id="main" data-start="0" data-duration="30" data-width="1080" data-height="1920" data-fps="30">
+
+  <svg width="0" height="0" style="position:absolute">
+    <filter id="mbB" x="-40%" y="-5%" width="180%" height="110%"><feGaussianBlur id="mbBg" stdDeviation="0 0"/></filter>
+    <filter id="mbD" x="-40%" y="-5%" width="180%" height="110%"><feGaussianBlur id="mbDg" stdDeviation="0 0"/></filter>
+  </svg>
+
+  <!-- Beat 1-2: hook + "but v1 was this" (paper) -->
+  <div id="sA" class="scene">
+    <div class="bg paper"></div>
+    <div id="camA" class="cam"><div id="shkA" class="cam">
+      <div id="grp1" class="grp">
+        <div class="ln" style="top:489.5px;font-size:170px;font-weight:900"><span class="w">اینو</span></div>
+        <div class="ln" style="top:680.5px;font-size:230px;font-family:'Superline',cursive;color:#c8102e;direction:ltr"><span class="w">Claude</span></div>
+        <div class="ln" style="top:927px;font-size:220px;font-weight:900"><span class="w">ساخت.</span></div>
+        <div class="ln" style="top:1235.4px;font-size:84px;font-weight:700"><span class="w l4">یه</span> <span class="w l4">خط</span> <span class="w l4">کد</span> <span class="w l4">هم</span> <span class="w l4">ننوشتم.</span></div>
+      </div>
+      <div id="grp2" class="grp">
+        <div class="ln" style="top:832.4px;font-size:104px;font-weight:800"><span class="w g2">ولی</span> <span class="w g2">نسخه&zwnj;ی</span> <span class="w g2" style="color:#c8102e">اولش</span></div>
+        <div class="ln" style="top:982.5px;font-size:150px;font-weight:900"><span class="w g2">این</span> <span class="w g2">بود</span></div>
+      </div>
+    </div></div>
+  </div>
+
+  <!-- v1: deliberately bad raw AI output -->
+  <div id="sv1" class="scene">
+    <div id="tag" class="v1" style="top:238px;font-size:34px;color:#888">v1 | خروجی خام هوش مصنوعی</div>
+    <div id="v1A" class="v1" style="top:748.5px;font-size:110px"></div>
+    <div id="v1B" class="v1" style="top:888.5px;font-size:110px"></div>
+    <div id="v1C" class="v1" style="top:1060px;font-size:46px;color:#555;opacity:0"></div>
+  </div>
+
+  <!-- Beats 3-5 (paper): fix 1 word by word, fix 2 spring, fix 3 hand-held -->
+  <div id="sB" class="scene">
+    <div class="bg paper"></div>
+    <div id="camB" class="cam"><div id="hhB" class="cam"><div id="shkB" class="cam">
+      <div id="g3" class="grp">
+        <div id="sakhtB" class="ln" style="top:791px;font-size:260px;font-weight:900"><span class="sk"><span id="skW" class="w">ساخت.</span><span id="skS" class="split"><i>س</i><i>ا</i><i>خ</i><i>ت</i><i>.</i></span></span></div>
+        <div class="ln" style="top:934.6px;font-size:116px;font-weight:800"><span class="w b3">کلمه</span> <span class="w b3">به</span> <span class="w b3">کلمه،</span></div>
+        <div class="ln grey" style="top:1110.6px;font-size:76px;font-weight:700"><span class="w b4">نه</span> <span class="inner"><span class="w b4">حرف</span> <span class="w b4">به</span> <span class="w b4">حرف</span><i id="strike"></i></span></div>
+        <div class="ln" style="top:1290px;font-size:54px;font-weight:700"><span class="w b5">وگرنه</span> <span class="w b5">حروفِ</span> <span class="w b5">فارسی</span> <span class="w b5">از هم</span> <span class="w b5 red">جدا</span> <span class="w b5">می&zwnj;شن.</span></div>
+      </div>
+      <div id="g4" class="grp">
+        <div class="ln red" style="top:370px;font-size:180px;font-weight:900"><span id="fanar" class="w">فنر،</span></div>
+        <div class="ln grey" style="top:610px;font-size:100px;font-weight:800"><span class="w b6">نه</span> <span class="w b6">خطِ</span> <span class="w b6">صاف</span></div>
+        <svg id="graph" viewBox="0 0 840 440">
+          <line id="axX" x1="40" y1="400" x2="820" y2="400" stroke="#0c0c0c" stroke-width="5" stroke-linecap="round"/>
+          <line id="axY" x1="40" y1="400" x2="40" y2="20" stroke="#0c0c0c" stroke-width="5" stroke-linecap="round"/>
+          <line id="tgtL" x1="40" y1="120" x2="820" y2="120" stroke="#8a8984" stroke-width="3" stroke-dasharray="12 12" opacity="0"/>
+          <text id="tgtT" x="815" y="98" font-family="Abar" font-weight="700" font-size="34" fill="#6d6c68" text-anchor="end" opacity="0">هدف</text>
+          <path id="linP" d="M40 400 L820 120" fill="none" stroke="#8a8984" stroke-width="8" stroke-linecap="round"/>
+          <path id="sprP" d="" fill="none" stroke="#c8102e" stroke-width="10" stroke-linejoin="round" stroke-linecap="round"/>
+          <circle id="linD" cx="40" cy="400" r="14" fill="#8a8984" opacity="0"/>
+          <circle id="sprD" cx="40" cy="400" r="16" fill="#c8102e" opacity="0"/>
+          <text id="linT" x="815" y="222" font-family="Abar" font-weight="800" font-size="40" fill="#8a8984" text-anchor="end" opacity="0">خطی</text>
+          <text id="sprT" x="227" y="-12" font-family="Abar" font-weight="900" font-size="46" fill="#c8102e" text-anchor="middle" opacity="0">فنر</text>
+        </svg>
+        <div class="lane" id="laneL" style="top:1290px"><div class="track"></div><div class="tgt"></div><span class="chip lin">خطی</span></div>
+        <div class="lane" id="laneS" style="top:1372px"><div class="track"></div><div class="tgt"></div><span class="chip spr">فنر</span></div>
+      </div>
+      <div id="g5" class="grp">
+        <i class="vf tl"></i><i class="vf tr"></i><i class="vf bl"></i><i class="vf br"></i>
+        <div id="rec"><span id="recDot"></span><span id="recT">REC 00:00:13:03</span></div>
+        <div class="ln" style="top:560px;font-size:190px;font-weight:900"><span id="w5a" class="w">دوربینِ</span></div>
+        <div class="ln" style="top:790px;font-size:230px;font-weight:900"><span id="w5b" class="w">دستی.</span></div>
+        <div class="ln" style="top:1110px;font-size:84px;font-weight:800"><span class="w b7">هیچی</span> <span class="w b7 red">ثابت</span> <span class="w b7">نمی&zwnj;مونه.</span></div>
+      </div>
+    </div></div></div>
+  </div>
+
+  <!-- Beat 6 (dark): fix 4 real motion blur + sound -->
+  <div id="sD" class="scene on-dark">
+    <div class="bg dark"></div>
+    <div id="camD" class="cam"><div id="shkD" class="cam">
+      <div class="ln" style="top:400px;font-size:180px;font-weight:900"><span id="w6a" class="w">موشن&zwnj;بلرِ</span></div>
+      <div class="ln" style="top:625px;font-size:180px;font-weight:900"><span id="w6b" class="w">واقعی</span></div>
+      <div class="ln" style="top:855px;font-size:150px;font-weight:900"><span id="w6c" class="w"><span class="red">+</span> صدا</span></div>
+      <svg id="spk" viewBox="0 0 24 24">
+        <path d="M3 9h4l5-4v14l-5-4H3z" fill="#f2f1ed"/>
+        <g id="spkX" style="transform-origin:18.5px 12px"><path d="M16 9l5 6M21 9l-5 6" stroke="#e5243b" stroke-width="2.2" stroke-linecap="round" fill="none"/></g>
+      </svg>
+      <div id="bars"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+    </div></div>
+  </div>
+
+  <!-- Beat 7a (paper, the drop): AI is a tool -->
+  <div id="sE" class="scene">
+    <div class="bg paper"></div>
+    <div id="camE" class="cam"><div id="shkE" class="cam">
+      <div class="ln" style="top:470px;font-size:130px;font-weight:800"><span class="w b8">هوش</span> <span class="w b8">مصنوعی</span></div>
+      <div class="ln" style="top:650px;font-size:240px;font-weight:900"><span id="abzar" class="w">ابزاره.</span></div>
+      <div class="fxrow" style="top:1130px"><span class="fx" id="fx1"><b><span>۱</span></b>کلمه&zwnj;به&zwnj;کلمه</span><span class="fx" id="fx2"><b><span>۲</span></b>فنر</span></div>
+      <div class="fxrow" style="top:1232px"><span class="fx" id="fx3"><b><span>۳</span></b>دوربین دستی</span><span class="fx" id="fx4"><b><span>۴</span></b>موشن&zwnj;بلر + صدا</span></div>
+    </div></div>
+  </div>
+
+  <!-- Beat 7b (dark, circle wipe): the editor's eye -->
+  <div id="sF" class="scene on-dark">
+    <div class="bg dark"></div>
+    <div id="camF" class="cam"><div id="shkF" class="cam">
+      <div class="ln red" style="top:520px;font-size:210px;font-weight:900"><span id="cheshm" class="w">چشمِ</span></div>
+      <div class="ln red" style="top:800px;font-size:210px;font-weight:900"><span id="editor" class="w">ادیتوره</span></div>
+      <div class="ln" style="top:1100px;font-size:104px;font-weight:800"><span class="w b9">که</span> <span class="w b9">خوبش</span> <span class="w b9">می&zwnj;کنه.</span></div>
+    </div></div>
+  </div>
+
+  <!-- Beat 8 (paper, circle wipe): CTA, then back to frame 0 -->
+  <div id="sG" class="scene">
+    <div class="bg paper"></div>
+    <div id="camG" class="cam"><div id="shkG" class="cam">
+      <div class="ln" style="top:440px;font-size:150px;font-weight:900"><span class="w b10">کامنت</span> <span class="w b10">کن</span></div>
+      <div class="ln" style="top:660px;font-size:190px;font-weight:900"><span id="prompt" class="w"><span class="mint">پرامپت<i id="shine"></i></span></span></div>
+      <div class="ln" style="top:1000px;font-size:66px;font-weight:700"><span class="w b11">تا</span> <span class="w b11">پرامپت</span> <span class="w b11">کامل</span> <span class="w b11">و چک&zwnj;لیست</span></div>
+      <div class="ln" style="top:1095px;font-size:66px;font-weight:700"><span class="w b11">رو</span> <span class="w b11">برات</span> <span class="w b11">بفرستم</span></div>
+    </div></div>
+  </div>
+
+  <div id="pillWrap">
+    <div class="pill" id="p1"><span class="pb">اصلاح <span class="dg">۱/۴</span></span></div>
+    <div class="pill" id="p2"><span class="pb">اصلاح <span class="dg">۲/۴</span></span></div>
+    <div class="pill" id="p3"><span class="pb">اصلاح <span class="dg">۳/۴</span></span></div>
+    <div class="pill inv" id="p4"><span class="pb">اصلاح <span class="dg">۴/۴</span></span></div>
+    <div class="pill" id="p5"><span class="pb">قسمت <span class="dg">۱</span> از <span class="dg">۳</span></span></div>
+  </div>
+  <div id="scan"></div>
+  <div id="band1" class="band"></div>
+  <div id="band2" class="band"></div>
+  <div id="rew">◀◀ REW</div>
+  <div id="flash"></div>
+  <div id="vig"></div>
+  <div id="grain"></div>
+
+  <audio class="clip" id="a-mix" src="assets/audio/mix-full.wav" data-start="0" data-duration="30" data-track-index="20"></audio>
+</div>
+
+<script>
+const $ = s => document.querySelector(s);
+const $$ = s => Array.from(document.querySelectorAll(s));
+let seed = 7;    const rnd = () => ((seed = (seed * 16807) % 2147483647) / 2147483647);
+let seed2 = 1234; const rs = () => ((seed2 = (seed2 * 16807) % 2147483647) / 2147483647) * 2 - 1;
+const FPS = 30, END = 30;
+
+// ---- word onsets on the timeline (vo/words.json, Whisper + silence snap) ----
+const T = {
+  kalame: 4.95, na: 5.98, harf1: 6.18, be2: 6.44, harf2: 6.56,
+  vagarna: 7.23, horoof: 7.42, farsi: 7.60, azham: 7.86, joda: 8.00, mishan: 8.26,
+  do: 9.10, fanar: 9.45, nakhat: 10.16, saaf: 10.53, ke: 11.20, harekat: 11.26, joon: 11.65, begire: 12.04,
+  se: 13.10, doorbin: 13.57, dasti: 13.78, hichi: 14.80, sabet: 15.01, nemimoone: 15.46,
+  chahar: 17.30, motion: 18.13, vaghei: 18.56, va: 19.80, seda: 19.92,
+  hoosh: 22.10, masnooi: 22.22, abzare: 22.58,
+  cheshm: 23.60, editore: 23.98, ke2: 24.34, khoobesh: 24.48, mikone: 24.72,
+  comment: 25.70, kon: 25.96, prompt: 26.14, ta: 26.805, prompt2: 26.95, kamel: 27.08, checklist: 27.46,
+  ro: 27.86, barat: 28.02, befrestam: 28.18,
+};
+const DROP = 22.0;
+
+// ---- v1: per-letter inline-blocks (breaks the joins on purpose) ----
+function letters(el, str, cls) {
+  for (const ch of str) {
+    if (ch === " ") { el.appendChild(document.createTextNode(" ")); continue; }
+    const s = document.createElement("span"); s.className = cls; s.textContent = ch; el.appendChild(s);
+  }
+}
+letters($("#v1A"), "اینو ", "lt");
+const cl = document.createElement("span"); cl.className = "ltr"; letters(cl, "Claude", "lt"); $("#v1A").appendChild(cl);
+letters($("#v1B"), "ساخت.", "lt");
+letters($("#v1C"), "یه خط کد هم ننوشتم.", "lc");
+
+// ---- grain ----
+const n = document.createElement("canvas"); n.width = n.height = 256;
+const cx = n.getContext("2d"); const id = cx.createImageData(256, 256);
+for (let i = 0; i < id.data.length; i += 4) { const v = rnd() * 255; id.data[i] = id.data[i+1] = id.data[i+2] = v; id.data[i+3] = 255; }
+cx.putImageData(id, 0, 0);
+$("#grain").style.backgroundImage = `url(${n.toDataURL()})`;
+
+// ---- spring (zeta 0.32, omega 12): one ~31 % overshoot, settled by ~1.2 s ----
+const springVal = (t, z = 0.32, w = 12) => { const wd = w * Math.sqrt(1 - z * z); return 1 - Math.exp(-z * w * t) * (Math.cos(wd * t) + (z * w / wd) * Math.sin(wd * t)); };
+const springEase = (Tsec = 1.2) => p => (p >= 1 ? 1 : springVal(p * Tsec));
+// graph path: x = time (0-1.2 s), y = value (0 at y 400, target 1 at y 120)
+const SP = []; for (let i = 0; i <= 96; i++) { const t = 1.2 * i / 96; SP.push([40 + 780 * i / 96, 400 - 280 * springVal(t)]); }
+$("#sprP").setAttribute("d", "M" + SP.map(p => p[0].toFixed(1) + " " + p[1].toFixed(1)).join(" L"));
+
+const tl = gsap.timeline({ paused: true });
+for (let f = 0; f < END * FPS; f++) tl.set("#grain", { backgroundPosition: `${Math.floor(rnd()*256)}px ${Math.floor(rnd()*256)}px` }, f / FPS);
+
+// focus-pull landing on a spring
+function land(el, t, o = {}) {
+  const s = o.s ?? 1.14, b = o.b ?? 12, d = o.d ?? 0.55, bd = o.bd ?? 0.28, ease = o.ease ?? "back.out(1.8)";
+  tl.fromTo(el, { opacity: 0 }, { opacity: 1, duration: 0.06, ease: "none" }, t);
+  tl.fromTo(el, { scale: s }, { scale: 1, duration: d, ease }, t);
+  tl.fromTo(el, { filter: `blur(${b}px)` }, { filter: "blur(0px)", duration: bd, ease: "power2.out" }, t);
+}
+// hand-held shake, decaying, per frame
+function shake(el, t, amp = 14, dur = 0.3) {
+  const nF = Math.round(dur * FPS);
+  for (let i = 0; i < nF; i++) {
+    const k = 1 - i / nF;
+    tl.set(el, { x: rs() * amp * k, y: rs() * amp * k, rotation: rs() * 0.6 * k }, t + i / FPS);
+  }
+  tl.set(el, { x: 0, y: 0, rotation: 0 }, t + dur);
+}
+// smooth hand-held float (sum of slow sines, seeded phases), per frame
+function handheld(el, t0, t1, amp = 9, rot = 0.5) {
+  const ph = [rnd(), rnd(), rnd(), rnd(), rnd(), rnd()].map(v => v * 6.283);
+  for (let f = Math.round(t0 * FPS); f < Math.round(t1 * FPS); f++) {
+    const t = f / FPS;
+    tl.set(el, {
+      x: amp * (Math.sin(t * 1.7 + ph[0]) * 0.7 + Math.sin(t * 4.1 + ph[1]) * 0.3),
+      y: amp * (Math.sin(t * 1.3 + ph[2]) * 0.7 + Math.sin(t * 3.7 + ph[3]) * 0.3),
+      rotation: rot * (Math.sin(t * 0.9 + ph[4]) * 0.8 + Math.sin(t * 2.9 + ph[5]) * 0.2),
+    }, t);
+  }
+  tl.set(el, { x: 0, y: 0, rotation: 0 }, t1);
+}
+// group exit: up and out with blur
+function exitUp(el, t, dy = -300, d = 0.3) {
+  tl.to(el, { y: dy, opacity: 0, duration: d, ease: "power3.in" }, t);
+  tl.fromTo(el, { filter: "blur(0px)" }, { filter: "blur(14px)", duration: d, ease: "power3.in", immediateRender: false }, t);
+}
+// pill swap
+function pillIn(sel, t) {
+  tl.fromTo(sel, { opacity: 0 }, { opacity: 1, duration: 0.08, ease: "none" }, t);
+  tl.fromTo(sel, { scale: 0.6, y: -30 }, { scale: 1, y: 0, duration: 0.45, ease: "back.out(2.5)" }, t);
+}
+function pillFlip(from, to, t) {
+  tl.to(from, { scaleY: 0, opacity: 0, duration: 0.1, ease: "power2.in" }, t - 0.1);
+  tl.fromTo(to, { opacity: 0, scaleY: 0 }, { opacity: 1, scaleY: 1, duration: 0.35, ease: "back.out(2.6)", immediateRender: false }, t);
+}
+function strokeDraw(el, t, d, ease = "none") {
+  const L = el.getTotalLength(); el.style.strokeDasharray = L + " " + L; el.style.opacity = 0;  // round caps leak a dot before drawing
+  tl.set(el, { opacity: 1 }, t);
+  tl.fromTo(el, { strokeDashoffset: L }, { strokeDashoffset: 0, duration: d, ease }, t);
+}
+
+// ================= Beat 1: hook (as approved in the sample) =================
+const shkA = $("#shkA"), grp1 = $("#grp1"), grp2 = $("#grp2");
+tl.fromTo("#camA", { x: -8, y: 6, rotation: -0.4, scale: 1 }, { x: 10, y: -10, rotation: 0.5, scale: 1.04, duration: 3.9, ease: "sine.inOut" }, 0);
+tl.fromTo(grp1, { y: 90 }, { y: 50, duration: 0.5, ease: "power3.out" }, 0.45);
+tl.to(grp1, { y: 10, duration: 0.5, ease: "power3.out" }, 0.85);
+tl.to(grp1, { y: -30, duration: 0.5, ease: "power3.out" }, 1.35);
+const g1 = $$("#grp1 .w");
+land(g1[0], 0.10); shake(shkA, 0.10, 5, 0.2);
+land(g1[1], 0.45); shake(shkA, 0.45, 7, 0.22);
+land(g1[2], 0.85, { s: 1.3, b: 16, ease: "back.out(2.5)" }); shake(shkA, 0.85, 18, 0.35);
+$$(".l4").forEach((w, i) => {
+  const t = 1.35 + i * 0.12;
+  land(w, t, { s: 1.2, b: 10, d: 0.45 });
+  tl.fromTo(w, { y: 12 }, { y: 0, duration: 0.45, ease: "power3.out" }, t);
+});
+tl.to(grp1, { y: -290, opacity: 0, duration: 0.28, ease: "power3.in" }, 2.45);
+tl.fromTo(grp1, { filter: "blur(0px)" }, { filter: "blur(14px)", duration: 0.28, ease: "power3.in", immediateRender: false }, 2.45);
+
+// ================= Beat 2: "but v1 was this" =================
+const g2 = $$(".g2");
+tl.fromTo(grp2, { y: 40 }, { y: 0, duration: 0.6, ease: "power3.out" }, 2.68);
+[2.68, 2.80, 2.92].forEach((t, i) => land(g2[i], t, { s: 1.16, b: 12, d: 0.5 }));
+land(g2[3], 3.08, { s: 1.22, b: 14, d: 0.5, ease: "back.out(2.2)" });
+land(g2[4], 3.18, { s: 1.22, b: 14, d: 0.5, ease: "back.out(2.2)" });
+shake(shkA, 3.08, 10, 0.2);
+// tape rewind 3.30-3.90
+tl.set(["#scan", "#rew"], { opacity: 1 }, 3.3);
+tl.fromTo("#band1", { y: -400 }, { y: 1920, duration: 0.3, ease: "none" }, 3.3);
+tl.fromTo("#band2", { y: -400 }, { y: 1920, duration: 0.3, ease: "none" }, 3.6);
+tl.fromTo(shkA, { scale: 1 }, { scale: 1.06, duration: 0.6, ease: "power2.in" }, 3.3);
+for (let f = 0; f < 18; f++) {
+  const t = 3.3 + f / FPS;
+  tl.set(shkA, { x: rs() * 14, skewX: rs() * 3 }, t);
+  tl.set("#rew", { opacity: (f % 6) < 3 ? 1 : 0.25 }, t);
+}
+tl.set(g2, { textShadow: "-6px 0 rgba(255,0,60,.7), 6px 0 rgba(0,220,255,.7)" }, 3.3);
+g2.slice().reverse().forEach((w, k) => {
+  tl.fromTo(w, { scale: 1, opacity: 1, filter: "blur(0px)" },
+    { scale: 1.6, opacity: 0, filter: "blur(20px)", duration: 0.16, ease: "power2.in", immediateRender: false }, 3.32 + k * 0.09);
+});
+
+// ================= v1 (3.9-5.5): static, linear, silent =================
+tl.set("#sA", { visibility: "hidden" }, 3.9);
+tl.set("#sv1", { visibility: "visible" }, 3.9);
+tl.set(["#scan", "#rew", "#vig", "#grain"], { opacity: 0 }, 3.9);
+tl.fromTo("#v1A .lt", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.15, ease: "none", stagger: 0.05 }, 3.95);
+const ltB = $$("#v1B .lt");
+tl.fromTo(ltB, { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.15, ease: "none", stagger: 0.05 }, 4.5);
+tl.fromTo("#v1C", { opacity: 0 }, { opacity: 1, duration: 0.3, ease: "none" }, 4.75);
+
+// ================= Beat 3: fix 1/4, word by word =================
+tl.to("#tag", { opacity: 0, duration: 0.2, ease: "none" }, T.kalame);
+pillIn("#p1", T.kalame);
+tl.to(["#v1A", "#v1C"], { opacity: 0.12, duration: 0.25, ease: "power2.out" }, 4.98);
+tl.to("#v1B", { scale: 1.6, duration: 0.25, ease: "power2.out" }, 4.98);
+ltB.forEach((l, i) => {
+  tl.to(l, { x: (2 - i) * 34, duration: 0.25, ease: "power2.out" }, 4.98);
+  tl.to(l, { x: -(2 - i) * 8, duration: 0.2, ease: "power4.in" }, 5.30);
+});
+// circle wipe to the polished version
+const WIPE3 = 5.50;
+tl.set("#sB", { visibility: "visible" }, WIPE3);
+tl.fromTo("#sB", { clipPath: "circle(0px at 540px 960px)" }, { clipPath: "circle(1150px at 540px 960px)", duration: 0.45, ease: "power3.out" }, WIPE3);
+tl.set("#sv1", { visibility: "hidden" }, WIPE3 + 0.45);
+tl.to("#vig", { opacity: 1, duration: 0.4, ease: "none" }, WIPE3);
+tl.to("#grain", { opacity: 0.16, duration: 0.4, ease: "none" }, WIPE3);
+tl.fromTo("#camB", { x: 0, y: 0, rotation: 0, scale: 1 }, { x: -10, y: -8, rotation: -0.5, scale: 1.05, duration: 3.3, ease: "sine.inOut" }, WIPE3);
+land($("#skW"), WIPE3, { s: 1.25, b: 14, d: 0.55, bd: 0.25, ease: "back.out(2.2)" });
+shake($("#shkB"), WIPE3, 16, 0.32);
+tl.to("#sakhtB", { y: -230, scale: 0.72, duration: 0.5, ease: "power3.out" }, WIPE3 + 0.22);
+$$(".b3").forEach((w, i) => land(w, 5.62 + i * 0.10, { s: 1.16, b: 12, d: 0.5 }));
+shake($("#shkB"), 5.62, 5, 0.18);
+const b4 = $$(".b4");
+[T.na, T.harf1, T.be2, T.harf2].forEach((t, i) => land(b4[i], t, { s: 1.12, b: 10, d: 0.45 }));
+tl.fromTo("#strike", { scaleX: 0 }, { scaleX: 1, duration: 0.2, ease: "power3.out" }, 6.75);
+shake($("#shkB"), 6.75, 4, 0.15);
+// line 5: «وگرنه حروفِ فارسی از هم جدا می‌شن.»
+const b5 = $$(".b5");
+[T.vagarna, T.horoof, T.farsi, T.azham, T.joda, T.mishan].forEach((t, i) => land(b5[i], t, { s: 1.12, b: 9, d: 0.42 }));
+// ...and «ساخت.» shows it: the letters come apart, then spring back together
+const skL = $$("#skS i");
+tl.set("#skW", { opacity: 0 }, T.joda);
+tl.set("#skS", { opacity: 1 }, T.joda);
+skL.forEach((l, i) => {
+  const dx = (2 - i) * 58, rot = [8, -6, 5, -9, 4][i];
+  tl.fromTo(l, { x: 0, rotation: 0, y: 0 }, { x: dx, rotation: rot, y: (i % 2 ? 14 : -10), duration: 0.32, ease: "power3.out", immediateRender: false }, T.joda);
+  tl.to(l, { x: 0, rotation: 0, y: 0, duration: 0.2, ease: "power4.in" }, 8.42);
+});
+shake($("#shkB"), T.joda, 8, 0.2);
+tl.set("#skS", { opacity: 0 }, 8.62);
+tl.set("#skW", { opacity: 1 }, 8.62);
+tl.fromTo("#skW", { scale: 1.08 }, { scale: 1, duration: 0.3, ease: "back.out(2)", immediateRender: false }, 8.62);
+shake($("#shkB"), 8.62, 6, 0.15);
+exitUp("#g3", 8.80, -360, 0.3);
+tl.to("#camB", { rotation: 0.6, x: 6, duration: 0.6, ease: "power2.inOut" }, 8.8);
+
+// ================= Beat 4: fix 2/4, spring =================
+tl.set("#g4", { opacity: 1 }, 8.95);
+tl.fromTo("#g4", { y: 300 }, { y: 0, duration: 0.55, ease: "power3.out" }, 8.95);
+pillFlip("#p1", "#p2", T.do);
+strokeDraw($("#axX"), T.do, 0.35, "power2.out");
+strokeDraw($("#axY"), T.do, 0.3, "power2.out");
+tl.to(["#tgtL", "#tgtT"], { opacity: 1, duration: 0.25, ease: "none" }, T.do + 0.2);
+// «فنر،» + the spring curve with its dot
+land($("#fanar"), T.fanar, { s: 1.3, b: 14, ease: "back.out(2.6)" }); shake($("#shkB"), T.fanar, 10, 0.25);
+const SPR_D = 0.75;
+strokeDraw($("#sprP"), T.fanar, SPR_D);
+tl.set("#sprD", { opacity: 1 }, T.fanar);
+tl.fromTo({ p: 0 }, { p: 0 }, { p: 1, duration: SPR_D, ease: "none", immediateRender: false,
+  onUpdate() { const p = this.targets()[0].p, i = Math.min(96, Math.round(p * 96)); $("#sprD").setAttribute("cx", SP[i][0]); $("#sprD").setAttribute("cy", SP[i][1]); } }, T.fanar);
+tl.fromTo("#sprT", { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.3, ease: "back.out(2)" }, T.fanar + 0.17);
+// «نه خطِ صاف» + the straight line, dead stop
+const b6 = $$(".b6");
+[T.nakhat, T.nakhat + 0.14, T.saaf].forEach((t, i) => land(b6[i], t, { s: 1.12, b: 9, d: 0.42 }));
+const LIN_D = 0.56;
+strokeDraw($("#linP"), T.nakhat, LIN_D);
+tl.set("#linD", { opacity: 1 }, T.nakhat);
+tl.fromTo("#linD", { attr: { cx: 40, cy: 400 } }, { attr: { cx: 820, cy: 120 }, duration: LIN_D, ease: "none" }, T.nakhat);
+tl.to("#linT", { opacity: 1, duration: 0.15, ease: "none" }, T.nakhat + LIN_D);
+// «که حرکت جون بگیره»: the two chips race to the same target
+tl.to(".lane .track", { opacity: 1, duration: 0.2 }, T.ke - 0.15);
+tl.fromTo(".lane .track", { scaleX: 0 }, { scaleX: 1, duration: 0.3, ease: "power2.out" }, T.ke - 0.15);
+tl.to(".lane .tgt", { opacity: 1, duration: 0.2, ease: "none" }, T.ke - 0.05);
+tl.set(".chip", { opacity: 1 }, T.ke);
+const CH0 = 700, CH1 = 110;   // left px: start (right side) -> target (left, next to the dashed line)
+tl.fromTo("#laneL .chip", { x: CH0 }, { x: CH1, duration: 0.7, ease: "none" }, T.ke);
+tl.fromTo("#laneS .chip", { x: CH0 }, { x: CH1, duration: 1.2, ease: springEase(1.2) }, T.ke);
+shake($("#shkB"), T.ke + 0.28, 6, 0.18);
+// «جون»: the title bounces
+tl.fromTo("#fanar", { scaleY: 1, scaleX: 1 }, { keyframes: [{ scaleY: 1.18, scaleX: 0.92, duration: 0.1 }, { scaleY: 1, scaleX: 1, duration: 0.5, ease: springEase(1.0) }], immediateRender: false }, T.joon);
+tl.to("#camB", { rotation: -0.4, x: -8, duration: 1.4, ease: "sine.inOut" }, 11.0);
+// exit, pull back
+tl.to("#g4", { scale: 0.86, opacity: 0, duration: 0.3, ease: "power3.in" }, 12.76);
+tl.fromTo("#g4", { filter: "blur(0px)" }, { filter: "blur(12px)", duration: 0.3, ease: "power3.in", immediateRender: false }, 12.76);
+
+// ================= Beat 5: fix 3/4, hand-held camera =================
+pillFlip("#p2", "#p3", T.se);
+handheld($("#hhB"), 12.9, 16.9, 12, 0.7);
+tl.fromTo(".vf", { opacity: 0, scale: 1.4 }, { opacity: 1, scale: 1, duration: 0.35, ease: "power3.out", stagger: 0.04 }, 12.98);
+tl.fromTo("#rec", { opacity: 0 }, { opacity: 1, duration: 0.1, ease: "none" }, T.se);
+tl.fromTo({ t: 0 }, { t: 0 }, { t: 1, duration: 16.9 - T.se, ease: "none", immediateRender: false,
+  onUpdate() {
+    const now = T.se + this.progress() * (16.9 - T.se), fr = Math.floor(now * FPS), s = Math.floor(fr / FPS), ff = fr % FPS;
+    $("#recT").textContent = `REC 00:00:${String(s).padStart(2, "0")}:${String(ff).padStart(2, "0")}`;
+    $("#recDot").style.opacity = (Math.floor(now / 0.6) % 2) ? 0.15 : 1;
+  } }, T.se);
+land($("#w5a"), T.doorbin, { s: 1.22, b: 14, ease: "back.out(2.2)" });
+tl.fromTo("#w5a", { rotation: -5 }, { rotation: -2, duration: 0.5, ease: "back.out(2)" }, T.doorbin);
+tl.to("#camB", { rotation: -1.2, y: -10, duration: 0.5, ease: "power2.out" }, T.doorbin);
+land($("#w5b"), T.dasti, { s: 1.35, b: 18, ease: "back.out(2.6)" });
+tl.fromTo("#w5b", { rotation: 4 }, { rotation: 1.5, duration: 0.5, ease: "back.out(2)" }, T.dasti);
+shake($("#shkB"), T.dasti, 20, 0.4);
+tl.to("#camB", { rotation: 0.9, y: -24, x: 10, duration: 0.7, ease: "power2.out" }, T.hichi - 0.1);
+const b7 = $$(".b7");
+[T.hichi, T.sabet, T.nemimoone].forEach((t, i) => { land(b7[i], t, { s: 1.16, b: 10, d: 0.45 }); });
+shake($("#shkB"), T.sabet, 7, 0.2);
+// focus hunting in the gap before the whip
+tl.fromTo("#g5", { filter: "blur(0px)" }, { keyframes: [{ filter: "blur(6px)", duration: 0.18 }, { filter: "blur(1.5px)", duration: 0.16 }, { filter: "blur(3px)", duration: 0.12 }, { filter: "blur(0px)", duration: 0.2 }], immediateRender: false }, 16.18);
+tl.to("#camB", { scale: 1.12, duration: 0.6, ease: "power2.in" }, 16.3);
+// WHIP out (real directional blur), cut to dark at mid-whip
+tl.set("#camB", { filter: "url(#mbB)" }, 16.9);
+tl.to("#camB", { x: -1300, duration: 0.2, ease: "power3.in" }, 16.9);
+tl.fromTo("#mbBg", { attr: { stdDeviation: "0 0" } }, { attr: { stdDeviation: "90 0" }, duration: 0.2, ease: "power2.in" }, 16.9);
+tl.to("#p3", { opacity: 0, duration: 0.12, ease: "none" }, 16.95);
+
+// ================= Beat 6: fix 4/4, real motion blur + sound (dark) =================
+const CUT6 = 17.1;
+tl.set("#sD", { visibility: "visible" }, CUT6);
+tl.set("#sB", { visibility: "hidden" }, CUT6);
+tl.set("#camD", { filter: "url(#mbD)" }, CUT6);
+tl.fromTo("#camD", { x: 1300 }, { x: 0, duration: 0.24, ease: "power3.out" }, CUT6);
+tl.fromTo("#mbDg", { attr: { stdDeviation: "90 0" } }, { attr: { stdDeviation: "0 0" }, duration: 0.24, ease: "power2.out" }, CUT6);
+tl.set("#camD", { filter: "none" }, CUT6 + 0.25);
+pillIn("#p4", T.chahar);
+tl.fromTo("#camD", { scale: 1, rotation: 0 }, { scale: 1.05, rotation: 0.5, duration: 2.7, ease: "sine.inOut", immediateRender: false }, CUT6 + 0.25);
+// words whip in from the right with trailing blur copies
+function whipIn(el, t) {
+  tl.fromTo(el, { opacity: 0 }, { opacity: 1, duration: 0.04, ease: "none" }, t);
+  tl.fromTo(el, { x: 900, scaleX: 1.35 }, { x: 0, scaleX: 1, duration: 0.42, ease: "expo.out" }, t);
+  tl.fromTo(el, { textShadow: "90px 0 18px rgba(242,241,237,.40), 190px 0 30px rgba(242,241,237,.22), 300px 0 44px rgba(242,241,237,.10)" },
+    { textShadow: "0px 0 0px rgba(242,241,237,0), 0px 0 0px rgba(242,241,237,0), 0px 0 0px rgba(242,241,237,0)", duration: 0.4, ease: "power3.out" }, t);
+  tl.fromTo(el, { filter: "blur(6px)" }, { filter: "blur(0px)", duration: 0.25, ease: "power2.out" }, t);
+}
+whipIn($("#w6a"), T.motion); shake($("#shkD"), T.motion + 0.1, 8, 0.2);
+whipIn($("#w6b"), T.vaghei); shake($("#shkD"), T.vaghei + 0.1, 8, 0.2);
+// mute icon, then «و صدا»: the X goes, the speaker sounds, the waveform runs on the real music
+tl.fromTo("#spk", { opacity: 0, scale: 0.6 }, { opacity: 1, scale: 1, duration: 0.35, ease: "back.out(2.4)" }, 17.55);
+tl.to("#spkX", { scale: 0, opacity: 0, duration: 0.18, ease: "power3.in" }, T.va);
+land($("#w6c"), T.seda, { s: 1.3, b: 14, ease: "back.out(2.6)" }); shake($("#shkD"), T.seda, 12, 0.25);
+const bars = $$("#bars i");
+tl.set(bars, { opacity: 1 }, T.seda);
+const BR0 = T.seda, BR1 = 21.75;
+tl.fromTo({ p: 0 }, { p: 0 }, { p: 1, duration: BR1 - BR0, ease: "none", immediateRender: false,
+  onUpdate() {
+    const now = BR0 + this.progress() * (BR1 - BR0), f = Math.round(now * FPS);
+    const row = BARS.d[Math.max(0, Math.min(BARS.d.length - 1, f - BARS.f0))];
+    const grow = Math.min(1, (now - BR0) / 0.15);
+    bars.forEach((b, i) => { b.style.transform = `scaleY(${(0.06 + 0.94 * row[i] * grow).toFixed(3)})`; });
+  } }, BR0);
+tl.set(bars, { scaleY: 0.04 }, BR1);
+tl.to("#camD", { scale: 1.14, duration: 1.7, ease: "power2.in" }, 20.05);
+// pre-drop: the music cuts at 21.75, everything holds its breath
+tl.to(["#w6a", "#w6b", "#w6c", "#spk"], { opacity: 0.35, duration: 0.1, ease: "none" }, 21.75);
+tl.to("#p4", { opacity: 0, duration: 0.1, ease: "none" }, 21.75);
+
+// ================= Beat 7a: the DROP (paper): «هوش مصنوعی ابزاره.» + the 4 fixes =================
+tl.set("#sE", { visibility: "visible" }, DROP);
+tl.set("#sD", { visibility: "hidden" }, DROP);
+tl.set("#vig", { opacity: 1 }, DROP);
+tl.fromTo("#flash", { opacity: 1 }, { opacity: 0, duration: 0.3, ease: "power2.out", immediateRender: false }, DROP);
+tl.fromTo("#camE", { scale: 1.1 }, { scale: 1, duration: 0.48, ease: "expo.out" }, DROP);
+shake($("#shkE"), DROP, 22, 0.4);
+const b8 = $$(".b8");
+land(b8[0], T.hoosh, { s: 1.2, b: 12, d: 0.45 }); land(b8[1], T.masnooi, { s: 1.2, b: 12, d: 0.45 });
+land($("#abzar"), T.abzare, { s: 1.35, b: 18, ease: "back.out(2.6)" }); shake($("#shkE"), T.abzare, 18, 0.3);
+["#fx1", "#fx2", "#fx3", "#fx4"].forEach((s, i) => {
+  const t = DROP + i * 0.25;
+  tl.fromTo(s, { opacity: 0, scale: 0.5, y: 30 }, { opacity: 1, scale: 1, y: 0, duration: 0.4, ease: "back.out(2.4)" }, t);
+});
+// kick pulse on every beat (120 BPM) through the drop
+for (let t = DROP + 0.5; t < 29.0; t += 0.5) {
+  ["#camE", "#camF", "#camG"].forEach(c => tl.fromTo(c, { scale: 1.012 }, { scale: 1, duration: 0.25, ease: "power2.out", immediateRender: false }, t));
+}
+// circle wipe to black
+const WIPE7 = 23.38;
+tl.set("#sF", { visibility: "visible" }, WIPE7);
+tl.fromTo("#sF", { clipPath: "circle(0px at 540px 960px)" }, { clipPath: "circle(1150px at 540px 960px)", duration: 0.4, ease: "power3.inOut" }, WIPE7);
+tl.set("#sE", { visibility: "hidden" }, WIPE7 + 0.4);
+
+// ================= Beat 7b: «چشمِ ادیتوره که خوبش می‌کنه.» (dark) =================
+land($("#cheshm"), T.cheshm, { s: 1.35, b: 18, ease: "back.out(2.6)" }); shake($("#shkF"), T.cheshm, 18, 0.3);
+land($("#editor"), T.editore, { s: 1.3, b: 16, ease: "back.out(2.4)" }); shake($("#shkF"), T.editore, 10, 0.22);
+const b9 = $$(".b9");
+[T.ke2, T.khoobesh, T.mikone].forEach((t, i) => land(b9[i], t, { s: 1.16, b: 10, d: 0.45 }));
+tl.fromTo("#camF", { x: 0, y: 0, rotation: 0 }, { x: 8, y: -12, rotation: 0.6, duration: 2.0, ease: "sine.inOut", immediateRender: false }, WIPE7);
+// circle wipe back to paper
+const WIPE8 = 25.42;
+tl.set("#sG", { visibility: "visible" }, WIPE8);
+tl.fromTo("#sG", { clipPath: "circle(0px at 540px 960px)" }, { clipPath: "circle(1150px at 540px 960px)", duration: 0.42, ease: "power3.inOut" }, WIPE8);
+tl.set("#sF", { visibility: "hidden" }, WIPE8 + 0.42);
+
+// ================= Beat 8: CTA, then back to frame 0 =================
+const b10 = $$(".b10");
+land(b10[0], T.comment, { s: 1.22, b: 14 }); land(b10[1], T.kon, { s: 1.22, b: 14 });
+shake($("#shkG"), T.comment, 8, 0.2);
+land($("#prompt"), T.prompt, { s: 0.4, b: 10, d: 0.7, ease: springEase(1.2) });
+shake($("#shkG"), T.prompt, 14, 0.3);
+pillIn("#p5", T.ta);
+const b11 = $$(".b11");
+[T.ta, T.prompt2, T.kamel, T.checklist, T.ro, T.barat, T.befrestam].forEach((t, i) => land(b11[i], t, { s: 1.12, b: 8, d: 0.42 }));
+tl.fromTo("#shine", { x: -200 }, { x: 900, duration: 0.55, ease: "power2.inOut" }, 26.25);
+tl.fromTo("#shine", { x: -200 }, { x: 900, duration: 0.55, ease: "power2.inOut", immediateRender: false }, 28.85);
+tl.fromTo("#camG", { x: 6, y: 8, rotation: 0.3 }, { x: -8, y: -6, rotation: -0.4, duration: 3.9, ease: "sine.inOut", immediateRender: false }, WIPE8);
+// loop: everything leaves, the empty paper of frame 0 is all that is left
+const OUT = 29.40;
+const outEls = [...b11.slice().reverse(), $("#prompt"), ...b10.slice().reverse()];
+outEls.forEach((el, k) => {
+  tl.to(el, { scale: 1.3, opacity: 0, duration: 0.2, ease: "power2.in" }, OUT + k * 0.03);
+  tl.fromTo(el, { filter: "blur(0px)" }, { filter: "blur(16px)", duration: 0.2, ease: "power2.in", immediateRender: false }, OUT + k * 0.03);
+});
+tl.to("#p5", { opacity: 0, duration: 0.2, ease: "none" }, OUT + 0.15);
+
+tl.set({}, {}, END);
+window.__timelines = window.__timelines || {}; window.__timelines["main"] = tl; tl.seek(0);
+</script>
+</body>
+</html>

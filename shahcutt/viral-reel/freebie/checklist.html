@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="fa">
+<head>
+<meta charset="utf-8">
+<title>پرامپت و چک‌لیست | اینو Claude ساخت</title>
+<style>
+@font-face{font-family:"Vazirmatn";src:url("fonts/vazirmatn-arabic-400-normal.woff2") format("woff2");font-weight:400;unicode-range:U+0600-06FF,U+200C-200E,U+FB50-FDFF,U+FE70-FEFF}
+@font-face{font-family:"Vazirmatn";src:url("fonts/vazirmatn-arabic-700-normal.woff2") format("woff2");font-weight:700;unicode-range:U+0600-06FF,U+200C-200E,U+FB50-FDFF,U+FE70-FEFF}
+@font-face{font-family:"Vazirmatn";src:url("fonts/vazirmatn-arabic-900-normal.woff2") format("woff2");font-weight:900;unicode-range:U+0600-06FF,U+200C-200E,U+FB50-FDFF,U+FE70-FEFF}
+@font-face{font-family:"Vazirmatn";src:url("fonts/vazirmatn-latin-400-normal.woff2") format("woff2");font-weight:400;unicode-range:U+0000-00FF,U+2000-206F}
+@font-face{font-family:"Vazirmatn";src:url("fonts/vazirmatn-latin-700-normal.woff2") format("woff2");font-weight:700;unicode-range:U+0000-00FF,U+2000-206F}
+@font-face{font-family:"Vazirmatn";src:url("fonts/vazirmatn-latin-900-normal.woff2") format("woff2");font-weight:900;unicode-range:U+0000-00FF,U+2000-206F}
+@page{size:540px 960px;margin:0}
+*{margin:0;padding:0;box-sizing:border-box}
+html{font-synthesis:none}
+body{font-family:"Vazirmatn",sans-serif;color:#0c0c0c;background:#e4e3df;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+.page{width:540px;height:960px;position:relative;overflow:hidden;padding:56px 44px 48px;direction:rtl;page-break-after:always;
+  background:radial-gradient(ellipse at 50% 40%,#ecebe7 0%,#e1e0dc 60%,#d4d3ce 100%)}
+.page:last-child{page-break-after:auto}
+.foot{position:absolute;left:44px;right:44px;bottom:30px;display:flex;justify-content:space-between;font-size:12px;color:#6d6c68;font-weight:700}
+.foot .ltr{direction:ltr}
+.pill{display:inline-block;background:#0c0c0c;color:#f2f1ed;border-radius:999px;padding:3px 16px;font-size:14px;font-weight:700}
+.red{color:#c8102e}
+.mint{background:#9ef0c8;border-radius:10px;padding:0 12px}
+code,.mono{font-family:"JetBrains Mono",monospace;direction:ltr;unicode-bidi:isolate;font-size:.86em;background:rgba(12,12,12,.07);border-radius:5px;padding:0 5px}
+/* cover */
+.cover{display:flex;flex-direction:column;justify-content:center;text-align:center}
+.cover h1{font-size:76px;font-weight:900;line-height:1.15;margin:22px 0 6px}
+.cover h1 .claude{font-family:"Georgia",serif;font-style:italic;font-weight:700;color:#c8102e;font-size:.9em}
+.cover .sub{font-size:30px;font-weight:900;margin:8px 0 22px}
+.cover p{font-size:17px;line-height:1.9;color:#3b3a37;max-width:400px;margin:0 auto}
+.fix4{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:30px auto 0;max-width:420px}
+.fix4 span{background:#0c0c0c;color:#f2f1ed;border-radius:999px;padding:7px 10px;font-size:14px;font-weight:700}
+.fix4 b{display:inline-block;width:22px;height:22px;line-height:22px;border-radius:50%;background:#c8102e;color:#fff;font-size:12px;margin-left:6px}
+/* prompt */
+h2{font-size:30px;font-weight:900;line-height:1.3;margin:12px 0 6px}
+.lead{font-size:14.5px;line-height:1.8;color:#3b3a37;margin-bottom:14px}
+.box{background:#f6f5f2;border:2px solid #0c0c0c;border-radius:16px;padding:16px 18px;font-size:13.2px;line-height:1.85;white-space:pre-wrap}
+.box .ph{background:#9ef0c8;border-radius:5px;padding:0 4px;font-weight:700}
+.steps{margin-top:14px;font-size:14px;line-height:1.8;counter-reset:s;list-style:none}
+.steps li{position:relative;padding-right:30px;margin-bottom:4px}
+.steps li::before{counter-increment:s;content:counter(s);position:absolute;right:0;top:3px;width:21px;height:21px;border-radius:50%;background:#c8102e;color:#fff;font-size:12px;font-weight:700;text-align:center;line-height:21px}
+/* checklist */
+.sec{margin-top:16px}
+.sec h3{font-size:19px;font-weight:900;margin-bottom:6px;display:flex;align-items:center;gap:8px}
+.sec h3 b{display:inline-block;width:28px;height:28px;line-height:28px;border-radius:50%;background:#c8102e;color:#fff;font-size:15px;text-align:center}
+.ck{list-style:none;font-size:13.6px;line-height:1.7}
+.ck li{position:relative;padding-right:26px;margin-bottom:5px}
+.ck li::before{content:"";position:absolute;right:0;top:4px;width:15px;height:15px;border:2px solid #0c0c0c;border-radius:4px}
+.ck li small{color:#5e5d58}
+.why{margin-top:10px;font-size:12.5px;line-height:1.75;color:#4a4945;border-right:3px solid #c8102e;padding-right:10px}
+.end{display:flex;flex-direction:column;justify-content:center;text-align:center}
+.end h2{font-size:34px}
+.end p{font-size:16px;line-height:1.9;color:#3b3a37;max-width:400px;margin:6px auto}
+.series{list-style:none;margin:20px auto 0;max-width:380px;text-align:right}
+.series li{background:#f6f5f2;border:1.5px solid #cfcdc6;border-radius:12px;padding:10px 14px;margin-bottom:8px;font-size:15px;font-weight:700}
+.series li.now{background:#0c0c0c;color:#f2f1ed;border-color:#0c0c0c}
+.series li span{float:left;font-size:12px;font-weight:700;color:#8a8984}
+.series li.now span{color:#9ef0c8}
+</style>
+</head>
+<body>
+
+<!-- 1 cover -->
+<section class="page cover">
+  <div><span class="pill">قسمت ۱ از ۳</span></div>
+  <h1>اینو <span class="claude">Claude</span><br>ساخت.</h1>
+  <div class="sub"><span class="mint">پرامپت</span> + چک‌لیست</div>
+  <p>۴ اصلاحی که خروجی خام هوش مصنوعی رو به یه موشن‌گرافیک قابل انتشار تبدیل می‌کنه. همون ۴ اصلاحی که توی ریل دیدی.</p>
+  <div class="fix4">
+    <span><b>۱</b>کلمه‌به‌کلمه</span>
+    <span><b>۲</b>فنر، نه خط صاف</span>
+    <span><b>۳</b>دوربین دستی</span>
+    <span><b>۴</b>موشن‌بلر + صدا</span>
+  </div>
+  <div class="foot"><span>شاهین میرشاهی | ادیتور و موشن‌دیزاینر</span><span class="ltr">@shahcutt</span></div>
+</section>
+
+<!-- 2 prompt -->
+<section class="page">
+  <span class="pill">پرامپت</span>
+  <h2>کپی کن، متن خودت رو بذار، بده به <span class="red">Claude</span></h2>
+  <p class="lead">این پرامپت از همون اول ۴ اصلاح رو از هوش مصنوعی می‌خواد، که نسخه‌ی اولش خراب درنیاد.</p>
+  <div class="box">یه موشن‌گرافیک تایپوگرافی فارسی بساز: ۱۰۸۰×۱۹۲۰، ۳۰ فریم، با HTML و GSAP (یه تایم‌لاین که فریم‌به‌فریم قابل رندر باشه) برای این متن:
+<span class="ph">[متن خودت]</span>
+
+قانون‌ها:
+۱. کلمه‌به‌کلمه، نه حرف‌به‌حرف: هر کلمه یه span جدا با inline-block. هیچ‌وقت حروف رو جدا انیمیت نکن، چون اتصال حروف فارسی می‌شکنه.
+۲. فنر، نه خط صاف: هر کلمه با scale از ۱.۱۴ به ۱ و blur از ۱۲ به ۰ پیکسل فرود بیاد (۰.۵۵ ثانیه) با ease فنری که کمی از هدف رد بشه و برگرده، مثل back.out(1.8). هیچ حرکتی linear نباشه.
+۳. دوربین دستی: کل صحنه همیشه آروم شناور باشه (حدود ۱۰ پیکسل و نیم درجه)، روی کلمه‌های مهم ۰.۳ ثانیه بلرزه و موقع اومدن خط جدید کمی به سمتش خم بشه. هیچ فریمی ثابت نمونه.
+۴. موشن‌بلر و صدا: ترنزیشن‌ها ویپ با بلر افقی باشن. برای هر فرود و ترنزیشن یه صدا با زمان دقیقش بنویس (کلیک، ووش، بوم) و یه لحظه سکوت قبل از ضربه‌ی اصلی.
+
+فونت فارسی با ‎@font-face‎ لود بشه، ‎font-synthesis: none‎، line-height بین ۱.۲۵ تا ۱.۴، ی و ک و اعداد فارسی. همه‌ی متن‌ها بین x ۹۶ تا ۹۸۴ و y ۱۹۰ تا ۱۴۶۰ بمونن.</div>
+  <ol class="steps">
+    <li>جای <span class="mint">[متن خودت]</span> متن ریلت رو بذار، جمله به جمله.</li>
+    <li>خروجی رو با چک‌لیست صفحه‌ی بعد چک کن. هر تیکی که نخورد، همون مورد رو دوباره ازش بخواه.</li>
+  </ol>
+  <div class="foot"><span>پرامپت + چک‌لیست | قسمت ۱ از ۳</span><span class="ltr">@shahcutt</span></div>
+</section>
+
+<!-- 3 checklist 1-2 -->
+<section class="page">
+  <span class="pill">چک‌لیست</span>
+  <h2>قبل از انتشار، تیک بزن</h2>
+  <div class="sec">
+    <h3><b>۱</b>کلمه‌به‌کلمه، نه حرف‌به‌حرف</h3>
+    <ul class="ck">
+      <li>هر کلمه یه span جداست. هیچ‌جا حروف تکی انیمیت نشدن. <small>(حرف‌به‌حرف، اتصال حروف فارسی رو می‌شکنه)</small></li>
+      <li>«ی» و «ک» فارسی‌ان، نه عربی. اعداد فارسی‌ان.</li>
+      <li>فونت با <code>@font-face</code> لود شده و <code>font-synthesis: none</code> هست. <small>(وگرنه مرورگر بولد و ایتالیک جعلی می‌سازه)</small></li>
+      <li>فاصله‌ی خط‌ها (line-height) بین ۱.۲۵ تا ۱.۴ هست و هیچ خطی بیشتر از ۸۴۰ پیکسل نیست.</li>
+      <li>وسط‌چین بر اساس خود حروفه، نه جعبه‌ی متن. <small>(نقطه‌ی آخر جمله خط رو کج نشون نده)</small></li>
+    </ul>
+  </div>
+  <div class="sec">
+    <h3><b>۲</b>فنر، نه خط صاف</h3>
+    <ul class="ck">
+      <li>فرود هر کلمه: scale از ۱.۱۴ به ۱، blur از ۱۲ به ۰ پیکسل، حدود ۰.۵۵ ثانیه.</li>
+      <li>ease با کمی رد شدن از هدف: <code>back.out(1.8)</code> یا فنر با میرایی ۰.۳۲ و فرکانس ۱۲. <small>(حدود ۳۰٪ رد می‌شه و تا ۱.۲ ثانیه آروم می‌گیره)</small></li>
+      <li>هیچ حرکتی linear نیست، مگه جایی که عمداً بخوای خشک و مصنوعی باشه.</li>
+    </ul>
+    <p class="why">چرا؟ چیزی که خطی می‌ره و یهو می‌ایسته، مصنوعی به نظر میاد. فنر یه کم رد می‌شه و برمی‌گرده، مثل هر چیز واقعی که وزن داره.</p>
+  </div>
+  <div class="foot"><span>پرامپت + چک‌لیست | قسمت ۱ از ۳</span><span class="ltr">@shahcutt</span></div>
+</section>
+
+<!-- 4 checklist 3-4 + delivery -->
+<section class="page">
+  <span class="pill">چک‌لیست</span>
+  <div class="sec">
+    <h3><b>۳</b>دوربین دستی</h3>
+    <ul class="ck">
+      <li>کل صحنه همیشه کمی شناوره: حدود ۱۰ پیکسل جابه‌جایی و نیم درجه چرخش، با چند حرکت سینوسی آروم.</li>
+      <li>روی فرود کلمه‌های مهم یه لرزش کوتاه هست: ۰.۲ تا ۰.۴ ثانیه، که کم‌کم می‌خوابه.</li>
+      <li>وقتی خط جدید میاد، دوربین کمی به سمتش خم می‌شه.</li>
+      <li>هیچ فریمی کاملاً ثابت نیست.</li>
+    </ul>
+  </div>
+  <div class="sec">
+    <h3><b>۴</b>موشن‌بلر واقعی + صدا</h3>
+    <ul class="ck">
+      <li>ترنزیشن‌ها ویپ با بلر افقی‌ان، نه بلر معمولی که همه‌طرفه پخش می‌شه.</li>
+      <li>برای موشن‌بلر واقعی: با ۲۴۰ فریم رندر کن و از هر ۸ فریم، ۴ تا رو میانگین بگیر. <small>(همون شاتر ۱۸۰ درجه‌ی دوربین واقعی)</small></li>
+      <li>هر حرکت صدای خودش رو داره: کلیک برای کلمه، ووش برای ترنزیشن، بوم برای ضربه.</li>
+      <li>قبل از ضربه‌ی اصلی، یه لحظه سکوت کامل هست.</li>
+      <li>موزیک ۱۵ تا ۲۰ دسی‌بل زیر صدای گوینده‌ست و زیر حرف‌زدن پایین میاد.</li>
+    </ul>
+  </div>
+  <div class="sec">
+    <h3><b>✓</b>تحویل</h3>
+    <ul class="ck">
+      <li>۱۰۸۰×۱۹۲۰، ۳۰ فریم. صدا روی ‎−14 LUFS‎ و پیک زیر ‎−1.5 dBTP‎.</li>
+      <li>همه‌ی متن‌ها توی محدوده‌ی امن‌ان: پایین صفحه و ستون آیکون‌های سمت راست زیر UI اینستاگرام می‌رن.</li>
+      <li>فریم اول خود نتیجه‌ست، نه معرفی. آخر ویدیو برمی‌گرده به فریم اول (لوپ).</li>
+    </ul>
+  </div>
+  <div class="foot"><span>پرامپت + چک‌لیست | قسمت ۱ از ۳</span><span class="ltr">@shahcutt</span></div>
+</section>
+
+<!-- 5 end -->
+<section class="page end">
+  <div><span class="pill">سری «اینو Claude ساخت»</span></div>
+  <h2 style="margin-top:18px">هوش مصنوعی ابزاره.<br><span class="red">چشمِ ادیتوره</span> که خوبش می‌کنه.</h2>
+  <ul class="series">
+    <li class="now">۱. اینو Claude ساخت <span>همین قسمت</span></li>
+    <li>۲. طراحی صدا با هوش مصنوعی <span>به‌زودی</span></li>
+    <li>۳. ۵ اشتباه تایپوگرافی فارسیِ هوش مصنوعی <span>به‌زودی</span></li>
+  </ul>
+  <p style="margin-top:18px">فالو کن که قسمت‌های بعد رو از دست ندی.<br>اگه می‌خوای ریلزهات رو خودم برات بسازم، توی دایرکت پیام بده.</p>
+  <div class="foot"><span>شاهین میرشاهی | ادیتور و موشن‌دیزاینر</span><span class="ltr">@shahcutt</span></div>
+</section>
+
+</body>
+</html>

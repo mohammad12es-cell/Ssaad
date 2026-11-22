@@ -33,10 +33,12 @@
       .ln em { font-style: normal; color: var(--acc); text-shadow: 0 0 28px rgba(255, 46, 58, 0.75), 0 0 64px rgba(255, 46, 58, 0.45); }
       .k-hook .ln { font-size: 146px; }
       .k-hook .ln:first-of-type { font-size: 100px; color: var(--ink); opacity: 0.92; }
-      /* story bars: a row of Instagram story progress bars that fill one by one */
-      .segs { display: flex; gap: 5px; width: 960px; direction: rtl; margin-bottom: 56px; }
-      .segs i { flex: 1; height: 12px; border-radius: 6px; background: rgba(246, 241, 232, 0.16); overflow: hidden; }
-      .segs b { display: block; height: 100%; border-radius: 6px; background: var(--ink); transform-origin: 100% 50%; box-shadow: 0 0 12px rgba(255, 255, 255, 0.45); }
+      /* story rings: a grid of Instagram story rings that light up one by one */
+      .segs { display: flex; flex-wrap: wrap; justify-content: center; gap: 20px 22px; width: 860px; direction: rtl; margin-bottom: 44px; }
+      .segs i { position: relative; width: 64px; height: 64px; border-radius: 50%; box-shadow: inset 0 0 0 4px rgba(246, 241, 232, 0.14); }
+      .segs i::after { content: ""; position: absolute; inset: 13px; border-radius: 50%; background: rgba(246, 241, 232, 0.1); }
+      .segs b { position: absolute; inset: 0; border-radius: 50%; background: conic-gradient(from 200deg, #feda75, #fa7e1e, #d62976, #962fbf, #4f5bd5, #feda75); box-shadow: 0 0 22px rgba(214, 41, 118, 0.45); }
+      .segs b::after { content: ""; position: absolute; inset: 5px; border-radius: 50%; background: #16161c; box-shadow: inset 0 0 0 4px #16161c, inset 0 0 0 30px #2a2a33; }
       .k-text .ln { font-size: 120px; }
       .k-stat .val { font-size: 340px; font-weight: 900; line-height: 1; color: var(--acc); text-shadow: 0 0 40px rgba(255, 46, 58, 0.7), 0 0 90px rgba(255, 46, 58, 0.4); direction: ltr; }
       .k-stat .val.good { color: var(--ok); text-shadow: 0 0 40px rgba(61, 220, 132, 0.6), 0 0 90px rgba(61, 220, 132, 0.35); }
@@ -126,8 +128,8 @@
         if (b.segs) {
           el.querySelectorAll(".segs b").forEach((s, k) => {
             const t = T.segT0 + k * T.segDt;
-            if (t <= 0) gsap.set(s, { scaleX: 1 });
-            else tl.fromTo(s, { scaleX: 0 }, { scaleX: 1, duration: T.segDt, ease: "none" }, t);
+            if (t <= 0) gsap.set(s, { opacity: 1, scale: 1 });
+            else tl.fromTo(s, { opacity: 0, scale: 0.3 }, { opacity: 1, scale: 1, duration: 0.2, ease: "back.out(2.2)" }, t);
           });
         }
         if (b.kind === "list") {

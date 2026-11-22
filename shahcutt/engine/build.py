@@ -14,7 +14,7 @@ script.json:
     kind chart:     title, bars:[{v, label, good?, show?}], suffix?     show = text printed instead of v (e.g. "۵ تا ۷")
     kind list:      title, rows:[{at:"s7:word", text}]               result checklist, each row ticks in on its word
     kind cta:       lines:[...], word, word_at:"s9:«word»"
-    hook/text may add segs:N  -> a row of N Instagram story bars above the lines that fill one by one
+    hook/text may add segs:N  -> a grid of N Instagram story rings above the lines that light up one by one
 Voice pipeline: gen_vo.py -> tools/clean_take.py -> tools/tighten.py -> whisper (yerevan-christmas/tools/asr.py)."""
 import json, os, re, shutil, subprocess, sys, wave
 import numpy as np
@@ -24,7 +24,7 @@ sys.path.insert(0, A("tools"))
 from align import align  # noqa: E402
 
 SCRIPT = json.load(open(A("script.json"), encoding="utf-8")); SR = 44100
-SEG_T0, SEG_DT = -0.4, 0.065  # hook story bars: bar i fills at SEG_T0 + i*SEG_DT (the first few are already full on frame 0)
+SEG_T0, SEG_DT = -0.4, 0.065  # hook story rings: ring i lights up at SEG_T0 + i*SEG_DT (the first few are already full on frame 0)
 FA = str.maketrans("0123456789", "۰۱۲۳۴۵۶۷۸۹")
 
 

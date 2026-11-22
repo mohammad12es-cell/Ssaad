@@ -1,10 +1,10 @@
 # Reel 2026-11-23 · روزی ۵۰ تا استوری
 
-- Formula: client-case story. Mistake + number on frame 0 («روزی ۵۰ تا استوری… اشتباه بود», 50 story bars filling) → promise by ~4 s («با دو تا پیشنهاد ورق برگشت») → open loop («ولی اول ببین مشکل کجا بود») → diagnosis → 2 fixes (a real face per department; listings to a Telegram channel, 5–7 stories a day) with a 50 vs 5–7 chart → result checklist held for the last third → share line → comment CTA.
+- Formula: client-case story. Mistake + number on frame 0 («روزی ۵۰ تا استوری… اشتباه بود», a grid of 50 Instagram story rings lighting up) → promise by ~4 s («با دو تا پیشنهاد ورق برگشت») → open loop («ولی اول ببین مشکل کجا بود») → diagnosis → 2 fixes (a real face per department; listings to a Telegram channel, 5–7 stories a day) with a 50 vs 5–7 chart → result checklist held for the last third → share line → comment CTA.
 - Facts: all from Shahin's own account of the Yerevan real-estate page (50+ stories a day, no face on the page, high unfollows; his two suggestions; unfollows went to zero, Telegram members up, page followers growing). The client is not named.
 - Comment keyword: **استوری** (gift: a free review of their stories)
-- Length: __LEN__. Cover: frame 0 → output/shahcutt-2026-11-23-story-cover.png. Video: output/shahcutt-2026-11-23-story.mp4
-- Checklist score (PLAYBOOK §6): 9/10. Passes: hook, promise by 5 s, re-hooks every ~3 s, open loop (result at the end), value (apply today: fewer stories, catalogue in a channel, a real face), real proof, keyword CTA, pace, share line. Weaker on #2: the proof in the first 4 s is the 50-bar visual, not a result number.
+- Length: 43.2 s (voice: Gemini take 2, pauses capped at 0.35 s, tempo ×1.06). Cover: frame 0 → output/shahcutt-2026-11-23-story-cover.png. Video: output/shahcutt-2026-11-23-story.mp4
+- Checklist score (PLAYBOOK §6): 9/10. Passes: hook, promise by 5 s, re-hooks every ~3 s, open loop (result at the end), value (apply today: fewer stories, catalogue in a channel, a real face), real proof, keyword CTA, pace, share line. Weaker on #2: the proof in the first 4 s is the 50-ring visual, not a result number.
 - Status: draft, waiting for Shahin's approval. Not published.
 
 ## Caption

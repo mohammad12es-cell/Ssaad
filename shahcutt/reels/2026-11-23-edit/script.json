@@ -1,0 +1,40 @@
+{
+ "title": "@shahcutt · قبل و بعد از ادیت",
+ "voice": {
+  "voiceName": "Charon",
+  "style": "Read the following text aloud in natural, conversational Tehrani Persian (Farsi), as a confident young Iranian video editor showing his audience a quick before-and-after trick. Say the first sentence proudly, the second flatly and a little disappointed; give «قدم یک»، «قدم دو»، «قدم سه» a crisp, punchy rhythm like a tutorial; on «قبل… و بعد» leave a tiny dramatic beat between the two words; end with a friendly, inviting call to action, stressing the word «ادیت». Fast, energetic Reels pace with only very short pauses (never long silences). Never read punctuation marks or guillemets aloud."
+ },
+ "tail": 2.4,
+ "segments": [
+  {"id": "s1", "text": "این، یه جمله‌ست بعد از ادیت.",
+   "captions": ["این، یه جمله‌ست", "[بعد از ادیت.]"]},
+  {"id": "s2", "text": "و این، همون جمله قبل از ادیت.",
+   "captions": ["و این، همون جمله", "[قبل از ادیت.]"]},
+  {"id": "s3", "text": "فرقش فقط سه قدمه؛ بیا از صفر با هم بسازیمش.",
+   "captions": ["فرقش فقط [سه قدمه؛]", "بیا از صفر", "با هم بسازیمش."]},
+  {"id": "s4", "text": "قدم یک: کل جمله رو درشت نکن؛ فقط یه کلمه رو بزرگ و رنگی کن.",
+   "captions": ["قدم یک:", "کل جمله رو درشت نکن؛", "فقط [یه کلمه] رو", "بزرگ و رنگی کن."]},
+  {"id": "s5", "text": "قدم دو: هر دو سه ثانیه، یه چیزی تکون بخوره؛ یه زوم، یه پرش.",
+   "captions": ["قدم دو:", "هر [دو سه ثانیه،]", "یه چیزی تکون بخوره؛", "یه زوم، یه پرش."]},
+  {"id": "s6", "text": "قدم سه: هر حرکت، صدای خودش رو داشته باشه.",
+   "captions": ["قدم سه:", "هر حرکت،", "[صدای خودش] رو داشته باشه."]},
+  {"id": "s7", "text": "حالا دوباره ببین: قبل… و بعد.",
+   "captions": ["حالا دوباره ببین:", "قبل…", "و [بعد.]"]},
+  {"id": "s8", "text": "اگه چک‌لیست کامل این سه قدم رو با سایز فونت و زمان‌بندی‌ش می‌خوای، کلمه‌ی «ادیت» رو کامنت کن تا برات بفرستم.",
+   "captions": ["اگه چک‌لیست کامل", "این سه قدم رو", "با سایز فونت و زمان‌بندی‌ش می‌خوای،", "کلمه‌ی [«ادیت»] رو کامنت کن", "تا برات بفرستم."]}
+ ],
+ "beats": [
+  {"at": "s1:این،", "kind": "demo", "state": "after", "mark": "ok", "label": "بعد از ادیت", "head": "یه جمله، [دو تا ادیت]", "text": "تو فقط [۳ ثانیه] وقت داری"},
+  {"at": "s2:و", "kind": "demo", "state": "before", "mark": "x", "label": "قبل از ادیت", "head": "یه جمله، [دو تا ادیت]", "text": "تو فقط [۳ ثانیه] وقت داری"},
+  {"at": "s3:فرقش", "kind": "text", "lines": ["فقط [۳ قدم]", "از صفر"]},
+  {"at": "s4:قدم", "kind": "rule", "num": "۱", "lines": ["فقط [یه کلمه]", "بزرگ و رنگی"]},
+  {"at": "s4:فقط", "kind": "demo", "state": "step1", "label": "قدم ۱: یه کلمه", "text": "تو فقط [۳ ثانیه] وقت داری"},
+  {"at": "s5:قدم", "kind": "rule", "num": "۲", "lines": ["هر [۲-۳ ثانیه]", "یه حرکت"]},
+  {"at": "s5:یه", "kind": "demo", "state": "step2", "label": "قدم ۲: حرکت", "text": "تو فقط [۳ ثانیه] وقت داری"},
+  {"at": "s6:قدم", "kind": "rule", "num": "۳", "lines": ["هر حرکت،", "[یه صدا]"]},
+  {"at": "s6:هر", "kind": "demo", "state": "step3", "label": "قدم ۳: صدا", "text": "تو فقط [۳ ثانیه] وقت داری"},
+  {"at": "s7:قبل…", "kind": "demo", "state": "before", "mark": "x", "label": "قبل", "text": "تو فقط [۳ ثانیه] وقت داری"},
+  {"at": "s7:بعد.", "kind": "demo", "state": "after", "mark": "ok", "label": "بعد", "text": "تو فقط [۳ ثانیه] وقت داری"},
+  {"at": "s8:اگه", "kind": "cta", "lines": ["چک‌لیست کامل", "[این ۳ قدم]"], "word": "ادیت", "word_at": "s8:«ادیت»"}
+ ]
+}

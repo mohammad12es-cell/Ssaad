@@ -15,6 +15,9 @@ script.json:
     kind list:      title, rows:[{at:"s7:word", text}]               result checklist, each row ticks in on its word
     kind cta:       lines:[...], word, word_at:"s9:«word»"
     hook/text may add segs:N  -> a grid of N Instagram story rings above the lines that light up one by one
+    kind demo:      state before|step1|step2|step3|after, text ([word] = the key word), label, head?, mark? ("x" | "ok")
+                    the same sentence shown at one stage of an edit: before = flat, step1 = one big coloured word,
+                    step2 = + motion every DEMO_HIT s (silent), step3/after = + a sound on every move; after = full finish
 Voice pipeline: gen_vo.py -> tools/clean_take.py -> tools/tighten.py -> whisper (yerevan-christmas/tools/asr.py)."""
 import json, os, re, shutil, subprocess, sys, wave
 import numpy as np
@@ -24,6 +27,7 @@ sys.path.insert(0, A("tools"))
 from align import align  # noqa: E402
 
 SCRIPT = json.load(open(A("script.json"), encoding="utf-8")); SR = 44100
+DEMO_HIT = 0.62  # seconds between the moves in a demo beat
 SEG_T0, SEG_DT = -0.4, 0.065  # hook story rings: ring i lights up at SEG_T0 + i*SEG_DT (the first few are already full on frame 0)
 FA = str.maketrans("0123456789", "۰۱۲۳۴۵۶۷۸۹")
 
@@ -124,8 +128,18 @@ def make_audio(total, beats, voice):
     for i in range(beats[0].get("segs", 0)):
         t = SEG_T0 + i * SEG_DT
         if t > 0: add(sfx, tick(1700 + 9 * i), t, 0.07)
+    for bt in beats:
+        if bt["kind"] != "demo": continue
+        for k, h in enumerate(bt.get("hits", [])):
+            if bt["state"] == "step2": continue                       # motion without sound, on purpose
+            if bt["state"] == "after" and k == 0: add(sfx, impact(), h, 0.3)
+            add(sfx, whoosh(0.28, 4, 18) if k % 2 == 0 else click(2600), h - (0.12 if k % 2 == 0 else 0), 0.4 if k % 2 == 0 else 0.45)
+            if k % 2 == 1: add(sfx, pop(900), h, 0.25)
     for bt in beats[1:]:
-        t0 = bt["start"]; add(sfx, whoosh(), t0 - 0.2, 0.3)
+        t0 = bt["start"]
+        if bt["kind"] == "demo" and bt["state"] == "before":
+            add(sfx, tick(900), t0, 0.25); continue                # the flat version gets no whoosh
+        add(sfx, whoosh(), t0 - 0.2, 0.3)
         if bt["kind"] == "stat":
             add(sfx, impact(), t0 + 0.02, 0.35)
             for i in range(10): add(sfx, tick(1200 + 60 * i), t0 + 0.05 + i * 0.07, 0.2)
@@ -166,6 +180,14 @@ def beat_html(b):
         bars = "".join(f'<div class="bar{" good" if x.get("good") else ""}"><div class="v">{val(x)}</div>'
                        f'<div class="col" style="height:{int(380 * x["v"] / mx)}px"></div><div class="lb">{esc(x["label"])}</div></div>' for x in b["bars"])
         inner = f'<div class="title">{rich(b["title"])}</div><div class="bars">{bars}</div>'
+    elif k == "demo":
+        st = b["state"]; mark = b.get("mark", "")
+        icon = {"x": '<span class="mk x">✕</span>', "ok": '<span class="mk ok">✓</span>'}.get(mark, "")
+        inner = ((f'<div class="head">{rich(b["head"])}</div>' if b.get("head") else "") +
+                 f'<div class="screen st-{st}"><div class="chip">{icon}{esc(b["label"])}</div>'
+                 f'<div class="sent">{rich(b["text"])}</div>'
+                 + ('<div class="spk"><i class="wave w1"></i><i class="wave w2"></i><i class="wave w3"></i></div>' if st in ("step3", "after") else "") +
+                 '</div>')
     elif k == "list":
         inner = f'<div class="ttl">{rich(b["title"])}</div>' + "".join(
             f'<div class="row"><span class="ck"><svg viewBox="0 0 64 64"><path d="M15 33 L27 45 L49 20" /></svg></span><span class="rt">{rich(r["text"])}</span></div>' for r in b["rows"])
@@ -188,7 +210,7 @@ def build_html(total, lines, beats, vo_dur):
     for i, L in enumerate(lines):
         ws = "".join(f'<span class="w{" hi" if w["hi"] else ""}"><i></i><span>{esc(w["t"])}</span></span>' for w in L["words"])
         caps.append(f'<div id="cap{i}" class="clip cap" data-start="{L["start"] - 0.06:.3f}" data-duration="{L["hold"] - L["start"] + 0.06:.3f}" data-track-index="9"><div class="cap-in">{ws}</div></div>')
-    T = {"total": total, "segT0": SEG_T0, "segDt": SEG_DT, "beats": [{"kind": b["kind"], "start": b["start"], **{k: b[k] for k in ("wordAt", "rowsAt", "segs") if k in b}} for b in beats],
+    T = {"total": total, "segT0": SEG_T0, "segDt": SEG_DT, "beats": [{"kind": b["kind"], "start": b["start"], **{k: b[k] for k in ("wordAt", "rowsAt", "segs", "hits", "state") if k in b}} for b in beats],
          "lines": [{"start": L["start"], "hold": L["hold"], "w": [[w["s"], w["e"]] for w in L["words"]]} for L in lines]}
     html = (tpl.replace("__TOTAL__", f"{total:.3f}").replace("__VO_DUR__", f"{vo_dur:.3f}").replace("<!--__BEATS__-->", "\n        ".join(bh))
             .replace("<!--__CAPTIONS__-->", "\n      ".join(caps)).replace("/*__TIMING__*/null", json.dumps(T, ensure_ascii=False)))
@@ -204,6 +226,11 @@ def main():
     lines, beats, last = timing(words)
     voice = read_audio(A("assets", "voiceover.wav")); vo_dur = len(voice) / SR
     total = round(last + SCRIPT.get("tail", 2.2), 2)
+    for i, b in enumerate(beats):
+        if b["kind"] == "demo" and b["state"] in ("step2", "step3", "after"):
+            end = beats[i + 1]["start"] if i + 1 < len(beats) else total - 0.4
+            t = b["start"] + 0.35; b["hits"] = []
+            while t < end - 0.25: b["hits"].append(round(t, 3)); t += DEMO_HIT
     make_audio(total, beats, voice)
     T = build_html(total, lines, beats, min(vo_dur, total))
     json.dump(dict(T, words=words), open(A("timing.json"), "w", encoding="utf-8"), ensure_ascii=False, indent=1)

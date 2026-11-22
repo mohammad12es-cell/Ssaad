@@ -98,6 +98,14 @@ Built in a Linux cloud container (no access to Shahin's Chrome, so no AI Studio 
    - **Beat 8:** circle wipe to paper, «کامنت کن», «پرامپت» in the mint box (spring + shine), «قسمت ۱ از ۳», the line on its word onsets. Everything leaves 29.40–29.85 s → empty paper = frame 0.
 8. **Render + master:** `npx --yes hyperframes@0.8.137 render . -o renders/full-raw.mp4 --quality delivery`, then `bash tools/deliver.sh renders/full-raw.mp4 renders/viral-reel-v1.mp4 30 assets/audio/mix-full.wav` (`deliver.sh` now skips `cygpath` on Linux).
 
+**Result:** `renders/viral-reel-v1.mp4`.
+- 30.000 s, 900 frames, 1080×1920 @ 30 fps.
+- 6.88 Mbps, −14.1 LUFS, peak −2.4 dBFS, LRA 3.7.
+- Render took 4 min 8 s (software GPU).
+- The last frame matches frame 0: empty paper, so the loop has no visible seam.
+- Cover: `renders/viral-reel-v1-cover.png` (the full hook at 2.1 s).
+- Sent to Shahin on 2026-11-22. Waiting for his notes.
+
 **Differences from the local setup**
 - **Font:** Tahoma isn't installed in the cloud, so the broken v1 falls back to DejaVu Sans. It still looks like the generic default font.
 - **Motion blur:** no 240 fps / shutter pass yet. The whips use an SVG directional blur and the words use trailing copies.

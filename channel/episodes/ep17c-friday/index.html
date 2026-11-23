@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en" data-resolution="portrait">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <script src="assets/gsap.min.js"></script>
+    <script src="assets/characters.js"></script>
+    <style>
+      @font-face { font-family: "Fredoka"; font-weight: 700; src: url("assets/fredoka-latin-700-normal.woff2") format("woff2"); }
+      @font-face { font-family: "Fredoka"; font-weight: 500; src: url("assets/fredoka-latin-500-normal.woff2") format("woff2"); }
+      :root { --ground: #ffd9e8; --ink: #ffffff; --stroke: #2b2a6e; --font-display: "Fredoka", sans-serif; }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { margin: 0; width: 1080px; height: 1920px; overflow: hidden; background: var(--ground); }
+      #root { position: relative; width: 100%; height: 100%; overflow: hidden; font-family: var(--font-display); }
+      .clip { position: absolute; inset: 0; }
+      svg.stage { width: 1080px; height: 1920px; }
+      .cap { position: absolute; left: 50px; right: 50px; top: 250px; bottom: auto; text-align: center; color: var(--ink); font-weight: 700; font-size: 96px; line-height: 1.05;
+        -webkit-text-stroke: 16px var(--stroke); paint-order: stroke fill; }
+      .cap { top: 300px; color: #2b2a6e; -webkit-text-stroke: 0; font-size: 78px; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="14" data-width="1080" data-height="1920">
+      <svg id="world" class="clip stage" data-start="0" data-duration="14" data-track-index="0" viewBox="0 0 1080 1920">
+        <defs>
+          <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffd9e8" /><stop offset="0.6" stop-color="#ffe9c8" /><stop offset="1" stop-color="#fff7ea" /></linearGradient>
+          <clipPath id="cardclip"><rect x="40" y="520" width="1000" height="1180" rx="60" /></clipPath>
+          <radialGradient id="glow" cx="0.5" cy="0.5" r="0.5"><stop offset="0" stop-color="#fff6c4" /><stop offset="0.5" stop-color="#ffd27a" stop-opacity="0.7" /><stop offset="1" stop-color="#ffb347" stop-opacity="0" /></radialGradient>
+        </defs>
+        <rect width="1080" height="1920" fill="#fff7ea" />
+        <g clip-path="url(#cardclip)"><rect width="1080" height="1920" fill="url(#sky)" />
+        
+        <g id="zoom" transform="translate(540,1110) scale(1.45) translate(-545,-1310)">
+          <path d="M0,1250 C300,1180 700,1320 1080,1230 L1080,1920 L0,1920 Z" fill="#8be08f" />
+          <path d="M0,1520 C320,1470 760,1580 1080,1500 L1080,1920 L0,1920 Z" fill="#5fcf6a" />
+          <g id="room">
+<g id="window"><rect x="430" y="1080" width="170" height="130" rx="14" fill="#1b1f52" stroke="#fff" stroke-width="10" /><circle cx="560" cy="1120" r="20" fill="#fff4c8" /><line x1="515" y1="1080" x2="515" y2="1210" stroke="#fff" stroke-width="8" /></g>
+<g id="cal"><rect x="660" y="1090" width="150" height="120" rx="12" fill="#fff" stroke="#2b2a6e" stroke-width="5" /><rect x="660" y="1090" width="150" height="34" rx="10" fill="#ff5a5f" />
+  <text x="735" y="1180" text-anchor="middle" font-family="Fredoka" font-weight="700" font-size="34" fill="#2b2a6e">FRI</text></g>
+<g id="bed"><rect x="215" y="1360" width="22" height="120" rx="8" fill="#a0673e" /><rect x="225" y="1420" width="290" height="40" rx="12" fill="#c98a5a" /><rect x="230" y="1460" width="16" height="30" fill="#a0673e" /><rect x="495" y="1460" width="16" height="30" fill="#a0673e" /></g>
+<g id="stand"><rect x="560" y="1400" width="90" height="80" rx="10" fill="#c98a5a" /></g>
+<g id="clock"><circle cx="0" cy="0" r="34" fill="#ff5a5f" /><circle cx="0" cy="0" r="26" fill="#fff" /><circle cx="-26" cy="-30" r="10" fill="#ffd166" /><circle cx="26" cy="-30" r="10" fill="#ffd166" />
+  <text id="time" x="0" y="8" text-anchor="middle" font-family="Fredoka" font-weight="700" font-size="20" fill="#2b2a6e">6:00</text></g>
+</g>
+<g id="street" opacity="0">
+  <rect x="0" y="0" width="1080" height="1920" fill="#14183f" opacity="0.55" />
+  <circle cx="820" cy="1070" r="40" fill="#fff4c8" /><g fill="#fff"><circle cx="300" cy="1050" r="4" /><circle cx="520" cy="1100" r="3" /><circle cx="650" cy="1020" r="4" /><circle cx="420" cy="1160" r="3" /></g>
+  <rect x="150" y="1455" width="800" height="70" fill="#9aa0ad" /><line x1="150" y1="1490" x2="950" y2="1490" stroke="#fff" stroke-width="6" stroke-dasharray="40 30" />
+  <g id="stop"><rect x="300" y="1270" width="12" height="190" fill="#666" /><rect x="250" y="1230" width="112" height="60" rx="10" fill="#2f4aa0" /><text x="306" y="1268" text-anchor="middle" font-family="Fredoka" font-weight="700" font-size="24" fill="#fff">BUS</text>
+    <rect x="330" y="1420" width="150" height="16" rx="6" fill="#a0673e" /><rect x="340" y="1436" width="10" height="24" fill="#7a4a2a" /><rect x="460" y="1436" width="10" height="24" fill="#7a4a2a" /></g>
+  
+</g>
+<g id="pip"></g>
+<text id="zzz" x="420" y="1250" font-family="Fredoka" font-weight="700" font-size="50" fill="#fff" stroke="#2b2a6e" stroke-width="6" paint-order="stroke" opacity="0">Z z z</text>
+<g id="ring" stroke="#2b2a6e" stroke-width="5" fill="none" opacity="0"><path d="M-55,-20 q-10,20 0,40" /><path d="M55,-20 q10,20 0,40" /></g>
+<g id="dust"></g>
+<g transform="translate(60,-150)"><g id="notif" opacity="0"><rect x="330" y="1180" width="420" height="110" rx="26" fill="#fff" stroke="#2b2a6e" stroke-width="5" /><text x="540" y="1232" text-anchor="middle" font-family="Fredoka" font-weight="700" font-size="30" fill="#2b2a6e">🕒 3:07 AM</text><text x="540" y="1270" text-anchor="middle" font-family="Fredoka" font-weight="500" font-size="22" fill="#555">everyone is asleep 😴</text></g></g>
+
+        </g>
+        <g transform="translate(0,140)"></g>
+        </g><rect x="40" y="520" width="1000" height="1180" rx="60" fill="none" stroke="#2b2a6e" stroke-width="6" /><text x="540" y="1800" text-anchor="middle" font-family="Fredoka" font-weight="700" font-size="58" fill="#2b2a6e">Pip &amp; Pebble 🐸🐌</text>
+      </svg>
+      <div id="c1" class="clip cap" data-start="0" data-duration="1.5" data-track-index="1">Part 3: Friday ⏰</div>
+<div id="c2" class="clip cap" data-start="1.6" data-duration="2.4" data-track-index="1">FRIDAY!!! 🎉</div>
+<div id="c3" class="clip cap" data-start="4.2" data-duration="1.2" data-track-index="1">Not even tired 😆</div>
+<div id="c4" class="clip cap" data-start="5.4" data-duration="3.0" data-track-index="1">SPEEDRUN 🏃💨</div>
+<div id="c5" class="clip cap" data-start="8.6" data-duration="2.2" data-track-index="1">Where is everyone? 🤔</div>
+<div id="c6" class="clip cap" data-start="10.8" data-duration="1.2" data-track-index="1">…</div>
+<div id="c7" class="clip cap" data-start="12.0" data-duration="2.0" data-track-index="1">…it's 3 AM 💀</div>
+      <audio id="sound" src="assets/audio.wav" data-start="0" data-duration="14" data-volume="1"></audio>
+    </div>
+    <script>
+      const NS = "http://www.w3.org/2000/svg";
+      const $ = (id) => document.getElementById(id);
+      const mk = (tag, attrs, parent) => { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); parent.appendChild(e); return e; };
+      const pipSVG = (s = 0.5) => `<g transform="scale(${s})">${PIP(0, -165, 1)}</g>`;
+      const pebSVG = (s = 0.5, shades = false) => `<g transform="scale(${s})">${PEBBLE(0, -92, 1)}${shades ? `<g><rect x="105" y="-245" width="62" height="44" rx="14" fill="#111"/><rect x="167" y="-240" width="62" height="44" rx="14" fill="#111"/><rect x="150" y="-232" width="30" height="8" fill="#111"/><rect x="115" y="-238" width="18" height="8" rx="4" fill="#fff" opacity=".6"/></g>` : ""}</g>`;
+      // eyelids for Pip (scaled 0.5): eye centres (+/-42.5, -158.5), r 29
+      const lidsSVG = (s = 0.5) => `<g transform="scale(${s / 0.5})"><circle cx="-42.5" cy="-158.5" r="31" fill="#5fcf6a"/><circle cx="42.5" cy="-158.5" r="31" fill="#5fcf6a"/><path d="M-62,-156 C-50,-146 -35,-146 -23,-156 M23,-156 C35,-146 50,-146 62,-156" stroke="#1b1a2e" stroke-width="5" fill="none" stroke-linecap="round"/></g>`;
+      const winkSVG = (s = 0.5) => `<g transform="scale(${s / 0.5})"><circle cx="42.5" cy="-158.5" r="31" fill="#5fcf6a"/><path d="M23,-156 C35,-146 50,-146 62,-156" stroke="#1b1a2e" stroke-width="5" fill="none" stroke-linecap="round"/></g>`;
+      const star = (x, y, s) => `M${x},${y - s} L${x + s * 0.25},${y - s * 0.25} L${x + s},${y} L${x + s * 0.25},${y + s * 0.25} L${x},${y + s} L${x - s * 0.25},${y + s * 0.25} L${x - s},${y} L${x - s * 0.25},${y - s * 0.25} Z`;
+      const tl = gsap.timeline({ paused: true });
+      const pop = (id, t) => tl.fromTo(id, { scale: 0.4, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.22, ease: "back.out(2.5)" }, t);
+      // dust/splash puff helper: creates n circles in group g around (x,y) and animates them at t
+      function puff(g, x, y, t, color = "#e8d6b0", n = 6, spread = 60) {
+        const els = []; for (let i = 0; i < n; i++) els.push(mk("circle", { cx: x, cy: y, r: 22 + (i % 3) * 8, fill: color, opacity: 0 }, $(g)));
+        els.forEach((e, i) => tl.fromTo(e, { opacity: 0.9, x: 0, y: 0, scale: 0.5, transformOrigin: "50% 50%" }, { opacity: 0, x: (i - n / 2) * spread * 0.5, y: -40 - (i % 2) * 40, scale: 1.8, transformOrigin: "50% 50%", duration: 0.7, immediateRender: false }, t));
+        tl.set(els, { opacity: 0 }, 0);
+      }
+      const blanket = `<g id="blanket"><path d="M-120,-80 Q0,-110 120,-80 L130,10 L-130,10 Z" fill="#6a7bff"/><path d="M-120,-80 Q0,-110 120,-80" stroke="#fff" stroke-width="6" fill="none"/></g>`;
+      const bag = `<g id="bag" opacity="0"><rect x="-120" y="-150" width="60" height="80" rx="16" fill="#ff5a5f"/><rect x="-112" y="-118" width="44" height="22" rx="6" fill="#c43c47"/></g>`;
+      $("pip").innerHTML = `<g id="pipIn">${bag}${pipSVG(0.5)}<g id="lids">${lidsSVG(0.5)}</g>${blanket}</g>`;
+            tl.set("#pip", { x: 370, y: 1440 }, 0); tl.set("#clock", { x: 605, y: 1360 }, 0); tl.set("#ring", { x: 605, y: 1360 }, 0); tl.set("#lids", { opacity: 1 }, 0);
+      const ring = (t, d, big = false) => { tl.set("#ring", { opacity: 1 }, t); tl.to("#clock", { rotation: big ? 18 : 10, transformOrigin: "50% 50%", duration: 0.05, yoyo: true, repeat: Math.round(d / 0.05) }, t); tl.set("#ring", { opacity: 0 }, t + d); };
+      tl.set("#time", { textContent: "3:00" }, 0); ring(0.2, 1.2);
+      
+      tl.set("#lids", { opacity: 0 }, 1.6); tl.to("#pipIn", { y: -80, duration: 0.2, yoyo: true, repeat: 3, ease: "power2.out" }, 1.8);
+      tl.fromTo("#cal", { scale: 1, transformOrigin: "50% 50%" }, { scale: 1.35, transformOrigin: "50% 50%", duration: 0.3, ease: "back.out(2.5)", immediateRender: false }, 4.2);
+      tl.to("#pipIn", { x: 8, duration: 0.05, yoyo: true, repeat: 9 }, 4.4);
+      // speedrun
+      tl.to("#blanket", { y: -300, x: -200, rotation: -60, opacity: 0, duration: 0.4 }, 5.4);
+      tl.to("#pipIn", { rotation: 720, transformOrigin: "50% 50%", duration: 0.7 }, 5.5);
+      tl.set("#bag", { opacity: 1 }, 6.0);
+      tl.to("#pip", { x: 1150, duration: 1.4, ease: "power2.in" }, 6.6);
+      tl.to("#pipIn", { y: -30, duration: 0.1, yoyo: true, repeat: 13 }, 6.6);
+      // cut to street
+      tl.set("#room", { opacity: 0 }, 8.4); tl.set("#street", { opacity: 1 }, 8.4); tl.set("#pip", { x: -100, y: 1450 }, 8.4);
+            tl.to("#pip", { x: 420, duration: 0.8, ease: "power2.out" }, 8.6);
+      tl.to("#pipIn", { y: -30, duration: 0.1, yoyo: true, repeat: 7 }, 8.6);
+      tl.to("#pipIn", { scaleX: -1, transformOrigin: "50% 50%", duration: 0.1, yoyo: true, repeat: 3, repeatDelay: 0.25 }, 9.6);
+      tl.to("#pipIn", { scaleY: 0.85, transformOrigin: "50% 100%", duration: 0.4 }, 10.8);
+      tl.to("#pip", { x: 405, y: 1425, duration: 0.3 }, 11.2);
+      // twist
+      tl.fromTo("#notif", { opacity: 0, y: -80 }, { opacity: 1, y: 0, duration: 0.35, ease: "back.out(2)" }, 12.0);
+      tl.to("#pipIn", { scaleY: 1.1, duration: 0.1, yoyo: true, repeat: 1 }, 12.2);
+      tl.set("#lids", { opacity: 1 }, 13.0); tl.to("#zzz", { opacity: 1, duration: 0.2 }, 13.1); tl.to("#zzz", { y: -30, duration: 0.4, yoyo: true, repeat: 1 }, 13.1);
+
+      pop("#c1", 0.02);
+      pop("#c2", 1.62);
+      pop("#c3", 4.22);
+      pop("#c4", 5.42);
+      pop("#c5", 8.62);
+      pop("#c6", 10.82);
+      pop("#c7", 12.02);
+      window.__timelines = window.__timelines || {};
+      window.__timelines["main"] = tl;
+      tl.seek(0);
+    </script>
+  </body>
+</html>

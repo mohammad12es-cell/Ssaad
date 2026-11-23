@@ -1,0 +1,22 @@
+<g id="room">
+<g id="window"><rect x="430" y="1080" width="170" height="130" rx="14" fill="#1b1f52" stroke="#fff" stroke-width="10" /><circle cx="560" cy="1120" r="20" fill="#fff4c8" /><line x1="515" y1="1080" x2="515" y2="1210" stroke="#fff" stroke-width="8" /></g>
+<g id="cal"><rect x="660" y="1090" width="150" height="120" rx="12" fill="#fff" stroke="#2b2a6e" stroke-width="5" /><rect x="660" y="1090" width="150" height="34" rx="10" fill="#ff5a5f" />
+  <text x="735" y="1180" text-anchor="middle" font-family="Fredoka" font-weight="700" font-size="34" fill="#2b2a6e">FRI</text></g>
+<g id="bed"><rect x="215" y="1360" width="22" height="120" rx="8" fill="#a0673e" /><rect x="225" y="1420" width="290" height="40" rx="12" fill="#c98a5a" /><rect x="230" y="1460" width="16" height="30" fill="#a0673e" /><rect x="495" y="1460" width="16" height="30" fill="#a0673e" /></g>
+<g id="stand"><rect x="560" y="1400" width="90" height="80" rx="10" fill="#c98a5a" /></g>
+<g id="clock"><circle cx="0" cy="0" r="34" fill="#ff5a5f" /><circle cx="0" cy="0" r="26" fill="#fff" /><circle cx="-26" cy="-30" r="10" fill="#ffd166" /><circle cx="26" cy="-30" r="10" fill="#ffd166" />
+  <text id="time" x="0" y="8" text-anchor="middle" font-family="Fredoka" font-weight="700" font-size="20" fill="#2b2a6e">6:00</text></g>
+</g>
+<g id="street" opacity="0">
+  <rect x="0" y="0" width="1080" height="1920" fill="#14183f" opacity="0.55" />
+  <circle cx="820" cy="1070" r="40" fill="#fff4c8" /><g fill="#fff"><circle cx="300" cy="1050" r="4" /><circle cx="520" cy="1100" r="3" /><circle cx="650" cy="1020" r="4" /><circle cx="420" cy="1160" r="3" /></g>
+  <rect x="150" y="1455" width="800" height="70" fill="#9aa0ad" /><line x1="150" y1="1490" x2="950" y2="1490" stroke="#fff" stroke-width="6" stroke-dasharray="40 30" />
+  <g id="stop"><rect x="300" y="1270" width="12" height="190" fill="#666" /><rect x="250" y="1230" width="112" height="60" rx="10" fill="#2f4aa0" /><text x="306" y="1268" text-anchor="middle" font-family="Fredoka" font-weight="700" font-size="24" fill="#fff">BUS</text>
+    <rect x="330" y="1420" width="150" height="16" rx="6" fill="#a0673e" /><rect x="340" y="1436" width="10" height="24" fill="#7a4a2a" /><rect x="460" y="1436" width="10" height="24" fill="#7a4a2a" /></g>
+  
+</g>
+<g id="pip"></g>
+<text id="zzz" x="420" y="1250" font-family="Fredoka" font-weight="700" font-size="50" fill="#fff" stroke="#2b2a6e" stroke-width="6" paint-order="stroke" opacity="0">Z z z</text>
+<g id="ring" stroke="#2b2a6e" stroke-width="5" fill="none" opacity="0"><path d="M-55,-20 q-10,20 0,40" /><path d="M55,-20 q10,20 0,40" /></g>
+<g id="dust"></g>
+<g transform="translate(60,-150)"><g id="notif" opacity="0"><rect x="330" y="1180" width="420" height="110" rx="26" fill="#fff" stroke="#2b2a6e" stroke-width="5" /><text x="540" y="1232" text-anchor="middle" font-family="Fredoka" font-weight="700" font-size="30" fill="#2b2a6e">🕒 3:07 AM</text><text x="540" y="1270" text-anchor="middle" font-family="Fredoka" font-weight="500" font-size="22" fill="#555">everyone is asleep 😴</text></g></g>

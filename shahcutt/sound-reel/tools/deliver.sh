@@ -25,7 +25,7 @@ done
 
 ffmpeg -y -v error -i "$IN" -i work/master.wav -map 0:v:0 -map 1:a:0 \
   -c:v libx264 -preset slow -crf 19 -maxrate 6.6M -bufsize 13.2M -pix_fmt yuv420p -r 30 \
-  -c:a aac -b:a 192k -ar 48000 -shortest -movflags +faststart "$OUT"
+  -af apad -c:a aac -b:a 192k -ar 48000 -t "$DUR" -movflags +faststart "$OUT"
 
 ffprobe -v error -show_entries format=duration,bit_rate:stream=codec_name,width,height,r_frame_rate -of compact "$OUT"
 ffmpeg -hide_banner -nostats -i "$OUT" -af ebur128=peak=true -f null - 2>&1 | grep -E "I:|Peak:|LRA:" | tail -n 3

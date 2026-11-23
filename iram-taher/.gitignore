@@ -1,0 +1,10 @@
+work/
+snapshots/
+renders/*-raw.mp4
+renders/work-*/
+renders/.*hf-transaction*/
+assets/media/
+# client footage and voice: not in the repo
+assets/audio/*.wav
+renders/*.mp4
+renders/*.jpg

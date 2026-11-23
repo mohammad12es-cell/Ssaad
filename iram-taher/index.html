@@ -1,0 +1,298 @@
+<!doctype html>
+<html lang="fa">
+<head>
+<meta charset="utf-8">
+<title>IRAM CO. · بلک فرایدی در ارمنستان (talking head edit)</title>
+<script src="assets/gsap.min.js"></script>
+<script src="assets/timing.js"></script>
+<style>
+@font-face { font-family: "Vazirmatn"; font-weight: 700; src: url("assets/fonts/vazirmatn-latin-700-normal.woff2") format("woff2"); }
+@font-face { font-family: "Vazirmatn"; font-weight: 900; src: url("assets/fonts/vazirmatn-latin-900-normal.woff2") format("woff2"); }
+@font-face { font-family: "Vazirmatn"; font-weight: 700; src: url("assets/fonts/vazirmatn-arabic-700-normal.woff2") format("woff2"); unicode-range: U+0600-06FF, U+0750-077F, U+0870-088E, U+0890-0891, U+0897-08E1, U+08E3-08FF, U+200C-200E, U+2010-2011, U+204F, U+2E41, U+FB50-FDFF, U+FE70-FE74, U+FE76-FEFC; }
+@font-face { font-family: "Vazirmatn"; font-weight: 800; src: url("assets/fonts/vazirmatn-arabic-800-normal.woff2") format("woff2"); unicode-range: U+0600-06FF, U+0750-077F, U+0870-088E, U+0890-0891, U+0897-08E1, U+08E3-08FF, U+200C-200E, U+2010-2011, U+204F, U+2E41, U+FB50-FDFF, U+FE70-FE74, U+FE76-FEFC; }
+@font-face { font-family: "Vazirmatn"; font-weight: 900; src: url("assets/fonts/vazirmatn-arabic-900-normal.woff2") format("woff2"); unicode-range: U+0600-06FF, U+0750-077F, U+0870-088E, U+0890-0891, U+0897-08E1, U+08E3-08FF, U+200C-200E, U+2010-2011, U+204F, U+2E41, U+FB50-FDFF, U+FE70-FE74, U+FE76-FEFC; }
+/* IRAM CO. palette (as in armenia-residency): forest green, metallic gold, cream */
+:root { --ink: #faf2e0; --dark: #06140d; --green: #1f6b47; --acc: #dcad58; --warn: #d8463a;
+  --gold: linear-gradient(180deg, #fff0c2 0%, #f4d68c 30%, #dcad58 70%, #c8954a 100%); }
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { width: 1080px; height: 1920px; overflow: hidden; background: #000; }
+#root { position: relative; width: 1080px; height: 1920px; overflow: hidden; font-family: "Vazirmatn", sans-serif; font-synthesis: none; }
+#cam { position: absolute; inset: 0; transform-origin: 540px 640px; }
+#vid, #vidB { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; object-fit: cover; }
+/* interstitial over the source crossfade: a hotel key card taps the lock, booked */
+#inter { position: absolute; inset: 0; background: radial-gradient(ellipse at 50% 42%, #145238 0%, #0b2e20 55%, #06140d 100%); clip-path: circle(0px at 540px 1380px); }
+#inter .glow { position: absolute; left: 140px; top: 360px; width: 800px; height: 800px; border-radius: 50%; background: radial-gradient(circle, rgba(244,214,140,.28), transparent 65%); }
+#lock { position: absolute; left: 395px; top: 430px; width: 290px; height: 420px; border-radius: 40px; background: #0a2218; border: 6px solid #dcad58; box-shadow: 0 30px 60px rgba(0,0,0,.5); }
+#lock .slot { position: absolute; left: 50px; right: 50px; top: 150px; height: 18px; border-radius: 9px; background: #020805; }
+#led { position: absolute; left: 117px; top: 290px; width: 56px; height: 56px; border-radius: 50%; background: #5a1d18; box-shadow: inset 0 0 0 5px #2a0d0a; }
+#keycard { position: absolute; left: 300px; top: 1500px; width: 480px; height: 300px; border-radius: 28px; background: var(--gold); box-shadow: 0 30px 60px rgba(0,0,0,.5); overflow: hidden; }
+#keycard .stripe { position: absolute; left: 0; right: 0; top: 46px; height: 54px; background: #3a2a10; opacity: .8; }
+#keycard img { position: absolute; left: 34px; bottom: 30px; width: 96px; }
+#keycard .h { position: absolute; right: 34px; bottom: 36px; font-weight: 900; font-size: 64px; color: #06140d; direction: ltr; letter-spacing: 3px; }
+#booked { position: absolute; left: 0; right: 0; top: 900px; text-align: center; direction: rtl; font-weight: 900; font-size: 92px; opacity: 0; }
+#booked b { display: inline-block; width: 92px; height: 92px; border-radius: 50%; background: #3fbf7f; vertical-align: -14px; margin-left: 18px; }
+#shade { position: absolute; inset: 0; pointer-events: none;
+  background: linear-gradient(180deg, rgba(6,20,13,.62) 0%, rgba(6,20,13,.18) 17%, transparent 26%, transparent 52%, rgba(6,20,13,.38) 60%, rgba(6,20,13,.55) 72%, rgba(6,20,13,.2) 80%, transparent 86%); }
+.fa { direction: rtl; }
+/* house style: stacked logo, top-right */
+#brand { position: absolute; top: 196px; right: 52px; width: 170px; display: flex; flex-direction: column; align-items: center; gap: 6px; opacity: 0;
+  filter: drop-shadow(0 6px 14px rgba(0,0,0,.5)); }
+#brand .ic { width: 96px; } #brand .wd { width: 170px; }
+/* captions (karaoke) */
+#cap { position: absolute; left: 0; right: 0; top: 1132px; height: 140px; display: flex; justify-content: center; align-items: center; }
+.line { position: absolute; max-width: 980px; text-align: center; direction: rtl; font-weight: 900; font-size: 60px; line-height: 1.5; opacity: 0; white-space: nowrap; }
+.line .w { position: relative; isolation: isolate; display: inline-block; padding: 0 12px 4px; color: color-mix(in srgb, var(--ink) 45%, transparent);
+  text-shadow: 0 4px 18px rgba(6,20,13,.95); }
+.line .w i { position: absolute; inset: 6px 0 2px; border-radius: 18px; background: var(--gold); opacity: 0; z-index: -1; box-shadow: 0 8px 26px rgba(220,173,88,.35); }
+.line .w span { position: relative; }
+/* titles (top band) */
+.title { position: absolute; left: 0; right: 0; text-align: center; direction: rtl; font-weight: 900; opacity: 0; }
+.goldtxt { color: transparent; background: var(--gold); -webkit-background-clip: text; background-clip: text; filter: drop-shadow(0 3px 0 #5a3324) drop-shadow(0 8px 18px rgba(0,0,0,.6)); }
+/* G1 route */
+#route { position: absolute; left: 90px; top: 130px; width: 700px; height: 230px; opacity: 0; overflow: visible; }
+#armTitle { top: 222px; font-size: 78px; line-height: 1.25; }
+#armTitle small { display: block; font-size: 28px; letter-spacing: 8px; direction: ltr; font-weight: 700; color: var(--ink); -webkit-text-fill-color: var(--ink); filter: none; opacity: .9; }
+/* G2 Black Friday tag */
+#tagWrap { position: absolute; left: 34px; top: 96px; width: 360px; height: 340px; transform-origin: 180px 0px; opacity: 0; }
+#tagWrap .string { position: absolute; left: 178px; top: 0; width: 3px; height: 104px; background: var(--acc); }
+#tag { position: absolute; left: 0; top: 98px; width: 360px; height: 214px; background: #0b0b0b; border: 5px solid var(--acc); border-radius: 26px;
+  box-shadow: 0 22px 50px rgba(0,0,0,.55); display: flex; flex-direction: column; align-items: center; justify-content: center; }
+#tag::before { content: ""; position: absolute; left: 166px; top: -14px; width: 28px; height: 28px; border-radius: 50%; background: #0b0b0b; border: 5px solid var(--acc); }
+#tag .en { font-weight: 900; font-size: 56px; line-height: 1; letter-spacing: 2px; direction: ltr; }
+#tag .fa2 { margin-top: 14px; font-weight: 800; font-size: 34px; color: var(--ink); direction: rtl; }
+/* bottom slot cards (G3, G4, G6) */
+.card { position: absolute; left: 90px; width: 900px; top: 1300px; border-radius: 30px; background: rgba(6,20,13,.82); border: 3px solid rgba(220,173,88,.85);
+  box-shadow: 0 24px 60px rgba(0,0,0,.5); opacity: 0; direction: rtl; color: var(--ink); }
+#meter { height: 150px; padding: 22px 34px; }
+#meter .lab { font-weight: 900; font-size: 40px; }
+#meter .trk { position: absolute; left: 34px; right: 34px; bottom: 30px; height: 30px; border-radius: 15px; background: rgba(250,242,224,.16); overflow: hidden; direction: ltr; }
+#meter .fill { position: absolute; right: 0; top: 0; bottom: 0; width: 100%; transform-origin: 100% 50%; transform: scaleX(.35); background: var(--gold); border-radius: 15px; }
+#meter .red { position: absolute; inset: 0; background: var(--warn); opacity: 0; border-radius: 15px; }
+#stamp { position: absolute; left: 40px; top: 18px; font-weight: 900; font-size: 54px; color: var(--warn); border: 6px solid var(--warn); border-radius: 16px; padding: 0 22px 6px;
+  transform: rotate(-8deg); opacity: 0; background: rgba(6,20,13,.6); }
+#book { height: 150px; display: flex; align-items: center; gap: 26px; padding: 0 34px; }
+#book svg { width: 92px; height: 92px; flex: none; }
+#book .t1 { font-weight: 900; font-size: 46px; }
+#book .t2 { font-weight: 700; font-size: 32px; opacity: .85; }
+#check { position: absolute; left: 38px; top: 25px; width: 100px; height: 100px; border-radius: 50%; background: var(--gold); display: flex; align-items: center; justify-content: center; opacity: 0; }
+/* light sweep at the location change */
+#sweep { position: absolute; left: -900px; top: -200px; width: 700px; height: 2400px; transform: rotate(18deg);
+  background: linear-gradient(90deg, transparent, rgba(255,236,190,.0) 10%, rgba(255,236,190,.55) 45%, rgba(255,255,240,.85) 50%, rgba(255,236,190,.55) 55%, transparent 90%);
+  mix-blend-mode: screen; opacity: 0; }
+#flash { position: absolute; inset: 0; background: #fff6de; opacity: 0; mix-blend-mode: screen; }
+/* G5 clock */
+#clock { position: absolute; left: 90px; top: 250px; width: 150px; height: 150px; opacity: 0; }
+#nowTitle { top: 266px; left: 262px; right: auto; text-align: left; font-size: 70px; }
+/* G6 comment box */
+#cmt { height: 128px; display: flex; align-items: center; gap: 22px; padding: 0 30px; background: rgba(250,242,224,.96); border-color: var(--acc); color: #1d1d1d; }
+#cmt .av { width: 72px; height: 72px; border-radius: 50%; background: var(--green); display: flex; align-items: center; justify-content: center; flex: none; }
+#cmt .av img { width: 46px; }
+#cmt .box { flex: 1; height: 76px; border-radius: 38px; background: #fff; border: 2px solid #d9d2c0; display: flex; align-items: center; padding: 0 28px; font-size: 44px; font-weight: 900; position: relative; overflow: hidden; }
+#cmt .ph { color: #9a9488; font-weight: 700; font-size: 36px; position: absolute; right: 28px; }
+#typed { display: inline-block; color: var(--green); clip-path: inset(0 0 0 100%); }
+#caret { display: inline-block; width: 4px; height: 50px; background: var(--green); margin-right: 6px; vertical-align: -8px; opacity: 0; }
+#cmt .send { width: 76px; height: 76px; border-radius: 50%; background: var(--gold); display: flex; align-items: center; justify-content: center; flex: none; }
+#plane { position: absolute; left: 160px; top: 1330px; width: 90px; height: 90px; opacity: 0; }
+#dm { position: absolute; right: 70px; top: 470px; display: flex; align-items: center; gap: 16px; background: rgba(6,20,13,.85); border: 3px solid var(--acc); border-radius: 999px; padding: 10px 30px 14px 16px; direction: rtl; opacity: 0; }
+#dm .ic { width: 64px; height: 64px; border-radius: 50%; background: var(--gold); display: flex; align-items: center; justify-content: center; }
+#dm .tx { font-weight: 900; font-size: 40px; color: var(--ink); }
+/* end card (house style: cream fog, logo, IRAMCO.ORG) */
+#end { position: absolute; inset: 0; background: radial-gradient(ellipse at 50% 42%, #fffaf0 0%, #faf2e0 55%, #efe3c6 100%); clip-path: inset(100% 0 0 0); }
+#endLogo { position: absolute; left: 140px; top: 560px; width: 800px; opacity: 0; }
+#endUrl { position: absolute; left: 0; right: 0; top: 900px; text-align: center; direction: ltr; font-weight: 900; font-size: 84px; letter-spacing: 2px; color: #111; opacity: 0; }
+#endCta { position: absolute; left: 0; right: 0; top: 1060px; text-align: center; direction: rtl; font-weight: 900; font-size: 50px; color: var(--green); opacity: 0; }
+#endCta b { display: inline-block; background: var(--gold); color: var(--dark); border-radius: 18px; padding: 0 22px 6px; margin: 0 8px; }
+</style>
+</head>
+<body>
+<div id="root" data-composition-id="main" data-start="0" data-duration="24.6" data-width="1080" data-height="1920" data-fps="30">
+  <div id="cam">
+    <video id="vid" class="clip" src="assets/media/taher-graded.mp4" data-start="0" data-duration="12.6" data-track-index="1" muted playsinline></video>
+    <video id="vidB" class="clip" src="assets/media/taher-graded.mp4" data-start="13.85" data-media-start="13.85" data-duration="8.45" data-track-index="2" muted playsinline></video>
+  </div>
+  <div id="shade"></div>
+  <div id="inter"><div class="glow"></div><div id="lock"><div class="slot"></div><div id="led"></div></div>
+    <div id="keycard"><div class="stripe"></div><img src="assets/iram-icon.png" alt=""><div class="h">HOTEL</div></div>
+    <div id="booked"><b><svg viewBox="0 0 60 60" width="92" height="92"><path d="M16 31 L27 42 L45 20" fill="none" stroke="#fff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/></svg></b><span class="goldtxt">رزرو شد</span></div></div>
+
+  <!-- G1: Armenia, a dotted flight arc with a plane -->
+  <svg id="route" viewBox="0 0 700 230">
+    <path id="arc" d="M660 200 C 520 20, 180 20, 40 200" fill="none" stroke="#dcad58" stroke-width="6" stroke-dasharray="4 18" stroke-linecap="round"/>
+    <circle cx="660" cy="200" r="12" fill="#dcad58"/><circle id="dest" cx="40" cy="200" r="16" fill="#faf2e0" stroke="#dcad58" stroke-width="6"/>
+    <g id="planeA"><path d="M0 -14 L 30 0 L 0 14 L 6 0 Z" fill="#faf2e0" stroke="#06140d" stroke-width="2"/></g>
+  </svg>
+  <div id="armTitle" class="title goldtxt"><span class="fa">ارمنستان</span><small>ARMENIA</small></div>
+
+  <!-- G2: Black Friday tag -->
+  <div id="tagWrap"><div class="string"></div><div id="tag"><div class="en goldtxt">BLACK FRIDAY</div><div class="fa2">بلک فرایدی در ارمنستان</div></div></div>
+
+  <!-- G3: hotel capacity meter -->
+  <div id="meter" class="card"><div class="lab">ظرفیت هتل‌ها</div><div class="trk"><div class="fill"></div><div class="red"></div></div><div id="stamp">تکمیل!</div></div>
+
+  <!-- G4: book early -->
+  <div id="book" class="card">
+    <svg viewBox="0 0 92 92"><rect x="10" y="16" width="72" height="66" rx="10" fill="none" stroke="#dcad58" stroke-width="6"/><path d="M10 34 H82" stroke="#dcad58" stroke-width="6"/><path d="M28 8 V24 M64 8 V24" stroke="#dcad58" stroke-width="6" stroke-linecap="round"/><rect x="26" y="46" width="14" height="12" rx="3" fill="#faf2e0"/><rect x="52" y="46" width="14" height="12" rx="3" fill="#faf2e0"/><rect x="26" y="64" width="14" height="10" rx="3" fill="#faf2e0" opacity=".5"/></svg>
+    <div><div class="t1">رزرو هتل</div><div class="t2">قبل از تکمیل ظرفیت</div></div>
+    <div id="check"><svg viewBox="0 0 60 60" width="62" height="62"><path d="M14 31 L26 43 L47 19" fill="none" stroke="#06140d" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+  </div>
+
+  <!-- G5: now, before it is too late -->
+  <svg id="clock" viewBox="0 0 150 150"><circle cx="75" cy="75" r="64" fill="rgba(6,20,13,.75)" stroke="#dcad58" stroke-width="8"/>
+    <g stroke="#faf2e0" stroke-width="5" stroke-linecap="round"><path d="M75 20 V30 M75 120 V130 M20 75 H30 M120 75 H130"/></g>
+    <line id="hMin" x1="75" y1="75" x2="75" y2="30" stroke="#dcad58" stroke-width="7" stroke-linecap="round" style="transform-origin:75px 75px"/>
+    <line id="hHr" x1="75" y1="75" x2="102" y2="75" stroke="#faf2e0" stroke-width="7" stroke-linecap="round" style="transform-origin:75px 75px"/>
+    <circle cx="75" cy="75" r="7" fill="#dcad58"/></svg>
+  <div id="nowTitle" class="title goldtxt"><span class="fa">تا دیر نشده</span></div>
+
+  <!-- G6: comment «تور» and the trip info goes out -->
+  <div id="cmt" class="card">
+    <div class="av"><img src="assets/iram-icon.png" alt=""></div>
+    <div class="box"><span class="ph" id="ph">کامنت بنویس…</span><span id="typed">تور</span><span id="caret"></span></div>
+    <div class="send"><svg viewBox="0 0 40 40" width="40" height="40"><path d="M4 20 L36 6 L28 34 L19 23 Z" fill="#06140d"/></svg></div>
+  </div>
+  <svg id="plane" viewBox="0 0 90 90"><path d="M6 44 L84 10 L64 80 L42 54 Z" fill="#faf2e0" stroke="#dcad58" stroke-width="4" stroke-linejoin="round"/><path d="M42 54 L84 10" stroke="#dcad58" stroke-width="4"/></svg>
+  <div id="dm"><div class="ic"><svg viewBox="0 0 40 40" width="38" height="38"><path d="M4 20 L36 6 L28 34 L19 23 Z" fill="#06140d"/></svg></div><div class="tx">اطلاعات سفر</div></div>
+
+  <div id="cap"></div>
+  <div id="brand"><img class="ic" src="assets/iram-icon.png" alt=""><img class="wd" src="assets/iram-word.png" alt=""></div>
+  <div id="sweep"></div>
+  <div id="flash"></div>
+
+  <!-- end card -->
+  <div id="end"><img id="endLogo" src="assets/iram-logo-clean.png" alt="IRAM CO."><div id="endUrl">IRAMCO.ORG</div>
+    <div id="endCta">کامنت کن <b>تور</b></div></div>
+
+  <audio id="a-mix" class="clip" src="assets/audio/mix.wav" data-start="0" data-duration="24.6" data-track-index="20"></audio>
+</div>
+
+<script>
+const $ = (s) => document.querySelector(s), $$ = (s) => Array.from(document.querySelectorAll(s));
+const P = window.__P, E = P.ev, FPS = 30;
+// captions: one line element per caption line, one span per word
+const cap = $("#cap");
+P.lines.forEach((L, li) => {
+  const d = document.createElement("div"); d.className = "line"; d.id = "ln" + li;
+  P.words.slice(L.a, L.b).forEach((w, k) => {
+    const s = document.createElement("span"); s.className = "w"; s.dataset.i = L.a + k;
+    s.innerHTML = "<i></i><span>" + w.w + "</span>"; d.appendChild(s); d.appendChild(document.createTextNode(" "));
+  });
+  cap.appendChild(d);
+});
+
+const tl = gsap.timeline({ paused: true });
+let seed = 4321; const rs = () => ((seed = (seed * 16807) % 2147483647) / 2147483647) * 2 - 1;
+function shake(t, amp = 10, dur = 0.25) {
+  const n = Math.round(dur * FPS);
+  for (let i = 0; i < n; i++) { const k = 1 - i / n; tl.set("#cam", { x: rs() * amp * k, y: rs() * amp * k }, t + i / FPS); }
+  tl.set("#cam", { x: 0, y: 0 }, t + dur);
+}
+function cardIn(sel, t) {
+  tl.fromTo(sel, { opacity: 0 }, { opacity: 1, duration: 0.12, ease: "none" }, t);
+  tl.fromTo(sel, { y: 80, scale: 0.92 }, { y: 0, scale: 1, duration: 0.45, ease: "back.out(1.8)" }, t);
+}
+function cardOut(sel, t) { tl.to(sel, { opacity: 0, y: 40, duration: 0.25, ease: "power2.in" }, t); }
+
+// ---- captions (karaoke: spoken words light up, the current word sits on a gold pill)
+P.lines.forEach((L, li) => {
+  const el = "#ln" + li, end = li + 1 < P.lines.length ? P.lines[li + 1].t0 : E.speech_end + 0.25;
+  tl.fromTo(el, { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.15, ease: "power2.out" }, L.t0);
+  tl.to(el, { opacity: 0, duration: 0.06, ease: "none" }, end - 0.07);          // gone before the next line starts
+  for (let k = L.a; k < L.b; k++) {
+    const w = `${el} .w[data-i="${k}"]`, t = P.words[k].t, nt = k + 1 < L.b ? P.words[k + 1].t : end;
+    tl.set(`${w}`, { color: "#faf2e0" }, t);
+    tl.fromTo(`${w} i`, { opacity: 0, scale: 0.7 }, { opacity: 1, scale: 1, duration: 0.12, ease: "back.out(2)" }, t);
+    tl.set(`${w} span`, { color: "#06140d", textShadow: "none" }, t);
+    tl.to(`${w} i`, { opacity: 0, duration: 0.08 }, nt - 0.02);
+    tl.set(`${w} span`, { color: "#faf2e0", textShadow: "0 4px 18px rgba(6,20,13,.95)" }, nt);
+  }
+});
+
+// ---- camera: slow push-ins, punches on key words, settle at the location change
+tl.fromTo("#cam", { scale: 1.0 }, { scale: 1.04, duration: E.black, ease: "none" }, 0);
+tl.to("#cam", { scale: 1.11, duration: 0.25, ease: "power3.out" }, E.black);
+tl.to("#cam", { scale: 1.05, duration: 1.4, ease: "power2.inOut" }, E.friday + 1.0);
+tl.to("#cam", { scale: 1.09, duration: 12.4 - E.think, ease: "none" }, E.think);
+tl.fromTo("#cam", { scale: 1.12 }, { scale: 1.0, duration: 0.5, ease: "expo.out", immediateRender: false }, 13.9);
+tl.to("#cam", { scale: 1.05, duration: E.tour - 14.45, ease: "none" }, 14.45);
+tl.to("#cam", { scale: 1.11, duration: 0.22, ease: "power3.out" }, E.tour);
+tl.to("#cam", { scale: 1.04, duration: 1.6, ease: "power2.inOut" }, E.comment);
+shake(E.black, 12, 0.3); shake(E.full, 9, 0.25); shake(E.tour, 7, 0.2);
+
+// ---- brand: stacked logo top-right (house style) for the talking part
+tl.fromTo("#brand", { opacity: 0, y: -20 }, { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" }, 0.3);
+tl.to("#brand", { opacity: 0, duration: 0.3 }, E.end_card - 0.2);
+
+// ---- G1: Armenia
+tl.fromTo("#route", { opacity: 0 }, { opacity: 1, duration: 0.25 }, E.armenia - 0.9);
+const arc = $("#arc"), AL = arc.getTotalLength();
+tl.fromTo({ p: 0 }, { p: 0 }, { p: 1, duration: 0.9, ease: "power2.inOut", immediateRender: false,
+  onUpdate() { const p = this.targets()[0].p, pt = arc.getPointAtLength(p * AL), q = arc.getPointAtLength(Math.min(AL, p * AL + 2));
+    const ang = Math.atan2(q.y - pt.y, q.x - pt.x) * 180 / Math.PI; $("#planeA").setAttribute("transform", `translate(${pt.x} ${pt.y}) rotate(${ang})`); } }, E.armenia - 0.9);
+tl.fromTo("#dest", { attr: { r: 6 } }, { attr: { r: 16 }, duration: 0.35, ease: "back.out(3)" }, E.armenia);
+tl.fromTo("#armTitle", { opacity: 0, scale: 1.3 }, { opacity: 1, scale: 1, duration: 0.35, ease: "back.out(2)" }, E.armenia);
+tl.to(["#route", "#armTitle"], { opacity: 0, duration: 0.25 }, E.black - 0.3);
+
+// ---- G2: Black Friday tag drops in and swings
+tl.set("#tagWrap", { opacity: 1 }, E.black - 0.02);
+tl.fromTo("#tagWrap", { y: -520 }, { y: 0, duration: 0.35, ease: "power3.in" }, E.black - 0.35);
+tl.fromTo("#tagWrap", { rotation: 0 }, { keyframes: [{ rotation: -9, duration: 0.18 }, { rotation: 6, duration: 0.3 }, { rotation: -3.5, duration: 0.32 }, { rotation: 2, duration: 0.34 }, { rotation: -1, duration: 0.4 }, { rotation: 0, duration: 0.5 }], ease: "sine.inOut", immediateRender: false }, E.black);
+tl.to("#tagWrap", { y: -520, opacity: 0, duration: 0.35, ease: "power3.in" }, E.capacity - 0.5);
+
+// ---- G3: hotel capacity fills up
+cardIn("#meter", E.capacity - 0.15);
+tl.fromTo("#meter .fill", { scaleX: 0.35 }, { scaleX: 1, duration: E.full - E.capacity, ease: "power1.in" }, E.capacity);
+tl.to("#meter .red", { opacity: 1, duration: 0.15 }, E.full - 0.05);
+tl.fromTo("#stamp", { opacity: 0, scale: 2.2 }, { opacity: 1, scale: 1, duration: 0.22, ease: "power4.in" }, E.full - 0.2);
+cardOut("#meter", E.think - 0.2);
+
+// ---- G4: book early, then the check
+cardIn("#book", E.think + 0.05);
+cardOut("#book", 12.3);
+
+// ---- the location change: a golden light sweep
+// the source crossfades between its two locations at ~12.8-13.4 s: the flash and the sweep cover the double image
+const I0 = 12.42, I1 = 13.9;   // interstitial in / out; the source crossfades 12.55-13.95
+tl.fromTo("#inter", { clipPath: "circle(0px at 540px 1380px)" }, { clipPath: "circle(1700px at 540px 1380px)", duration: 0.32, ease: "power3.in" }, I0 - 0.04);
+tl.fromTo("#keycard", { y: 0, rotation: 8 }, { y: -880, rotation: -4, duration: 0.42, ease: "back.out(1.4)" }, I0 + 0.25);
+tl.to("#keycard", { y: -900, rotation: 0, duration: 0.12, ease: "power2.in" }, I0 + 0.72);
+tl.to("#led", { backgroundColor: "#3fbf7f", boxShadow: "0 0 40px #3fbf7f, inset 0 0 0 5px #1d5c3c", duration: 0.1 }, I0 + 0.84);
+tl.fromTo("#booked", { opacity: 0, scale: 1.4 }, { opacity: 1, scale: 1, duration: 0.3, ease: "back.out(2.4)" }, I0 + 0.86);
+tl.set("#sweep", { opacity: 1 }, I1 - 0.32);
+tl.fromTo("#sweep", { x: 0 }, { x: 2400, duration: 0.6, ease: "power2.inOut" }, I1 - 0.32);
+tl.set("#sweep", { opacity: 0 }, I1 + 0.3);
+tl.to("#inter", { y: -1920, duration: 0.32, ease: "power3.in" }, I1 - 0.02);   // slides up and away with the light sweep
+tl.fromTo("#flash", { opacity: 0 }, { keyframes: [{ opacity: 0.45, duration: 0.08 }, { opacity: 0, duration: 0.3 }], immediateRender: false }, I1 - 0.06);
+
+// ---- G5: now, before it is too late
+tl.fromTo("#clock", { opacity: 0, scale: 0.4 }, { opacity: 1, scale: 1, duration: 0.35, ease: "back.out(2.4)" }, 14.0);
+tl.fromTo("#hMin", { rotation: 0 }, { rotation: 720, duration: E.comment_word - E.now, ease: "power1.in" }, E.now);
+tl.fromTo("#hHr", { rotation: 0 }, { rotation: 60, duration: E.comment_word - E.now, ease: "power1.in" }, E.now);
+tl.fromTo("#nowTitle", { opacity: 0, x: 60 }, { opacity: 1, x: 0, duration: 0.35, ease: "back.out(2)" }, E.now2);
+tl.to(["#clock", "#nowTitle"], { opacity: 0, duration: 0.25 }, E.comment_word - 0.3);
+
+// ---- G6: comment «تور», then the trip info flies to the DMs
+cardIn("#cmt", E.comment_word - 0.2);
+tl.set("#ph", { opacity: 0 }, E.tour);
+tl.fromTo("#typed", { clipPath: "inset(0 0 0 100%)" }, { clipPath: "inset(0 0 0 0%)", duration: 0.3, ease: "steps(3)" }, E.tour);
+tl.set("#caret", { opacity: 1 }, E.tour);
+for (let t = E.tour + 0.5; t < E.info; t += 0.5) tl.set("#caret", { opacity: Math.round((t - E.tour) / 0.5) % 2 ? 0 : 1 }, t);
+tl.fromTo("#cmt .send", { scale: 1 }, { keyframes: [{ scale: 1.3, duration: 0.12 }, { scale: 1, duration: 0.3, ease: "back.out(3)" }], immediateRender: false }, E.comment);
+tl.fromTo("#dm", { opacity: 0, x: 80 }, { opacity: 1, x: 0, duration: 0.4, ease: "back.out(2)" }, E.info);
+tl.set("#plane", { opacity: 1 }, E.send - 0.15);
+tl.fromTo("#plane", { x: 0, y: 0, rotation: 0, scale: 1 }, { x: 760, y: -830, rotation: -12, scale: 0.6, duration: 0.55, ease: "power2.in" }, E.send - 0.15);
+tl.set("#plane", { opacity: 0 }, E.send + 0.4);
+tl.fromTo("#dm", { scale: 1 }, { keyframes: [{ scale: 1.15, duration: 0.12 }, { scale: 1, duration: 0.3, ease: "back.out(3)" }], immediateRender: false }, E.send + 0.38);
+tl.to(["#cmt", "#dm"], { opacity: 0, duration: 0.25 }, E.end_card - 0.15);
+
+// ---- end card: cream fog wipes up, logo, IRAMCO.ORG, the keyword again
+tl.fromTo("#end", { clipPath: "inset(100% 0 0 0)" }, { clipPath: "inset(0% 0 0 0)", duration: 0.55, ease: "power3.inOut" }, E.end_card);
+tl.fromTo("#endLogo", { opacity: 0, y: 40, scale: 0.92 }, { opacity: 1, y: 0, scale: 1, duration: 0.6, ease: "power3.out" }, E.end_card + 0.35);
+tl.fromTo("#endUrl", { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.5, ease: "power3.out" }, E.end_card + 0.6);
+tl.fromTo("#endCta", { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.5, ease: "power3.out" }, E.end_card + 0.85);
+tl.fromTo("#endLogo", { scale: 1 }, { scale: 1.03, duration: E.total - E.end_card - 1.0, ease: "none", immediateRender: false }, E.end_card + 0.95);
+
+tl.set({}, {}, E.total);
+window.__timelines = window.__timelines || {}; window.__timelines["main"] = tl;
+</script>
+</body>
+</html>

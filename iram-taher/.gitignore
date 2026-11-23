@@ -8,3 +8,4 @@ assets/media/
 assets/audio/*.wav
 renders/*.mp4
 renders/*.jpg
+renders/*.png

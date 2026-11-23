@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="fa">
+<!-- IRAM CO. cover for the «بلک فرایدی در ارمنستان» reel, in the house cover style of
+     yerevan-christmas/cover (variant b): deep-green textured ground with gold sparkles, logo top-centre,
+     cream kicker, white title with a gold «ارمنستان», the presenter in front, a gold prop, flag pill.
+     Render: node tools/render_cover.cjs  -> renders/iram-taher-cover.png -->
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=1080, height=1920">
+<style>
+@font-face { font-family: "Vazirmatn"; font-weight: 700; src: url("../assets/fonts/vazirmatn-arabic-700-normal.woff2") format("woff2"); }
+@font-face { font-family: "Vazirmatn"; font-weight: 900; src: url("../assets/fonts/vazirmatn-arabic-900-normal.woff2") format("woff2"); }
+@font-face { font-family: "Vazirmatn"; font-weight: 900; src: url("../assets/fonts/vazirmatn-latin-900-normal.woff2") format("woff2"); unicode-range: U+0000-00FF; }
+:root { --ink: #faf2e0; --acc: #dcad58; --acc-hi: #f4d68c; --acc-lo: #a9792f; --dark: #06140d;
+  --gold: linear-gradient(180deg, #f8e3a4 0%, var(--acc-hi) 25%, var(--acc) 55%, var(--acc-lo) 88%, #d9b264 100%); }
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { width: 1080px; height: 1920px; overflow: hidden; background: #0b2017; font-family: "Vazirmatn", sans-serif; font-synthesis: none; }
+canvas { position: absolute; inset: 0; width: 1080px; height: 1920px; }
+#fx { pointer-events: none; }
+#logo { position: absolute; left: 50%; top: 85px; width: 340px; transform: translateX(-50%); }
+.txt { position: absolute; left: 0; right: 0; text-align: center; direction: rtl; color: var(--ink); font-weight: 900; white-space: nowrap;
+  filter: drop-shadow(0 8px 18px rgba(0,0,0,.45)); }
+.gold { background: var(--gold); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+.small { font-size: .45em; vertical-align: .08em; margin-left: .15em; color: var(--ink); }
+#kick { top: 292px; font-size: 48px; font-weight: 700; opacity: .95; }
+#kick b { color: var(--acc-hi); font-weight: 900; }
+#t1 { top: 352px; font-size: 128px; line-height: 1.2; }
+#t2 { top: 500px; font-size: 156px; line-height: 1.2; }
+#halo { position: absolute; left: 170px; top: 640px; width: 900px; height: 900px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(244,214,140,.20), rgba(244,214,140,.06) 45%, transparent 70%); }
+#presenter { position: absolute; left: 30px; top: 600px; width: 1250px;
+  filter: drop-shadow(0 0 2px rgba(244,214,140,.35)) drop-shadow(0 30px 40px rgba(0,0,0,.45)); }
+#floor { position: absolute; left: 0; right: 0; bottom: 0; height: 520px; background: linear-gradient(180deg, transparent, rgba(6,20,13,.55) 60%, rgba(6,20,13,.8)); }
+/* the gold hotel key card from the reel, as the prop */
+#card { position: absolute; left: 44px; top: 1160px; width: 400px; height: 250px; border-radius: 26px; background: var(--gold);
+  transform: rotate(-11deg); box-shadow: 0 34px 50px rgba(0,0,0,.55), inset 0 2px 0 rgba(255,255,255,.55), inset 0 -4px 0 rgba(120,80,20,.35); overflow: hidden; }
+#card .stripe { position: absolute; left: 0; right: 0; top: 38px; height: 46px; background: #3a2a10; opacity: .82; }
+#card .shine { position: absolute; left: -140px; top: -60px; width: 120px; height: 420px; transform: rotate(24deg);
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,.55), transparent); }
+#card img { position: absolute; left: 28px; bottom: 24px; width: 82px; }
+#card .h { position: absolute; right: 30px; bottom: 30px; font-weight: 900; font-size: 54px; color: #06140d; direction: ltr; letter-spacing: 3px; }
+#badge { position: absolute; left: 352px; top: 1124px; width: 96px; height: 96px; border-radius: 50%; background: #3fbf7f;
+  border: 6px solid var(--ink); box-shadow: 0 12px 30px rgba(0,0,0,.45), 0 0 40px rgba(63,191,127,.55); display: flex; align-items: center; justify-content: center; }
+.pill { position: absolute; left: 50%; transform: translateX(-50%); display: inline-flex; align-items: center; gap: 18px; white-space: nowrap; direction: rtl;
+  padding: 14px 40px 18px; border-radius: 999px; background: rgba(6,20,13,.72); border: 3px solid var(--acc); color: var(--ink); font-weight: 900; font-size: 46px;
+  box-shadow: 0 18px 40px rgba(0,0,0,.4); }
+.pill b { color: var(--acc-hi); font-weight: 900; }
+.pill em { width: 12px; height: 12px; border-radius: 50%; background: var(--acc); display: inline-block; }
+.pill .flag { width: 44px; height: 44px; border-radius: 50%; background: linear-gradient(180deg, #D90012 0 33.4%, #0033A0 33.4% 66.7%, #F2A800 66.7% 100%); border: 2px solid var(--acc); }
+#pill { top: 1735px; }
+</style>
+</head>
+<body>
+<canvas id="bg" width="360" height="640"></canvas>
+<canvas id="fx" width="1080" height="1920"></canvas>
+<img id="logo" src="../assets/iram-logo.png" alt="IRAM CO.">
+<div id="kick" class="txt">قبل از <b>تکمیل ظرفیت</b> هتل‌ها</div>
+<div id="t1" class="txt">بلک فرایدی</div>
+<div id="t2" class="txt"><span class="small">در</span><span class="gold">ارمنستان</span></div>
+<div id="halo"></div>
+<img id="presenter" src="../assets/media/cover-presenter.png" alt="">
+<div id="floor"></div>
+<div id="card"><div class="stripe"></div><div class="shine"></div><img src="../assets/iram-icon.png" alt=""><div class="h">HOTEL</div></div>
+<div id="badge"><svg viewBox="0 0 60 60" width="62" height="62"><path d="M15 31 L26 42 L46 19" fill="none" stroke="#fff" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+<div id="pill" class="pill"><span class="flag"></span><b>رزرو هتل</b><em></em>کامنت کن: «تور»</div>
+<script>
+// brand ground: the generator from yerevan-christmas/cover/cover.js, drawn to a 360x640 canvas and scaled up
+const hash = (i) => { const x = Math.sin(i * 127.1 + 311.7) * 43758.5453; return x - Math.floor(x); };
+const lerp = (a, b, k) => a + (b - a) * k, cl = (x) => Math.max(0, Math.min(1, x));
+(() => {
+  const cv = document.getElementById("bg"), w = cv.width, h = cv.height, g = cv.getContext("2d");
+  const A = [9, 30, 21], B = [20, 58, 40], C = [40, 86, 62];
+  const grid = (n, s) => Array.from({ length: (n + 1) * (n * 2 + 1) }, (_, i) => hash(i * 7.31 + s));
+  const oct = [[4, 0.55, 1], [10, 0.3, 2], [26, 0.15, 3]].map(([n, a, s]) => ({ n, a, g: grid(n, s) }));
+  const noise = (x, y) => oct.reduce((acc, o) => { const gx = x * o.n, gy = y * o.n * 2, ix = Math.floor(gx), iy = Math.floor(gy), fx = gx - ix, fy = gy - iy, R = o.n + 1;
+    const q = (a, b) => o.g[Math.min(b, o.n * 2) * R + Math.min(a, o.n)], sx = fx * fx * (3 - 2 * fx), sy = fy * fy * (3 - 2 * fy);
+    return acc + o.a * lerp(lerp(q(ix, iy), q(ix + 1, iy), sx), lerp(q(ix, iy + 1), q(ix + 1, iy + 1), sx), sy); }, 0);
+  const img = g.createImageData(w, h);
+  for (let y = 0; y < h; y++) for (let x = 0; x < w; x++) {
+    const u = x / w, v = y / h, k = cl(1 - Math.hypot((u - 0.5) * 1.1, (v - 0.5) * 0.8) / 0.9);
+    const sweep = Math.max(0, 1 - Math.abs((u - 0.05) - (v - 0.02) * 0.9) / 0.12) * cl(1 - v * 2.2) + Math.max(0, 1 - Math.abs((u - 0.95) + (v - 0.92) * 0.7) / 0.1) * cl((v - 0.6) * 3) * 0.7;
+    const n = noise(u, v) - 0.5, gr = (hash(x * 13.7 + y * 91.3) - 0.5) * 0.05, i = (y * w + x) * 4;
+    for (let c = 0; c < 3; c++) img.data[i + c] = Math.max(0, Math.min(255, lerp(lerp(A[c], B[c], k), C[c], sweep * 0.5) * (1 + n * 0.3 + gr)));
+    img.data[i + 3] = 255;
+  }
+  g.putImageData(img, 0, 0);
+})();
+// gold sparkles (four-point glints with a soft glow) and fine cream specks, as on the earlier IRAM covers
+(() => {
+  const g = document.getElementById("fx").getContext("2d");
+  for (let i = 0; i < 160; i++) {
+    const x = hash(i) * 1080, y = hash(i + 9) * 1920, r = 1.2 + hash(i + 5) * 2.2;
+    g.globalAlpha = 0.25 + hash(i + 2) * 0.45; g.fillStyle = "#fbf3df"; g.beginPath(); g.arc(x, y, r, 0, Math.PI * 2); g.fill();
+  }
+  g.globalAlpha = 1;
+  const glint = (x, y, s, rot) => {
+    g.save(); g.translate(x, y); g.rotate(rot); g.shadowColor = "rgba(255,236,180,.9)"; g.shadowBlur = s * 0.9; g.fillStyle = "#fff2c2";
+    g.beginPath(); g.moveTo(0, -s); g.quadraticCurveTo(s * 0.12, -s * 0.12, s, 0); g.quadraticCurveTo(s * 0.12, s * 0.12, 0, s);
+    g.quadraticCurveTo(-s * 0.12, s * 0.12, -s, 0); g.quadraticCurveTo(-s * 0.12, -s * 0.12, 0, -s); g.fill(); g.restore();
+  };
+  [[120, 330, 26], [965, 300, 30], [70, 760, 22], [1010, 820, 26], [150, 1560, 30], [960, 1480, 24], [880, 1060, 18], [240, 980, 16], [1000, 1660, 18], [60, 1260, 16]]
+    .forEach(([x, y, s], i) => glint(x, y, s, (hash(i + 3) - 0.5) * 0.5));
+})();
+Promise.all([document.fonts.ready, ...[...document.images].map((im) => im.decode().catch(() => {}))]).then(() => { window.__ready = true; });
+</script>
+</body>
+</html>

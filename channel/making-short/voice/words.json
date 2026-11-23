@@ -1,0 +1,956 @@
+[
+ {
+  "line": 1,
+  "word": "This",
+  "start": 0.35,
+  "end": 0.644
+ },
+ {
+  "line": 1,
+  "word": "cartoon",
+  "start": 0.644,
+  "end": 1.114
+ },
+ {
+  "line": 1,
+  "word": "frog",
+  "start": 1.114,
+  "end": 1.408
+ },
+ {
+  "line": 1,
+  "word": "has",
+  "start": 1.408,
+  "end": 1.643
+ },
+ {
+  "line": 1,
+  "word": "never",
+  "start": 1.643,
+  "end": 1.996
+ },
+ {
+  "line": 1,
+  "word": "been",
+  "start": 1.996,
+  "end": 2.29
+ },
+ {
+  "line": 1,
+  "word": "drawn",
+  "start": 2.29,
+  "end": 2.643
+ },
+ {
+  "line": 1,
+  "word": "by",
+  "start": 2.643,
+  "end": 2.819
+ },
+ {
+  "line": 1,
+  "word": "hand.",
+  "start": 2.819,
+  "end": 3.172
+ },
+ {
+  "line": 1,
+  "word": "Not",
+  "start": 3.172,
+  "end": 3.407
+ },
+ {
+  "line": 1,
+  "word": "even",
+  "start": 3.407,
+  "end": 3.701
+ },
+ {
+  "line": 1,
+  "word": "once.",
+  "start": 3.701,
+  "end": 4.054
+ },
+ {
+  "line": 2,
+  "word": "Every",
+  "start": 4.604,
+  "end": 4.915
+ },
+ {
+  "line": 2,
+  "word": "frame",
+  "start": 4.915,
+  "end": 5.226
+ },
+ {
+  "line": 2,
+  "word": "of",
+  "start": 5.226,
+  "end": 5.381
+ },
+ {
+  "line": 2,
+  "word": "him",
+  "start": 5.381,
+  "end": 5.589
+ },
+ {
+  "line": 2,
+  "word": "is",
+  "start": 5.589,
+  "end": 5.744
+ },
+ {
+  "line": 2,
+  "word": "a",
+  "start": 5.744,
+  "end": 5.848
+ },
+ {
+  "line": 2,
+  "word": "few",
+  "start": 5.848,
+  "end": 6.055
+ },
+ {
+  "line": 2,
+  "word": "lines",
+  "start": 6.055,
+  "end": 6.366
+ },
+ {
+  "line": 2,
+  "word": "of",
+  "start": 6.366,
+  "end": 6.522
+ },
+ {
+  "line": 2,
+  "word": "code.",
+  "start": 6.522,
+  "end": 6.833
+ },
+ {
+  "line": 3,
+  "word": "In",
+  "start": 7.283,
+  "end": 7.466
+ },
+ {
+  "line": 3,
+  "word": "November,",
+  "start": 7.466,
+  "end": 8.078
+ },
+ {
+  "line": 3,
+  "word": "a",
+  "start": 8.078,
+  "end": 8.201
+ },
+ {
+  "line": 3,
+  "word": "tiny",
+  "start": 8.201,
+  "end": 8.507
+ },
+ {
+  "line": 3,
+  "word": "channel",
+  "start": 8.507,
+  "end": 8.996
+ },
+ {
+  "line": 3,
+  "word": "called",
+  "start": 8.996,
+  "end": 9.425
+ },
+ {
+  "line": 3,
+  "word": "Pip",
+  "start": 9.425,
+  "end": 9.669
+ },
+ {
+  "line": 3,
+  "word": "and",
+  "start": 9.669,
+  "end": 9.914
+ },
+ {
+  "line": 3,
+  "word": "Pebble",
+  "start": 9.914,
+  "end": 10.343
+ },
+ {
+  "line": 3,
+  "word": "started",
+  "start": 10.343,
+  "end": 10.832
+ },
+ {
+  "line": 3,
+  "word": "posting",
+  "start": 10.832,
+  "end": 11.322
+ },
+ {
+  "line": 3,
+  "word": "shorts.",
+  "start": 11.322,
+  "end": 11.811
+ },
+ {
+  "line": 3,
+  "word": "A",
+  "start": 11.811,
+  "end": 11.934
+ },
+ {
+  "line": 3,
+  "word": "frog",
+  "start": 11.934,
+  "end": 12.24
+ },
+ {
+  "line": 3,
+  "word": "who",
+  "start": 12.24,
+  "end": 12.485
+ },
+ {
+  "line": 3,
+  "word": "rushes.",
+  "start": 12.485,
+  "end": 12.974
+ },
+ {
+  "line": 3,
+  "word": "A",
+  "start": 12.974,
+  "end": 13.097
+ },
+ {
+  "line": 3,
+  "word": "snail",
+  "start": 13.097,
+  "end": 13.464
+ },
+ {
+  "line": 3,
+  "word": "who",
+  "start": 13.464,
+  "end": 13.709
+ },
+ {
+  "line": 3,
+  "word": "always",
+  "start": 13.709,
+  "end": 14.137
+ },
+ {
+  "line": 3,
+  "word": "wins.",
+  "start": 14.137,
+  "end": 14.504
+ },
+ {
+  "line": 4,
+  "word": "First,",
+  "start": 15.104,
+  "end": 15.485
+ },
+ {
+  "line": 4,
+  "word": "the",
+  "start": 15.485,
+  "end": 15.703
+ },
+ {
+  "line": 4,
+  "word": "frog",
+  "start": 15.703,
+  "end": 15.976
+ },
+ {
+  "line": 4,
+  "word": "is",
+  "start": 15.976,
+  "end": 16.139
+ },
+ {
+  "line": 4,
+  "word": "built",
+  "start": 16.139,
+  "end": 16.466
+ },
+ {
+  "line": 4,
+  "word": "from",
+  "start": 16.466,
+  "end": 16.738
+ },
+ {
+  "line": 4,
+  "word": "circles.",
+  "start": 16.738,
+  "end": 17.229
+ },
+ {
+  "line": 4,
+  "word": "One",
+  "start": 17.229,
+  "end": 17.447
+ },
+ {
+  "line": 4,
+  "word": "for",
+  "start": 17.447,
+  "end": 17.665
+ },
+ {
+  "line": 4,
+  "word": "the",
+  "start": 17.665,
+  "end": 17.882
+ },
+ {
+  "line": 4,
+  "word": "body,",
+  "start": 17.882,
+  "end": 18.209
+ },
+ {
+  "line": 4,
+  "word": "two",
+  "start": 18.209,
+  "end": 18.427
+ },
+ {
+  "line": 4,
+  "word": "for",
+  "start": 18.427,
+  "end": 18.645
+ },
+ {
+  "line": 4,
+  "word": "the",
+  "start": 18.645,
+  "end": 18.863
+ },
+ {
+  "line": 4,
+  "word": "eyes,",
+  "start": 18.863,
+  "end": 19.19
+ },
+ {
+  "line": 4,
+  "word": "and",
+  "start": 19.19,
+  "end": 19.408
+ },
+ {
+  "line": 4,
+  "word": "one",
+  "start": 19.408,
+  "end": 19.626
+ },
+ {
+  "line": 4,
+  "word": "curve",
+  "start": 19.626,
+  "end": 19.953
+ },
+ {
+  "line": 4,
+  "word": "for",
+  "start": 19.953,
+  "end": 20.171
+ },
+ {
+  "line": 4,
+  "word": "the",
+  "start": 20.171,
+  "end": 20.388
+ },
+ {
+  "line": 4,
+  "word": "smile.",
+  "start": 20.388,
+  "end": 20.77
+ },
+ {
+  "line": 5,
+  "word": "Then",
+  "start": 21.22,
+  "end": 21.468
+ },
+ {
+  "line": 5,
+  "word": "the",
+  "start": 21.468,
+  "end": 21.667
+ },
+ {
+  "line": 5,
+  "word": "code",
+  "start": 21.667,
+  "end": 21.915
+ },
+ {
+  "line": 5,
+  "word": "tells",
+  "start": 21.915,
+  "end": 22.213
+ },
+ {
+  "line": 5,
+  "word": "him",
+  "start": 22.213,
+  "end": 22.411
+ },
+ {
+  "line": 5,
+  "word": "where",
+  "start": 22.411,
+  "end": 22.709
+ },
+ {
+  "line": 5,
+  "word": "to",
+  "start": 22.709,
+  "end": 22.858
+ },
+ {
+  "line": 5,
+  "word": "be,",
+  "start": 22.858,
+  "end": 23.057
+ },
+ {
+  "line": 5,
+  "word": "thirty",
+  "start": 23.057,
+  "end": 23.404
+ },
+ {
+  "line": 5,
+  "word": "times",
+  "start": 23.404,
+  "end": 23.702
+ },
+ {
+  "line": 5,
+  "word": "every",
+  "start": 23.702,
+  "end": 24.0
+ },
+ {
+  "line": 5,
+  "word": "second.",
+  "start": 24.0,
+  "end": 24.397
+ },
+ {
+  "line": 6,
+  "word": "Then",
+  "start": 24.947,
+  "end": 25.214
+ },
+ {
+  "line": 6,
+  "word": "the",
+  "start": 25.214,
+  "end": 25.428
+ },
+ {
+  "line": 6,
+  "word": "music.",
+  "start": 25.428,
+  "end": 25.802
+ },
+ {
+  "line": 6,
+  "word": "No",
+  "start": 25.802,
+  "end": 25.962
+ },
+ {
+  "line": 6,
+  "word": "instruments.",
+  "start": 25.962,
+  "end": 26.657
+ },
+ {
+  "line": 6,
+  "word": "Just",
+  "start": 26.657,
+  "end": 26.924
+ },
+ {
+  "line": 6,
+  "word": "math.",
+  "start": 26.924,
+  "end": 27.245
+ },
+ {
+  "line": 6,
+  "word": "Sine",
+  "start": 27.245,
+  "end": 27.512
+ },
+ {
+  "line": 6,
+  "word": "waves,",
+  "start": 27.512,
+  "end": 27.886
+ },
+ {
+  "line": 6,
+  "word": "stacked",
+  "start": 27.886,
+  "end": 28.313
+ },
+ {
+  "line": 6,
+  "word": "until",
+  "start": 28.313,
+  "end": 28.634
+ },
+ {
+  "line": 6,
+  "word": "they",
+  "start": 28.634,
+  "end": 28.901
+ },
+ {
+  "line": 6,
+  "word": "sound",
+  "start": 28.901,
+  "end": 29.222
+ },
+ {
+  "line": 6,
+  "word": "like",
+  "start": 29.222,
+  "end": 29.489
+ },
+ {
+  "line": 6,
+  "word": "a",
+  "start": 29.489,
+  "end": 29.596
+ },
+ {
+  "line": 6,
+  "word": "song.",
+  "start": 29.596,
+  "end": 29.916
+ },
+ {
+  "line": 7,
+  "word": "Then",
+  "start": 30.366,
+  "end": 30.621
+ },
+ {
+  "line": 7,
+  "word": "a",
+  "start": 30.621,
+  "end": 30.722
+ },
+ {
+  "line": 7,
+  "word": "browser",
+  "start": 30.722,
+  "end": 31.129
+ },
+ {
+  "line": 7,
+  "word": "plays",
+  "start": 31.129,
+  "end": 31.434
+ },
+ {
+  "line": 7,
+  "word": "it",
+  "start": 31.434,
+  "end": 31.587
+ },
+ {
+  "line": 7,
+  "word": "all,",
+  "start": 31.587,
+  "end": 31.841
+ },
+ {
+  "line": 7,
+  "word": "takes",
+  "start": 31.841,
+  "end": 32.147
+ },
+ {
+  "line": 7,
+  "word": "a",
+  "start": 32.147,
+  "end": 32.248
+ },
+ {
+  "line": 7,
+  "word": "picture",
+  "start": 32.248,
+  "end": 32.655
+ },
+ {
+  "line": 7,
+  "word": "of",
+  "start": 32.655,
+  "end": 32.808
+ },
+ {
+  "line": 7,
+  "word": "every",
+  "start": 32.808,
+  "end": 33.113
+ },
+ {
+  "line": 7,
+  "word": "single",
+  "start": 33.113,
+  "end": 33.469
+ },
+ {
+  "line": 7,
+  "word": "frame,",
+  "start": 33.469,
+  "end": 33.825
+ },
+ {
+  "line": 7,
+  "word": "and",
+  "start": 33.825,
+  "end": 34.029
+ },
+ {
+  "line": 7,
+  "word": "glues",
+  "start": 34.029,
+  "end": 34.334
+ },
+ {
+  "line": 7,
+  "word": "them",
+  "start": 34.334,
+  "end": 34.588
+ },
+ {
+  "line": 7,
+  "word": "into",
+  "start": 34.588,
+  "end": 34.843
+ },
+ {
+  "line": 7,
+  "word": "a",
+  "start": 34.843,
+  "end": 34.944
+ },
+ {
+  "line": 7,
+  "word": "video.",
+  "start": 34.944,
+  "end": 35.3
+ },
+ {
+  "line": 8,
+  "word": "Luckily,",
+  "start": 35.9,
+  "end": 36.392
+ },
+ {
+  "line": 8,
+  "word": "the",
+  "start": 36.392,
+  "end": 36.61
+ },
+ {
+  "line": 8,
+  "word": "computer",
+  "start": 36.61,
+  "end": 37.101
+ },
+ {
+  "line": 8,
+  "word": "never",
+  "start": 37.101,
+  "end": 37.428
+ },
+ {
+  "line": 8,
+  "word": "gets",
+  "start": 37.428,
+  "end": 37.701
+ },
+ {
+  "line": 8,
+  "word": "tired.",
+  "start": 37.701,
+  "end": 38.083
+ },
+ {
+  "line": 9,
+  "word": "Unluckily,",
+  "start": 38.433,
+  "end": 39.014
+ },
+ {
+  "line": 9,
+  "word": "it",
+  "start": 39.014,
+  "end": 39.172
+ },
+ {
+  "line": 9,
+  "word": "never",
+  "start": 39.172,
+  "end": 39.489
+ },
+ {
+  "line": 9,
+  "word": "gets",
+  "start": 39.489,
+  "end": 39.753
+ },
+ {
+  "line": 9,
+  "word": "the",
+  "start": 39.753,
+  "end": 39.964
+ },
+ {
+  "line": 9,
+  "word": "joke",
+  "start": 39.964,
+  "end": 40.228
+ },
+ {
+  "line": 9,
+  "word": "either.",
+  "start": 40.228,
+  "end": 40.651
+ },
+ {
+  "line": 10,
+  "word": "Think",
+  "start": 41.301,
+  "end": 41.636
+ },
+ {
+  "line": 10,
+  "word": "of",
+  "start": 41.636,
+  "end": 41.804
+ },
+ {
+  "line": 10,
+  "word": "a",
+  "start": 41.804,
+  "end": 41.916
+ },
+ {
+  "line": 10,
+  "word": "flipbook.",
+  "start": 41.916,
+  "end": 42.476
+ },
+ {
+  "line": 10,
+  "word": "The",
+  "start": 42.476,
+  "end": 42.699
+ },
+ {
+  "line": 10,
+  "word": "code",
+  "start": 42.699,
+  "end": 42.979
+ },
+ {
+  "line": 10,
+  "word": "draws",
+  "start": 42.979,
+  "end": 43.315
+ },
+ {
+  "line": 10,
+  "word": "every",
+  "start": 43.315,
+  "end": 43.651
+ },
+ {
+  "line": 10,
+  "word": "page.",
+  "start": 43.651,
+  "end": 43.986
+ },
+ {
+  "line": 10,
+  "word": "The",
+  "start": 43.986,
+  "end": 44.21
+ },
+ {
+  "line": 10,
+  "word": "browser",
+  "start": 44.21,
+  "end": 44.658
+ },
+ {
+  "line": 10,
+  "word": "flips",
+  "start": 44.658,
+  "end": 44.994
+ },
+ {
+  "line": 10,
+  "word": "them.",
+  "start": 44.994,
+  "end": 45.329
+ },
+ {
+  "line": 11,
+  "word": "Sixteen",
+  "start": 45.879,
+  "end": 46.35
+ },
+ {
+  "line": 11,
+  "word": "episodes",
+  "start": 46.35,
+  "end": 46.88
+ },
+ {
+  "line": 11,
+  "word": "later,",
+  "start": 46.88,
+  "end": 47.292
+ },
+ {
+  "line": 11,
+  "word": "the",
+  "start": 47.292,
+  "end": 47.528
+ },
+ {
+  "line": 11,
+  "word": "most",
+  "start": 47.528,
+  "end": 47.822
+ },
+ {
+  "line": 11,
+  "word": "watched",
+  "start": 47.822,
+  "end": 48.293
+ },
+ {
+  "line": 11,
+  "word": "one",
+  "start": 48.293,
+  "end": 48.529
+ },
+ {
+  "line": 11,
+  "word": "is",
+  "start": 48.529,
+  "end": 48.705
+ },
+ {
+  "line": 11,
+  "word": "about",
+  "start": 48.705,
+  "end": 49.059
+ },
+ {
+  "line": 11,
+  "word": "an",
+  "start": 49.059,
+  "end": 49.235
+ },
+ {
+  "line": 11,
+  "word": "alarm",
+  "start": 49.235,
+  "end": 49.589
+ },
+ {
+  "line": 11,
+  "word": "clock.",
+  "start": 49.589,
+  "end": 50.001
+ },
+ {
+  "line": 12,
+  "word": "And",
+  "start": 50.601,
+  "end": 50.836
+ },
+ {
+  "line": 12,
+  "word": "this",
+  "start": 50.836,
+  "end": 51.129
+ },
+ {
+  "line": 12,
+  "word": "video?",
+  "start": 51.129,
+  "end": 51.54
+ },
+ {
+  "line": 12,
+  "word": "Same",
+  "start": 51.54,
+  "end": 51.834
+ },
+ {
+  "line": 12,
+  "word": "recipe.",
+  "start": 51.834,
+  "end": 52.304
+ },
+ {
+  "line": 12,
+  "word": "Just",
+  "start": 52.304,
+  "end": 52.597
+ },
+ {
+  "line": 12,
+  "word": "a",
+  "start": 52.597,
+  "end": 52.715
+ },
+ {
+  "line": 12,
+  "word": "few",
+  "start": 52.715,
+  "end": 52.95
+ },
+ {
+  "line": 12,
+  "word": "more",
+  "start": 52.95,
+  "end": 53.243
+ },
+ {
+  "line": 12,
+  "word": "pages.",
+  "start": 53.243,
+  "end": 53.654
+ }
+]

@@ -11,11 +11,11 @@ const [prefix, frames, scale = "0.5"] = process.argv.slice(2);
 const browserExecutable = process.env.REMOTION_BROWSER || "/opt/pw-browsers/chromium-1243/chrome-linux64/chrome";
 const chromiumOptions = { gl: process.env.REMOTION_GL || "swangle" };
 const serveUrl = await bundle({ entryPoint: path.resolve(process.env.BRIDGE_ENTRY || "src/index.ts"), publicDir: path.resolve("public") });
-const composition = await selectComposition({ serveUrl, id: "BridgeShort", browserExecutable, chromiumOptions });
+const composition = await selectComposition({ serveUrl, id: process.env.COMP || "BridgeShort", inputProps: JSON.parse(process.env.PROPS || "{}"), browserExecutable, chromiumOptions });
 const onBrowserLog = (l) => { if (l.type === "error" || l.type === "warning") console.log(`[${l.type}]`, l.text.slice(0, 300)); };
 for (const f of frames.split(",").map(Number)) {
   const t0 = Date.now();
-  await renderStill({ composition, serveUrl, frame: f, output: `${prefix}${f}.jpg`, imageFormat: "jpeg", jpegQuality: 88, scale: Number(scale),
+  await renderStill({ composition, serveUrl, inputProps: JSON.parse(process.env.PROPS || "{}"), frame: f, output: `${prefix}${f}.jpg`, imageFormat: "jpeg", jpegQuality: 88, scale: Number(scale),
     browserExecutable, chromiumOptions, timeoutInMilliseconds: 180000, onBrowserLog });
   console.log("still", f, ((Date.now() - t0) / 1000).toFixed(1) + "s");
 }

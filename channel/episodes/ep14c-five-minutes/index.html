@@ -68,7 +68,7 @@
       const lidsSVG = (s = 0.5) => `<g transform="scale(${s / 0.5})"><circle cx="-42.5" cy="-158.5" r="31" fill="#5fcf6a"/><circle cx="42.5" cy="-158.5" r="31" fill="#5fcf6a"/><path d="M-62,-156 C-50,-146 -35,-146 -23,-156 M23,-156 C35,-146 50,-146 62,-156" stroke="#1b1a2e" stroke-width="5" fill="none" stroke-linecap="round"/></g>`;
       const winkSVG = (s = 0.5) => `<g transform="scale(${s / 0.5})"><circle cx="42.5" cy="-158.5" r="31" fill="#5fcf6a"/><path d="M23,-156 C35,-146 50,-146 62,-156" stroke="#1b1a2e" stroke-width="5" fill="none" stroke-linecap="round"/></g>`;
       const star = (x, y, s) => `M${x},${y - s} L${x + s * 0.25},${y - s * 0.25} L${x + s},${y} L${x + s * 0.25},${y + s * 0.25} L${x},${y + s} L${x - s * 0.25},${y + s * 0.25} L${x - s},${y} L${x - s * 0.25},${y - s * 0.25} Z`;
-      const tl = gsap.timeline({ paused: true });
+      const tl = gsap.timeline({ paused: true }); window.tl = tl;
       const pop = (id, t) => tl.fromTo(id, { scale: 0.4, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.22, ease: "back.out(2.5)" }, t);
       // dust/splash puff helper: creates n circles in group g around (x,y) and animates them at t
       function puff(g, x, y, t, color = "#e8d6b0", n = 6, spread = 60) {

@@ -1,0 +1,12 @@
+{"duration": 60, "seed": 11, "cues": [
+ ["bed","happy",0,60,0.55],
+ ["glint",0.3],["whoosh",4.45],["click",4.6],["pop",4.8],["pop",5.1],["pop",5.4],
+ ["whoosh",7.2],["tiptoe",7.8,10,0.6],["jump",13.4],
+ ["whoosh",15.0],["pop",15.67],["pop",17.6],["pop",17.75],["ding",19.6],["sparkle",20.5],
+ ["whoosh",21.1],["jump",21.4],["whoosh",24.8],["riser",27.4,1.4],["glint",28.8],
+ ["whoosh",30.2],["click",32.17],["click",32.83],["click",33.5],["click",34.17],["whoosh",34.3],["sparkle",35.0],
+ ["whoosh",35.8],["error",37.0],["bonk",39.33],["jump",39.4],
+ ["rustle",42.83,1.6],["sparkle",44.3],
+ ["whoosh",45.7],["ding",49.4],["ding",49.55],["ding",49.7],["connect",49.8],
+ ["riser",50.4,1.5],["angelic",52.0]
+]}

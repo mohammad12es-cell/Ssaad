@@ -1,0 +1,18 @@
+{
+ "total": 32.5,
+ "clipA": 4.0, "clipB": 25.0, "clipLen": 3.75,
+ "silence": 18.45, "drop": 19.0,
+ "scenes": [
+  {"id": "hook",  "start": 0.0,   "end": 2.3,   "bg": "lime"},
+  {"id": "cardA", "start": 2.3,   "end": 4.0,   "bg": "black"},
+  {"id": "clipA", "start": 4.0,   "end": 7.75,  "bg": "lime"},
+  {"id": "dead",  "start": 7.75,  "end": 8.95,  "bg": "grey"},
+  {"id": "three", "start": 8.95,  "end": 9.9,   "bg": "black"},
+  {"id": "r1",    "start": 9.9,   "end": 15.6,  "bg": "lime"},
+  {"id": "r2",    "start": 15.6,  "end": 19.6,  "bg": "black"},
+  {"id": "r3",    "start": 19.6,  "end": 23.0,  "bg": "light"},
+  {"id": "cardB", "start": 23.0,  "end": 25.0,  "bg": "black"},
+  {"id": "clipB", "start": 25.0,  "end": 28.75, "bg": "lime"},
+  {"id": "cta",   "start": 28.75, "end": 32.5,  "bg": "lime"}
+ ]
+}

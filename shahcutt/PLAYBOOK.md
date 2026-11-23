@@ -31,6 +31,20 @@ Call something a pattern only when it appears in 2+ niches or 2+ independent sou
 
 ## 2. Cross-niche patterns this week (update every day; newest first)
 
+**Update 2026-11-23** (Volume tech-and-ai + business-and-marketing measured 2026-11-22; Virlo 2026-11-16…22):
+- **P1 result first** still the top tech format: 9 accounts, 28x.
+- **P8 animated mockup per list item** holds: 5 accounts, 32x. Examples are Claude roundups, e.g. @theaiimpact 54x.
+- **P7 one-word comment gate** holds: 3 accounts, 51x.
+- **New P9: «A vs B, pick one»**, business 6 accounts, 29x, hook formula "[Option A] vs [Option B]: pick one". It matches Shahin's reference showreel (2026-11-23): one brief, two outputs back to back, each opened by a title card.
+- **New P10: «every click / exact setting on screen»**, business 10 accounts, 10x. Two of its examples sit in Shahin's own niche:
+  - "Everyone's editing their videos using Claude Code" (@samdespomarketing, 20x).
+  - "steal these fonts" (@maya.culin, 22x).
+- **Strong single formats, too few accounts to count as patterns yet:**
+  - "five quick tricks inside one feature" (3 accounts, 84x).
+  - "open with the tool builder's credentials" (3 accounts, 82x).
+  - "open on a quoted audience line" (4 accounts, 29x).
+- **Virlo this week:** lip-sync / couple trends ("My moon my man", "He wanna pay full price"). Not usable in the niche. On-screen text is the hook in 58% of videos.
+
 Measured 2026-11-21 (Volume: posts vs each account's usual views) and 2026-11-16…22 (Virlo, Later, SocialBee, InMagic).
 
 | # | Pattern | Seen in (accounts, median lift) | How it is built | For @shahcutt |
@@ -102,6 +116,8 @@ Seasonal (late November): year-recap ("I feel like I haven't done much this year
 
 | Date | Source | Hook (first 2 s) | Body device | CTA | Why it worked |
 |---|---|---|---|---|---|
+| 2026-11-23 | Shahin's reference showreel (two AI takes of one motion brief, 32 s, music only) | title card with the maker's name, then the result | two 15 s showreels back to back; cuts every 0.5–1.5 s on the beat; heavy grotesk type, HUD labels, chrome 3D shapes, dot grids; lime/black and orange/blue palettes | — | P9 A vs B; the viewer judges and comments |
+| 2026-11-22 | Volume business, @samdespomarketing, 20x (https://www.instagram.com/p/DeurFmpSPVd/) | "Everyone's editing their videos using Claude Code" | every click on screen | product at the end | P10; AI editing is a live topic in Shahin's niche |
 | 2026-11-21 | Volume tech, @techinherstep, 58x (https://www.instagram.com/p/Deku4G5iu7x/) | "The iPhone Setting That Stops THIEVES": the result shown first | back to step one, every tap on screen | — | P1 result first + fear angle |
 | 2026-11-21 | Volume tech, @off_brown, 114x (https://www.tiktok.com/@off_brown/video/7702424547705818390) | "Big clock effect": the finished effect in second one | then how it is made | — | P1; an editing effect, closest to Shahin's craft |
 | 2026-11-21 | Volume beauty, @mariannarozmajzl, 59x (https://www.tiktok.com/@mariannarozmajzl/video/7697336488022805790) | finished pirate hair in second one | bare start, step by step | — | P1; 41 accounts use it in beauty alone |

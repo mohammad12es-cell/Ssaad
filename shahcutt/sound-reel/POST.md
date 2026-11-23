@@ -1,10 +1,11 @@
-# sound-reel «بی‌صدا یا باصدا؟»: post (draft, NOT published)
+# sound-reel «بی‌صدا یا باصدا؟»: post (published 2026-11-23)
 
 Series «اینو Claude ساخت», part 2 of 3 (the part promised in part 1's caption: «طراحی صدا با هوش مصنوعی»).
 
 - **Account:** @shahcutt.
-- **Status:** v1 is waiting for Shahin's notes. Nothing goes to Instagram until he approves the video, the caption, the account, the regular-or-Trial choice and the AI label.
-- **Comment keyword:** **صدا**. The gift is the list of this reel's sounds (which sound, when, how loud) plus the 3 rules. The freebie and its ManyChat texts are still to be written.
+- **Published 2026-11-23** on @shahcutt as a regular Reel with the AI label: https://www.instagram.com/reel/DgFX0hRHN-w/ (media 17953295397321374), via vidIQ.
+  - Shahin approved the v1 video, the caption below and the AI label («منتشرش کن»).
+- **Comment keyword:** **صدا**. The gift is the list of this reel's sounds (which sound, when, how loud) plus the 3 rules. The DM texts are in MANYCHAT.md; Shahin sets up the automation.
 
 ## Why this formula (trend analysis 2026-11-23, PLAYBOOK §2)
 - **A vs B, pick one** (business 29x): one clip, two versions back to back, each opened by a title card. This is the core idea of Shahin's reference showreel.

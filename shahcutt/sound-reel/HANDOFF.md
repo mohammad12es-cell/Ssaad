@@ -2,7 +2,7 @@
 
 ## Status (2026-11-23)
 - **v1 built and sent to Shahin:** `renders/sound-reel-v1.mp4`, 32.5 s, 975 frames, 1080×1920 @ 30 fps, −14.1 LUFS, peak −2.8 dBFS.
-- **Not published.** Waiting for his notes.
+- **Published 2026-11-23** (regular Reel + AI label): https://www.instagram.com/reel/DgFX0hRHN-w/. The ManyChat texts for «صدا» are in MANYCHAT.md.
 
 ## Brief
 - Shahin's request: find today's trends, extract the formula for his niche, write the scenario, build it in the style of his reference video, and voice it with Google AI Studio.

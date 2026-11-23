@@ -1,0 +1,8 @@
+# reanimate evidence: frames, captures and the downloaded reference stay local (the reference is someone else's video).
+# Only the spec, the report and the scripts are committed.
+*
+!.gitignore
+!*/
+!*/spec.md
+!*/report.md
+!*/events.py

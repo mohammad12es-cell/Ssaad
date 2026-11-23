@@ -1,0 +1,8 @@
+# licensed fonts: never commit (FontIran / Shahin's licence)
+assets/fonts/
+work/
+snapshots/
+renders/*-raw.mp4
+renders/work-*/
+renders/.*hf-transaction*/
+assets/audio/*.wav

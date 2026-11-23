@@ -18,6 +18,7 @@
 html, body { width: 1080px; height: 1920px; overflow: hidden; background: #000; }
 #root { position: relative; width: 1080px; height: 1920px; overflow: hidden; font-family: "Vazirmatn", sans-serif; font-synthesis: none; }
 #cam { position: absolute; inset: 0; transform-origin: 540px 640px; }
+#punch { position: absolute; inset: 0; transform-origin: 540px 560px; }
 #vid, #vidB { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; object-fit: cover; }
 /* interstitial over the source crossfade: a hotel key card taps the lock, booked */
 #inter { position: absolute; inset: 0; background: radial-gradient(ellipse at 50% 42%, #145238 0%, #0b2e20 55%, #06140d 100%); clip-path: circle(0px at 540px 1380px); }
@@ -49,17 +50,17 @@ html, body { width: 1080px; height: 1920px; overflow: hidden; background: #000; 
 .title { position: absolute; left: 0; right: 0; text-align: center; direction: rtl; font-weight: 900; opacity: 0; }
 .goldtxt { color: transparent; background: var(--gold); -webkit-background-clip: text; background-clip: text; filter: drop-shadow(0 3px 0 #5a3324) drop-shadow(0 8px 18px rgba(0,0,0,.6)); }
 /* G1 route */
-#route { position: absolute; left: 90px; top: 130px; width: 700px; height: 230px; opacity: 0; overflow: visible; }
+#route { position: absolute; left: 240px; top: 140px; width: 600px; height: 197px; opacity: 0; overflow: visible; }
 #armTitle { top: 222px; font-size: 78px; line-height: 1.25; }
 #armTitle small { display: block; font-size: 28px; letter-spacing: 8px; direction: ltr; font-weight: 700; color: var(--ink); -webkit-text-fill-color: var(--ink); filter: none; opacity: .9; }
 /* G2 Black Friday tag */
-#tagWrap { position: absolute; left: 34px; top: 96px; width: 360px; height: 340px; transform-origin: 180px 0px; opacity: 0; }
-#tagWrap .string { position: absolute; left: 178px; top: 0; width: 3px; height: 104px; background: var(--acc); }
-#tag { position: absolute; left: 0; top: 98px; width: 360px; height: 214px; background: #0b0b0b; border: 5px solid var(--acc); border-radius: 26px;
+#tagWrap { position: absolute; left: 320px; top: 0; width: 440px; height: 290px; transform-origin: 220px 0px; opacity: 0; }
+#tagWrap .string { position: absolute; left: 218px; top: 0; width: 3px; height: 118px; background: var(--acc); }
+#tag { position: absolute; left: 0; top: 116px; width: 440px; height: 160px; background: #0b0b0b; border: 5px solid var(--acc); border-radius: 26px;
   box-shadow: 0 22px 50px rgba(0,0,0,.55); display: flex; flex-direction: column; align-items: center; justify-content: center; }
-#tag::before { content: ""; position: absolute; left: 166px; top: -14px; width: 28px; height: 28px; border-radius: 50%; background: #0b0b0b; border: 5px solid var(--acc); }
-#tag .en { font-weight: 900; font-size: 56px; line-height: 1; letter-spacing: 2px; direction: ltr; }
-#tag .fa2 { margin-top: 14px; font-weight: 800; font-size: 34px; color: var(--ink); direction: rtl; }
+#tag::before { content: ""; position: absolute; left: 201px; top: -14px; width: 28px; height: 28px; border-radius: 50%; background: #0b0b0b; border: 5px solid var(--acc); }
+#tag .en { font-weight: 900; font-size: 50px; line-height: 1; letter-spacing: 1px; direction: ltr; white-space: nowrap; text-align: center; }
+#tag .fa2 { margin-top: 12px; font-weight: 800; font-size: 32px; color: var(--ink); direction: rtl; }
 /* bottom slot cards (G3, G4, G6) */
 .card { position: absolute; left: 90px; width: 900px; top: 1300px; border-radius: 30px; background: rgba(6,20,13,.82); border: 3px solid rgba(220,173,88,.85);
   box-shadow: 0 24px 60px rgba(0,0,0,.5); opacity: 0; direction: rtl; color: var(--ink); }
@@ -98,7 +99,9 @@ html, body { width: 1080px; height: 1920px; overflow: hidden; background: #000; 
 #dm .tx { font-weight: 900; font-size: 40px; color: var(--ink); }
 /* end card (house style: cream fog, logo, IRAMCO.ORG) */
 #end { position: absolute; inset: 0; background: radial-gradient(ellipse at 50% 42%, #fffaf0 0%, #faf2e0 55%, #efe3c6 100%); clip-path: inset(100% 0 0 0); }
-#endLogo { position: absolute; left: 140px; top: 560px; width: 800px; opacity: 0; }
+#endLogo { position: absolute; left: 110px; top: 500px; width: 860px; height: 350px; box-sizing: border-box; display: flex; align-items: center; justify-content: center;
+  background: linear-gradient(180deg, #0b2419, #06140d); border: 4px solid #dcad58; border-radius: 40px; box-shadow: 0 30px 60px rgba(6,20,13,.28); opacity: 0; }
+#endLogo img { width: 760px; display: block; }
 #endUrl { position: absolute; left: 0; right: 0; top: 900px; text-align: center; direction: ltr; font-weight: 900; font-size: 84px; letter-spacing: 2px; color: #111; opacity: 0; }
 #endCta { position: absolute; left: 0; right: 0; top: 1060px; text-align: center; direction: rtl; font-weight: 900; font-size: 50px; color: var(--green); opacity: 0; }
 #endCta b { display: inline-block; background: var(--gold); color: var(--dark); border-radius: 18px; padding: 0 22px 6px; margin: 0 8px; }
@@ -106,9 +109,10 @@ html, body { width: 1080px; height: 1920px; overflow: hidden; background: #000; 
 </head>
 <body>
 <div id="root" data-composition-id="main" data-start="0" data-duration="24.6" data-width="1080" data-height="1920" data-fps="30">
-  <div id="cam">
+  <div id="cam"><div id="punch">
     <video id="vid" class="clip" src="assets/media/taher-graded.mp4" data-start="0" data-duration="12.6" data-track-index="1" muted playsinline></video>
     <video id="vidB" class="clip" src="assets/media/taher-graded.mp4" data-start="13.85" data-media-start="13.85" data-duration="8.45" data-track-index="2" muted playsinline></video>
+  </div>
   </div>
   <div id="shade"></div>
   <div id="inter"><div class="glow"></div><div id="lock"><div class="slot"></div><div id="led"></div></div>
@@ -159,7 +163,7 @@ html, body { width: 1080px; height: 1920px; overflow: hidden; background: #000; 
   <div id="flash"></div>
 
   <!-- end card -->
-  <div id="end"><img id="endLogo" src="assets/iram-logo-clean.png" alt="IRAM CO."><div id="endUrl">IRAMCO.ORG</div>
+  <div id="end"><div id="endLogo"><img src="assets/iram-logo.png" alt="IRAM CO."></div><div id="endUrl">IRAMCO.ORG</div>
     <div id="endCta">کامنت کن <b>تور</b></div></div>
 
   <audio id="a-mix" class="clip" src="assets/audio/mix.wav" data-start="0" data-duration="24.6" data-track-index="20"></audio>
@@ -235,7 +239,7 @@ tl.to(["#route", "#armTitle"], { opacity: 0, duration: 0.25 }, E.black - 0.3);
 // ---- G2: Black Friday tag drops in and swings
 tl.set("#tagWrap", { opacity: 1 }, E.black - 0.02);
 tl.fromTo("#tagWrap", { y: -520 }, { y: 0, duration: 0.35, ease: "power3.in" }, E.black - 0.35);
-tl.fromTo("#tagWrap", { rotation: 0 }, { keyframes: [{ rotation: -9, duration: 0.18 }, { rotation: 6, duration: 0.3 }, { rotation: -3.5, duration: 0.32 }, { rotation: 2, duration: 0.34 }, { rotation: -1, duration: 0.4 }, { rotation: 0, duration: 0.5 }], ease: "sine.inOut", immediateRender: false }, E.black);
+tl.fromTo("#tagWrap", { rotation: 0 }, { keyframes: [{ rotation: -6, duration: 0.18 }, { rotation: 4.5, duration: 0.3 }, { rotation: -2.8, duration: 0.32 }, { rotation: 1.6, duration: 0.34 }, { rotation: -0.8, duration: 0.4 }, { rotation: 0, duration: 0.5 }], ease: "sine.inOut", immediateRender: false }, E.black);
 tl.to("#tagWrap", { y: -520, opacity: 0, duration: 0.35, ease: "power3.in" }, E.capacity - 0.5);
 
 // ---- G3: hotel capacity fills up
@@ -292,6 +296,9 @@ tl.fromTo("#endCta", { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.5, e
 tl.fromTo("#endLogo", { scale: 1 }, { scale: 1.03, duration: E.total - E.end_card - 1.0, ease: "none", immediateRender: false }, E.end_card + 0.95);
 
 tl.set({}, {}, E.total);
+// zoom bump on each take join cut by tools/fix_dissolves.py (source frames 185, 245, 276, 503 at 29.97 fps)
+const CUTS = [185, 245, 276, 503].map(f => f * 1001 / 30000 - 0.017);
+CUTS.forEach(t => tl.fromTo("#punch", { scale: 1.06 }, { scale: 1, duration: 0.45, ease: "expo.out", immediateRender: false }, t));
 window.__timelines = window.__timelines || {}; window.__timelines["main"] = tl;
 </script>
 </body>

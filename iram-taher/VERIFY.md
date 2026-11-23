@@ -19,18 +19,20 @@
 | Time | Words | Graphic |
 |---|---|---|
 | 1.3 s | «ارمنستان» | dotted flight arc, ARMENIA |
-| 4.0 s | «بلک فرایدی» | black and gold BLACK FRIDAY tag swings in, camera punch-in |
+| 4.0 s | «بلک فرایدی» | black and gold BLACK FRIDAY sign drops in, centre-top above his head, and swings; camera punch-in |
 | 7.0–8.6 s | «ظرفیت هتل‌ها تکمیل» | hotel capacity bar fills and turns red, «تکمیل!» stamp |
 | 9.1 s | — | «رزرو هتل / قبل از تکمیل ظرفیت» card |
-| 12.4–13.9 s | — | key-card interstitial |
+| 12.4–13.9 s | — | key-card interstitial (covers the source's long 1.4 s crossfade) |
 | 14.0 s | — | clock + «تا دیر نشده» |
 | 17.4–21.8 s | «تور», «ارسال» | comment box types «تور», «اطلاعات سفر» DM chip, a paper plane flies to it |
-| 22.05 s | — | end card in IRAM house style: cream fog, logo, IRAMCO.ORG, «کامنت کن تور» |
+| 22.05 s | — | end card in IRAM house style: cream fog, logo on a dark-green gold-edged plate, IRAMCO.ORG, «کامنت کن تور» |
 
 - **Brand:**
   - Stacked IRAM logo top-right while he speaks, as in IRAM's own reels.
   - Palette: forest green, metallic gold, cream.
-  - The logo PNG's grey halo was cleaned for the cream end card (`assets/iram-logo-clean.png`).
+  - `assets/iram-logo.png` is a cut-out from a black background: on cream its dark facets go see-through and its edges fringe.
+    - v2: on the end card it sits on its own dark-green plate (gold border), so it shows complete.
+    - The v1 halo clean-up eroded the gold and was dropped.
 - **Colour grade and cinematic lighting** (`tools/cinegrade.py`, baked into `assets/media/taher-graded.mp4`):
   - MODNet person matte, keeping only the presenter, smoothed over time.
   - Background: −0.7 EV, cooler, slightly desaturated, soft defocus (normalised convolution, so his edges don't halo).
@@ -51,11 +53,31 @@
   - nothing outside the safe area
 - Render (`hyperframes render --quality delivery`, exit 0) + master (`tools/deliver.sh`):
   - `renders/iram-taher-v1.mp4`: 1080x1920, 24.6 s, 738 frames, H.264 at 5.1 Mbps
-  - audio: −14.1 LUFS integrated, LRA 0.9 LU, sample peak −3.0 dBFS
+  - `renders/iram-taher-v2.mp4` (v2 fixes below): 1080x1920, 24.6 s, 738 frames, H.264 at 4.9 Mbps
+  - audio (both): −14.1 LUFS integrated, LRA 0.9 LU, sample peak −3.0 dBFS
 - Frames at 12.5, 13.0, 13.6, 13.9, 14.0, 14.6 and 15.5 s were checked: the interstitial opens over the first shot and slides up to show the park.
   - There is no black frame and no source crossfade ghost.
   - The caption lines hand over without overlapping (14.3–14.7 s checked frame by frame).
-- Cover: `renders/iram-taher-v1-cover.jpg` (4.6 s: BLACK FRIDAY tag + «بلک فرایدی»).
+- Cover: `renders/iram-taher-v2-cover.jpg` (4.6 s: BLACK FRIDAY sign + «بلک فرایدی»).
+- v2 render checked:
+  - every frame around the four joins (no double image; zoom bump lands on the first post-cut frame)
+  - the tag at 4.15–6.35 s (inside the frame, above his hair)
+  - the arc at 1.6 and 3.2 s (centred)
+  - the end card (logo complete)
+
+## v2 (client notes, 2026-11-23)
+- BLACK FRIDAY tag was out of frame: it sat 34 px from the left edge and came within about 2 px of it while swinging.
+  - It is now a one-line sign (440x160) hung centre-top from the frame edge, ending at y ≈ 276, above his hair (~290).
+  - The swing is ±6° (was ±9°).
+- Armenia arc centred on 540 (was centred on 440 while its title is centred); slightly smaller, so its right end (x 806) stays clear of the logo (x ≥ 858).
+- End-card logo shown complete (see Brand). `tools/fix_v2.py` holds the exact changes.
+- Four more take joins in the source were dissolves that showed a double face (found while checking v2; they were in v1 too):
+  - blended frames 181–189, 241–248, 272–279 and 500–506 (6.04, 8.04, 9.08, 16.68 s)
+  - measured as linear blends of the frames either side
+  - `tools/fix_dissolves.py` turns each into a hard cut mid-dissolve: the 5 clean frames each side are stretched over the blended frames (about half speed)
+  - The frame count (670) is unchanged, so the sound and graphics stay in sync.
+  - `index.html` adds a 6 % zoom bump (`#punch`) on each cut so it reads as a jump cut.
+  - Build order: `cinegrade.py` → `fix_dissolves.py` → render.
 
 ## Limitations
 - The matte follows the person, not a face model. When he turns, the key light follows the head blob, not his actual eyes.

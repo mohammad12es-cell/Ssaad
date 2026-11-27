@@ -26,7 +26,9 @@ export class Post {
     this.rtQ1 = new THREE.WebGLRenderTarget(qw, qh, hf); this.rtQ2 = new THREE.WebGLRenderTarget(qw, qh, hf);
 
     this.params = { focus: 5, focusRange: 3, maxCoc: 1, exposure: 1, bloom: 0.9, bloomRadius: 0.55, bloomThreshold: 0.72,
-      vignette: 0.6, grain: 0.022, ca: 0.002, zoom: 0, zoomCenter: [0.5, 0.5], fade: 0, flash: 0, lift: [0.003, 0.007, 0.018], saturation: 1.0, tint: [1, 1, 1] };
+      vignette: 0.6, grain: 0.022, ca: 0.002, zoom: 0, zoomCenter: [0.5, 0.5], fade: 0, flash: 0, lift: [0.003, 0.007, 0.018], saturation: 1.0, tint: [1, 1, 1],
+      // optional (off by default, so older films render unchanged)
+      rays: 0, raysPos: [0.5, 0.5], raysThreshold: 0.55, streak: 0, streakThreshold: 0.9, streakTint: [0.45, 0.75, 1.0], split: 0 };
 
     // CoC + downsample
     this.cocQ = quad(new THREE.ShaderMaterial({
@@ -71,13 +73,20 @@ export class Post {
           gl_FragColor = vec4(c, 1.0);
         }`, depthTest: false, depthWrite: false }));
 
+    this.brightQ = quad(new THREE.ShaderMaterial({ uniforms: { tIn: { value: null }, th: { value: 0.9 } }, vertexShader: VS,
+      fragmentShader: `uniform sampler2D tIn; uniform float th; varying vec2 vUv; void main(){ vec3 c = texture2D(tIn, vUv).rgb; float l = max(c.r, max(c.g, c.b)); gl_FragColor = vec4(c * max(l - th, 0.0) / max(l, 1e-3), 1.0); }`, depthTest: false, depthWrite: false }));
+    this.hblurQ = quad(new THREE.ShaderMaterial({ uniforms: { tIn: { value: null }, step: { value: 0.0 } }, vertexShader: VS,
+      fragmentShader: `uniform sampler2D tIn; uniform float step; varying vec2 vUv; void main(){ vec3 a = vec3(0.0); float ws = 0.0;
+        for (int i = -7; i <= 7; i++) { float f = float(i); float w = exp(-abs(f) * 0.32); a += texture2D(tIn, vUv + vec2(f * step, 0.0)).rgb * w; ws += w; }
+        gl_FragColor = vec4(a / ws, 1.0); }`, depthTest: false, depthWrite: false }));
+    this.rtS1 = new THREE.WebGLRenderTarget(W >> 2, H >> 3, hf); this.rtS2 = new THREE.WebGLRenderTarget(W >> 2, H >> 3, hf);
     this.bloom = new UnrealBloomPass(new THREE.Vector2(W, H), 0.9, 0.55, 0.72);
 
     this.finalQ = quad(new THREE.ShaderMaterial({
       uniforms: { tIn: { value: null }, res: { value: new THREE.Vector2(W, H) }, time: { value: 0 }, exposure: { value: 1 }, vignette: { value: 0.5 }, grain: { value: 0.04 },
-        ca: { value: 0.002 }, zoom: { value: 0 }, zoomCenter: { value: new THREE.Vector2(0.5, 0.5) }, fade: { value: 0 }, flash: { value: 0 }, lift: { value: new THREE.Vector3() }, saturation: { value: 1 }, tint: { value: new THREE.Vector3(1, 1, 1) } },
+        ca: { value: 0.002 }, zoom: { value: 0 }, tStreak: { value: null }, streak: { value: 0 }, streakTint: { value: new THREE.Vector3(0.45, 0.75, 1) }, rays: { value: 0 }, raysPos: { value: new THREE.Vector2(0.5, 0.5) }, raysTh: { value: 0.55 }, split: { value: 0 }, zoomCenter: { value: new THREE.Vector2(0.5, 0.5) }, fade: { value: 0 }, flash: { value: 0 }, lift: { value: new THREE.Vector3() }, saturation: { value: 1 }, tint: { value: new THREE.Vector3(1, 1, 1) } },
       vertexShader: VS, fragmentShader: /* glsl */`
-        uniform sampler2D tIn; uniform vec2 res, zoomCenter; uniform float time, exposure, vignette, grain, ca, zoom, fade, flash, saturation; uniform vec3 lift, tint; varying vec2 vUv;
+        uniform sampler2D tIn, tStreak; uniform vec2 res, zoomCenter, raysPos; uniform float time, exposure, vignette, grain, ca, zoom, fade, flash, saturation, streak, rays, raysTh, split; uniform vec3 lift, tint, streakTint; varying vec2 vUv;
         vec3 aces(vec3 x){ const float a=2.51,b=0.03,c=2.43,d=0.59,e=0.14; return clamp((x*(a*x+b))/(x*(c*x+d)+e),0.0,1.0); }
         float h12(vec2 p){ vec3 p3 = fract(vec3(p.xyx) * .1031); p3 += dot(p3, p3.yzx + 33.33); return fract((p3.x + p3.y) * p3.z); }
         vec3 samp(vec2 uv){
@@ -92,11 +101,22 @@ export class Post {
             for (int i = 0; i < 16; i++) { float k = 1.0 - zoom * float(i) / 16.0; acc += samp(zoomCenter + d * k); }
             c = acc / 16.0;
           } else c = samp(vUv);
+          if (rays > 0.001) { // screen-space volumetric light scattering toward raysPos
+            vec2 d = (raysPos - vUv) / 40.0; vec2 uv = vUv; float w = 1.0; vec3 acc = vec3(0.0);
+            float jit = fract(sin(dot(gl_FragCoord.xy, vec2(12.9898, 78.233))) * 43758.5453);
+            uv += d * jit;
+            for (int i = 0; i < 40; i++) { uv += d; vec3 s = texture2D(tIn, uv).rgb; float l = max(s.r, max(s.g, s.b)); acc += s * max(l - raysTh, 0.0) / max(l, 1e-3) * w; w *= 0.965; }
+            c += acc / 40.0 * rays;
+          }
+          if (streak > 0.001) c += texture2D(tStreak, vUv).rgb * streakTint * streak;
           c *= exposure * tint;
           c = aces(c);
           float l = dot(c, vec3(0.2126, 0.7152, 0.0722));
           c = mix(vec3(l), c, saturation);
           c = c + lift * (1.0 - c);
+          if (split > 0.001) { // split-tone: cool shadows, warm highlights
+            c = mix(c, c * vec3(0.92, 1.0, 1.1), split * (1.0 - l)); c = mix(c, c * vec3(1.06, 1.0, 0.92), split * l * 0.7);
+          }
           vec2 q = vUv - 0.5; q.x *= res.x / res.y;
           float v = smoothstep(0.95, 0.15, length(q * vec2(1.0, 0.82)));
           c *= mix(1.0 - vignette, 1.0, v);
@@ -111,7 +131,7 @@ export class Post {
 
   pass(q, target) { this.r.setRenderTarget(target); this.r.render(q.scene, this.cam); }
 
-  render(scene, camera, time) {
+  render(scene, camera, time, target = null) {
     const r = this.r, P = this.params;
     r.setRenderTarget(this.rtScene); r.clear(); r.render(scene, camera);
     const dofOn = P.maxCoc > 0.001;
@@ -142,9 +162,17 @@ export class Post {
       this.bloom.render(r, null, src, 0, false);
     }
     const fu = this.finalQ.material.uniforms;
+    fu.streak.value = P.streak; fu.rays.value = P.rays; fu.raysTh.value = P.raysThreshold; fu.raysPos.value.set(P.raysPos[0], P.raysPos[1]); fu.split.value = P.split; fu.streakTint.value.set(...P.streakTint);
+    if (P.streak > 0.001) { // anamorphic streak: bright pass -> very wide horizontal blur at low res
+      this.brightQ.material.uniforms.tIn.value = src.texture; this.brightQ.material.uniforms.th.value = P.streakThreshold; this.pass(this.brightQ, this.rtS1);
+      const hb = this.hblurQ.material.uniforms; const sw = 1 / (this.W >> 2);
+      let a = this.rtS1, b = this.rtS2;
+      for (const k of [1.5, 4, 10]) { hb.tIn.value = a.texture; hb.step.value = sw * k; this.pass(this.hblurQ, b); [a, b] = [b, a]; }
+      fu.tStreak.value = a.texture;
+    } else fu.tStreak.value = src.texture;
     fu.tIn.value = src.texture; fu.time.value = time; fu.exposure.value = P.exposure; fu.vignette.value = P.vignette; fu.grain.value = P.grain; fu.ca.value = P.ca;
     fu.zoom.value = P.zoom; fu.zoomCenter.value.set(P.zoomCenter[0], P.zoomCenter[1]); fu.fade.value = P.fade; fu.flash.value = P.flash;
     fu.lift.value.set(...P.lift); fu.saturation.value = P.saturation; fu.tint.value.set(...P.tint);
-    this.pass(this.finalQ, null);
+    this.pass(this.finalQ, target);
   }
 }

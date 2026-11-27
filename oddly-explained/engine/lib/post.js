@@ -131,14 +131,42 @@ export class Post {
 
   pass(q, target) { this.r.setRenderTarget(target); this.r.render(q.scene, this.cam); }
 
+  // Motion blur: average n HDR scene renders (middle sub-frame rendered last, so its depth drives DOF), then post once.
+  renderBlurred(frames, time, target = null) {
+    const r = this.r; const n = frames.length;
+    if (!this.rtAcc) {
+      this.rtAcc = new THREE.WebGLRenderTarget(this.W, this.H, { type: THREE.HalfFloatType, minFilter: THREE.LinearFilter, magFilter: THREE.LinearFilter });
+      this.accQ = quad(new THREE.ShaderMaterial({ uniforms: { tIn: { value: null }, w: { value: 1 } }, vertexShader: VS,
+        fragmentShader: 'uniform sampler2D tIn; uniform float w; varying vec2 vUv; void main(){ gl_FragColor = vec4(texture2D(tIn, vUv).rgb * w, 1.0); }',
+        depthTest: false, depthWrite: false, transparent: true, blending: THREE.AdditiveBlending }));
+    }
+    const ac = r.autoClear;
+    const order = frames.map((_, i) => i).filter((i) => i !== (n >> 1)).concat([n >> 1]);
+    let last;
+    order.forEach((i, k) => {
+      const { scene, camera } = frames[i]();   // sets up scene state for sub-frame i, including post params
+      r.autoClear = true; r.setRenderTarget(this.rtScene); r.clear(); r.render(scene, camera);
+      r.autoClear = false; this.accQ.material.uniforms.tIn.value = this.rtScene.texture; this.accQ.material.uniforms.w.value = 1 / n;
+      r.setRenderTarget(this.rtAcc); if (k === 0) r.clear(); r.render(this.accQ.scene, this.cam);
+      last = camera;
+    });
+    r.autoClear = ac;
+    this.process(this.rtAcc.texture, this.rtScene.depthTexture, last, time, target);
+  }
+
   render(scene, camera, time, target = null) {
-    const r = this.r, P = this.params;
+    const r = this.r;
     r.setRenderTarget(this.rtScene); r.clear(); r.render(scene, camera);
+    this.process(this.rtScene.texture, this.rtScene.depthTexture, camera, time, target);
+  }
+
+  process(colorTex, depthTex, camera, time, target = null) {
+    const r = this.r, P = this.params;
     const dofOn = P.maxCoc > 0.001;
-    let src = this.rtScene;
+    let src;
     if (dofOn) {
       const cu = this.cocQ.material.uniforms;
-      cu.tColor.value = this.rtScene.texture; cu.tDepth.value = this.rtScene.depthTexture; cu.near.value = camera.near; cu.far.value = camera.far;
+      cu.tColor.value = colorTex; cu.tDepth.value = depthTex; cu.near.value = camera.near; cu.far.value = camera.far;
       cu.focus.value = P.focus; cu.range.value = P.focusRange; cu.maxCoc.value = P.maxCoc;
       this.pass(this.cocQ, this.rtH1);
       const bu = this.blurQ.material.uniforms; const hw = this.W >> 1, hh = this.H >> 1, qw = this.W >> 2, qh = this.H >> 2;
@@ -147,14 +175,14 @@ export class Post {
       bu.tIn.value = this.rtH1.texture; bu.dir.value.set(2.0 / qw, 0); this.pass(this.blurQ, this.rtQ1);
       bu.tIn.value = this.rtQ1.texture; bu.dir.value.set(0, 2.0 / qh); this.pass(this.blurQ, this.rtQ2);
       const du = this.dofQ.material.uniforms;
-      du.tSharp.value = this.rtScene.texture; du.tDepth.value = this.rtScene.depthTexture; du.tB1.value = this.rtH1.texture; du.tB2.value = this.rtQ2.texture;
+      du.tSharp.value = colorTex; du.tDepth.value = depthTex; du.tB1.value = this.rtH1.texture; du.tB2.value = this.rtQ2.texture;
       du.near.value = camera.near; du.far.value = camera.far; du.focus.value = P.focus; du.range.value = P.focusRange; du.maxCoc.value = P.maxCoc;
       this.pass(this.dofQ, this.rtA);
       src = this.rtA;
     } else {
       // copy MSAA scene into a plain target for bloom
-      const du = this.dofQ.material.uniforms; du.tSharp.value = this.rtScene.texture; du.tDepth.value = this.rtScene.depthTexture;
-      du.tB1.value = this.rtScene.texture; du.tB2.value = this.rtScene.texture; du.maxCoc.value = 0;
+      const du = this.dofQ.material.uniforms; du.tSharp.value = colorTex; du.tDepth.value = depthTex;
+      du.tB1.value = colorTex; du.tB2.value = colorTex; du.maxCoc.value = 0;
       this.pass(this.dofQ, this.rtA); src = this.rtA;
     }
     if (P.bloom > 0.001) {

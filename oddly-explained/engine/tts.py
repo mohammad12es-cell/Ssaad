@@ -70,7 +70,11 @@ for ln in cfg['narration']:
         a, sr = sf.read(ext); a = a.mean(1) if a.ndim > 1 else a; src = 'recording'
     else:
         tts = tts or kokoro()
-        a, sr = tts.create(ln['tts'], voice=v['voice'], speed=v.get('speed', 1.0), lang=v.get('lang', 'en-us')); src = 'kokoro:' + v['voice']
+        voice = v['voice']; src = 'kokoro:' + v['voice']
+        if v.get('blend'):  # weighted mix of Kokoro voice style vectors, e.g. {"am_fenrir": 0.65, "am_michael": 0.35}
+            voice = sum(w * tts.get_voice_style(n) for n, w in v['blend'].items())
+            src = 'kokoro:' + '+'.join(f'{n}*{w}' for n, w in v['blend'].items())
+        a, sr = tts.create(ln['tts'], voice=voice, speed=v.get('speed', 1.0), lang=v.get('lang', 'en-us'))
     a = trim(resample(np.asarray(a, dtype=np.float64), sr, SR))
     a = a / (np.max(np.abs(a)) + 1e-9) * 0.89
     start = max(ln['at'], cursor + 0.12); dur = len(a) / SR

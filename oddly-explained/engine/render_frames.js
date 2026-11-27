@@ -4,7 +4,7 @@
 // or a real GPU when present) and captures frames by calling window.OE.renderFrame(i).
 //
 // usage: node engine/render_frames.js --page videos/001-falling-asleep/scene.html --out build/frames3d
-//          [--frames 0-899 | --list 0,30,60] [--scale 0.5] [--workers 2] [--transparent] [--query a=b]
+//          [--frames 0-899 | --list 0,30,60] [--scale 0.5] [--workers 2] [--transparent] [--query a=b] [--resume]
 const http = require('http');
 const fs = require('fs');
 const path = require('path');
@@ -39,15 +39,21 @@ const server = http.createServer((req, res) => {
   let frames = [];
   if (args.list) frames = String(args.list).split(',').map(Number);
   else { const [a, b] = String(args.frames || `0-${Math.round((cfgPage?.duration || 30) * (cfgPage?.fps || 30)) - 1}`).split('-').map(Number); for (let i = a; i <= b; i++) frames.push(i); }
+  if (args.resume) { // skip frames already rendered (restart-safe long renders)
+    const before = frames.length; frames = frames.filter((i) => { const f = path.join(out, `f${String(i).padStart(4, '0')}.png`); return !(fs.existsSync(f) && fs.statSync(f).size > 0); });
+    console.log(`resume: ${before - frames.length} frames already done, ${frames.length} to render`);
+  }
   const t0 = Date.now(); let done = 0;
   const chunks = Array.from({ length: workers }, (_, w) => frames.filter((_, i) => i % workers === w));
   await Promise.all(chunks.map(async (list, w) => {
     const ctx = await browser.newContext({ viewport: { width: W, height: H }, deviceScaleFactor: 1 });
     const p = await ctx.newPage();
     p.on('console', (m) => { if (m.type() === 'error' || m.type() === 'warning') console.error(`[page ${w}] ${m.text()}`); });
-    p.on('pageerror', (e) => console.error(`[page ${w}] ${e.message}`));
+    p.on('pageerror', (e) => console.error(`[page ${w}] ${e.stack || e.message}`));
     await p.goto(url);
-    await p.waitForFunction(() => window.__ready === true, null, { timeout: 600000 });
+    let bootErr; const failed = new Promise((_, rej) => p.on('pageerror', (e) => { bootErr = e; rej(new Error(`page error during boot: ${e.message}`)); }));
+    failed.catch(() => {});
+    await Promise.race([p.waitForFunction(() => window.__ready === true, null, { timeout: 600000 }), failed]); // fail fast instead of waiting for the timeout
     for (const i of list) {
       await p.evaluate((i) => window.OE.renderFrame(i), i);
       await p.screenshot({ path: path.join(out, `f${String(i).padStart(4, '0')}.png`), omitBackground: !!args.transparent, type: 'png' });

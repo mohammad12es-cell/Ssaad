@@ -7,35 +7,131 @@
   "fps": 30,
   "duration": 30,
   "samples": 4,
-  "motionBlur": { "samples": 3, "shutter": 0.5 },
-  "voice": { "engine": "kokoro-82m", "voice": "am_fenrir", "blend": { "am_fenrir": 0.65, "am_michael": 0.35 }, "speed": 0.97, "lang": "en-us" },
+  "motionBlur": {
+    "samples": 3,
+    "shutter": 0.5
+  },
+  "voice": {
+    "engine": "kokoro-82m",
+    "voice": "am_fenrir",
+    "blend": {
+      "am_fenrir": 0.65,
+      "am_michael": 0.35
+    },
+    "speed": 1.02,
+    "lang": "en-us"
+  },
   "shots": [
-    { "id": "hook",      "start": 0,    "end": 4.6 },
-    { "id": "brainstem", "start": 4.6,  "end": 10.5 },
-    { "id": "atonia",    "start": 10.5, "end": 16.2 },
-    { "id": "exceptions","start": 16.2, "end": 21.8 },
-    { "id": "rbd",       "start": 21.8, "end": 26.5 },
-    { "id": "resolve",   "start": 26.5, "end": 30 }
+    {
+      "id": "hook",
+      "start": 0,
+      "end": 4.6
+    },
+    {
+      "id": "brainstem",
+      "start": 4.6,
+      "end": 10.5
+    },
+    {
+      "id": "atonia",
+      "start": 10.5,
+      "end": 16.2
+    },
+    {
+      "id": "exceptions",
+      "start": 16.2,
+      "end": 21.8
+    },
+    {
+      "id": "rbd",
+      "start": 21.8,
+      "end": 26.5
+    },
+    {
+      "id": "resolve",
+      "start": 26.5,
+      "end": 30
+    }
   ],
   "narration": [
-    { "id": "n1", "at": 0.3,  "tts": "Tonight, you might dream you're running, while your body lies almost perfectly still.",
-      "en": ["Tonight, you might dream you're running,", "while your body lies almost perfectly still."],
-      "fa": ["امشب شاید خواب ببینید که دارید می‌دوید،", "در حالی که بدنتان تقریباً کاملاً بی‌حرکت است."] },
-    { "id": "n2", "at": 5.0,  "tts": "In REM sleep, circuits in your brainstem shut down signals to most of your muscles.",
-      "en": ["In REM sleep, circuits in your brainstem", "shut down signals to most of your muscles."],
-      "fa": ["در خواب REM، مدارهایی در ساقه‌ی مغز", "پیام‌ها به بیشتر عضلات را متوقف می‌کنند."] },
-    { "id": "n3", "at": 10.8, "tts": "This temporary paralysis, called REM atonia, helps stop you from acting out your dreams.",
-      "en": ["This temporary paralysis, called REM atonia,", "helps stop you from acting out your dreams."],
-      "fa": ["این فلج موقت که «آتونی REM» نام دارد،", "کمک می‌کند خواب‌هایتان را اجرا نکنید."] },
-    { "id": "n4", "at": 16.5, "tts": "But your eyes keep darting, and your breathing muscles keep working.",
-      "en": ["But your eyes keep darting,", "and your breathing muscles keep working."],
-      "fa": ["اما چشم‌هایتان همچنان به‌سرعت حرکت می‌کنند", "و عضلات تنفسی‌تان به کارشان ادامه می‌دهند."] },
-    { "id": "n5", "at": 22.0, "tts": "When this system fails, some people physically act out their dreams.",
-      "en": ["When this system fails,", "some people physically act out their dreams."],
-      "fa": ["وقتی این سیستم دچار اختلال شود،", "بعضی افراد خواب‌هایشان را با بدنشان اجرا می‌کنند."] },
-    { "id": "n6", "at": 26.6, "tts": "So tonight, your brain will keep you still... on purpose.",
-      "en": ["So tonight, your brain will keep you still...", "on purpose."],
-      "fa": ["پس امشب، مغزتان شما را بی‌حرکت نگه می‌دارد...", "آن هم عمداً."] }
+    {
+      "id": "n1",
+      "at": 0.3,
+      "tts": "Tonight, you might dream you're running, while your body lies almost perfectly still.",
+      "en": [
+        "Tonight, you might dream you're running,",
+        "while your body lies almost perfectly still."
+      ],
+      "fa": [
+        "امشب شاید خواب ببینید که دارید می‌دوید،",
+        "در حالی که بدنتان تقریباً کاملاً بی‌حرکت است."
+      ]
+    },
+    {
+      "id": "n2",
+      "at": 4.95,
+      "tts": "In REM sleep, circuits in your brainstem shut down signals to most of your muscles.",
+      "en": [
+        "In REM sleep, circuits in your brainstem",
+        "shut down signals to most of your muscles."
+      ],
+      "fa": [
+        "در خواب REM، مدارهایی در ساقه‌ی مغز",
+        "پیام‌ها به بیشتر عضلات را متوقف می‌کنند."
+      ]
+    },
+    {
+      "id": "n3",
+      "at": 10.6,
+      "tts": "This temporary paralysis, called REM atonia, helps stop you from acting out your dreams.",
+      "en": [
+        "This temporary paralysis, called REM atonia,",
+        "helps stop you from acting out your dreams."
+      ],
+      "fa": [
+        "این فلج موقت که «آتونی REM» نام دارد،",
+        "کمک می‌کند خواب‌هایتان را اجرا نکنید."
+      ]
+    },
+    {
+      "id": "n4",
+      "at": 16.6,
+      "tts": "But your eyes keep darting, and your breathing muscles keep working.",
+      "en": [
+        "But your eyes keep darting,",
+        "and your breathing muscles keep working."
+      ],
+      "fa": [
+        "اما چشم‌هایتان همچنان به‌سرعت حرکت می‌کنند",
+        "و عضلات تنفسی‌تان به کارشان ادامه می‌دهند."
+      ]
+    },
+    {
+      "id": "n5",
+      "at": 22.0,
+      "tts": "When this system fails, some people physically act out their dreams.",
+      "en": [
+        "When this system fails,",
+        "some people physically act out their dreams."
+      ],
+      "fa": [
+        "وقتی این سیستم دچار اختلال شود،",
+        "بعضی افراد خواب‌هایشان را با بدنشان اجرا می‌کنند."
+      ]
+    },
+    {
+      "id": "n6",
+      "at": 26.45,
+      "tts": "So tonight, your brain will keep you still, on purpose.",
+      "en": [
+        "So tonight, your brain will keep you still...",
+        "on purpose."
+      ],
+      "fa": [
+        "پس امشب، مغزتان شما را بی‌حرکت نگه می‌دارد...",
+        "آن هم عمداً."
+      ]
+    }
   ],
   "titles": {
     "en": {

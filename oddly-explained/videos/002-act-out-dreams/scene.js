@@ -212,7 +212,7 @@ export async function create(stage) {
     ringMat.uniforms.uTime.value = t; ringMat.uniforms.uGlitch.value = st.rbd * (h1(Math.floor(t * 18)) > 0.5 ? 1 : 0.2);
     ringMat.uniforms.uAmp.value = st.brainstemOn * (1 - 0.7 * st.rbd * (h1(Math.floor(t * 18) + 3) > 0.5 ? 1 : 0)) * (1 + 0.8 * win(t, 6.4, 8.2, 0.2, 1.2));
     waveRings.forEach((m, i) => {
-      const u = ((t * 0.55 + i / 4) % 1); const [y, z] = cordAt(u);
+      const u = (((t * 0.55 + i / 4) % 1) + 1) % 1; const [y, z] = cordAt(u); // u wraps: t can be slightly negative (motion-blur sub-frames)
       m.position.copy(W(0, y, z)); m.rotation.set(0, 0, 0); m.rotation.x = 0; // ring lies across the cord (cord runs along world z when lying)
       m.material.uniforms.uAmp.value = st.brainstemOn * Math.sin(u * Math.PI) * 0.7 * (1 - st.rbd) * (1 - smooth(16.0, 17.0, t) * 0.6);
       m.material.uniforms.uTime.value = t; m.scale.setScalar(1 + 0.3 * u);

@@ -31,6 +31,31 @@ Call something a pattern only when it appears in 2+ niches or 2+ independent sou
 
 ## 2. Cross-niche patterns this week (update every day; newest first)
 
+**Update 2026-11-27** (Volume, all 7 niches measured 2026-11-27; Later 11-27, SocialBee 11-26, InMagic 11-23, Virlo 11-27):
+- **New P11: «quote the doubter / the audience's own line, then proof».**
+  - Beauty «Quote the doubter, then show proof»: 9 accounts, 30x.
+  - Fitness «Open on a quote your audience says»: 9, 11x.
+  - Fashion «Open with a quoted viewer struggle»: 7, 14x.
+  - Business «Open on a quoted audience line»: 4, 29x.
+  - Hook formula: "“[common belief] doesn't work”, watch this". Used 2026-11-27 (clinic proof).
+- **New P12 (business #1 this week): «hidden in-app button walkthrough with red arrows»**, 10 accounts, 44x.
+  - Hook: "Don't [common action] until you use this new [platform] feature that turns [input] into [output]".
+  - Also tech «Settings Apple hides on purpose» (4, 7x). For Shahin: a real Premiere/CapCut/Edits feature, every click with arrows.
+- **Still strong:**
+  - P1 result first: tech 9, 28x; beauty 35, 11x.
+  - P3 exact words: business 9, 20x.
+  - P4 more text than you can read: health 18, 10x; travel 6, 29x.
+  - P6 name held to the end: travel 15, 7x and 12, 9x.
+  - P7 comment keyword: travel 13, 5x; tech 3, 51x.
+- **Coin a named concept** (business 9, 10x) is one niche only, so not yet a pattern.
+- **Seasonal** (Later / InMagic):
+  - then-and-now cut on the beat
+  - «I feel like I haven't done much this year» month recap
+  - «the switch to Christmas» same-spot before/after
+  - candle-blow makeup transformation (cut on the beat)
+  - Black Friday story reveal
+  - Virlo TikTok: GTA 6 loading-screen filter, «Who's that?» soft-launch reveal.
+
 **Update 2026-11-23** (Volume tech-and-ai + business-and-marketing measured 2026-11-22; Virlo 2026-11-16…22):
 - **P1 result first** still the top tech format: 9 accounts, 28x.
 - **P8 animated mockup per list item** holds: 5 accounts, 32x. Examples are Claude roundups, e.g. @theaiimpact 54x.
@@ -79,10 +104,12 @@ Seasonal (late November): year-recap ("I feel like I haven't done much this year
 - وقتی کسی گفت «ادیت گرونه»، دقیقاً این رو بگو: … (P3)
 - این صفحه رو ذخیره کن؛ کل تدوین ریلز توی یه تصویر (P4)
 - روزی ۵۰ تا استوری… اشتباه بود (client case)
+- می‌گن [ریلز برای X] جواب نمی‌ده… (P11; 2026-11-27)
+- قبل از پست بعدیت، این دکمه‌ی [Premiere/CapCut] رو بزن… (P12)
 
 ## 5. CTA, caption and DM rules
 
-- Keyword: one short Persian word, new each reel. Used: دیزنی، رونالدو، پیج، هوک، ادیت.
+- Keyword: one short Persian word, new each reel. Used: دیزنی، رونالدو، پیج، هوک، ادیت، پرامپت، صدا، تایپ، رشد.
 - Caption: line 1 repeats the hook; 2–4 short lines of value; CTA line with the keyword; 3–6 Persian hashtags (#تدوین #موشن_گرافیک #ریلز #تولید_محتوا #اینستاگرام_مارکتینگ).
 - DM: thank them, deliver the promised gift in the DM itself, one soft line about paid editing, sign «شاهین | @shahcutt».
 - DMs are sent by Shahin or by an Instagram-approved tool (for example ManyChat keyword automation); Claude only writes them.
@@ -116,6 +143,10 @@ Seasonal (late November): year-recap ("I feel like I haven't done much this year
 
 | Date | Source | Hook (first 2 s) | Body device | CTA | Why it worked |
 |---|---|---|---|---|---|
+| 2026-11-27 | Volume beauty, @tinabobeena222, 78x (https://www.tiktok.com/@tinabobeena222/photo/7710286996119244045) | «you can tell she smooths out her skin in her photos» | the doubter's line, then the proof | — | P11 quote the doubter, then proof |
+| 2026-11-27 | Volume beauty, @gracemweston, 47x (https://www.instagram.com/p/DevoJbevJ0w/) | «I could NEVER sleep in those» | proof that answers the quote | — | P11 |
+| 2026-11-27 | Volume fitness, @vickyjustiz, 78x (https://www.tiktok.com/@vickyjustiz/video/7701421200601369887) | the viewer's own line: «I want to workout glutes at home but idk what to do» | the workout that answers it | TRY THIS WORKOUT | P11 audience quote |
+| 2026-11-27 | Volume business, @sarahsaiditofficial, 6192x (https://www.tiktok.com/@sarahsaiditofficial/video/7699620296902462733) | «How to make a VIDEO with one photo!!!» | hidden in-app button, red arrows, every click | — | P12 hidden feature walkthrough |
 | 2026-11-23 | Shahin's reference showreel (two AI takes of one motion brief, 32 s, music only) | title card with the maker's name, then the result | two 15 s showreels back to back; cuts every 0.5–1.5 s on the beat; heavy grotesk type, HUD labels, chrome 3D shapes, dot grids; lime/black and orange/blue palettes | — | P9 A vs B; the viewer judges and comments |
 | 2026-11-22 | Volume business, @samdespomarketing, 20x (https://www.instagram.com/p/DeurFmpSPVd/) | "Everyone's editing their videos using Claude Code" | every click on screen | product at the end | P10; AI editing is a live topic in Shahin's niche |
 | 2026-11-21 | Volume tech, @techinherstep, 58x (https://www.instagram.com/p/Deku4G5iu7x/) | "The iPhone Setting That Stops THIEVES": the result shown first | back to step one, every tap on screen | — | P1 result first + fear angle |

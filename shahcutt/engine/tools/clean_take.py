@@ -9,8 +9,10 @@ src, dst = sys.argv[1], sys.argv[2]; LEAD = float(sys.argv[3]) if len(sys.argv) 
 w = wave.open(src); sr = w.getframerate(); x = np.frombuffer(w.readframes(w.getnframes()), np.int16).astype(np.float32) / 32768
 n = int(0.01 * sr); k = len(x) // n
 db = 20 * np.log10(np.sqrt((x[: k * n].reshape(k, n) ** 2).mean(1)) + 1e-9)
-# start: first frame is a click; begin at the first quiet frame after it
-a = next(i for i in range(k) if db[i] < -50) * n
+# start: the take may open with a click; begin at the first quiet frame after it, but look only in the first
+# 0.2 s (a take that starts speaking at once has no quiet frame there and is kept from 0; fixed 2026-11-27,
+# it used to cut the first words of such a take)
+a = next((i for i in range(min(k, 20)) if db[i] < -50), 0) * n
 # end: Gemini appends a short loud noise burst after a moment of digital silence; cut at the first
 # near-silent frame of the last 0.6 s (the speech tail never drops that low)
 tail0 = k - 60

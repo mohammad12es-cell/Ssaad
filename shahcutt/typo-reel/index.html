@@ -9,7 +9,7 @@
 <style>
 @font-face{font-family:"Abar";src:url("assets/fonts/AbarHigh-Light.otf") format("opentype");font-weight:300;font-display:block;}
 @font-face{font-family:"Abar";src:url("assets/fonts/AbarHigh-Black.otf") format("opentype");font-weight:900;font-display:block;}
-@font-face{font-family:"Nast";src:url("assets/fonts-ofl/noto-nastaliq-urdu-arabic-700-normal.woff2") format("woff2");font-weight:700;font-display:block;}
+@font-face{font-family:"Mirza";src:url("assets/fonts-ofl/mirza-arabic-700-normal.woff2") format("woff2");font-weight:700;font-display:block;}
 :root{--y:#fbfb44;--w:#ffffff}
 *{margin:0;padding:0;box-sizing:border-box}
 html,body{width:1080px;height:1920px;overflow:hidden;background:#000}
@@ -25,9 +25,9 @@ html,body{width:1080px;height:1920px;overflow:hidden;background:#000}
 svg{position:absolute;overflow:visible}
 .ln{position:absolute;left:0;width:1080px;text-align:center;direction:rtl;white-space:nowrap}
 .sm{font-family:"Abar";font-weight:300;font-size:46px;line-height:1.2;color:var(--w)}
-.scr{font-family:"Nast";font-weight:700;font-size:74px;line-height:1;color:var(--y);filter:drop-shadow(0 0 10px rgba(251,251,68,.35))}
-.scr .rw{font-family:"Abar";font-weight:300;font-size:46px;color:var(--w);margin-right:14px;vertical-align:14px}
-.big{font-family:"Abar";font-weight:900;line-height:1.1;background:linear-gradient(180deg,#ffffff 25%,#c9c9c9 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.scr{font-family:"Mirza";font-weight:700;font-size:80px;line-height:1.25;color:var(--y);filter:drop-shadow(0 0 10px rgba(251,251,68,.35))}
+.scr .rw{font-family:"Abar";font-weight:300;font-size:50px;color:var(--w);margin-right:28px}
+.big{font-family:"Abar";font-weight:900;line-height:1.1;padding:.32em .06em .5em;margin-top:-.32em;background:linear-gradient(180deg,#ffffff 0%,#ffffff 34%,#c9c9c9 76%,#c9c9c9 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
 .grp .ln{opacity:0}
 .big .dot{-webkit-text-fill-color:var(--y)}
 .grp{position:absolute;inset:0;opacity:0}
@@ -40,9 +40,9 @@ svg{position:absolute;overflow:visible}
 .sq{position:absolute;top:648px;width:66px;height:54px;border-radius:11px;background:var(--y);opacity:0}
 #blackGrp{position:absolute;inset:0;transform-origin:540px 905px}
 #bTop{top:712px;font-size:44px;opacity:.92}
-#bBig{top:742px;font-size:250px;line-height:1.1;background:linear-gradient(180deg,#ffffff 40%,#f2f69a 75%,#fbfb44 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;filter:drop-shadow(0 0 34px rgba(251,251,68,.38))}
+#bBig{top:742px;font-size:250px;line-height:1.1;padding:.32em .06em .5em;margin-top:-.32em;background:linear-gradient(180deg,#ffffff 0%,#ffffff 42%,#f2f69a 64%,#fbfb44 80%,#fbfb44 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;filter:drop-shadow(0 0 34px rgba(251,251,68,.38))}
 #bBot{top:1020px;font-size:44px;opacity:.92}
-.cta{background:linear-gradient(180deg,#f6f8c8 0%,#f4f77a 45%,#fbfb44 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.cta{background:linear-gradient(180deg,#f6f8c8 0%,#f6f8c8 18%,#f4f77a 44%,#fbfb44 76%,#fbfb44 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
 #cWg{position:absolute;inset:0;filter:drop-shadow(0 0 26px rgba(251,251,68,.28))}
 #part{position:absolute;left:390px;top:180px;width:300px;height:64px;border-radius:32px;border:2px solid rgba(255,255,255,.18);background:rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;direction:rtl;font-family:"Abar";font-weight:300;font-size:30px;color:#fff;opacity:0}
 #part b{font-weight:900;color:var(--y);margin:0 8px}
@@ -189,7 +189,7 @@ function blurIn(sel, t, dur, from) {
   tl.fromTo(sel, a, b, t);
 }
 function blurOut(sel, t, dur) { tl.to(sel, { opacity: 0, filter: "blur(10px)", duration: dur, ease: "power2.in" }, t); }
-function writeOn(sel, t, dur) { tl.fromTo(sel, { clipPath: "inset(-80px 0px -80px 100%)" }, { clipPath: "inset(-80px 0px -80px 0%)", duration: dur, ease: "power1.inOut", immediateRender: false }, t); }
+function writeOn(sel, t, dur) { tl.fromTo(sel, { clipPath: "inset(-400px 0px -400px 100%)" }, { clipPath: "inset(-400px 0px -400px 0%)", duration: dur, ease: "power1.inOut", immediateRender: false }, t); }
 function smearOut(sel, t, dur) {                                 // C1: slide right with a yellow smear
   tl.set(sel, { textShadow: smear }, t);
   tl.to(sel, { x: 700, filter: "blur(2px)", duration: dur, ease: "power3.in" }, t);

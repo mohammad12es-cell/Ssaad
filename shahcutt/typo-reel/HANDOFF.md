@@ -36,6 +36,25 @@
 - **Master:** `LIMIT=0.56 bash tools/deliver.sh renders/typo-raw.mp4 renders/typo-reel-v1.mp4 22.5 assets/audio/mix.wav`.
   - `LIMIT` −5 dBFS keeps AAC overshoot on these sharp transients under −1 dBTP.
 
+## v2 (2026-11-27, Shahin's notes: letters cut, add a voice, use the reference's own sound effects)
+- **Text:**
+  - Every gradient word lost its dots and tails outside the element box. That is how background-clip text works.
+    - `.big`, `#bBig` and `.cta` now have padding (.32em top, .5em bottom) with a matching negative margin; gradient stops are re-mapped.
+  - The Nastaliq line used the Urdu final «ی», so «فارسی» read as «فارسید». It is now Mirza Bold (OFL), with the write-on mask ±400 px.
+  - Aref Ruqaa was tried and dropped: its flat final «ی» also reads as cut.
+  - `tools/clipcheck.cjs` seeks the real timeline and compares every text styled vs unclipped: **0 clipped** in 32 elements.
+- **Sound:** `tools/ref_sfx.py` rebuilds the reference's sound design from measurements.
+  - Tones: partial tracking (the high C ~1046 Hz with harmonics, E4 336 Hz, 895 Hz, C5 ~525 Hz, the end cluster).
+  - Noise: band envelopes every 5.3 ms per channel (14 bands above 150 Hz, 4 below).
+  - New oscillators and noise; no samples of the original.
+  - Envelope correlation with the reference 0.96-0.996 per band; 90 % of 50-ms windows within 2.5-6.8 dB.
+  - `tools/make_sfx.py <ref-rebuilt.wav>` places it by device: hook as is, and per mistake the reference's cut-in (E), morph (B) and exit (C1). The CTA uses the reference's ending; the quiet drone loops underneath.
+  - To regenerate, run `ref_sfx.py` on the reference audio (kept outside git) → `assets/audio/ref-rebuilt.wav`.
+- **Render:** `renders/typo-reel-v2.mp4`: 22.5 s, 675 frames, −14.7 LUFS (the reference is −14.8), −2.8 dBTP.
+- **Voice: blocked.** There is no valid Gemini key in this environment.
+  - The script is ready in `vo/script.md` (Puck, 9 lines with start times).
+  - Shahin adds the key as a network secret: host generativelanguage.googleapis.com, header x-goog-api-key.
+
 ## Still to do
 - Shahin's notes on v1.
 - Caption (POST.md) and the ManyChat texts for «تایپ».

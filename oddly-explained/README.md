@@ -2,7 +2,7 @@
 
 A repeatable pipeline for short 9:16 3D science films. All visuals and audio are **procedural and generated locally**: no stock footage, no paid APIs, no samples.
 
-Video 001, *What happens when you fall asleep?*, is the first title built on it.
+Video 001, *What happens when you fall asleep?*, is the first title built on it. Video 002, *Why don't you act out your dreams?*, is the second.
 
 ```
 oddly-explained/
@@ -20,6 +20,7 @@ oddly-explained/
 │   │   ├── neurons.js               neuron field (somas, branching tapered dendrites, axons, boutons) + activity shader, bokeh motes, light shafts
 │   │   ├── dreams.js                dream fragments (floating island, melting clock, distant figure, colour forms)
 │   │   ├── memory.js                memory-fragment cards that settle into a linked lattice
+│   │   ├── body.js                  procedural human: SDF + surface nets, 17-bone skinning, nervous system with per-region gates, hologram twin
 │   │   ├── noise.js / geom.js       seeded RNG + simplex noise (JS + GLSL), geometry helpers
 │   ├── fonts/                       Montserrat, Inter, Vazirmatn (SIL OFL; licences included)
 │   └── vendor/                      three.module.js r170 + UnrealBloomPass (MIT)
@@ -87,6 +88,13 @@ The stylised HUD trace (with its N1/N2/N3/REM stage abbreviations) belongs to th
 5. Iterate with `--preview` and contact sheets, then run the full build.
 
 **Swapping in a human voice.** Drop `n1.wav … n6.wav` into `videos/<id>/voice/`. `tts.py` uses those files instead of the TTS, then trims, places and aligns them automatically.
+
+## Quality features (opt-in per film)
+
+- **Motion blur**: set `"motionBlur": { "samples": 3, "shutter": 0.5 }` in `config.json`. Sub-frames are accumulated in HDR and post-processed once. Use `--query mb=1` for fast look-dev.
+- **God rays, anamorphic streaks, split toning**: set `post.params.rays/raysPos`, `streak`, and `split` in the scene. All are off by default.
+- **Voice blending**: `"voice": { "blend": { "am_fenrir": 0.65, "am_michael": 0.35 } }` mixes Kokoro voice styles.
+- **Long renders**: `render_frames.js --resume` skips frames already on disk. A page error during boot fails immediately, with a stack trace.
 
 ## Determinism
 

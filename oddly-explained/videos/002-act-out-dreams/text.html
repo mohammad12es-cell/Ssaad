@@ -1,0 +1,130 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<style>
+@font-face{font-family:Montserrat;font-weight:500;src:url(/engine/fonts/montserrat-latin-500-normal.woff2) format('woff2')}
+@font-face{font-family:Montserrat;font-weight:600;src:url(/engine/fonts/montserrat-latin-600-normal.woff2) format('woff2')}
+@font-face{font-family:Montserrat;font-weight:800;src:url(/engine/fonts/montserrat-latin-800-normal.woff2) format('woff2')}
+@font-face{font-family:Inter;font-weight:600;src:url(/engine/fonts/inter-latin-600-normal.woff2) format('woff2')}
+@font-face{font-family:Vazirmatn;font-weight:500;src:url(/engine/fonts/vazirmatn-arabic-500-normal.woff2) format('woff2');unicode-range:U+0600-06FF,U+200C-200F,U+2010-2011,U+204F,U+2E41,U+FB50-FDFF,U+FE70-FEFC}
+@font-face{font-family:Vazirmatn;font-weight:500;src:url(/engine/fonts/vazirmatn-latin-500-normal.woff2) format('woff2');unicode-range:U+0000-00FF}
+@font-face{font-family:Vazirmatn;font-weight:700;src:url(/engine/fonts/vazirmatn-arabic-700-normal.woff2) format('woff2');unicode-range:U+0600-06FF,U+200C-200F,U+2010-2011,U+204F,U+2E41,U+FB50-FDFF,U+FE70-FEFC}
+@font-face{font-family:Vazirmatn;font-weight:700;src:url(/engine/fonts/vazirmatn-latin-700-normal.woff2) format('woff2');unicode-range:U+0000-00FF}
+@font-face{font-family:Vazirmatn;font-weight:800;src:url(/engine/fonts/vazirmatn-arabic-800-normal.woff2) format('woff2');unicode-range:U+0600-06FF,U+200C-200F,U+2010-2011,U+204F,U+2E41,U+FB50-FDFF,U+FE70-FEFC}
+@font-face{font-family:Vazirmatn;font-weight:800;src:url(/engine/fonts/vazirmatn-latin-800-normal.woff2) format('woff2');unicode-range:U+0000-00FF}
+html,body{margin:0;width:1080px;height:1920px;overflow:hidden;background:transparent}
+#root{position:absolute;inset:0;color:#fff;font-family:Montserrat,sans-serif}
+.el{position:absolute;left:0;right:0;text-align:center;opacity:0;will-change:opacity,transform,filter}
+.glowc{text-shadow:0 0 18px rgba(60,200,255,.55),0 0 46px rgba(60,160,255,.35),0 2px 6px rgba(0,0,0,.6)}
+.glowa{text-shadow:0 0 18px rgba(255,170,90,.55),0 0 46px rgba(255,140,60,.3),0 2px 6px rgba(0,0,0,.6)}
+#bug{top:128px;font-weight:600;font-size:24px;letter-spacing:.42em;color:rgba(220,236,255,.7);text-shadow:0 1px 3px rgba(0,0,0,.8)}
+#bug b{font-weight:800;color:rgba(255,255,255,.8)}
+.tag{top:176px;font-weight:600;font-size:22px;letter-spacing:.18em;color:rgba(185,222,255,.78);text-shadow:0 1px 3px rgba(0,0,0,.9),0 0 14px rgba(0,0,0,.8)}
+#hook{top:300px;font-weight:800;font-size:74px;line-height:1.12;letter-spacing:.02em;padding:0 60px}
+#hook span{display:inline-block}
+.label{top:300px;font-weight:800;font-size:96px;letter-spacing:.14em}
+.label small{display:block;font-weight:500;font-size:28px;letter-spacing:.32em;margin-top:14px;opacity:.75;text-transform:uppercase}
+#ttag{top:1346px;font-weight:600;font-size:19px;letter-spacing:.2em;color:rgba(185,222,255,.62);text-shadow:0 1px 3px rgba(0,0,0,.9)}
+#sub{top:1436px;padding:0 80px;font-family:Inter,sans-serif;font-weight:600;font-size:46px;line-height:1.32;
+  text-shadow:0 2px 3px rgba(0,0,0,.9),0 0 18px rgba(0,0,0,.85),0 0 36px rgba(0,0,0,.6)}
+#end{top:770px}
+#end .w1{font-weight:800;font-size:104px;letter-spacing:.16em;line-height:1.02}
+#end .rule{width:420px;height:3px;margin:34px auto 34px;background:linear-gradient(90deg,rgba(60,200,255,0),#3cc8ff 30%,#ffa24a 70%,rgba(255,162,74,0))}
+#end .q{font-weight:600;font-size:44px;letter-spacing:.06em;line-height:1.25;color:#e8f4ff}
+/* Persian */
+.fa #hook,.fa #sub,.fa #end .q,.fa .label small,.fa .tag,.fa #ttag{font-family:Vazirmatn,sans-serif;direction:rtl;letter-spacing:0}
+.fa #hook{font-weight:800;font-size:80px;line-height:1.35}
+.fa #sub{font-weight:700;font-size:50px;line-height:1.5}
+.fa #end .q{font-weight:800;font-size:54px;line-height:1.45}
+.fa .label{font-family:Vazirmatn,Montserrat,sans-serif;direction:rtl;letter-spacing:0;font-size:100px}
+.fa .label small{font-size:32px;font-weight:500}
+.fa .tag{font-size:27px;font-weight:700}
+.fa #ttag{font-size:22px;font-weight:700}
+
+.legend{top:1340px;font-weight:600;font-size:24px;letter-spacing:.08em;color:rgba(220,236,255,.85);text-shadow:0 1px 3px rgba(0,0,0,.9)}
+.legend i{display:inline-block;width:14px;height:14px;border-radius:50%;margin:0 10px 0 26px;vertical-align:middle}
+.legend .go{background:#ffa24a;box-shadow:0 0 14px #ffa24a} .legend .stop{background:#3cc8ff;box-shadow:0 0 14px #3cc8ff}
+.glowr{text-shadow:0 0 18px rgba(255,110,70,.6),0 0 46px rgba(255,80,40,.35),0 2px 6px rgba(0,0,0,.6)}
+.label.two{font-size:76px;line-height:1.08}
+.fa .legend{font-family:Vazirmatn,sans-serif;direction:rtl;letter-spacing:0;font-size:27px;font-weight:700}
+.fa .label.two{font-size:78px;line-height:1.3}
+#hook2{top:300px;font-weight:800;font-size:104px;line-height:1.05;letter-spacing:.02em}
+.fa #hook2{font-family:Vazirmatn,sans-serif;direction:rtl;font-size:110px;line-height:1.3;letter-spacing:0}
+#end .q{font-size:38px}
+#sub{padding:0 60px;text-wrap:balance}
+.fa #end .q{font-size:46px}
+</style></head>
+<body>
+<div id="root">
+  <div id="bug" class="el"><b>ODDLY</b> EXPLAINED</div>
+  <div id="tagViz" class="el tag"></div>
+  <div id="tagDream" class="el tag"></div>
+  <div id="tagRbd" class="el tag"></div>
+  <div id="hook" class="el glowc"></div>
+  <div id="hook2" class="el glowa"></div>
+  <div id="lRem" class="el label glowc"></div>
+  <div id="lAton" class="el label glowc"></div>
+  <div id="lEyes" class="el label glowa"></div>
+  <div id="lBreath" class="el label glowa"></div>
+  <div id="lRbd" class="el label two glowr"></div>
+  <div id="legend" class="el legend"></div>
+  <div id="sub" class="el"></div>
+  <div id="end" class="el"><div class="w1">ODDLY<br>EXPLAINED</div><div class="rule"></div><div class="q"></div></div>
+</div>
+<script type="module">
+const q = new URLSearchParams(location.search);
+const lang = q.get('lang') || 'en';
+const cfg = await (await fetch('./config.json')).json();
+const tim = await (await fetch(q.get('timings') || '/build/002/audio/timings.json')).json();
+const T = cfg.titles[lang]; const FPS = cfg.fps;
+const root = document.getElementById('root'); if (lang === 'fa') root.classList.add('fa');
+const $ = (id) => document.getElementById(id);
+$('tagViz').textContent = T.tag_viz; $('tagDream').textContent = T.tag_dream; $('tagRbd').textContent = T.tag_rbd;
+$('hook').innerHTML = T.hook1.split('<br>').map((line) => line.split(' ').map((w) => `<span>${w}</span>`).join(' ')).join('<br>');
+const hookWords = [...$('hook').querySelectorAll('span')];
+$('hook2').innerHTML = T.hook2;
+const lab = (id, a, b) => { $(id).innerHTML = b ? `${a}<small>${b}</small>` : a; };
+lab('lRem', T.rem, T.rem_sub); lab('lAton', T.atonia, T.atonia_sub); lab('lEyes', T.eyes, T.eyes_sub); lab('lBreath', T.breath, T.breath_sub); lab('lRbd', T.rbd, T.rbd_sub);
+$('legend').innerHTML = `<i class="go"></i>${T.legend_go}<i class="stop"></i>${T.legend_stop}`;
+$('end').querySelector('.q').innerHTML = T.end_q;
+const cues = [];
+tim.lines.forEach((ln, li) => {
+  const next = tim.lines[li + 1];
+  ln.chunks.forEach((c, ci) => {
+    const last = ci === ln.chunks.length - 1;
+    const end = last ? Math.min(ln.end + 0.35, next ? next.start - 0.1 : 29.6) : ln.chunks[ci + 1].start - 0.06;
+    cues.push({ start: c.start - 0.06, end, text: c[lang] });
+  });
+});
+await document.fonts.ready;
+for (const f of ['800 74px Montserrat', '600 46px Inter', '700 50px Vazirmatn', '800 80px Vazirmatn', '500 20px Montserrat', '600 24px Montserrat']) await document.fonts.load(f, 'آب abc');
+const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
+const sm = (a, b, x) => { const t = clamp((x - a) / (b - a)); return t * t * (3 - 2 * t); };
+const win = (t, a, b, fi = 0.4, fo = 0.4) => sm(a, a + fi, t) * (1 - sm(b - fo, b, t));
+function set(el, o, extra = '') { el.style.opacity = o.toFixed(3); el.style.transform = extra; }
+function label(id, t, a, b) { const o = win(t, a, b, 0.45, 0.4); set($(id), o, `translateY(${((1 - sm(a, a + 0.55, t)) * 22).toFixed(1)}px)`); if (lang !== 'fa') $(id).style.letterSpacing = `${(0.2 - 0.07 * sm(a, a + 1.0, t)).toFixed(3)}em`; }
+function render(t) {
+  set($('bug'), 0.9 * win(t, 0.2, 28.2, 0.5, 0.5));
+  set($('tagDream'), win(t, 0.4, 4.3, 0.4, 0.3) + win(t, 26.9, 28.3, 0.4, 0.3));
+  set($('tagViz'), win(t, 4.9, 22.3, 0.5, 0.3) + win(t, 26.3, 26.9, 0.2, 0.2) * 0);
+  set($('tagRbd'), win(t, 22.6, 26.3, 0.4, 0.4));
+  // hook line 1: word stagger; line 2 punches in when the running sound stops
+  const out1 = 1 - sm(2.1, 2.3, t);
+  hookWords.forEach((w, i) => { const a0 = 0.12 + i * 0.12; w.style.opacity = (sm(a0, a0 + 0.3, t) * out1).toFixed(3); w.style.filter = `blur(${((1 - sm(a0, a0 + 0.35, t)) * 8).toFixed(2)}px)`; w.style.transform = `translateY(${((1 - sm(a0, a0 + 0.4, t)) * 16).toFixed(1)}px)`; });
+  set($('hook'), 1, `scale(${(1 + 0.03 * sm(0.1, 2.2, t)).toFixed(4)})`);
+  const h2 = sm(2.32, 2.42, t) * (1 - sm(4.1, 4.45, t));
+  set($('hook2'), h2, `scale(${(1.18 - 0.18 * sm(2.32, 2.5, t) + 0.03 * sm(2.5, 4.4, t)).toFixed(4)})`);
+  label('lRem', t, 5.4, 10.3); $('lRem').querySelector('small').style.opacity = sm(7.3, 7.8, t).toFixed(3);
+  label('lAton', t, 11.7, 16.0); label('lEyes', t, 16.7, 19.0); label('lBreath', t, 19.3, 21.7); label('lRbd', t, 22.4, 26.3);
+  set($('legend'), win(t, 7.4, 21.7, 0.5, 0.5));
+  const c = cues.find((c) => t >= c.start && t < c.end); const s = $('sub');
+  if (c) { if (s.dataset.k !== c.text) { s.textContent = c.text; s.dataset.k = c.text; } set(s, sm(c.start, c.start + 0.1, t) * (1 - sm(c.end - 0.06, c.end, t))); } else set(s, 0);
+  const e = sm(28.45, 29.0, t), eq = sm(28.85, 29.35, t);
+  set($('end'), e, `scale(${(1.06 - 0.06 * sm(28.45, 29.8, t)).toFixed(4)})`);
+  $('end').querySelector('.w1').style.filter = `blur(${((1 - e) * 12).toFixed(2)}px)`;
+  $('end').querySelector('.q').style.opacity = eq.toFixed(3);
+  $('end').querySelector('.rule').style.transform = `scaleX(${sm(28.6, 29.3, t).toFixed(3)})`;
+}
+window.OE = { frames: Math.round(cfg.duration * FPS), async renderFrame(i) { render(i / FPS); return true; } };
+render(0); window.__ready = true;
+</script>
+</body></html>

@@ -55,6 +55,17 @@
   - The script is ready in `vo/script.md` (Puck, 9 lines with start times).
   - Shahin adds the key as a network secret: host generativelanguage.googleapis.com, header x-goog-api-key.
 
+## v3 (2026-11-27): the voice
+- **Voice:** Gemini 3.8 Flash TTS, Puck, one take of `vo/script.md` (25.1 s).
+  - Whisper (`work/whisper.json`) confirms all 9 lines, word for word.
+  - `tools/place_vo.py` finds the 14 speech chunks by loudness and keeps each «number،» with its phrase (0.22 s gap). Lines start at 0.30 / 3.00 / 4.60 / 6.08 / 8.70 / 11.40 / 14.08 / 16.80 / 19.45 s; no overlaps.
+  - The reel is now **23.4 s** so the 3.6 s CTA line fits.
+- **Mix:** `tools/mix.py`: voice −16 LUFS, the reference sound design −21 LUFS plus a 4 dB duck while he speaks.
+  - Run `make_sfx.py assets/audio/ref-rebuilt.wav --total 23.4` first.
+- **Master:** `tools/deliver.sh renders/typo-raw.mp4 renders/typo-reel-v3.mp4 23.4 assets/audio/mix.wav`.
+  - Result: 702 frames, −14.2 LUFS, −2.5 dBTP.
+- **The key is never stored.** It is passed inline as `GEMINI_API_KEY` only.
+
 ## Still to do
 - Shahin's notes on v1.
 - Caption (POST.md) and the ManyChat texts for «تایپ».

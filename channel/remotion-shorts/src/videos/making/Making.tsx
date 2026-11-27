@@ -38,7 +38,7 @@ const Inner: React.FC<{ shot: Shot }> = ({ shot }) => {
     tone: new ToneMappingEffect({ mode: ToneMappingMode.NEUTRAL }),
     grade: new GradeEffect(GRADES.day, GRADE_STRENGTH.day),
   }), [camera, scene]);
-  useEffect(() => () => fx.ink.dispose(), [fx]);
+  useEffect(() => () => { if (typeof fx.ink?.dispose === "function") fx.ink.dispose(); }, [fx]);
   const useLens = P.lens !== false;
   const composer = useMemo(() => (
     <EffectComposer multisampling={P.msaa ?? 4}>

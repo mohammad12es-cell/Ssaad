@@ -1,8 +1,26 @@
 # 2026-11-28 · «ویدیوی افقی رو دستی کراپ نکن» (P12 hidden button walkthrough + P1 result first)
 
-**Status: script and visuals ready; voice blocked.** There is no Gemini key in this session (`API_KEY_INVALID`).
-- Once the key is saved as a network secret (host `generativelanguage.googleapis.com`, header `x-goog-api-key`), the rest of the pipeline runs: two Charon takes, clean, tighten, Whisper, `build.py`, render, loudnorm.
-- A silent timing draft (scratchpad only, not delivered) was used to check the new `ui` beats frame by frame: menu, cursor, click ripple, red arrow, dropdown, Create.
+**Video:** `output/shahcutt-2026-11-28-reframe.mp4`
+- 39.7 s, 1080×1920, −15.0 LUFS.
+- Cover: frame 0, `output/shahcutt-2026-11-28-reframe-cover.png`.
+
+**Voice:** Gemini 3.8 Flash TTS, Charon.
+- 4 takes were made:
+  - Takes 1 and 2 said «بفرستن» (they send) instead of «بفرستم»; take 2 also said «بیشتر» and dropped «تند».
+  - Takes 3 and 4 also spoke part of a pronunciation note aloud.
+- Used take 3 with that 2.75 s cut out at its pauses, ×1.06 tempo. Whisper confirms all 10 sentences.
+
+**Look:** v2 follows Shahin's reference (an editing-agency promo).
+- Light studio, ice-blue extruded 3D type with glow, blue stripe sets.
+- Full-frame 3D scenes (hill + laptop, clock floor + light beam, CRT TV stack), rendered in three.js (`scenes/`).
+- The "horizontal footage" is a 3D studio with a presenter layer, so the 9:16 crop can really track him.
+- Raw-vs-new split cards, pixel-dissolve cuts, light app panels with blue arrows, and an end card with ripples.
+- Built by `build_ref.py` + `src/ref.html`. The first, dark engine version is still reproducible with `build.py`.
+
+**Why no Gemini images or Veo:**
+- The AI Studio key has 0 free-tier quota for every image model (gemini-3-pro-image, 3.1-flash-image, 2.5-flash-image).
+- No Veo model is listed for it (veo-3.1 returns 404).
+- `tools/gen_image.py` is ready. With billing on, any plate in `assets/img/` can be replaced by a generated image of the same name.
 
 ## Pattern and source reels
 **P12: hidden in-app button walkthrough with red arrows.**
@@ -82,4 +100,4 @@ Paths 1–3 were checked against Adobe's documentation today. **Shahin should co
 شاهین | @shahcutt
 
 ## Publishing
-Not built and not published. The voice is needed first, then Shahin's approval of this exact video and caption.
+Not published. That needs Shahin's approval of this exact video and caption.

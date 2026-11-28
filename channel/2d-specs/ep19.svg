@@ -1,0 +1,16 @@
+<g id="window"><rect x="430" y="1080" width="170" height="130" rx="14" fill="#1b1f52" stroke="#fff" stroke-width="10" /><circle cx="560" cy="1115" r="20" fill="#f3f0ff" /><circle cx="552" cy="1110" r="16" fill="#1b1f52" /><line x1="515" y1="1080" x2="515" y2="1210" stroke="#fff" stroke-width="8" /></g>
+<g id="bed"><rect x="215" y="1360" width="22" height="120" rx="8" fill="#a0673e" /><rect x="225" y="1420" width="290" height="40" rx="12" fill="#c98a5a" /><rect x="230" y="1460" width="16" height="30" fill="#a0673e" /><rect x="495" y="1460" width="16" height="30" fill="#a0673e" /></g>
+<g id="stand"><rect x="560" y="1400" width="90" height="80" rx="10" fill="#c98a5a" /></g>
+<g id="clock"><circle cx="0" cy="0" r="34" fill="#4a4e8a" /><circle cx="0" cy="0" r="26" fill="#fff" /><circle cx="-26" cy="-30" r="10" fill="#8ec5ff" /><circle cx="26" cy="-30" r="10" fill="#8ec5ff" />
+  <text id="time" x="0" y="8" text-anchor="middle" font-family="Fredoka" font-weight="700" font-size="20" fill="#2b2a6e">11:58</text></g>
+<g id="peb"></g>
+<g id="pip"></g>
+<g id="phoneGlow"><ellipse cx="0" cy="0" rx="90" ry="70" fill="#8ec5ff" opacity="0.35" /></g>
+<g id="phone"><rect x="-34" y="-62" width="68" height="124" rx="14" fill="#1b1b22" stroke="#444" stroke-width="4" /><rect x="-26" y="-50" width="52" height="92" rx="4" fill="#bfe9ff" /></g>
+<g id="checklist" opacity="0"><rect x="-80" y="-100" width="160" height="150" rx="14" fill="#fff" stroke="#2b2a6e" stroke-width="6" />
+  <rect x="-58" y="-72" width="24" height="24" rx="6" fill="#7ed957" /><path d="M-54,-60 l6,8 l12,-16" stroke="#fff" stroke-width="4" fill="none" stroke-linecap="round" /><rect x="-24" y="-68" width="70" height="14" rx="6" fill="#2b2a6e" opacity="0.7" />
+  <rect x="-58" y="-34" width="24" height="24" rx="6" fill="#7ed957" /><path d="M-54,-22 l6,8 l12,-16" stroke="#fff" stroke-width="4" fill="none" stroke-linecap="round" /><rect x="-24" y="-30" width="70" height="14" rx="6" fill="#2b2a6e" opacity="0.7" />
+  <rect x="-58" y="4" width="24" height="24" rx="6" fill="#7ed957" /><path d="M-54,16 l6,8 l12,-16" stroke="#fff" stroke-width="4" fill="none" stroke-linecap="round" /><rect x="-24" y="8" width="70" height="14" rx="6" fill="#2b2a6e" opacity="0.7" />
+</g>
+<text id="zzz" x="380" y="1260" font-family="Fredoka" font-weight="700" font-size="50" fill="#fff" stroke="#2b2a6e" stroke-width="6" paint-order="stroke" opacity="0">Z z z</text>
+<path id="glint" d="M0,-24 L5,-5 L24,0 L5,5 L0,24 L-5,5 L-24,0 L-5,-5 Z" fill="#fff" opacity="0" />

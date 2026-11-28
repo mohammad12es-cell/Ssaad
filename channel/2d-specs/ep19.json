@@ -1,0 +1,3 @@
+{"id":"ep19c-sunday-scaries","duration":14,"style":"cast","zoom":1.45,"cx":545,"cy":1310,"sky":["#2a2d6e","#4a4e8a","#6f73b0"],"svg":"ep19.svg","script":"ep19.js",
+ "captions":[["c1",0,1.6,"Sunday 11:58 PM 😬"],["c2",2.0,1.8,"7 hrs of sleep left… 😅"],["c3",4.0,1.8,"6 hrs… 😰"],["c4",6.0,1.2,"5 hrs!! 😱"],["c5",7.4,2.0,"Pebble: already prepped ✅😎"],["c6",10.2,0.8,"2 AM 💀"],["c7",11.6,1.3,"Pip: still scrolling 📱"],["c8",13.0,1.0,"MONDAY. 😵"]],
+ "cues":[["bed","sneaky",0,14,0.75],["whoosh",0.2],["click",1.1],["click",1.6],["click",2.1],["sparkle",2.3],["click",3.2],["click",3.7],["rustle",4.1,1.5],["click",5.1],["click",5.6],["error",6.0],["whoosh",7.4],["sparkle",7.6],["rustle",8.0,1.3],["sad",10.2],["rustle",10.6,1.0],["bonk",13.0],["ding",13.3]]}

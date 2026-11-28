@@ -31,6 +31,13 @@ Call something a pattern only when it appears in 2+ niches or 2+ independent sou
 
 ## 2. Cross-niche patterns this week (update every day; newest first)
 
+**Update 2026-11-28** (Volume pages still «Measured November 27», so no new measurement. Virlo was updated on 11-28; Later is still 11-27):
+- P12 «hidden in-app button walkthrough with red arrows» is still business #1 (10 accounts, 44x). Used 2026-11-28 (Premiere Auto Reframe), together with P1 result first (tech #1, 9 accounts, 28x).
+- vidIQ outliers (11-28): @deanwetherstechreviews 3 Premiere features, 2519x; @enriquestories «How To Do This?» CapCut, 39.7x; @lourrutiappt «Why is Canva hiding this!!»; @sofis.designspot «I still do my designs MANUALLY», 17.3x.
+  - Manual vs automatic is a strong hook angle for tool walkthroughs.
+- Virlo top 5 are meme/sound templates («My moon my man» couple montage, 579 creators; «In this town everybody goes out partying except me», 565, +209%; «In this town everyone plays GTA 6 except me», 201, new; GTA 6 loading-screen intro, 222).
+  - «In this town everyone ___ except me» is a P5-style meme frame that fits editors: «in this town everyone crops by hand except me».
+
 **Update 2026-11-27** (Volume, all 7 niches measured 2026-11-27; Later 11-27, SocialBee 11-26, InMagic 11-23, Virlo 11-27):
 - **New P11: «quote the doubter / the audience's own line, then proof».**
   - Beauty «Quote the doubter, then show proof»: 9 accounts, 30x.
@@ -106,6 +113,7 @@ Seasonal (late November): year-recap ("I feel like I haven't done much this year
 - روزی ۵۰ تا استوری… اشتباه بود (client case)
 - می‌گن [ریلز برای X] جواب نمی‌ده… (P11; 2026-11-27)
 - قبل از پست بعدیت، این دکمه‌ی [Premiere/CapCut] رو بزن… (P12)
+- [کار رایج] رو دستی انجام نده؛ [اپ] یه دکمه داره… (P12 + manual vs automatic; 2026-11-28)
 
 ## 5. CTA, caption and DM rules
 
@@ -143,6 +151,10 @@ Seasonal (late November): year-recap ("I feel like I haven't done much this year
 
 | Date | Source | Hook (first 2 s) | Body device | CTA | Why it worked |
 |---|---|---|---|---|---|
+| 2026-11-28 | vidIQ outlier, @deanwetherstechreviews, 2519x (https://www.tiktok.com/@deanwetherstechreviews/video/7706608499500846367) | 3 Premiere Pro features | each feature walked through on screen | — | P12, same app as Shahin |
+| 2026-11-28 | vidIQ outlier, @enriquestories, 39.7x, 4.6M views (https://www.instagram.com/reel/Df7kFJDIENM) | «How To Do This?» | CapCut feature, every tap shown | — | P12 + result first |
+| 2026-11-28 | vidIQ outlier, @sofis.designspot, 17.3x (https://www.instagram.com/reel/DfsOwaEpsod) | «I still do my designs MANUALLY» | manual vs automatic | — | the viewer recognises their own slow habit |
+| 2026-11-28 | vidIQ outlier, @lourrutiappt (https://www.instagram.com/reel/DgKRgmUAjOG) | «Why is Canva hiding this!!» | hidden button reveal | — | P12 hidden-feature hook |
 | 2026-11-27 | Volume beauty, @tinabobeena222, 78x (https://www.tiktok.com/@tinabobeena222/photo/7710286996119244045) | «you can tell she smooths out her skin in her photos» | the doubter's line, then the proof | — | P11 quote the doubter, then proof |
 | 2026-11-27 | Volume beauty, @gracemweston, 47x (https://www.instagram.com/p/DevoJbevJ0w/) | «I could NEVER sleep in those» | proof that answers the quote | — | P11 |
 | 2026-11-27 | Volume fitness, @vickyjustiz, 78x (https://www.tiktok.com/@vickyjustiz/video/7701421200601369887) | the viewer's own line: «I want to workout glutes at home but idk what to do» | the workout that answers it | TRY THIS WORKOUT | P11 audience quote |

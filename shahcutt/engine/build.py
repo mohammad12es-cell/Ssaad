@@ -18,6 +18,13 @@ script.json:
     kind demo:      state before|step1|step2|step3|after, text ([word] = the key word), label, head?, mark? ("x" | "ok")
                     the same sentence shown at one stage of an edit: before = flat, step1 = one big coloured word,
                     step2 = + motion every DEMO_HIT s (silent), step3/after = + a sound on every move; after = full finish
+    kind ui:        lines:[...] (head above the panel), view reframe|pair|menu|dialog   a stylised app panel, every click shown
+                    reframe: a 16:9 frame with a 9:16 crop that tracks the subject (works as the frame-0 result)
+                    pair:    the 16:9 original next to the new 9:16 version
+                    menu:    panel, target, items:[...], pick:i, rclick_at?:"s4:word" (right-click), click_at:"s4:word"
+                    dialog:  title, rows:[{label, value, opts?:[...], pick?, at?:"s5:word"}], button?, button_at?
+                             a row with `at` opens its dropdown 0.6 s before the word and picks opts[pick] on it
+                    the cursor travels to each target, clicks with a ripple, and a red arrow points at what was clicked
 Voice pipeline: gen_vo.py -> tools/clean_take.py -> tools/tighten.py -> whisper (yerevan-christmas/tools/asr.py)."""
 import json, os, re, shutil, subprocess, sys, wave
 import numpy as np
@@ -72,9 +79,24 @@ def timing(words):
         d = dict(b, start=round(st, 3))
         if b["kind"] == "cta": d["wordAt"] = round(word_time(by, b["word_at"]), 3)
         if b["kind"] == "list": d["rowsAt"] = [round(word_time(by, r["at"]), 3) for r in b["rows"]]
+        if b["kind"] == "ui":
+            acts = []
+            if b["view"] == "menu":
+                acts.append({"a": "rc", "t": word_time(by, b["rclick_at"]) if "rclick_at" in b else st + 0.45})
+                acts.append({"a": "pick", "t": word_time(by, b["click_at"])})
+            elif b["view"] == "dialog":
+                for ri, r in enumerate(b["rows"]):
+                    if "at" in r: t = word_time(by, r["at"]); acts += [{"a": "open", "t": t - 0.6, "row": ri}, {"a": "pick", "t": t, "row": ri}]
+                if "button_at" in b: acts.append({"a": "btn", "t": word_time(by, b["button_at"])})
+            for x in acts: x["t"] = round(x["t"], 3)
+            if acts and acts[0]["t"] < st + 0.5: sys.exit(f"ui beat {b['at']}: first click {acts[0]['t']:.2f}s is too close to its start {st:.2f}s")
+            for x, y in zip(acts, acts[1:]):
+                if y["t"] - x["t"] < 0.5: sys.exit(f"ui beat {b['at']}: clicks {x['t']:.2f} and {y['t']:.2f} are < 0.5 s apart")
+            d["acts"] = acts
         beats.append(d)
     for a, b in zip(beats, beats[1:]):
         if b["start"] <= a["start"]: sys.exit(f"beats out of order at {b['at']}")
+        if a.get("acts") and a["acts"][-1]["t"] > b["start"] - 0.35: sys.exit(f"ui beat {a['at']}: last click is too close to the next beat")
     return lines, beats, words[-1]["e"]
 
 
@@ -148,6 +170,15 @@ def make_audio(total, beats, voice):
         elif bt["kind"] == "list":
             add(sfx, pop(620), t0 + 0.02, 0.25)
             for i, ra in enumerate(bt["rowsAt"]): add(sfx, pop(700 + 140 * i), ra, 0.35); add(sfx, chime(1046.5 * 2 ** (i * 4 / 12), 0.7), ra + 0.05, 0.16)
+        elif bt["kind"] == "ui":
+            add(sfx, pop(620), t0 + 0.02, 0.22)
+            if bt["view"] == "pair": add(sfx, pop(880), t0 + 0.5, 0.3); add(sfx, chime(1318.5, 0.8), t0 + 0.85, 0.18)
+            for x in bt.get("acts", []):
+                add(sfx, whoosh(0.3, 6, 22), x["t"] - 0.42, 0.1)                       # the cursor travels
+                add(sfx, click(2800 if x["a"] != "rc" else 2300), x["t"], 0.5)
+                if x["a"] in ("rc", "open"): add(sfx, pop(760), x["t"] + 0.05, 0.22)   # a menu opens
+                if x["a"] == "pick": add(sfx, pop(980), x["t"] + 0.06, 0.25)
+                if x["a"] == "btn": add(sfx, chime(1568.0, 0.9), x["t"] + 0.06, 0.2)
         elif bt["kind"] == "cta":
             for i in range(5): add(sfx, click(), bt["wordAt"] + 0.04 + i * 0.1, 0.3)
             add(sfx, chime(1568.0, 1.0), bt["wordAt"] + 0.6, 0.25)
@@ -195,9 +226,39 @@ def beat_html(b):
         inner = ("".join(f'<span class="ln">{rich(x)}</span>' for x in b["lines"]) +
                  f'<div class="cbox"><div class="av"></div><div class="field"><div class="word">{esc(b["word"])}</div><div class="caret"></div></div>'
                  '<div class="send"><svg width="60" height="60" viewBox="0 0 64 64"><path d="M54,10 L8,30 L26,36 L32,56 Z" fill="#07070a" /></svg></div></div>')
+    elif k == "ui":
+        inner = "".join(f'<span class="ln">{rich(x)}</span>' for x in b.get("lines", [])) + f'<div class="ui v-{b["view"]}">{ui_html(b)}</div>'
     else:
         sys.exit(f"unknown beat kind {k}")
     return inner
+
+
+SCENE = '<div class="scene"><i class="win"></i><i class="lamp"></i><i class="floor"></i><div class="subj"><i class="hd"></i><i class="bd"></i></div></div>'
+CURSOR = ('<div class="rip"></div><svg class="arw" width="180" height="90" viewBox="0 0 180 90"><path d="M4 45 L66 6 L66 30 L174 30 L174 60 L66 60 L66 84 Z" /></svg>'
+          '<svg class="cur" width="60" height="78" viewBox="0 0 60 78"><path d="M3 3 L3 62 L18 48 L29 74 L40 69 L29 44 L49 44 Z" /></svg>')
+
+
+def ui_html(b):
+    v = b["view"]
+    if v == "reframe":
+        return f'<div class="fr">{SCENE}<div class="crop"><span class="tag">9:16</span></div><span class="tag t0">16:9</span></div>'
+    if v == "pair":
+        return (f'<div class="fr sm">{SCENE}<span class="tag t0">16:9</span></div><svg class="nx" width="70" height="90" viewBox="0 0 70 90"><path d="M12 8 L56 45 L12 82" /></svg>'
+                f'<div class="fr vt">{SCENE}<span class="tag">9:16</span><span class="ok"><svg viewBox="0 0 64 64"><path d="M15 33 L27 45 L49 20" /></svg></span></div>'
+                f'<span class="cp c0" dir="rtl">{esc(b.get("left", "اصلی"))}</span><span class="cp c1" dir="rtl">{esc(b.get("right", "جدید"))}</span>')
+    if v == "menu":
+        items = "".join(f'<div class="it{" pk" if i == b["pick"] else ""}">{esc(x)}</div>' for i, x in enumerate(b["items"]))
+        return f'<div class="bar">{esc(b.get("panel", "Project"))}</div><div class="seq"><i class="ic"></i><span>{esc(b["target"])}</span></div><div class="menu">{items}</div>' + CURSOR
+    if v == "dialog":
+        rows = ""
+        for i, r in enumerate(b["rows"]):
+            new = r["opts"][r["pick"]] if "opts" in r else r["value"]
+            dd = ('<div class="dd">' + "".join(f'<div class="it{" pk" if j == r.get("pick") else ""}">{esc(o)}</div>' for j, o in enumerate(r["opts"])) + "</div>") if "opts" in r else ""
+            rows += (f'<div class="row" style="top:{96 + i * 150}px;z-index:{10 - i}"><div class="lb">{esc(r["label"])}</div>'
+                     f'<div class="box"><span class="v0">{esc(r["value"])}</span><span class="v1">{esc(new)}</span><b>▾</b></div>{dd}</div>')
+        btn = f'<div class="btns"><div class="btn">Cancel</div><div class="btn go">{esc(b["button"])}</div></div>' if b.get("button") else ""
+        return f'<div class="bar">{esc(b["title"])}</div>{rows}{btn}' + CURSOR
+    sys.exit(f"unknown ui view {v}")
 
 
 def build_html(total, lines, beats, vo_dur):
@@ -210,7 +271,7 @@ def build_html(total, lines, beats, vo_dur):
     for i, L in enumerate(lines):
         ws = "".join(f'<span class="w{" hi" if w["hi"] else ""}"><i></i><span>{esc(w["t"])}</span></span>' for w in L["words"])
         caps.append(f'<div id="cap{i}" class="clip cap" data-start="{L["start"] - 0.06:.3f}" data-duration="{L["hold"] - L["start"] + 0.06:.3f}" data-track-index="9"><div class="cap-in">{ws}</div></div>')
-    T = {"total": total, "segT0": SEG_T0, "segDt": SEG_DT, "beats": [{"kind": b["kind"], "start": b["start"], **{k: b[k] for k in ("wordAt", "rowsAt", "segs", "hits", "state") if k in b}} for b in beats],
+    T = {"total": total, "segT0": SEG_T0, "segDt": SEG_DT, "beats": [{"kind": b["kind"], "start": b["start"], **{k: b[k] for k in ("wordAt", "rowsAt", "segs", "hits", "state", "view", "acts") if k in b}} for b in beats],
          "lines": [{"start": L["start"], "hold": L["hold"], "w": [[w["s"], w["e"]] for w in L["words"]]} for L in lines]}
     html = (tpl.replace("__TOTAL__", f"{total:.3f}").replace("__VO_DUR__", f"{vo_dur:.3f}").replace("<!--__BEATS__-->", "\n        ".join(bh))
             .replace("<!--__CAPTIONS__-->", "\n      ".join(caps)).replace("/*__TIMING__*/null", json.dumps(T, ensure_ascii=False)))

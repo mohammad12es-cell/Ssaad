@@ -1,0 +1,87 @@
+{
+ "title": "@shahcutt · دکمه‌ی Auto Reframe پریمیر",
+ "voice": {
+  "voiceName": "Charon",
+  "style": "Read the following text aloud in natural, conversational Tehrani Persian (Farsi), as a confident young Iranian video editor sharing a time-saving trick with a friend. The first sentence is a firm, friendly warning. Say the English Premiere Pro menu names (آتو ری‌فریم سیکوئنس، تارگت اسپکت ریشیو، موشن ترکینگ، دیفالت، کریت، فستر موشن) the way Iranian editors say them, clearly, like English words. Give «یک»، «دو»، «سه» a crisp tutorial rhythm. End with a friendly call to action stressing the word «پریمیر», then the last line short and punchy. Fast, energetic Reels pace with only very short pauses (never long silences). Never read punctuation marks or guillemets aloud."
+ },
+ "tail": 2.2,
+ "segments": [
+  {
+   "id": "s1",
+   "text": "ویدیوی افقی رو دستی برای ریلز کراپ نکن.",
+   "captions": ["ویدیوی افقی رو", "[دستی] برای ریلز", "کراپ نکن."]
+  },
+  {
+   "id": "s2",
+   "text": "پریمیر یه دکمه داره که خودش عمودیش می‌کنه و سوژه رو وسط کادر نگه می‌داره.",
+   "captions": ["پریمیر یه [دکمه] داره", "که خودش [عمودیش] می‌کنه", "و سوژه رو", "[وسط کادر] نگه می‌داره."]
+  },
+  {
+   "id": "s3",
+   "text": "من بیش از ۵۰۰ تا پروژه ادیت کردم؛ این سه تا کلیک کلی وقتت رو نجات می‌ده.",
+   "tts": "من بیش از پونصد تا پروژه ادیت کردم؛ این سه تا کلیک کلی وقتت رو نجات می‌ده.",
+   "captions": ["من بیش از [۵۰۰ تا] پروژه", "ادیت کردم؛", "این [سه تا کلیک]", "کلی وقتت رو نجات می‌ده."]
+  },
+  {
+   "id": "s4",
+   "text": "یک: توی پنل پروجکت روی سکانس راست‌کلیک کن و آتو ری‌فریم سیکوئنس رو بزن.",
+   "captions": ["یک:", "توی پنل پروجکت", "روی سکانس [راست‌کلیک] کن", "و [آتو ری‌فریم سیکوئنس]", "رو بزن."]
+  },
+  {
+   "id": "s5",
+   "text": "دو: تارگت اسپکت ریشیو رو بذار روی ۹ به ۱۶ عمودی.",
+   "tts": "دو: تارگت اسپکت ریشیو رو بذار روی نُه به شونزده عمودی.",
+   "captions": ["دو:", "[تارگت اسپکت ریشیو] رو", "بذار روی", "[۹ به ۱۶] عمودی."]
+  },
+  {
+   "id": "s6",
+   "text": "سه: موشن ترکینگ رو روی دیفالت بذار و کریت رو بزن.",
+   "captions": ["سه:", "[موشن ترکینگ] رو", "روی دیفالت بذار", "و [کریت] رو بزن."]
+  },
+  {
+   "id": "s7",
+   "text": "اگه سوژه‌ت تند حرکت می‌کنه، فستر موشن رو انتخاب کن.",
+   "captions": ["اگه سوژه‌ت", "[تند] حرکت می‌کنه،", "[فستر موشن] رو", "انتخاب کن."]
+  },
+  {
+   "id": "s8",
+   "text": "پریمیر یه سکانس عمودی جدید می‌سازه و سکانس اصلیت دست نمی‌خوره.",
+   "captions": ["پریمیر یه سکانس", "[عمودی] جدید می‌سازه", "و سکانس اصلیت", "[دست نمی‌خوره.]"]
+  },
+  {
+   "id": "s9",
+   "text": "کلمه‌ی «پریمیر» رو کامنت کن تا لیست ۷ تا ابزار خودکار پریمیر رو با مسیر دقیقشون برات بفرستم.",
+   "tts": "کلمه‌ی «پریمیر» رو کامنت کن تا لیست هفت تا ابزار خودکار پریمیر رو، با مسیر دقیقشون، برات بفرستم.",
+   "captions": ["کلمه‌ی [«پریمیر»] رو کامنت کن", "تا لیست [۷ تا ابزار]", "خودکار پریمیر رو", "با مسیر دقیقشون", "برات بفرستم."]
+  },
+  {
+   "id": "s10",
+   "text": "دیگه دستی کراپ نکن.",
+   "captions": ["دیگه [دستی]", "کراپ نکن."]
+  }
+ ],
+ "beats": [
+  {"at": "s1:ویدیوی", "kind": "ui", "view": "reframe", "lines": ["ویدیوی افقی رو", "[دستی] کراپ نکن"]},
+  {"at": "s2:پریمیر", "kind": "text", "lines": ["پریمیر", "یه [دکمه] داره"]},
+  {"at": "s2:سوژه", "kind": "ui", "view": "reframe", "lines": ["سوژه همیشه [وسط کادر]"]},
+  {"at": "s3:من", "kind": "stat", "n": 500, "suffix": "+", "label": "پروژه‌ی ادیت، توی ۳ استودیو"},
+  {"at": "s3:این", "kind": "text", "lines": ["فقط", "[۳ کلیک]"]},
+  {"at": "s4:یک:", "kind": "ui", "view": "menu", "lines": ["[۱] راست‌کلیک روی سکانس"], "panel": "Project: Reels",
+   "target": "Interview_16x9", "items": ["Cut", "Copy", "Duplicate", "Auto Reframe Sequence…", "Properties"], "pick": 3,
+   "rclick_at": "s4:راست‌کلیک", "click_at": "s4:آتو"},
+  {"at": "s5:دو:", "kind": "ui", "view": "dialog", "lines": ["[۲] نسبت تصویر"], "title": "Auto Reframe Sequence",
+   "rows": [
+    {"label": "Target Aspect Ratio", "value": "Square 1:1", "opts": ["Square 1:1", "Vertical 4:5", "Vertical 9:16", "Horizontal 16:9", "Custom"], "pick": 2, "at": "s5:۹"},
+    {"label": "Motion Tracking", "value": "Default"}
+   ], "button": "Create"},
+  {"at": "s6:سه:", "kind": "ui", "view": "dialog", "lines": ["[۳] ترکینگ و کریت"], "title": "Auto Reframe Sequence",
+   "rows": [
+    {"label": "Target Aspect Ratio", "value": "Vertical 9:16"},
+    {"label": "Motion Tracking", "value": "Default", "opts": ["Slower Motion", "Default", "Faster Motion"], "pick": 1, "at": "s6:دیفالت"}
+   ], "button": "Create", "button_at": "s6:کریت"},
+  {"at": "s7:اگه", "kind": "text", "lines": ["سوژه [تند] حرکت می‌کنه؟", "Faster Motion"]},
+  {"at": "s8:پریمیر", "kind": "ui", "view": "pair", "lines": ["یه سکانس [عمودیِ] جدید", "اصلی دست‌نخورده"], "left": "اصلی"},
+  {"at": "s9:کلمه‌ی", "kind": "cta", "lines": ["[۷ ابزار خودکار] پریمیر", "با مسیر دقیق"], "word": "پریمیر", "word_at": "s9:«پریمیر»"},
+  {"at": "s10:دیگه", "kind": "hook", "lines": ["دیگه [دستی]", "کراپ نکن"]}
+ ]
+}

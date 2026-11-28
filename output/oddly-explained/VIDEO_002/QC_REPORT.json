@@ -1,0 +1,63 @@
+{
+  "EN": {
+    "width": 1080,
+    "height": 1920,
+    "fps": "30/1",
+    "frames": 900,
+    "duration": 30.0,
+    "video_codec": "h264",
+    "pix_fmt": "yuv420p",
+    "audio": "aac 48000Hz 2ch",
+    "loudness_LUFS": -14.1,
+    "true_peak_dBFS": -1.4,
+    "black_segments": [],
+    "size_MB": 54.65,
+    "streams": [
+      "video",
+      "audio"
+    ]
+  },
+  "FA": {
+    "width": 1080,
+    "height": 1920,
+    "fps": "30/1",
+    "frames": 900,
+    "duration": 30.0,
+    "video_codec": "h264",
+    "pix_fmt": "yuv420p",
+    "audio": "aac 48000Hz 2ch",
+    "loudness_LUFS": -14.1,
+    "true_peak_dBFS": -1.4,
+    "black_segments": [],
+    "size_MB": 54.55,
+    "streams": [
+      "video",
+      "audio"
+    ]
+  },
+  "CLEAN": {
+    "width": 1080,
+    "height": 1920,
+    "fps": "30/1",
+    "frames": 900,
+    "duration": 30.0,
+    "video_codec": "h264",
+    "pix_fmt": "yuv420p",
+    "audio": "aac 48000Hz 2ch",
+    "loudness_LUFS": -14.1,
+    "true_peak_dBFS": -1.4,
+    "black_segments": [],
+    "size_MB": 54.81,
+    "streams": [
+      "video",
+      "audio",
+      "subtitle",
+      "subtitle"
+    ]
+  },
+  "srt": {
+    "EN": 12,
+    "FA": 12
+  },
+  "pass_spec": true
+}
